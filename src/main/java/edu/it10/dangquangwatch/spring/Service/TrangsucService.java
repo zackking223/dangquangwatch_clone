@@ -1,6 +1,6 @@
-package io.github.tubean.myspringcrud.service;  
+package edu.it10.dangquangwatch.spring.service;  
 
-import io.github.tubean.myspringcrud.entity.Trangsuc;  
+import edu.it10.dangquangwatch.spring.entity.Trangsuc;  
 
 import java.util.List;  
 import java.util.Optional;  

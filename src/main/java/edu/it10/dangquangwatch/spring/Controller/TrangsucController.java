@@ -1,7 +1,7 @@
-package io.github.tubean.myspringcrud.controller;  
+package edu.it10.dangquangwatch.spring.controller;  
 
-import io.github.tubean.myspringcrud.entity.Trangsuc;  
-import io.github.tubean.myspringcrud.service.TrangsucService;  
+import edu.it10.dangquangwatch.spring.entity.Trangsuc;  
+import edu.it10.dangquangwatch.spring.service.TrangsucService;  
 import org.springframework.beans.factory.annotation.Autowired;  
 import org.springframework.stereotype.Controller;  
 import org.springframework.ui.Model;  

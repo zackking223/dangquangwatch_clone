@@ -1,8 +1,8 @@
-package io.github.tubean.myspringcrud.service.impl;  
+package edu.it10.dangquangwatch.spring.service.impl;  
 
-import io.github.tubean.myspringcrud.entity.Dongho;  
-import io.github.tubean.myspringcrud.repository.DonghoRepository;  
-import io.github.tubean.myspringcrud.service.DonghoService;  
+import edu.it10.dangquangwatch.spring.entity.Dongho;  
+import edu.it10.dangquangwatch.spring.repository.DonghoRepository;  
+import edu.it10.dangquangwatch.spring.service.DonghoService;  
 import org.springframework.beans.factory.annotation.Autowired;  
 import org.springframework.stereotype.Service;  
 

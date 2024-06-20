@@ -1,6 +1,6 @@
-package io.github.tubean.myspringcrud.repository;  
+package edu.it10.dangquangwatch.spring.repository;  
 
-import io.github.tubean.myspringcrud.entity.Trangsuc;  
+import edu.it10.dangquangwatch.spring.entity.Trangsuc;  
 import org.springframework.data.repository.CrudRepository;  
 import org.springframework.stereotype.Repository;  
 

@@ -1,8 +1,8 @@
-package io.github.tubean.myspringcrud.service.impl;  
+package edu.it10.dangquangwatch.spring.service.impl;  
 
-import io.github.tubean.myspringcrud.entity.Trangsuc;  
-import io.github.tubean.myspringcrud.repository.TrangsucRepository;  
-import io.github.tubean.myspringcrud.service.TrangsucService;  
+import edu.it10.dangquangwatch.spring.entity.Trangsuc;  
+import edu.it10.dangquangwatch.spring.repository.TrangsucRepository;  
+import edu.it10.dangquangwatch.spring.service.TrangsucService;  
 import org.springframework.beans.factory.annotation.Autowired;  
 import org.springframework.stereotype.Service;  
 

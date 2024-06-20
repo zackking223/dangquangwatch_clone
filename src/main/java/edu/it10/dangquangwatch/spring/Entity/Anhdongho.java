@@ -1,6 +1,11 @@
-package io.github.tubean.myspringcrud.entity;  
+package edu.it10.dangquangwatch.spring.entity;  
 
-import javax.persistence.*;  
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;  
 
 @Entity  
 @Table(name = "anhdongho")
@@ -18,9 +23,9 @@ public class Anhdongho {
   @Column(name = "tenanh")  
   private String tenanh;  
 
-  public User() {}  
+  public Anhdongho() {}  
 
-  public User(String madongho, String url, String tenanh) {  
+  public Anhdongho(String madongho, String url, String tenanh) {  
     this.madongho = madongho;  
     this.url = url;  
     this.tenanh = tenanh;  
