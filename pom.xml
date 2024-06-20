@@ -16,7 +16,7 @@
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>22</java.version>
-
+		<start-class>edu.it10.dangquangwatch.DangQuangWatchApplication</start-class>
 		<!-- Maven plugins -->
 		<frontend-maven-plugin.version>1.10.0</frontend-maven-plugin.version>
 		<frontend-maven-plugin.nodeVersion>v16.13.1</frontend-maven-plugin.nodeVersion>
@@ -99,6 +99,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>edu.it10.dangquangwatch.spring.DangQuangWatchApplication</mainClass>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>com.github.eirslett</groupId>

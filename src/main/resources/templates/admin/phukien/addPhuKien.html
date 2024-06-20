@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Thêm phụ kiện</title>
+  <link rel="stylesheet" th:href="@{/css/application.css}">
+</head>
+
+<body>
+  <div class="col-3"></div>
+  <div class="container col-6">
+    <h1>Thêm mới</h1>
+    <div class="col-md-auto">
+      <form th:object="${phuKien}" th:action="@{/admin/phukien/save}" action="#" method="post">
+        <div style="clear: both; display: block; height: 10px"></div>
+        <div>
+          <label th:text="Tên sản phẩm" th:for="tenPhuKien"></label>
+          <input type="text" th:field="*{tenPhuKien}" class="form-control" placeholder="Tên sản phẩm" />
+        </div>
+
+        <div style="clear: both; display: block; height: 10px"></div>
+        <div>
+          <label th:text="Số lượng" th:for="soLuong"></label>
+          <input type="number" th:field="*{soLuong}" class="form-control" placeholder="0" />
+        </div>
+
+        <div style="clear: both; display: block; height: 10px"></div>
+        <div>
+          <label th:text="Giá tiền" th:for="giaTien"></label>
+          <input type="number" th:field="*{giaTien}" class="form-control" placeholder="3.000.000" />
+        </div>
+
+        <div style="clear: both; display: block; height: 10px"></div>
+        <div>
+          <label th:text="Trả góp" th:for="traGop"></label>
+          <input type="number" th:field="*{traGop}" class="form-control" placeholder="0%" />
+        </div>
+
+        <div style="clear: both; display: block; height: 10px"></div>
+        <div>
+          <label th:text="Thông tin" th:for="thongTin"></label>
+          <textarea rows="20" th:field="*{thongTin}" class="form-control"></textarea>
+        </div>
+
+        <div style="clear: both; display: block; height: 10px"></div>
+        <input type="submit" class="btn btn-success" value="Save" />
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>
