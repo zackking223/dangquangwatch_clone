@@ -5,43 +5,42 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>  
     <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}"/>  
 </head>  
-<body>  
-<div class="col-3"></div>  
-<div class="container col-6">  
-    <h1>Quản lý kính mắt</h1>  
-    <table class="table table-active">  
+<body> 
+<div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">  
+    <h1 class="font-bold text-center my-2">Quản lý kính mắt</h1>  
+    <table>  
         <tr>  
-            <th>Mã</th>  
-            <th>Tên sản phẩm</th>  
-            <th>Giá tiền</th>  
-            <th>Số lượng</th>  
-            <th>Rộng mắt</th>  
-            <th>Sống mũi</th>  
-            <th>Dài gọng</th>  
-            <th>Tính năng</th>  
-            <th>Trả góp</th>  
-            <th>Thông tin</th>  
-            <th>Ngày thêm</th>  
+            <th class="p-2 border border-solid border-black">Mã</th>  
+            <th class="p-2 border border-solid border-black">Tên sản phẩm</th>  
+            <th class="p-2 border border-solid border-black">Giá tiền</th>  
+            <th class="p-2 border border-solid border-black">Số lượng</th>  
+            <th class="p-2 border border-solid border-black">Rộng mắt</th>  
+            <th class="p-2 border border-solid border-black">Sống mũi</th>  
+            <th class="p-2 border border-solid border-black">Dài gọng</th>  
+            <th class="p-2 border border-solid border-black">Tính năng</th>  
+            <th class="p-2 border border-solid border-black">Trả góp</th>  
+            <th class="p-2 border border-solid border-black">Thông tin</th>  
+            <th class="p-2 border border-solid border-black">Ngày thêm</th>  
         </tr>  
         <tr th:each="kinhMat : ${kinhMats}">  
-            <td th:text="${kinhMat.maKinhMat}"></td>  
-            <td th:text="${kinhMat.tenSanPham}"></td>  
-            <td th:text="${kinhMat.giaTien}"></td>  
-            <td th:text="${kinhMat.soLuong}"></td>  
-            <td th:text="${kinhMat.rongMat}"></td>  
-            <td th:text="${kinhMat.songMui}"></td>  
-            <td th:text="${kinhMat.daiGong}"></td>  
-            <td th:text="${kinhMat.tinhNang}"></td>  
-            <td th:text="${kinhMat.traGop}"></td>  
-            <td th:text="${kinhMat.thongTin}"></td>  
-            <td th:text="${kinhMat.ngayThem}"></td>  
-            <td>  
+            <td class="p-2 border border-solid border-black" th:text="${kinhMat.maKinhMat}"></td>  
+            <td class="p-2 border border-solid border-black" th:text="${kinhMat.tenSanPham}"></td>  
+            <td class="p-2 border border-solid border-black" th:text="${kinhMat.giaTien}"></td>  
+            <td class="p-2 border border-solid border-black" th:text="${kinhMat.soLuong}"></td>  
+            <td class="p-2 border border-solid border-black" th:text="${kinhMat.rongMat}"></td>  
+            <td class="p-2 border border-solid border-black" th:text="${kinhMat.songMui}"></td>  
+            <td class="p-2 border border-solid border-black" th:text="${kinhMat.daiGong}"></td>  
+            <td class="p-2 border border-solid border-black" th:text="${kinhMat.tinhNang}"></td>  
+            <td class="p-2 border border-solid border-black" th:text="${kinhMat.traGop}"></td>  
+            <td class="p-2 border border-solid border-black" th:text="${kinhMat.thongTin}"></td>  
+            <td class="p-2 border border-solid border-black" th:text="${kinhMat.ngayThem}"></td>  
+            <td class="p-2 border border-solid border-black">  
                 <a th:href="@{/admin/kinhmat/edit?id={id}(id=${kinhMat.maKinhMat})}" class="btn btn-primary">Sửa</a>  
                 <a th:href="@{/admin/kinhmat/delete?id={id}(id=${kinhMat.maKinhMat})}" class="btn btn-danger">Xóa</a>  
             </td>  
         </tr>  
     </table>  
-    <a href="/admin/kinhmat/add" class="btn btn-success">Thêm mới</a>  
+    <a href="/admin/kinhmat/add" class="p-2 w-max bg-green-500 rounded block mt-4 text-white">Thêm mới</a>  
 </div>  
 </body>  
 </html>

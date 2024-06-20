@@ -27,7 +27,7 @@ public class KinhMatController {
     return "admin/kinhmat/index";  
   }  
 
-  @PostMapping("/add")  
+  @GetMapping("/add")  
   public String addKinhMat(Model model) {  
     model.addAttribute("kinhMat", new KinhMat());  
     return "admin/kinhmat/addKinhMat";  

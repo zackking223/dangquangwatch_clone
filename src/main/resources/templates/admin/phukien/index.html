@@ -5,35 +5,34 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>  
     <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}"/>  
 </head>  
-<body>  
-<div class="col-3"></div>  
-<div class="container col-6">  
-    <h1>Quản lý phụ kiện</h1>  
+<body>
+<div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">  
+    <h1 class="font-bold text-center my-2">Quản lý phụ kiện</h1>  
     <table class="table table-active">  
         <tr>  
-            <th>Mã</th>  
-            <th>Tên phụ kiện</th>  
-            <th>Giá tiền</th>  
-            <th>Số lượng</th>   
-            <th>Trả góp</th>  
-            <th>Thông tin</th>  
-            <th>Ngày thêm</th>  
+            <th class="p-2 border border-solid border-black">Mã</th>  
+            <th class="p-2 border border-solid border-black">Tên phụ kiện</th>  
+            <th class="p-2 border border-solid border-black">Giá tiền</th>  
+            <th class="p-2 border border-solid border-black">Số lượng</th>   
+            <th class="p-2 border border-solid border-black">Trả góp</th>  
+            <th class="p-2 border border-solid border-black">Thông tin</th>  
+            <th class="p-2 border border-solid border-black">Ngày thêm</th>  
         </tr>  
         <tr th:each="phuKien : ${phuKiens}">  
-            <td th:text="${phukien.maPhuKien}"></td>  
-            <td th:text="${phukien.tenSanPham}"></td>  
-            <td th:text="${phukien.giaTien}"></td>  
-            <td th:text="${phukien.soLuong}"></td> 
-            <td th:text="${phukien.traGop}"></td>  
-            <td th:text="${phukien.thongTin}"></td>  
-            <td th:text="${phukien.ngayThem}"></td>  
-            <td>  
+            <td class="p-2 border border-solid border-black" th:text="${phukien.maPhuKien}"></td>  
+            <td class="p-2 border border-solid border-black" th:text="${phukien.tenSanPham}"></td>  
+            <td class="p-2 border border-solid border-black" th:text="${phukien.giaTien}"></td>  
+            <td class="p-2 border border-solid border-black" th:text="${phukien.soLuong}"></td> 
+            <td class="p-2 border border-solid border-black" th:text="${phukien.traGop}"></td>  
+            <td class="p-2 border border-solid border-black" th:text="${phukien.thongTin}"></td>  
+            <td class="p-2 border border-solid border-black" th:text="${phukien.ngayThem}"></td>  
+            <td class="p-2 border border-solid border-black">  
                 <a th:href="@{/admin/phukien/edit?id={id}(id=${phukien.maPhuKien})}" class="btn btn-primary">Sửa</a>  
                 <a th:href="@{/admin/phukien/delete?id={id}(id=${phukien.maPhuKien})}" class="btn btn-danger">Xóa</a>  
             </td>  
         </tr>  
     </table>  
-    <a href="/admin/phukien/add" class="btn btn-success">Thêm mới</a>  
+    <a href="/admin/phukien/add" class="p-2 w-max bg-green-500 rounded block mt-4 text-white">Thêm mới</a>  
 </div>  
 </body>  
 </html>

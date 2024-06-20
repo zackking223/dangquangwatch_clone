@@ -1,7 +1,5 @@
 package edu.it10.dangquangwatch.spring.entity;
 
-import java.sql.Date;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,13 +32,13 @@ public class PhuKien {
   private String thongTin;
 
   @Column(name = "NGAYTHEM")
-  private Date NGAYTHEM;
+  private String NGAYTHEM;
 
 
   public PhuKien() {
   }
 
-  public PhuKien(int maPhuKien, String tenPhuKien, int giaTien, int traGop, int soLuong, String thongTin, Date NGAYTHEM) {
+  public PhuKien(int maPhuKien, String tenPhuKien, int giaTien, int traGop, int soLuong, String thongTin, String NGAYTHEM) {
     this.maPhuKien = maPhuKien;
     this.tenPhuKien = tenPhuKien;
     this.giaTien = giaTien;
@@ -98,11 +96,11 @@ public class PhuKien {
     this.thongTin = thongTin;
   }
 
-  public Date getNGAYTHEM() {
+  public String getNGAYTHEM() {
     return this.NGAYTHEM;
   }
 
-  public void setNGAYTHEM(Date NGAYTHEM) {
+  public void setNGAYTHEM(String NGAYTHEM) {
     this.NGAYTHEM = NGAYTHEM;
   }
 
@@ -136,7 +134,7 @@ public class PhuKien {
     return this;
   }
 
-  public PhuKien NGAYTHEM(Date NGAYTHEM) {
+  public PhuKien NGAYTHEM(String NGAYTHEM) {
     setNGAYTHEM(NGAYTHEM);
     return this;
   }
