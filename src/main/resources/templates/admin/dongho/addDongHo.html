@@ -1,0 +1,65 @@
+<!DOCTYPE html>  
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">  
+<head>  
+    <meta charset="UTF-8">  
+    <title>Thêm đồng hồ</title>  
+    <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}"/>  
+</head>  
+<body>  
+<div class="col-3"></div>  
+<div class="container col-6">  
+    <h1>Đồng hồ mới</h1>  
+    <div class="col-md-auto">  
+        <form th:object="${dongho}" th:action="@{save}" action="#" method="post">  
+            <div>  
+                <label th:for="madongho">Mã đồng hồ</label>  
+                <input type="number" th:field="*{madongho}" class="form-control" placeholder="Mã đồng hồ"/>  
+            </div>  
+            <div style="clear: both; display: block; height: 10px"></div>  
+            <div>  
+                <label th:for="tendongho">Tên đồng hồ</label>  
+                <input type="text" th:field="*{tendongho}" class="form-control" placeholder="Tên đồng hồ"/>  
+            </div>  
+            <div style="clear: both; display: block; height: 10px"></div>  
+            <div>  
+                <label th:for="giatien">Giá tiền</label>  
+                <input type="number" th:field="*{giatien}" class="form-control" placeholder="Giá tiền"/>  
+            </div>  
+            <div>  
+                <label th:for="soluong">Số lượng</label>  
+                <input type="number" th:field="*{soluong}" class="form-control" placeholder="Số lượng"/>  
+            </div>  
+            <div style="clear: both; display: block; height: 10px"></div>  
+            <div>  
+                <label th:for="tragop">Trả góp</label>  
+                <input type="text" th:field="*{tragop}" class="form-control" placeholder="Trả góp"/>  
+            </div>  
+            <div style="clear: both; display: block; height: 10px"></div>  
+            <div>  
+                <label th:for="duongkinh">Đường kính</label>  
+                <input type="text" th:field="*{duongkinh}" class="form-control" placeholder="Đường kính"/>  
+            </div>  
+            <div>  
+                <label th:for="chongnuoc">Chống nước</label>  
+                <input type="text" th:field="*{chongnuoc}" class="form-control" placeholder="Chống nước"/>  
+            </div>  
+            <div style="clear: both; display: block; height: 10px"></div>  
+            <div>  
+                <label th:for="bomay">Bộ máy</label>  
+                <input type="text" th:field="*{bomay}" class="form-control" placeholder="Bộ máy"/>  
+            </div>  
+            <div style="clear: both; display: block; height: 10px"></div>  
+            <div>  
+                <label th:for="thongtin">Thông tin</label>  
+                <input type="text" th:field="*{thongtin}" class="form-control" placeholder="Thông tin"/>  
+            </div>  
+
+            <input type="hidden" name="NGAYTHEM" value="NOW">
+
+            <div style="clear: both; display: block; height: 10px"></div>  
+            <input type="submit" class="btn btn-success" value="Lưu"/>  
+        </form>  
+    </div>  
+</div>  
+</body>  
+</html>
