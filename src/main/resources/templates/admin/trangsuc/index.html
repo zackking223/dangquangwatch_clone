@@ -1,52 +1,40 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Live Reload NPM Scripts</title>
-    <link rel="stylesheet" th:href="@{/css/application.css}">
-</head>
-
-<body class="w-full">
-    <header class="h-14 box-content py-2 bg-black">
-        <section class="w-[1215px] mx-auto flex items-center">
-            <a href="/">
-                <img src="/images/Logo.png" alt="Đăng Quang Watch" class="w-[230px] h-14">
-            </a>
-
-            <form action="">
-
-            </form>
-
-            <ul class="flex items-center text-xs text-white">
-                <li class="flex items-center px-4">
-                    <a href="/cart">
-                        Giỏ hàng (0)
-                    </a>
-                </li>
-                <li class="flex items-center px-4">
-                    <div>
-                        <p>
-                            Hotline mua hàng
-                        </p>
-                        <p class="text-yellow-500 text-base">
-                          1800 6005  
-                        </p>
-                    </div>
-                </li>
-                <li class="flex items-center px-4">
-                    <div>
-                        <p>
-                            Hệ thống cửa hàng
-                        </p>
-                        <p class="text-yellow-500 text-base">
-                          63 Tỉnh thành 
-                        </p>
-                    </div>
-                </li>
-            </ul>
-        </section>
-    </header>
-</body>
-
+<!DOCTYPE html>  
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">  
+<head>  
+    <title>Trang sức</title>  
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>  
+    <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}"/>  
+</head>  
+<body>  
+<div class="col-3"></div>  
+<div class="container col-6">  
+    <h1>Quản lý trang sức</h1>  
+    <table class="table table-active">  
+        <tr>  
+            <th>Mã trang sức</th>  
+            <th>Tên trang sức</th>  
+            <th>Giá tiền</th>  
+            <th>Số lượng</th>  
+            <th>Trả góp</th>  
+            <th>Thông tin</th>  
+            <th>Ngày thêm</th>  
+            <th>Tùy chọn</th>  
+        </tr>  
+        <tr th:each="trangsuc : ${trangsucs}">  
+            <td th:text="${trangsuc.getMatrangsuc()}"></td>  
+            <td th:text="${trangsuc.getTentrangsuc()}"></td>  
+            <td th:text="${trangsuc.getGia()}"></td>  
+            <td th:text="${trangsuc.getSoluong()}"></td>  
+            <td th:text="${trangsuc.getTragop()}"></td>   
+            <td th:text="${trangsuc.getThongtin()}"></td>  
+            <td th:text="${trangsuc.getNGAYTHEM()}"></td>  
+            <td>  
+                <a th:href="@{/admin/trangsuc/edit?id={id}(id=${trangsuc.getMatrangsuc()})}" class="btn btn-primary">Edit</a>  
+                <a th:href="@{/admin/trangsuc/delete?id={id}(id=${trangsuc.getMatrangsuc()})}" class="btn btn-danger">Delete</a>  
+            </td>  
+        </tr>  
+    </table>  
+    <a href="/admin/trangsuc/add" class="btn btn-success">Thêm trang sức</a>  
+</div>  
+</body>  
 </html>

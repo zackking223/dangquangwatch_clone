@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sửa thông tin</title>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="/css/application.css"
+      th:href="@{/css/application.css}"
+    />
+  </head>
+  <body>
+    <div class="col-3"></div>
+    <div class="container col-6">
+      <h1>Sửa thông tin</h1>
+      <form th:object="${trangsuc}" th:action="@{/admin/trangsuc/save}" action="#" method="post">
+        <div>
+          <label th:for="matrangsuc">Mã trang sức</label>
+          <input type="number" th:field="*{matrangsuc}" />
+        </div>
+        <div style="clear: both; display: block; height: 10px"></div>
+        <div>
+          <label th:for="tentrangsuc">Tên trang sức</label>
+          <input type="text" th:field="*{tentrangsuc}" />
+        </div>
+        <div style="clear: both; display: block; height: 10px"></div>
+        <div>
+          <label th:for="gia">Giá tiền</label>
+          <input type="number" th:field="*{gia}" />
+        </div>
+        <div>
+          <label th:for="soluong">Số lượng</label>
+          <input type="number" th:field="*{soluong}" />
+        </div>
+        <div style="clear: both; display: block; height: 10px"></div>
+        <div>
+          <label th:for="tragop">Trả góp</label>
+          <input type="number" th:field="*{tragop}" />
+        </div>
+        <div style="clear: both; display: block; height: 10px"></div>
+        <div>
+          <label th:for="thongtin">Thông tin</label>
+          <input type="text" th:field="*{thongtin}" />
+        </div>
+
+        <input type="date" id="datePicker" class="hidden" name="NGAYTHEM" />
+
+        <div style="clear: both; display: block; height: 10px"></div>
+        <input type="submit" value="Lưu" />
+      </form>
+    </div>
+    <script>
+      document.getElementById("datePicker").valueAsDate = new Date();
+    </script>
+  </body>
+</html>

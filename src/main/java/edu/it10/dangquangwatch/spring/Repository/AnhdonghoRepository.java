@@ -5,4 +5,4 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;  
 
 @Repository  
-public interface AnhdonghoRepository extends CrudRepository<Anhdongho, Long> {}
+public interface AnhdonghoRepository extends CrudRepository<Anhdongho, Integer> {}

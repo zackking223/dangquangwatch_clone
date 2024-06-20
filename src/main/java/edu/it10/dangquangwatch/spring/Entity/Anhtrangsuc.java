@@ -7,16 +7,17 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;  
+import java.util.Objects;
 
 @Entity  
 @Table(name = "anhtrangsuc")
 public class Anhtrangsuc {  
   @Id  
- @GeneratedValue(strategy = GenerationType.AUTO)  
-  private Long maanh;  
+ @GeneratedValue(strategy = GenerationType.IDENTITY)  
+  private Integer maanh;  
 
   @Column(name = "matrangsuc")  
-  private String matrangsuc;  
+  private Integer matrangsuc;  
 
   @Column(name = "url")  
   private String url;  
@@ -24,43 +25,92 @@ public class Anhtrangsuc {
   @Column(name = "tenanh")  
   private String tenanh;  
 
-  public Anhtrangsuc() {}  
 
-  public Anhtrangsuc(String matrangsuc, String url, String tenanh) {  
-    this.matrangsuc = matrangsuc;  
-    this.url = url;  
-    this.tenanh = tenanh;  
-  }  
+  public Anhtrangsuc() {
+  }
 
-  public Long getId() {  
-    return maanh;  
-  }  
+  public Anhtrangsuc(Integer maanh, Integer matrangsuc, String url, String tenanh) {
+    this.maanh = maanh;
+    this.matrangsuc = matrangsuc;
+    this.url = url;
+    this.tenanh = tenanh;
+  }
 
-  public void setId(Long maanh) {  
-    this.maanh = maanh;  
-  }  
+  public Integer getMaanh() {
+    return this.maanh;
+  }
 
-  public String getMatrangsuc() {  
-    return matrangsuc;  
-  }  
+  public void setMaanh(Integer maanh) {
+    this.maanh = maanh;
+  }
 
-  public void setMatrangsuc(String matrangsuc) {  
-    this.matrangsuc = matrangsuc;  
-  }  
+  public Integer getMatrangsuc() {
+    return this.matrangsuc;
+  }
 
-  public String getUrl() {  
-    return url;  
-  }  
+  public void setMatrangsuc(Integer matrangsuc) {
+    this.matrangsuc = matrangsuc;
+  }
 
-  public void setUrl(String url) {  
-    this.url = url;  
-  }  
+  public String getUrl() {
+    return this.url;
+  }
 
-  public String getTenanh() {  
-    return tenanh;  
-  }  
+  public void setUrl(String url) {
+    this.url = url;
+  }
 
-  public void setTenanh(String tenanh) {  
-    this.tenanh = tenanh;  
-  }  
+  public String getTenanh() {
+    return this.tenanh;
+  }
+
+  public void setTenanh(String tenanh) {
+    this.tenanh = tenanh;
+  }
+
+  public Anhtrangsuc maanh(Integer maanh) {
+    setMaanh(maanh);
+    return this;
+  }
+
+  public Anhtrangsuc matrangsuc(Integer matrangsuc) {
+    setMatrangsuc(matrangsuc);
+    return this;
+  }
+
+  public Anhtrangsuc url(String url) {
+    setUrl(url);
+    return this;
+  }
+
+  public Anhtrangsuc tenanh(String tenanh) {
+    setTenanh(tenanh);
+    return this;
+  }
+
+  @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof Anhtrangsuc)) {
+            return false;
+        }
+        Anhtrangsuc anhtrangsuc = (Anhtrangsuc) o;
+        return Objects.equals(maanh, anhtrangsuc.maanh) && Objects.equals(matrangsuc, anhtrangsuc.matrangsuc) && Objects.equals(url, anhtrangsuc.url) && Objects.equals(tenanh, anhtrangsuc.tenanh);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(maanh, matrangsuc, url, tenanh);
+  }
+
+  @Override
+  public String toString() {
+    return "{" +
+      " maanh='" + getMaanh() + "'" +
+      ", matrangsuc='" + getMatrangsuc() + "'" +
+      ", url='" + getUrl() + "'" +
+      ", tenanh='" + getTenanh() + "'" +
+      "}";
+  }    
 }

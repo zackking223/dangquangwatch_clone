@@ -1,7 +1,5 @@
 package edu.it10.dangquangwatch.spring.entity;
 
-import java.util.Date;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,95 +7,165 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "trangsuc")
 public class Trangsuc {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long matrangsuc;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer matrangsuc;
 
   @Column(name = "tentrangsuc")
   private String tentrangsuc;
 
   @Column(name = "gia")
-  private String gia;
+  private Integer gia;
 
   @Column(name = "soluong")
-  private String soluong;
+  private Integer soluong;
 
   @Column(name = "tragop")
-  private String tragop;
+  private Integer tragop;
 
   @Column(name = "NGAYTHEM")
-  private Date NGAYTHEM;
+  private String NGAYTHEM;
 
   @Column(name = "thongtin")
   private String thongtin;
 
-  public Trangsuc() {}
 
-  public Trangsuc(String tentrangsuc, String gia, String soluong, String tragop, Date NGAYTHEM, String thongtin) {  
-    this.tentrangsuc = tentrangsuc;  
-    this.gia = gia;  
-    this.soluong = soluong; 
-    this.tragop = tragop;  
-    this.NGAYTHEM = NGAYTHEM;  
-    this.thongtin = thongtin;  
+  public Trangsuc() {
   }
 
-  public Long getMatrangsuc() {
-    return matrangsuc;
+  public Trangsuc(Integer matrangsuc, String tentrangsuc, Integer gia, Integer soluong, Integer tragop, String NGAYTHEM, String thongtin) {
+    this.matrangsuc = matrangsuc;
+    this.tentrangsuc = tentrangsuc;
+    this.gia = gia;
+    this.soluong = soluong;
+    this.tragop = tragop;
+    this.NGAYTHEM = NGAYTHEM;
+    this.thongtin = thongtin;
   }
 
-  public void setMatrangsuc(Long matrangsuc) {
+  public Integer getMatrangsuc() {
+    return this.matrangsuc;
+  }
+
+  public void setMatrangsuc(Integer matrangsuc) {
     this.matrangsuc = matrangsuc;
   }
 
   public String getTentrangsuc() {
-    return tentrangsuc;
+    return this.tentrangsuc;
   }
 
   public void setTentrangsuc(String tentrangsuc) {
     this.tentrangsuc = tentrangsuc;
   }
 
-  public String getGia() {
-    return gia;
+  public Integer getGia() {
+    return this.gia;
   }
 
-  public void setGia(String gia) {
+  public void setGia(Integer gia) {
     this.gia = gia;
   }
 
-  public String getSoluong() {
-    return soluong;
+  public Integer getSoluong() {
+    return this.soluong;
   }
 
-  public void setSoluong(String soluong) {
+  public void setSoluong(Integer soluong) {
     this.soluong = soluong;
   }
 
-  public String getTragop() {
-    return tragop;
+  public Integer getTragop() {
+    return this.tragop;
   }
 
-  public void setTragop(String tragop) {
+  public void setTragop(Integer tragop) {
     this.tragop = tragop;
   }
 
-  public Date getNgaythem() {
-    return NGAYTHEM;
+  public String getNGAYTHEM() {
+    return this.NGAYTHEM;
   }
 
-  public void setNgaythem(Date NGAYTHEM) {
+  public void setNGAYTHEM(String NGAYTHEM) {
     this.NGAYTHEM = NGAYTHEM;
   }
 
   public String getThongtin() {
-    return thongtin;
+    return this.thongtin;
   }
 
   public void setThongtin(String thongtin) {
     this.thongtin = thongtin;
   }
+
+  public Trangsuc matrangsuc(Integer matrangsuc) {
+    setMatrangsuc(matrangsuc);
+    return this;
+  }
+
+  public Trangsuc tentrangsuc(String tentrangsuc) {
+    setTentrangsuc(tentrangsuc);
+    return this;
+  }
+
+  public Trangsuc gia(Integer gia) {
+    setGia(gia);
+    return this;
+  }
+
+  public Trangsuc soluong(Integer soluong) {
+    setSoluong(soluong);
+    return this;
+  }
+
+  public Trangsuc tragop(Integer tragop) {
+    setTragop(tragop);
+    return this;
+  }
+
+  public Trangsuc NGAYTHEM(String NGAYTHEM) {
+    setNGAYTHEM(NGAYTHEM);
+    return this;
+  }
+
+  public Trangsuc thongtin(String thongtin) {
+    setThongtin(thongtin);
+    return this;
+  }
+
+  @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof Trangsuc)) {
+            return false;
+        }
+        Trangsuc trangsuc = (Trangsuc) o;
+        return Objects.equals(matrangsuc, trangsuc.matrangsuc) && Objects.equals(tentrangsuc, trangsuc.tentrangsuc) && Objects.equals(gia, trangsuc.gia) && Objects.equals(soluong, trangsuc.soluong) && Objects.equals(tragop, trangsuc.tragop) && Objects.equals(NGAYTHEM, trangsuc.NGAYTHEM) && Objects.equals(thongtin, trangsuc.thongtin);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(matrangsuc, tentrangsuc, gia, soluong, tragop, NGAYTHEM, thongtin);
+  }
+
+  @Override
+  public String toString() {
+    return "{" +
+      " matrangsuc='" + getMatrangsuc() + "'" +
+      ", tentrangsuc='" + getTentrangsuc() + "'" +
+      ", gia='" + getGia() + "'" +
+      ", soluong='" + getSoluong() + "'" +
+      ", tragop='" + getTragop() + "'" +
+      ", NGAYTHEM='" + getNGAYTHEM() + "'" +
+      ", thongtin='" + getThongtin() + "'" +
+      "}";
+  }
+
 }

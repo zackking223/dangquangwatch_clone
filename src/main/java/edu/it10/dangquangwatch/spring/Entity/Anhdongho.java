@@ -6,16 +6,17 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;  
+import java.util.Objects;
 
 @Entity  
 @Table(name = "anhdongho")
 public class Anhdongho {  
   @Id  
- @GeneratedValue(strategy = GenerationType.AUTO)  
-  private Long maanh;  
+ @GeneratedValue(strategy = GenerationType.IDENTITY)  
+  private Integer maanh;  
 
   @Column(name = "madongho")  
-  private String madongho;  
+  private Integer madongho;  
 
   @Column(name = "url")  
   private String url;  
@@ -23,43 +24,92 @@ public class Anhdongho {
   @Column(name = "tenanh")  
   private String tenanh;  
 
-  public Anhdongho() {}  
 
-  public Anhdongho(String madongho, String url, String tenanh) {  
-    this.madongho = madongho;  
-    this.url = url;  
-    this.tenanh = tenanh;  
-  }  
+  public Anhdongho() {
+  }
 
-  public Long getId() {  
-    return maanh;  
-  }  
+  public Anhdongho(Integer maanh, Integer madongho, String url, String tenanh) {
+    this.maanh = maanh;
+    this.madongho = madongho;
+    this.url = url;
+    this.tenanh = tenanh;
+  }
 
-  public void setId(Long maanh) {  
-    this.maanh = maanh;  
-  }  
+  public Integer getMaanh() {
+    return this.maanh;
+  }
 
-  public String getMadongho() {  
-    return madongho;  
-  }  
+  public void setMaanh(Integer maanh) {
+    this.maanh = maanh;
+  }
 
-  public void setMadongho(String madongho) {  
-    this.madongho = madongho;  
-  }  
+  public Integer getMadongho() {
+    return this.madongho;
+  }
 
-  public String getUrl() {  
-    return url;  
-  }  
+  public void setMadongho(Integer madongho) {
+    this.madongho = madongho;
+  }
 
-  public void setUrl(String url) {  
-    this.url = url;  
-  }  
+  public String getUrl() {
+    return this.url;
+  }
 
-  public String getTenanh() {  
-    return tenanh;  
-  }  
+  public void setUrl(String url) {
+    this.url = url;
+  }
 
-  public void setTenanh(String tenanh) {  
-    this.tenanh = tenanh;  
-  }  
+  public String getTenanh() {
+    return this.tenanh;
+  }
+
+  public void setTenanh(String tenanh) {
+    this.tenanh = tenanh;
+  }
+
+  public Anhdongho maanh(Integer maanh) {
+    setMaanh(maanh);
+    return this;
+  }
+
+  public Anhdongho madongho(Integer madongho) {
+    setMadongho(madongho);
+    return this;
+  }
+
+  public Anhdongho url(String url) {
+    setUrl(url);
+    return this;
+  }
+
+  public Anhdongho tenanh(String tenanh) {
+    setTenanh(tenanh);
+    return this;
+  }
+
+  @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof Anhdongho)) {
+            return false;
+        }
+        Anhdongho anhdongho = (Anhdongho) o;
+        return Objects.equals(maanh, anhdongho.maanh) && Objects.equals(madongho, anhdongho.madongho) && Objects.equals(url, anhdongho.url) && Objects.equals(tenanh, anhdongho.tenanh);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(maanh, madongho, url, tenanh);
+  }
+
+  @Override
+  public String toString() {
+    return "{" +
+      " maanh='" + getMaanh() + "'" +
+      ", madongho='" + getMadongho() + "'" +
+      ", url='" + getUrl() + "'" +
+      ", tenanh='" + getTenanh() + "'" +
+      "}";
+  }    
 }
