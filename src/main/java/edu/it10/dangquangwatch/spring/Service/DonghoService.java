@@ -10,7 +10,7 @@ public interface DonghoService {
 
   void saveDongho(Dongho dongho);  
 
-  void deleteDongho(Long madongho);  
+  void deleteDongho(Integer madongho);  
 
-  Optional<Dongho> findDonghoById(Long madongho);  
+  Optional<Dongho> findDonghoById(Integer madongho);  
 }

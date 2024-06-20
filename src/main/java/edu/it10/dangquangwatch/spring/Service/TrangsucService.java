@@ -10,7 +10,7 @@ public interface TrangsucService {
 
   void saveTrangsuc(Trangsuc trangsuc);  
 
-  void deleteTrangsuc(Long matrangsuc);  
+  void deleteTrangsuc(Integer matrangsuc);  
 
-  Optional<Trangsuc> findTrangsucById(Long matrangsuc);  
+  Optional<Trangsuc> findTrangsucById(Integer matrangsuc);  
 }

@@ -24,12 +24,12 @@ public class TrangsucServiceImpl implements TrangsucService {
   }  
 
   @Override  
-  public void deleteTrangsuc(Long matrangsuc) {  
+  public void deleteTrangsuc(Integer matrangsuc) {  
     trangsucRepository.deleteById(matrangsuc);  
   }  
 
   @Override  
-  public Optional<Trangsuc> findTrangsucById(Long matrangsuc) {  
+  public Optional<Trangsuc> findTrangsucById(Integer matrangsuc) {  
     return trangsucRepository.findById(matrangsuc);  
   }  
 }

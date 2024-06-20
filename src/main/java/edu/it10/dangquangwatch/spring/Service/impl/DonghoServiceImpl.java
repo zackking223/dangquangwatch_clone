@@ -24,12 +24,12 @@ public class DonghoServiceImpl implements DonghoService {
   }  
 
   @Override  
-  public void deleteDongho(Long madongho) {  
+  public void deleteDongho(Integer madongho) {  
     donghoRepository.deleteById(madongho);  
   }  
 
   @Override  
-  public Optional<Dongho> findDonghoById(Long madongho) {  
+  public Optional<Dongho> findDonghoById(Integer madongho) {  
     return donghoRepository.findById(madongho);  
   }  
 }

@@ -20,20 +20,23 @@
             <th>Chống nước</th>  
             <th>Bộ máy</th>  
             <th>Thông tin</th>  
+            <th>Ngày thêm</th>  
+            <th>Tùy chọn</th>  
         </tr>  
         <tr th:each="dongho : ${donghos}">  
-            <td th:text="${dongho.madongho}"></td>  
-            <td th:text="${dongho.tendongho}"></td>  
-            <td th:text="${dongho.giatien}"></td>  
-            <td th:text="${dongho.soluong}"></td>  
-            <td th:text="${dongho.tragop}"></td>  
-            <td th:text="${dongho.duongkinh}"></td>  
-            <td th:text="${dongho.chongnuoc}"></td>  
-            <td th:text="${dongho.bomay}"></td>  
-            <td th:text="${dongho.thongtin}"></td>  
+            <td th:text="${dongho.getMadongho()}"></td>  
+            <td th:text="${dongho.getTendongho()}"></td>  
+            <td th:text="${dongho.getGiatien()}"></td>  
+            <td th:text="${dongho.getSoluong()}"></td>  
+            <td th:text="${dongho.getTragop()}"></td>  
+            <td th:text="${dongho.getDuongkinh()}"></td>  
+            <td th:text="${dongho.getChongnuoc()}"></td>  
+            <td th:text="${dongho.getBomay()}"></td>  
+            <td th:text="${dongho.getThongtin()}"></td>  
+            <td th:text="${dongho.getNGAYTHEM()}"></td>  
             <td>  
-                <a th:href="@{/admin/dongho/edit?id={id}(id=${dongho.madongho})}" class="btn btn-primary">Edit</a>  
-                <a th:href="@{/admin/dongho/delete?id={id}(id=${dongho.madongho})}" class="btn btn-danger">Delete</a>  
+                <a th:href="@{/admin/dongho/edit?id={id}(id=${dongho.getMadongho()})}" class="btn btn-primary">Edit</a>  
+                <a th:href="@{/admin/dongho/delete?id={id}(id=${dongho.getMadongho()})}" class="btn btn-danger">Delete</a>  
             </td>  
         </tr>  
     </table>  

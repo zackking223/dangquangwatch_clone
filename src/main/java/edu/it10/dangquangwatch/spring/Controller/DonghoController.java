@@ -30,25 +30,25 @@ public class DonghoController {
   @GetMapping(value = "/add")  
   public String addDongho(Model model) {  
     model.addAttribute("dongho", new Dongho());  
-    return "admin/dongho/addDongho";  
+    return "admin/dongho/addDongHo";  
   }  
 
   @GetMapping(value = "/edit")  
-  public String editDongho(@RequestParam("madongho") Long madongho, Model model) {  
+  public String editDongho(@RequestParam("id") Integer madongho, Model model) {  
     Optional<Dongho> donghoEdit = donghoService.findDonghoById(madongho);  
     donghoEdit.ifPresent(dongho -> model.addAttribute("dongho", dongho));  
-    return "admin/dongho/editDongho";  
+    return "admin/dongho/editDongHo";  
   }  
 
   @PostMapping(value = "save")  
-  public String save(Dongho dongho) {  
+  public String save(Dongho dongho) {
     donghoService.saveDongho(dongho);  
-    return "redirect:/";  
+    return "redirect:/admin/dongho/";  
   }  
 
   @GetMapping(value = "/delete")  
-  public String deleteDongho(@RequestParam("id") Long madongho, Model model) {  
+  public String deleteDongho(@RequestParam("id") Integer madongho, Model model) {  
     donghoService.deleteDongho(madongho);  
-    return "redirect:/";  
+    return "redirect:/admin/dongho/";  
   }  
 }
