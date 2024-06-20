@@ -17,18 +17,19 @@
             <th class="p-2 border border-solid border-black">Trả góp</th>  
             <th class="p-2 border border-solid border-black">Thông tin</th>  
             <th class="p-2 border border-solid border-black">Ngày thêm</th>  
+            <th class="p-2 border border-solid border-black">Tùy chọn</th>  
         </tr>  
         <tr th:each="phuKien : ${phuKiens}">  
-            <td class="p-2 border border-solid border-black" th:text="${phukien.maPhuKien}"></td>  
-            <td class="p-2 border border-solid border-black" th:text="${phukien.tenSanPham}"></td>  
-            <td class="p-2 border border-solid border-black" th:text="${phukien.giaTien}"></td>  
-            <td class="p-2 border border-solid border-black" th:text="${phukien.soLuong}"></td> 
-            <td class="p-2 border border-solid border-black" th:text="${phukien.traGop}"></td>  
-            <td class="p-2 border border-solid border-black" th:text="${phukien.thongTin}"></td>  
-            <td class="p-2 border border-solid border-black" th:text="${phukien.ngayThem}"></td>  
+            <td class="p-2 border border-solid border-black" th:text="${phuKien.getMaPhuKien()}"></td>  
+            <td class="p-2 border border-solid border-black" th:text="${phuKien.getTenPhuKien()}"></td>  
+            <td class="p-2 border border-solid border-black" th:text="${phuKien.getGiaTien()}"></td>  
+            <td class="p-2 border border-solid border-black" th:text="${phuKien.getSoLuong()}"></td> 
+            <td class="p-2 border border-solid border-black" th:text="${phuKien.getTraGop()}"></td>  
+            <td class="p-2 border border-solid border-black" th:text="${phuKien.getThongTin()}"></td>  
+            <td class="p-2 border border-solid border-black" th:text="${phuKien.getNGAYTHEM()}"></td>  
             <td class="p-2 border border-solid border-black">  
-                <a th:href="@{/admin/phukien/edit?id={id}(id=${phukien.maPhuKien})}" class="btn btn-primary">Sửa</a>  
-                <a th:href="@{/admin/phukien/delete?id={id}(id=${phukien.maPhuKien})}" class="btn btn-danger">Xóa</a>  
+                <a class="p-2 rounded bg-green-500 text-white" th:href="@{/admin/phukien/edit?id={id}(id=${phuKien.getMaPhuKien()})}">Sửa</a>  
+                <a class="p-2 rounded bg-red-500 text-white" th:href="@{/admin/phukien/delete?id={id}(id=${phuKien.getMaPhuKien()})}">Xóa</a>  
             </td>  
         </tr>  
     </table>  

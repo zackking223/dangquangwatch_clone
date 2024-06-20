@@ -21,22 +21,23 @@
             <th class="p-2 border border-solid border-black">Trả góp</th>  
             <th class="p-2 border border-solid border-black">Thông tin</th>  
             <th class="p-2 border border-solid border-black">Ngày thêm</th>  
+            <th class="p-2 border border-solid border-black">Tùy chọn</th>  
         </tr>  
         <tr th:each="kinhMat : ${kinhMats}">  
-            <td class="p-2 border border-solid border-black" th:text="${kinhMat.maKinhMat}"></td>  
-            <td class="p-2 border border-solid border-black" th:text="${kinhMat.tenSanPham}"></td>  
-            <td class="p-2 border border-solid border-black" th:text="${kinhMat.giaTien}"></td>  
-            <td class="p-2 border border-solid border-black" th:text="${kinhMat.soLuong}"></td>  
-            <td class="p-2 border border-solid border-black" th:text="${kinhMat.rongMat}"></td>  
-            <td class="p-2 border border-solid border-black" th:text="${kinhMat.songMui}"></td>  
-            <td class="p-2 border border-solid border-black" th:text="${kinhMat.daiGong}"></td>  
-            <td class="p-2 border border-solid border-black" th:text="${kinhMat.tinhNang}"></td>  
-            <td class="p-2 border border-solid border-black" th:text="${kinhMat.traGop}"></td>  
-            <td class="p-2 border border-solid border-black" th:text="${kinhMat.thongTin}"></td>  
-            <td class="p-2 border border-solid border-black" th:text="${kinhMat.ngayThem}"></td>  
+            <td class="p-2 border border-solid border-black" th:text="${kinhMat.getMaKinhMat()}"></td>  
+            <td class="p-2 border border-solid border-black" th:text="${kinhMat.getTenSanPham()}"></td>  
+            <td class="p-2 border border-solid border-black" th:text="${kinhMat.getGiaTien()}"></td>  
+            <td class="p-2 border border-solid border-black" th:text="${kinhMat.getSoLuong()}"></td>  
+            <td class="p-2 border border-solid border-black" th:text="${kinhMat.getRongMat()}"></td>  
+            <td class="p-2 border border-solid border-black" th:text="${kinhMat.getSongMui()}"></td>  
+            <td class="p-2 border border-solid border-black" th:text="${kinhMat.getDaiGong()}"></td>  
+            <td class="p-2 border border-solid border-black" th:text="${kinhMat.getTinhNang()}"></td>  
+            <td class="p-2 border border-solid border-black" th:text="${kinhMat.getTraGop()}"></td>  
+            <td class="p-2 border border-solid border-black" th:text="${kinhMat.getThongTin()}"></td>  
+            <td class="p-2 border border-solid border-black" th:text="${kinhMat.getNGAYTHEM()}"></td>  
             <td class="p-2 border border-solid border-black">  
-                <a th:href="@{/admin/kinhmat/edit?id={id}(id=${kinhMat.maKinhMat})}" class="btn btn-primary">Sửa</a>  
-                <a th:href="@{/admin/kinhmat/delete?id={id}(id=${kinhMat.maKinhMat})}" class="btn btn-danger">Xóa</a>  
+                <a class="p-2 rounded bg-green-500 text-white" th:href="@{/admin/kinhmat/edit?id={id}(id=${kinhMat.getMaKinhMat()})}">Sửa</a>  
+                <a class="p-2 rounded bg-red-500 text-white" th:href="@{/admin/kinhmat/delete?id={id}(id=${kinhMat.getMaKinhMat()})}">Xóa</a>  
             </td>  
         </tr>  
     </table>  

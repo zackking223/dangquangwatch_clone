@@ -36,7 +36,7 @@ public class PhuKienController {
   }
 
   @GetMapping("/edit")
-  public String editPhuKien(@RequestParam("maPhuKien") Integer maPhuKien, Model model) {
+  public String editPhuKien(@RequestParam("id") Integer maPhuKien, Model model) {
     Optional<PhuKien> phuKienEdit = phuKienService.findPhuKienById(maPhuKien);
     phuKienEdit.ifPresent(phuKien -> model.addAttribute("phuKien", phuKien));
     return "admin/phukien/editPhuKien";
@@ -49,7 +49,7 @@ public class PhuKienController {
   }
 
   @GetMapping("/delete")
-  public String deletePhuKien(@RequestParam("maPhuKien") Integer maPhuKien, Model model) {
+  public String deletePhuKien(@RequestParam("id") Integer maPhuKien, Model model) {
     phuKienService.deletePhuKien(maPhuKien);
     return "redirect:/admin/phukien/";
   }

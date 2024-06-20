@@ -1,5 +1,6 @@
 package edu.it10.dangquangwatch.spring.entity;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -167,5 +168,4 @@ public class PhuKien {
       ", NGAYTHEM='" + getNGAYTHEM() + "'" +
       "}";
   }
-
 }

@@ -34,7 +34,7 @@ public class KinhMatController {
   }  
 
   @GetMapping("/edit")  
-  public String editKinhMat(@RequestParam("maKinhMat") Integer maKinhMat, Model model) {  
+  public String editKinhMat(@RequestParam("id") Integer maKinhMat, Model model) {  
     Optional<KinhMat> kinhMatEdit = kinhMatService.findKinhMatById(maKinhMat);  
     kinhMatEdit.ifPresent(kinhMat -> model.addAttribute("kinhMat", kinhMat));  
     return "admin/kinhmat/editKinhMat";  
@@ -47,7 +47,7 @@ public class KinhMatController {
   }  
 
   @GetMapping("/delete")  
-  public String deleteKinhMat(@RequestParam("maKinhMat") Integer maKinhMat, Model model) {  
+  public String deleteKinhMat(@RequestParam("id") Integer maKinhMat, Model model) {  
     kinhMatService.deleteKinhMat(maKinhMat);  
     return "redirect:/admin/kinhmat/";  
   }
