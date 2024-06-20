@@ -1,0 +1,43 @@
+<!DOCTYPE html>  
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">  
+<head>  
+    <title>Đồng Hồ</title>  
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>  
+    <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}"/>  
+</head>  
+<body>  
+<div class="col-3"></div>  
+<div class="container col-6">  
+    <h1>Quản lý đồng hồ</h1>  
+    <table class="table table-active">  
+        <tr>  
+            <th>Mã đồng hồ</th>  
+            <th>Tên đồng hồ</th>  
+            <th>Giá tiền</th>  
+            <th>Số lượng</th>  
+            <th>Trả góp</th>  
+            <th>Đường kính</th>  
+            <th>Chống nước</th>  
+            <th>Bộ máy</th>  
+            <th>Thông tin</th>  
+        </tr>  
+        <tr th:each="dongho : ${donghos}">  
+            <td th:text="${dongho.madongho}"></td>  
+            <td th:text="${dongho.tendongho}"></td>  
+            <td th:text="${dongho.giatien}"></td>  
+            <td th:text="${dongho.soluong}"></td>  
+            <td th:text="${dongho.tragop}"></td>  
+            <td th:text="${dongho.duongkinh}"></td>  
+            <td th:text="${dongho.chongnuoc}"></td>  
+            <td th:text="${dongho.bomay}"></td>  
+            <td th:text="${dongho.thongtin}"></td>  
+            <td>  
+                <a th:href="@{/admin/dongho/edit?id={id}(id=${dongho.madongho})}" class="btn btn-primary">Edit</a>  
+                <a th:href="@{/admin/dongho/delete?id={id}(id=${dongho.madongho})}" class="btn btn-danger">Delete</a>  
+            </td>  
+        </tr>  
+    </table>  
+    <a href="/admin/dongho/add" class="btn btn-success">Thêm đông hồ</a>  
+</div>  
+</body>  
+</html>
