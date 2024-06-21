@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sửa thông tin</title>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="/css/application.css"
+      th:href="@{/css/application.css}"
+    />
+  </head>
+  <body>
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+    <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
+      <h1 class="font-bold text-center my-2">Sửa thông tin</h1>
+      <form th:object="${butky}" th:action="@{/admin/butky/save}" action="#" method="post">
+        <div>
+          <label class="block font-medium" th:for="mabutky">Mã bút ký</label>
+          <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{mabutky}" />
+        </div>
+        <div style="clear: both; display: block; height: 10px"></div>
+        <div>
+          <label class="block font-medium" th:for="tenbutky">Tên bút ký</label>
+          <input class="block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{tenbutky}" />
+        </div>
+        <div style="clear: both; display: block; height: 10px"></div>
+        <div>
+          <label class="block font-medium" th:for="giatien">Giá tiền</label>
+          <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{giatien}" />
+        </div>
+        <div>
+          <label class="block font-medium" th:for="soluong">Số lượng</label>
+          <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{soluong}" />
+        </div>
+        <div style="clear: both; display: block; height: 10px"></div>
+        <div>
+          <label class="block font-medium" th:for="tragop">Trả góp</label>
+          <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{tragop}" />
+        </div>
+        <div style="clear: both; display: block; height: 10px"></div>
+        <div>
+          <label class="block font-medium" th:for="thongtin">Thông tin</label>
+          <textarea class="w-[80vw] min-w-[280px]" rows="20" th:field="*{thongtin}"></textarea>
+        </div>
+
+        <input class="hidden" type="date" id="datePicker" name="NGAYTHEM" />
+
+        <div style="clear: both; display: block; height: 10px"></div>
+        <input class="p-2 w-max bg-green-500 rounded block mt-4 text-white" type="submit" value="Lưu" />
+      </form>
+    </div>
+    <script>
+      document.getElementById("datePicker").valueAsDate = new Date();
+    </script>
+  </body>
+</html>

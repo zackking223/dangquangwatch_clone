@@ -1,30 +1,28 @@
-package edu.it10.dangquangwatch.spring.entity;  
-
+package edu.it10.dangquangwatch.spring.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;  
+import jakarta.persistence.Table;
 import java.util.Objects;
 
-@Entity  
-@Table(name = "anhtrangsuc")
-public class Anhtrangsuc {  
-  @Id  
- @GeneratedValue(strategy = GenerationType.IDENTITY)  
-  private Integer maanh;  
+@Entity
+@Table(name = "anh_trangsuc")
+public class Anhtrangsuc {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer maanh;
 
-  @Column(name = "matrangsuc")  
-  private Integer matrangsuc;  
+  @Column(name = "matrangsuc")
+  private Integer matrangsuc;
 
-  @Column(name = "url")  
-  private String url;  
+  @Column(name = "url")
+  private String url;
 
-  @Column(name = "tenanh")  
-  private String tenanh;  
-
+  @Column(name = "tenanh")
+  private String tenanh;
 
   public Anhtrangsuc() {
   }
@@ -89,14 +87,15 @@ public class Anhtrangsuc {
   }
 
   @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof Anhtrangsuc)) {
-            return false;
-        }
-        Anhtrangsuc anhtrangsuc = (Anhtrangsuc) o;
-        return Objects.equals(maanh, anhtrangsuc.maanh) && Objects.equals(matrangsuc, anhtrangsuc.matrangsuc) && Objects.equals(url, anhtrangsuc.url) && Objects.equals(tenanh, anhtrangsuc.tenanh);
+  public boolean equals(Object o) {
+    if (o == this)
+      return true;
+    if (!(o instanceof Anhtrangsuc)) {
+      return false;
+    }
+    Anhtrangsuc anhtrangsuc = (Anhtrangsuc) o;
+    return Objects.equals(maanh, anhtrangsuc.maanh) && Objects.equals(matrangsuc, anhtrangsuc.matrangsuc)
+        && Objects.equals(url, anhtrangsuc.url) && Objects.equals(tenanh, anhtrangsuc.tenanh);
   }
 
   @Override
@@ -107,10 +106,10 @@ public class Anhtrangsuc {
   @Override
   public String toString() {
     return "{" +
-      " maanh='" + getMaanh() + "'" +
-      ", matrangsuc='" + getMatrangsuc() + "'" +
-      ", url='" + getUrl() + "'" +
-      ", tenanh='" + getTenanh() + "'" +
-      "}";
-  }    
+        " maanh='" + getMaanh() + "'" +
+        ", matrangsuc='" + getMatrangsuc() + "'" +
+        ", url='" + getUrl() + "'" +
+        ", tenanh='" + getTenanh() + "'" +
+        "}";
+  }
 }

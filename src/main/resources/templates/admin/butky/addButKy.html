@@ -4,31 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thêm trang sức</title>
+    <title>Thêm bút ký</title>
     <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}" />
 </head>
 
 <body>
     <div th:replace="~{fragments/sidebar :: sidebar}"></div>
     <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
-        <h1 class="font-bold text-center my-2">Trang sức mới</h1>
+        <h1 class="font-bold text-center my-2">Bút ký mới</h1>
         <div class="col-md-auto">
-            <form th:object="${trangsuc}" th:action="@{/admin/trangsuc/save}" action="#" method="post">
+            <form th:object="${butky}" th:action="@{/admin/butky/save}" action="#" method="post">
                 <div>
-                    <label class="block font-medium" th:for="matrangsuc">Mã trang sức</label>
-                    <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{matrangsuc}"
-                        placeholder="Mã trang sức" />
+                    <label class="block font-medium" th:for="tenbutky">Tên bút ký</label>
+                    <input class="block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{tenbutky}"
+                        placeholder="Tên bút ký" />
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
-                    <label class="block font-medium" th:for="tentrangsuc">Tên trang sức</label>
-                    <input class="block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{tentrangsuc}"
-                        placeholder="Tên trang sức" />
-                </div>
-                <div style="clear: both; display: block; height: 10px"></div>
-                <div>
-                    <label class="block font-medium" th:for="gia">Giá tiền</label>
-                    <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{gia}"
+                    <label class="block font-medium" th:for="giatien">Giá tiền</label>
+                    <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{giatien}"
                         placeholder="Giá tiền" />
                 </div>
                 <div>

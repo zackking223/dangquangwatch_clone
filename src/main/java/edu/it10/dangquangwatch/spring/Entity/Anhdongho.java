@@ -1,29 +1,28 @@
-package edu.it10.dangquangwatch.spring.entity;  
+package edu.it10.dangquangwatch.spring.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;  
+import jakarta.persistence.Table;
 import java.util.Objects;
 
-@Entity  
-@Table(name = "anhdongho")
-public class Anhdongho {  
-  @Id  
- @GeneratedValue(strategy = GenerationType.IDENTITY)  
-  private Integer maanh;  
+@Entity
+@Table(name = "anh_dongho")
+public class Anhdongho {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer maanh;
 
-  @Column(name = "madongho")  
-  private Integer madongho;  
+  @Column(name = "madongho")
+  private Integer madongho;
 
-  @Column(name = "url")  
-  private String url;  
+  @Column(name = "url")
+  private String url;
 
-  @Column(name = "tenanh")  
-  private String tenanh;  
-
+  @Column(name = "tenanh")
+  private String tenanh;
 
   public Anhdongho() {
   }
@@ -88,14 +87,15 @@ public class Anhdongho {
   }
 
   @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof Anhdongho)) {
-            return false;
-        }
-        Anhdongho anhdongho = (Anhdongho) o;
-        return Objects.equals(maanh, anhdongho.maanh) && Objects.equals(madongho, anhdongho.madongho) && Objects.equals(url, anhdongho.url) && Objects.equals(tenanh, anhdongho.tenanh);
+  public boolean equals(Object o) {
+    if (o == this)
+      return true;
+    if (!(o instanceof Anhdongho)) {
+      return false;
+    }
+    Anhdongho anhdongho = (Anhdongho) o;
+    return Objects.equals(maanh, anhdongho.maanh) && Objects.equals(madongho, anhdongho.madongho)
+        && Objects.equals(url, anhdongho.url) && Objects.equals(tenanh, anhdongho.tenanh);
   }
 
   @Override
@@ -106,10 +106,11 @@ public class Anhdongho {
   @Override
   public String toString() {
     return "{" +
-      " maanh='" + getMaanh() + "'" +
-      ", madongho='" + getMadongho() + "'" +
-      ", url='" + getUrl() + "'" +
-      ", tenanh='" + getTenanh() + "'" +
-      "}";
-  }    
+        " maanh='" + getMaanh() + "'" +
+        ", madongho='" + getMadongho() + "'" +
+        ", url='" + getUrl() + "'" +
+        ", tenanh='" + getTenanh() + "'" +
+        "}";
+  }
+
 }
