@@ -9,36 +9,36 @@
 
 <body>
     <div th:replace="~{fragments/sidebar :: sidebar}"></div>
-    <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
+    <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg md:mx-auto pl-11">
         <h1 class="font-bold text-center my-2">Quản lý kính mắt</h1>
         <table>
             <tr>
-                <th class="p-2 border border-solid border-black">Mã</th>
-                <th class="p-2 border border-solid border-black">Tên sản phẩm</th>
-                <th class="p-2 border border-solid border-black">Giá tiền</th>
-                <th class="p-2 border border-solid border-black">Số lượng</th>
-                <th class="p-2 border border-solid border-black">Rộng mắt</th>
-                <th class="p-2 border border-solid border-black">Sống mũi</th>
-                <th class="p-2 border border-solid border-black">Dài gọng</th>
-                <th class="p-2 border border-solid border-black">Tính năng</th>
-                <th class="p-2 border border-solid border-black">Trả góp</th>
-                <th class="p-2 border border-solid border-black">Thông tin</th>
-                <th class="p-2 border border-solid border-black">Ngày thêm</th>
-                <th class="p-2 border border-solid border-black">Tùy chọn</th>
+                <th class="p-2 border border-solid border-black max-w-[200px]">Mã</th>
+                <th class="p-2 border border-solid border-black max-w-[200px]">Tên sản phẩm</th>
+                <th class="p-2 border border-solid border-black max-w-[200px]">Giá tiền</th>
+                <th class="p-2 border border-solid border-black max-w-[200px]">Số lượng</th>
+                <th class="p-2 border border-solid border-black max-w-[200px]">Rộng mắt</th>
+                <th class="p-2 border border-solid border-black max-w-[200px]">Sống mũi</th>
+                <th class="p-2 border border-solid border-black max-w-[200px]">Dài gọng</th>
+                <th class="p-2 border border-solid border-black max-w-[200px]">Tính năng</th>
+                <th class="p-2 border border-solid border-black max-w-[200px]">Trả góp</th>
+                <th class="p-2 border border-solid border-black max-w-[200px]">Thông tin</th>
+                <th class="p-2 border border-solid border-black max-w-[200px]">Ngày thêm</th>
+                <th class="p-2 border border-solid border-black max-w-[200px]">Tùy chọn</th>
             </tr>
             <tr th:each="kinhMat : ${kinhMats}">
-                <td class="p-2 border border-solid border-black" th:text="${kinhMat.getMaKinhMat()}"></td>
-                <td class="p-2 border border-solid border-black" th:text="${kinhMat.getTenSanPham()}"></td>
-                <td class="p-2 border border-solid border-black" th:text="${kinhMat.getGiaTien()}"></td>
-                <td class="p-2 border border-solid border-black" th:text="${kinhMat.getSoLuong()}"></td>
-                <td class="p-2 border border-solid border-black" th:text="${kinhMat.getRongMat()}"></td>
-                <td class="p-2 border border-solid border-black" th:text="${kinhMat.getSongMui()}"></td>
-                <td class="p-2 border border-solid border-black" th:text="${kinhMat.getDaiGong()}"></td>
-                <td class="p-2 border border-solid border-black" th:text="${kinhMat.getTinhNang()}"></td>
-                <td class="p-2 border border-solid border-black" th:text="${kinhMat.getTraGop()}"></td>
-                <td class="p-2 border border-solid border-black" th:text="${kinhMat.getThongTin()}"></td>
-                <td class="p-2 border border-solid border-black" th:text="${kinhMat.getNGAYTHEM()}"></td>
-                <td class="p-2 border border-solid border-black">
+                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${kinhMat.getMaKinhMat()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${kinhMat.getTenSanPham()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${kinhMat.getGiaTien()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${kinhMat.getSoLuong()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${kinhMat.getRongMat()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${kinhMat.getSongMui()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${kinhMat.getDaiGong()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${kinhMat.getTinhNang()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${kinhMat.getTraGop()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${kinhMat.getThongTin()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${kinhMat.getNGAYTHEM()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px]">
                     <a class="p-2 rounded bg-green-500 text-white"
                         th:href="@{/admin/kinhmat/edit?id={id}(id=${kinhMat.getMaKinhMat()})}">Sửa</a>
                     <a class="p-2 rounded bg-red-500 text-white"

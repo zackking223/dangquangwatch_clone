@@ -12,7 +12,7 @@
   </head>
   <body>
     <div th:replace="~{fragments/sidebar :: sidebar}"></div>
-    <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
+    <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg ml-auto">
       <h1>Sửa thông tin</h1>
       <form th:object="${dongho}" th:action="@{/admin/dongho/save}" action="#" method="post">
         <div>

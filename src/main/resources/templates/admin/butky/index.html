@@ -10,28 +10,28 @@
 
 <body>
     <div th:replace="~{fragments/sidebar :: sidebar}"></div>
-    <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
+    <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg md:mx-auto pl-11">
         <h1 class="font-bold text-center my-2">Quản lý bút ký</h1>
         <table class="table table-active">
             <tr>
-                <th class="p-2 border border-solid border-black">Mã bút ký</th>
-                <th class="p-2 border border-solid border-black">Tên bút ký</th>
-                <th class="p-2 border border-solid border-black">Giá tiền</th>
-                <th class="p-2 border border-solid border-black">Số lượng</th>
-                <th class="p-2 border border-solid border-black">Trả góp</th>
-                <th class="p-2 border border-solid border-black">Thông tin</th>
-                <th class="p-2 border border-solid border-black">Ngày thêm</th>
-                <th class="p-2 border border-solid border-black">Tùy chọn</th>
+                <th class="p-2 border border-solid border-black max-w-[200px]">Mã bút ký</th>
+                <th class="p-2 border border-solid border-black max-w-[200px]">Tên bút ký</th>
+                <th class="p-2 border border-solid border-black max-w-[200px]">Giá tiền</th>
+                <th class="p-2 border border-solid border-black max-w-[200px]">Số lượng</th>
+                <th class="p-2 border border-solid border-black max-w-[200px]">Trả góp</th>
+                <th class="p-2 border border-solid border-black max-w-[200px]">Thông tin</th>
+                <th class="p-2 border border-solid border-black max-w-[200px]">Ngày thêm</th>
+                <th class="p-2 border border-solid border-black max-w-[200px]">Tùy chọn</th>
             </tr>
             <tr th:each="butky : ${butkys}">
-                <td class="p-2 border border-solid border-black" th:text="${butky.getMabutky()}"></td>
-                <td class="p-2 border border-solid border-black" th:text="${butky.getTenbutky()}"></td>
-                <td class="p-2 border border-solid border-black" th:text="${butky.getGiatien()}"></td>
-                <td class="p-2 border border-solid border-black" th:text="${butky.getSoluong()}"></td>
-                <td class="p-2 border border-solid border-black" th:text="${butky.getTragop()}"></td>
-                <td class="p-2 border border-solid border-black" th:text="${butky.getThongtin()}"></td>
-                <td class="p-2 border border-solid border-black" th:text="${butky.getNGAYTHEM()}"></td>
-                <td class="p-2 border border-solid border-black">
+                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${butky.getMabutky()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${butky.getTenbutky()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${butky.getGiatien()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${butky.getSoluong()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${butky.getTragop()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${butky.getThongtin()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${butky.getNGAYTHEM()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px]">
                     <a class="p-2 rounded bg-green-500 text-white"
                         th:href="@{/admin/butky/edit?id={id}(id=${butky.getMabutky()})}">Edit</a>
                     <a class="p-2 rounded bg-red-500 text-white"
