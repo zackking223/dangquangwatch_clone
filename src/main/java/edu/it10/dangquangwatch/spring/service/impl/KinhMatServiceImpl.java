@@ -21,7 +21,7 @@ public class KinhMatServiceImpl implements KinhMatService {
 
   @Override
   public List<KinhMat> searchKinhMat(String tenSanPham) {
-    return kinhMatRepository.findByTenSanPham(tenSanPham);
+    return kinhMatRepository.findByTenSanPhamContains(tenSanPham);
   }
 
   @Override

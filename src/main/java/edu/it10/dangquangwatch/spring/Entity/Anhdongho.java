@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.util.Objects;
 
@@ -15,23 +17,25 @@ public class Anhdongho {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer maanh;
 
-  @Column(name = "madongho")
-  private Integer madongho;
-
   @Column(name = "url")
   private String url;
 
   @Column(name = "tenanh")
   private String tenanh;
 
+  @ManyToOne(targetEntity = Dongho.class)
+  @JoinColumn(name = "madongho", nullable = false)
+  private Dongho dongHo;
+  
+
   public Anhdongho() {
   }
 
-  public Anhdongho(Integer maanh, Integer madongho, String url, String tenanh) {
+  public Anhdongho(Integer maanh, String url, String tenanh, Dongho dongHo) {
     this.maanh = maanh;
-    this.madongho = madongho;
     this.url = url;
     this.tenanh = tenanh;
+    this.dongHo = dongHo;
   }
 
   public Integer getMaanh() {
@@ -40,14 +44,6 @@ public class Anhdongho {
 
   public void setMaanh(Integer maanh) {
     this.maanh = maanh;
-  }
-
-  public Integer getMadongho() {
-    return this.madongho;
-  }
-
-  public void setMadongho(Integer madongho) {
-    this.madongho = madongho;
   }
 
   public String getUrl() {
@@ -66,13 +62,16 @@ public class Anhdongho {
     this.tenanh = tenanh;
   }
 
-  public Anhdongho maanh(Integer maanh) {
-    setMaanh(maanh);
-    return this;
+  public Dongho getDongHo() {
+    return this.dongHo;
   }
 
-  public Anhdongho madongho(Integer madongho) {
-    setMadongho(madongho);
+  public void setDongHo(Dongho dongHo) {
+    this.dongHo = dongHo;
+  }
+
+  public Anhdongho maanh(Integer maanh) {
+    setMaanh(maanh);
     return this;
   }
 
@@ -86,31 +85,34 @@ public class Anhdongho {
     return this;
   }
 
+  public Anhdongho dongHo(Dongho dongHo) {
+    setDongHo(dongHo);
+    return this;
+  }
+
   @Override
-  public boolean equals(Object o) {
-    if (o == this)
-      return true;
-    if (!(o instanceof Anhdongho)) {
-      return false;
-    }
-    Anhdongho anhdongho = (Anhdongho) o;
-    return Objects.equals(maanh, anhdongho.maanh) && Objects.equals(madongho, anhdongho.madongho)
-        && Objects.equals(url, anhdongho.url) && Objects.equals(tenanh, anhdongho.tenanh);
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof Anhdongho)) {
+            return false;
+        }
+        Anhdongho anhdongho = (Anhdongho) o;
+        return Objects.equals(maanh, anhdongho.maanh) && Objects.equals(url, anhdongho.url) && Objects.equals(tenanh, anhdongho.tenanh) && Objects.equals(dongHo, anhdongho.dongHo);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(maanh, madongho, url, tenanh);
+    return Objects.hash(maanh, url, tenanh, dongHo);
   }
 
   @Override
   public String toString() {
     return "{" +
-        " maanh='" + getMaanh() + "'" +
-        ", madongho='" + getMadongho() + "'" +
-        ", url='" + getUrl() + "'" +
-        ", tenanh='" + getTenanh() + "'" +
-        "}";
+      " maanh='" + getMaanh() + "'" +
+      ", url='" + getUrl() + "'" +
+      ", tenanh='" + getTenanh() + "'" +
+      ", dongHo='" + getDongHo() + "'" +
+      "}";
   }
-
 }

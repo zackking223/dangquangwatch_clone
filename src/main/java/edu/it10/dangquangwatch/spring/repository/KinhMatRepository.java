@@ -7,5 +7,5 @@ import java.util.List;
 
 
 public interface KinhMatRepository extends CrudRepository<KinhMat, Integer> {
-  List<KinhMat> findByTenSanPham(String tenSanPham);
+  List<KinhMat> findByTenSanPhamContains(String tenSanPham);
 }

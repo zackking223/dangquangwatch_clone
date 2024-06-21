@@ -5,8 +5,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "dongho")
@@ -42,11 +44,14 @@ public class Dongho {
   @Column(name = "thongtin")
   private String thongtin;
 
+  @OneToMany(mappedBy = "dongHo", targetEntity = Anhdongho.class, orphanRemoval = true)
+  private Set<Anhdongho> anhDongHos;
+
 
   public Dongho() {
   }
 
-  public Dongho(Integer madongho, String tendongho, Integer giatien, Integer soluong, Integer tragop, Integer duongkinh, Integer chongnuoc, String bomay, String NGAYTHEM, String thongtin) {
+  public Dongho(Integer madongho, String tendongho, Integer giatien, Integer soluong, Integer tragop, Integer duongkinh, Integer chongnuoc, String bomay, String NGAYTHEM, String thongtin, Set<Anhdongho> anhDongHos) {
     this.madongho = madongho;
     this.tendongho = tendongho;
     this.giatien = giatien;
@@ -57,6 +62,7 @@ public class Dongho {
     this.bomay = bomay;
     this.NGAYTHEM = NGAYTHEM;
     this.thongtin = thongtin;
+    this.anhDongHos = anhDongHos;
   }
 
   public Integer getMadongho() {
@@ -139,6 +145,14 @@ public class Dongho {
     this.thongtin = thongtin;
   }
 
+  public Set<Anhdongho> getAnhDongHos() {
+    return this.anhDongHos;
+  }
+
+  public void setAnhDongHos(Set<Anhdongho> anhDongHos) {
+    this.anhDongHos = anhDongHos;
+  }
+
   public Dongho madongho(Integer madongho) {
     setMadongho(madongho);
     return this;
@@ -189,6 +203,11 @@ public class Dongho {
     return this;
   }
 
+  public Dongho anhDongHos(Set<Anhdongho> anhDongHos) {
+    setAnhDongHos(anhDongHos);
+    return this;
+  }
+
   @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -197,12 +216,12 @@ public class Dongho {
             return false;
         }
         Dongho dongho = (Dongho) o;
-        return Objects.equals(madongho, dongho.madongho) && Objects.equals(tendongho, dongho.tendongho) && Objects.equals(giatien, dongho.giatien) && Objects.equals(soluong, dongho.soluong) && Objects.equals(tragop, dongho.tragop) && Objects.equals(duongkinh, dongho.duongkinh) && Objects.equals(chongnuoc, dongho.chongnuoc) && Objects.equals(bomay, dongho.bomay) && Objects.equals(NGAYTHEM, dongho.NGAYTHEM) && Objects.equals(thongtin, dongho.thongtin);
+        return Objects.equals(madongho, dongho.madongho) && Objects.equals(tendongho, dongho.tendongho) && Objects.equals(giatien, dongho.giatien) && Objects.equals(soluong, dongho.soluong) && Objects.equals(tragop, dongho.tragop) && Objects.equals(duongkinh, dongho.duongkinh) && Objects.equals(chongnuoc, dongho.chongnuoc) && Objects.equals(bomay, dongho.bomay) && Objects.equals(NGAYTHEM, dongho.NGAYTHEM) && Objects.equals(thongtin, dongho.thongtin) && Objects.equals(anhDongHos, dongho.anhDongHos);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(madongho, tendongho, giatien, soluong, tragop, duongkinh, chongnuoc, bomay, NGAYTHEM, thongtin);
+    return Objects.hash(madongho, tendongho, giatien, soluong, tragop, duongkinh, chongnuoc, bomay, NGAYTHEM, thongtin, anhDongHos);
   }
 
   @Override
@@ -218,6 +237,7 @@ public class Dongho {
       ", bomay='" + getBomay() + "'" +
       ", NGAYTHEM='" + getNGAYTHEM() + "'" +
       ", thongtin='" + getThongtin() + "'" +
+      ", anhDongHos='" + getAnhDongHos() + "'" +
       "}";
   }
   

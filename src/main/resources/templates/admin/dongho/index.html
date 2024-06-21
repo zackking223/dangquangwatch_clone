@@ -13,17 +13,17 @@
         <h1 class="font-bold text-center my-2">Quản lý đồng hồ</h1>
         <table>
             <tr>
-                <th class="p-2 border border-solid border-black max-w-[200px]">Mã đồng hồ</th>
-                <th class="p-2 border border-solid border-black max-w-[200px]">Tên đồng hồ</th>
-                <th class="p-2 border border-solid border-black max-w-[200px]">Giá tiền</th>
-                <th class="p-2 border border-solid border-black max-w-[200px]">Số lượng</th>
-                <th class="p-2 border border-solid border-black max-w-[200px]">Trả góp</th>
-                <th class="p-2 border border-solid border-black max-w-[200px]">Đường kính</th>
-                <th class="p-2 border border-solid border-black max-w-[200px]">Chống nước</th>
-                <th class="p-2 border border-solid border-black max-w-[200px]">Bộ máy</th>
-                <th class="p-2 border border-solid border-black max-w-[200px]">Thông tin</th>
-                <th class="p-2 border border-solid border-black max-w-[200px]">Ngày thêm</th>
-                <th class="p-2 border border-solid border-black max-w-[200px]">Tùy chọn</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Mã đồng hồ</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Tên đồng hồ</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Giá tiền</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Số lượng</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Trả góp</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Đường kính</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Chống nước</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Bộ máy</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Thông tin</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Ngày thêm</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Tùy chọn</th>
             </tr>
             <tr th:each="dongho : ${donghos}">
                 <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${dongho.getMadongho()}"></td>

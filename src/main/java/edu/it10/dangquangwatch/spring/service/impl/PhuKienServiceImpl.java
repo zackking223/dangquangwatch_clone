@@ -21,7 +21,7 @@ public class PhuKienServiceImpl implements PhuKienService {
 
   @Override
   public List<PhuKien> searchPhuKien(String tenPhuKien) {
-    return phuKienRepository.findByTenPhuKien(tenPhuKien);
+    return phuKienRepository.findByTenPhuKienContains(tenPhuKien);
   }
 
   @Override
