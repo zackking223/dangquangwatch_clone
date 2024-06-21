@@ -1,47 +1,53 @@
-<!DOCTYPE html>  
-<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">  
-<head>  
-    <title>Quản lý kính mắt</title>  
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>  
-    <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}"/>  
-</head>  
-<body> 
-<div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">  
-    <h1 class="font-bold text-center my-2">Quản lý kính mắt</h1>  
-    <table>  
-        <tr>  
-            <th class="p-2 border border-solid border-black">Mã</th>  
-            <th class="p-2 border border-solid border-black">Tên sản phẩm</th>  
-            <th class="p-2 border border-solid border-black">Giá tiền</th>  
-            <th class="p-2 border border-solid border-black">Số lượng</th>  
-            <th class="p-2 border border-solid border-black">Rộng mắt</th>  
-            <th class="p-2 border border-solid border-black">Sống mũi</th>  
-            <th class="p-2 border border-solid border-black">Dài gọng</th>  
-            <th class="p-2 border border-solid border-black">Tính năng</th>  
-            <th class="p-2 border border-solid border-black">Trả góp</th>  
-            <th class="p-2 border border-solid border-black">Thông tin</th>  
-            <th class="p-2 border border-solid border-black">Ngày thêm</th>  
-            <th class="p-2 border border-solid border-black">Tùy chọn</th>  
-        </tr>  
-        <tr th:each="kinhMat : ${kinhMats}">  
-            <td class="p-2 border border-solid border-black" th:text="${kinhMat.getMaKinhMat()}"></td>  
-            <td class="p-2 border border-solid border-black" th:text="${kinhMat.getTenSanPham()}"></td>  
-            <td class="p-2 border border-solid border-black" th:text="${kinhMat.getGiaTien()}"></td>  
-            <td class="p-2 border border-solid border-black" th:text="${kinhMat.getSoLuong()}"></td>  
-            <td class="p-2 border border-solid border-black" th:text="${kinhMat.getRongMat()}"></td>  
-            <td class="p-2 border border-solid border-black" th:text="${kinhMat.getSongMui()}"></td>  
-            <td class="p-2 border border-solid border-black" th:text="${kinhMat.getDaiGong()}"></td>  
-            <td class="p-2 border border-solid border-black" th:text="${kinhMat.getTinhNang()}"></td>  
-            <td class="p-2 border border-solid border-black" th:text="${kinhMat.getTraGop()}"></td>  
-            <td class="p-2 border border-solid border-black" th:text="${kinhMat.getThongTin()}"></td>  
-            <td class="p-2 border border-solid border-black" th:text="${kinhMat.getNGAYTHEM()}"></td>  
-            <td class="p-2 border border-solid border-black">  
-                <a class="p-2 rounded bg-green-500 text-white" th:href="@{/admin/kinhmat/edit?id={id}(id=${kinhMat.getMaKinhMat()})}">Sửa</a>  
-                <a class="p-2 rounded bg-red-500 text-white" th:href="@{/admin/kinhmat/delete?id={id}(id=${kinhMat.getMaKinhMat()})}">Xóa</a>  
-            </td>  
-        </tr>  
-    </table>  
-    <a href="/admin/kinhmat/add" class="p-2 w-max bg-green-500 rounded block mt-4 text-white">Thêm mới</a>  
-</div>  
-</body>  
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+
+<head>
+    <title>Quản lý kính mắt</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}" />
+</head>
+
+<body>
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+    <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
+        <h1 class="font-bold text-center my-2">Quản lý kính mắt</h1>
+        <table>
+            <tr>
+                <th class="p-2 border border-solid border-black">Mã</th>
+                <th class="p-2 border border-solid border-black">Tên sản phẩm</th>
+                <th class="p-2 border border-solid border-black">Giá tiền</th>
+                <th class="p-2 border border-solid border-black">Số lượng</th>
+                <th class="p-2 border border-solid border-black">Rộng mắt</th>
+                <th class="p-2 border border-solid border-black">Sống mũi</th>
+                <th class="p-2 border border-solid border-black">Dài gọng</th>
+                <th class="p-2 border border-solid border-black">Tính năng</th>
+                <th class="p-2 border border-solid border-black">Trả góp</th>
+                <th class="p-2 border border-solid border-black">Thông tin</th>
+                <th class="p-2 border border-solid border-black">Ngày thêm</th>
+                <th class="p-2 border border-solid border-black">Tùy chọn</th>
+            </tr>
+            <tr th:each="kinhMat : ${kinhMats}">
+                <td class="p-2 border border-solid border-black" th:text="${kinhMat.getMaKinhMat()}"></td>
+                <td class="p-2 border border-solid border-black" th:text="${kinhMat.getTenSanPham()}"></td>
+                <td class="p-2 border border-solid border-black" th:text="${kinhMat.getGiaTien()}"></td>
+                <td class="p-2 border border-solid border-black" th:text="${kinhMat.getSoLuong()}"></td>
+                <td class="p-2 border border-solid border-black" th:text="${kinhMat.getRongMat()}"></td>
+                <td class="p-2 border border-solid border-black" th:text="${kinhMat.getSongMui()}"></td>
+                <td class="p-2 border border-solid border-black" th:text="${kinhMat.getDaiGong()}"></td>
+                <td class="p-2 border border-solid border-black" th:text="${kinhMat.getTinhNang()}"></td>
+                <td class="p-2 border border-solid border-black" th:text="${kinhMat.getTraGop()}"></td>
+                <td class="p-2 border border-solid border-black" th:text="${kinhMat.getThongTin()}"></td>
+                <td class="p-2 border border-solid border-black" th:text="${kinhMat.getNGAYTHEM()}"></td>
+                <td class="p-2 border border-solid border-black">
+                    <a class="p-2 rounded bg-green-500 text-white"
+                        th:href="@{/admin/kinhmat/edit?id={id}(id=${kinhMat.getMaKinhMat()})}">Sửa</a>
+                    <a class="p-2 rounded bg-red-500 text-white"
+                        th:href="@{/admin/kinhmat/delete?id={id}(id=${kinhMat.getMaKinhMat()})}">Xóa</a>
+                </td>
+            </tr>
+        </table>
+        <a href="/admin/kinhmat/add" class="p-2 w-max bg-green-500 rounded block mt-4 text-white">Thêm mới</a>
+    </div>
+</body>
+
 </html>

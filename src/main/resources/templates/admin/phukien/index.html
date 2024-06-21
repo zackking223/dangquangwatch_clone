@@ -1,39 +1,45 @@
-<!DOCTYPE html>  
-<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">  
-<head>  
-    <title>Quản lý phụ kiện</title>  
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>  
-    <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}"/>  
-</head>  
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+
+<head>
+    <title>Quản lý phụ kiện</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}" />
+</head>
+
 <body>
-<div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">  
-    <h1 class="font-bold text-center my-2">Quản lý phụ kiện</h1>  
-    <table class="table table-active">  
-        <tr>  
-            <th class="p-2 border border-solid border-black">Mã</th>  
-            <th class="p-2 border border-solid border-black">Tên phụ kiện</th>  
-            <th class="p-2 border border-solid border-black">Giá tiền</th>  
-            <th class="p-2 border border-solid border-black">Số lượng</th>   
-            <th class="p-2 border border-solid border-black">Trả góp</th>  
-            <th class="p-2 border border-solid border-black">Thông tin</th>  
-            <th class="p-2 border border-solid border-black">Ngày thêm</th>  
-            <th class="p-2 border border-solid border-black">Tùy chọn</th>  
-        </tr>  
-        <tr th:each="phuKien : ${phuKiens}">  
-            <td class="p-2 border border-solid border-black" th:text="${phuKien.getMaPhuKien()}"></td>  
-            <td class="p-2 border border-solid border-black" th:text="${phuKien.getTenPhuKien()}"></td>  
-            <td class="p-2 border border-solid border-black" th:text="${phuKien.getGiaTien()}"></td>  
-            <td class="p-2 border border-solid border-black" th:text="${phuKien.getSoLuong()}"></td> 
-            <td class="p-2 border border-solid border-black" th:text="${phuKien.getTraGop()}"></td>  
-            <td class="p-2 border border-solid border-black" th:text="${phuKien.getThongTin()}"></td>  
-            <td class="p-2 border border-solid border-black" th:text="${phuKien.getNGAYTHEM()}"></td>  
-            <td class="p-2 border border-solid border-black">  
-                <a class="p-2 rounded bg-green-500 text-white" th:href="@{/admin/phukien/edit?id={id}(id=${phuKien.getMaPhuKien()})}">Sửa</a>  
-                <a class="p-2 rounded bg-red-500 text-white" th:href="@{/admin/phukien/delete?id={id}(id=${phuKien.getMaPhuKien()})}">Xóa</a>  
-            </td>  
-        </tr>  
-    </table>  
-    <a href="/admin/phukien/add" class="p-2 w-max bg-green-500 rounded block mt-4 text-white">Thêm mới</a>  
-</div>  
-</body>  
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+    <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
+        <h1 class="font-bold text-center my-2">Quản lý phụ kiện</h1>
+        <table class="table table-active">
+            <tr>
+                <th class="p-2 border border-solid border-black">Mã</th>
+                <th class="p-2 border border-solid border-black">Tên phụ kiện</th>
+                <th class="p-2 border border-solid border-black">Giá tiền</th>
+                <th class="p-2 border border-solid border-black">Số lượng</th>
+                <th class="p-2 border border-solid border-black">Trả góp</th>
+                <th class="p-2 border border-solid border-black">Thông tin</th>
+                <th class="p-2 border border-solid border-black">Ngày thêm</th>
+                <th class="p-2 border border-solid border-black">Tùy chọn</th>
+            </tr>
+            <tr th:each="phuKien : ${phuKiens}">
+                <td class="p-2 border border-solid border-black" th:text="${phuKien.getMaPhuKien()}"></td>
+                <td class="p-2 border border-solid border-black" th:text="${phuKien.getTenPhuKien()}"></td>
+                <td class="p-2 border border-solid border-black" th:text="${phuKien.getGiaTien()}"></td>
+                <td class="p-2 border border-solid border-black" th:text="${phuKien.getSoLuong()}"></td>
+                <td class="p-2 border border-solid border-black" th:text="${phuKien.getTraGop()}"></td>
+                <td class="p-2 border border-solid border-black" th:text="${phuKien.getThongTin()}"></td>
+                <td class="p-2 border border-solid border-black" th:text="${phuKien.getNGAYTHEM()}"></td>
+                <td class="p-2 border border-solid border-black">
+                    <a class="p-2 rounded bg-green-500 text-white"
+                        th:href="@{/admin/phukien/edit?id={id}(id=${phuKien.getMaPhuKien()})}">Sửa</a>
+                    <a class="p-2 rounded bg-red-500 text-white"
+                        th:href="@{/admin/phukien/delete?id={id}(id=${phuKien.getMaPhuKien()})}">Xóa</a>
+                </td>
+            </tr>
+        </table>
+        <a href="/admin/phukien/add" class="p-2 w-max bg-green-500 rounded block mt-4 text-white">Thêm mới</a>
+    </div>
+</body>
+
 </html>

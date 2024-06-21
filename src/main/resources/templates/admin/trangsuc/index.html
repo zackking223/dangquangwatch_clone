@@ -1,40 +1,46 @@
-<!DOCTYPE html>  
-<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">  
-<head>  
-    <title>Trang sức</title>  
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>  
-    <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}"/>  
-</head>  
-<body>  
-<div class="col-3"></div>  
-<div class="container col-6">  
-    <h1>Quản lý trang sức</h1>  
-    <table class="table table-active">  
-        <tr>  
-            <th>Mã trang sức</th>  
-            <th>Tên trang sức</th>  
-            <th>Giá tiền</th>  
-            <th>Số lượng</th>  
-            <th>Trả góp</th>  
-            <th>Thông tin</th>  
-            <th>Ngày thêm</th>  
-            <th>Tùy chọn</th>  
-        </tr>  
-        <tr th:each="trangsuc : ${trangsucs}">  
-            <td th:text="${trangsuc.getMatrangsuc()}"></td>  
-            <td th:text="${trangsuc.getTentrangsuc()}"></td>  
-            <td th:text="${trangsuc.getGia()}"></td>  
-            <td th:text="${trangsuc.getSoluong()}"></td>  
-            <td th:text="${trangsuc.getTragop()}"></td>   
-            <td th:text="${trangsuc.getThongtin()}"></td>  
-            <td th:text="${trangsuc.getNGAYTHEM()}"></td>  
-            <td>  
-                <a th:href="@{/admin/trangsuc/edit?id={id}(id=${trangsuc.getMatrangsuc()})}" class="btn btn-primary">Edit</a>  
-                <a th:href="@{/admin/trangsuc/delete?id={id}(id=${trangsuc.getMatrangsuc()})}" class="btn btn-danger">Delete</a>  
-            </td>  
-        </tr>  
-    </table>  
-    <a href="/admin/trangsuc/add" class="btn btn-success">Thêm trang sức</a>  
-</div>  
-</body>  
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+
+<head>
+    <title>Trang sức</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}" />
+</head>
+
+<body>
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+    <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
+        <h1 class="font-bold text-center my-2">Quản lý trang sức</h1>
+        <table class="table table-active">
+            <tr>
+                <th class="p-2 border border-solid border-black">Mã trang sức</th>
+                <th class="p-2 border border-solid border-black">Tên trang sức</th>
+                <th class="p-2 border border-solid border-black">Giá tiền</th>
+                <th class="p-2 border border-solid border-black">Số lượng</th>
+                <th class="p-2 border border-solid border-black">Trả góp</th>
+                <th class="p-2 border border-solid border-black">Thông tin</th>
+                <th class="p-2 border border-solid border-black">Ngày thêm</th>
+                <th class="p-2 border border-solid border-black">Tùy chọn</th>
+            </tr>
+            <tr th:each="trangsuc : ${trangsucs}">
+                <td class="p-2 border border-solid border-black" th:text="${trangsuc.getMatrangsuc()}"></td>
+                <td class="p-2 border border-solid border-black" th:text="${trangsuc.getTentrangsuc()}"></td>
+                <td class="p-2 border border-solid border-black" th:text="${trangsuc.getGia()}"></td>
+                <td class="p-2 border border-solid border-black" th:text="${trangsuc.getSoluong()}"></td>
+                <td class="p-2 border border-solid border-black" th:text="${trangsuc.getTragop()}"></td>
+                <td class="p-2 border border-solid border-black" th:text="${trangsuc.getThongtin()}"></td>
+                <td class="p-2 border border-solid border-black" th:text="${trangsuc.getNGAYTHEM()}"></td>
+                <td class="p-2 border border-solid border-black">
+                    <a class="p-2 rounded bg-green-500 text-white"
+                        th:href="@{/admin/trangsuc/edit?id={id}(id=${trangsuc.getMatrangsuc()})}">Edit</a>
+                    <a class="p-2 rounded bg-red-500 text-white"
+                        th:href="@{/admin/trangsuc/delete?id={id}(id=${trangsuc.getMatrangsuc()})}">Delete</a>
+                </td>
+            </tr>
+        </table>
+        <a href="/admin/trangsuc/add" class="p-2 w-max bg-green-500 rounded block mt-4 text-white">Thêm trang sức</a>
+    </div>
+</body>
+
 </html>

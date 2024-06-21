@@ -1,54 +1,63 @@
-<!DOCTYPE html>  
-<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">  
-<head>  
-    <meta charset="UTF-8">  
-    <title>Thêm trang sức</title>  
-    <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}"/>  
-</head>  
-<body>  
-<div class="col-3"></div>  
-<div class="container col-6">  
-    <h1>Trang sức mới</h1>  
-    <div class="col-md-auto">  
-        <form th:object="${trangsuc}" th:action="@{save}" action="#" method="post">  
-            <div>  
-                <label th:for="matrangsuc">Mã trang sức</label>  
-                <input type="number" th:field="*{matrangsuc}" class="form-control" placeholder="Mã trang sức"/>  
-            </div>  
-            <div style="clear: both; display: block; height: 10px"></div>  
-            <div>  
-                <label th:for="tentrangsuc">Tên trang sức</label>  
-                <input type="text" th:field="*{tentrangsuc}" class="form-control" placeholder="Tên trang sức"/>  
-            </div>  
-            <div style="clear: both; display: block; height: 10px"></div>  
-            <div>  
-                <label th:for="gia">Giá tiền</label>  
-                <input type="number" th:field="*{gia}" class="form-control" placeholder="Giá tiền"/>  
-            </div>  
-            <div>  
-                <label th:for="soluong">Số lượng</label>  
-                <input type="number" th:field="*{soluong}" class="form-control" placeholder="Số lượng"/>  
-            </div>  
-            <div style="clear: both; display: block; height: 10px"></div>  
-            <div>  
-                <label th:for="tragop">Trả góp</label>  
-                <input type="number" th:field="*{tragop}" class="form-control" placeholder="Trả góp"/>  
-            </div>   
-            <div style="clear: both; display: block; height: 10px"></div>  
-            <div>  
-                <label th:for="thongtin">Thông tin</label>  
-                <input type="text" th:field="*{thongtin}" class="form-control" placeholder="Thông tin"/>  
-            </div>  
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
 
-            <input type="date" id="datePicker" name="NGAYTHEM" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm trang sức</title>
+    <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}" />
+</head>
 
-            <div style="clear: both; display: block; height: 10px"></div>  
-            <input type="submit" class="btn btn-success" value="Thêm"/>  
-        </form>  
-    </div>  
-</div>  
-<script>
-    document.getElementById('datePicker').valueAsDate = new Date();
-</script>
-</body>  
+<body>
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+    <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
+        <h1 class="font-bold text-center my-2">Trang sức mới</h1>
+        <div class="col-md-auto">
+            <form th:object="${trangsuc}" th:action="@{save}" action="#" method="post">
+                <div>
+                    <label class="block font-medium" th:for="matrangsuc">Mã trang sức</label>
+                    <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{matrangsuc}"
+                        placeholder="Mã trang sức" />
+                </div>
+                <div style="clear: both; display: block; height: 10px"></div>
+                <div>
+                    <label class="block font-medium" th:for="tentrangsuc">Tên trang sức</label>
+                    <input class="block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{tentrangsuc}"
+                        placeholder="Tên trang sức" />
+                </div>
+                <div style="clear: both; display: block; height: 10px"></div>
+                <div>
+                    <label class="block font-medium" th:for="gia">Giá tiền</label>
+                    <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{gia}"
+                        placeholder="Giá tiền" />
+                </div>
+                <div>
+                    <label class="block font-medium" th:for="soluong">Số lượng</label>
+                    <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{soluong}"
+                        placeholder="Số lượng" />
+                </div>
+                <div style="clear: both; display: block; height: 10px"></div>
+                <div>
+                    <label class="block font-medium" th:for="tragop">Trả góp</label>
+                    <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{tragop}"
+                        placeholder="Trả góp" />
+                </div>
+                <div style="clear: both; display: block; height: 10px"></div>
+                <div>
+                    <label class="block font-medium" th:for="thongtin">Thông tin</label>
+                    <textarea class="w-[80vw] min-w-[280px]" rows="20" th:field="*{thongtin}"></textarea>
+                </div>
+
+                <input class="hidden" type="date" id="datePicker" name="NGAYTHEM" />
+
+                <div style="clear: both; display: block; height: 10px"></div>
+                <input class="p-2 w-max bg-green-500 rounded block mt-4 text-white" type="submit" value="Thêm" />
+            </form>
+        </div>
+    </div>
+    <script>
+        document.getElementById('datePicker').valueAsDate = new Date();
+    </script>
+</body>
+
 </html>

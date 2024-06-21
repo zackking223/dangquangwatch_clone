@@ -1,46 +1,51 @@
-<!DOCTYPE html>  
-<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">  
-<head>  
-    <title>Đồng Hồ</title>  
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>  
-    <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}"/>  
-</head>  
-<body>  
-<div class="col-3"></div>  
-<div class="container col-6">  
-    <h1>Quản lý đồng hồ</h1>  
-    <table class="table table-active">  
-        <tr>  
-            <th>Mã đồng hồ</th>  
-            <th>Tên đồng hồ</th>  
-            <th>Giá tiền</th>  
-            <th>Số lượng</th>  
-            <th>Trả góp</th>  
-            <th>Đường kính</th>  
-            <th>Chống nước</th>  
-            <th>Bộ máy</th>  
-            <th>Thông tin</th>  
-            <th>Ngày thêm</th>  
-            <th>Tùy chọn</th>  
-        </tr>  
-        <tr th:each="dongho : ${donghos}">  
-            <td th:text="${dongho.getMadongho()}"></td>  
-            <td th:text="${dongho.getTendongho()}"></td>  
-            <td th:text="${dongho.getGiatien()}"></td>  
-            <td th:text="${dongho.getSoluong()}"></td>  
-            <td th:text="${dongho.getTragop()}"></td>  
-            <td th:text="${dongho.getDuongkinh()}"></td>  
-            <td th:text="${dongho.getChongnuoc()}"></td>  
-            <td th:text="${dongho.getBomay()}"></td>  
-            <td th:text="${dongho.getThongtin()}"></td>  
-            <td th:text="${dongho.getNGAYTHEM()}"></td>  
-            <td>  
-                <a th:href="@{/admin/dongho/edit?id={id}(id=${dongho.getMadongho()})}" class="btn btn-primary">Edit</a>  
-                <a th:href="@{/admin/dongho/delete?id={id}(id=${dongho.getMadongho()})}" class="btn btn-danger">Delete</a>  
-            </td>  
-        </tr>  
-    </table>  
-    <a href="/admin/dongho/add" class="btn btn-success">Thêm đông hồ</a>  
-</div>  
-</body>  
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+
+<head>
+    <title>Đồng Hồ</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}" />
+</head>
+
+<body>
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+    <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
+        <h1 class="font-bold text-center my-2">Quản lý đồng hồ</h1>
+        <table>
+            <tr>
+                <th class="p-2 border border-solid border-black">Mã đồng hồ</th>
+                <th class="p-2 border border-solid border-black">Tên đồng hồ</th>
+                <th class="p-2 border border-solid border-black">Giá tiền</th>
+                <th class="p-2 border border-solid border-black">Số lượng</th>
+                <th class="p-2 border border-solid border-black">Trả góp</th>
+                <th class="p-2 border border-solid border-black">Đường kính</th>
+                <th class="p-2 border border-solid border-black">Chống nước</th>
+                <th class="p-2 border border-solid border-black">Bộ máy</th>
+                <th class="p-2 border border-solid border-black">Thông tin</th>
+                <th class="p-2 border border-solid border-black">Ngày thêm</th>
+                <th class="p-2 border border-solid border-black">Tùy chọn</th>
+            </tr>
+            <tr th:each="dongho : ${donghos}">
+                <td class="p-2 border border-solid border-black" th:text="${dongho.getMadongho()}"></td>
+                <td class="p-2 border border-solid border-black" th:text="${dongho.getTendongho()}"></td>
+                <td class="p-2 border border-solid border-black" th:text="${dongho.getGiatien()}"></td>
+                <td class="p-2 border border-solid border-black" th:text="${dongho.getSoluong()}"></td>
+                <td class="p-2 border border-solid border-black" th:text="${dongho.getTragop()}"></td>
+                <td class="p-2 border border-solid border-black" th:text="${dongho.getDuongkinh()}"></td>
+                <td class="p-2 border border-solid border-black" th:text="${dongho.getChongnuoc()}"></td>
+                <td class="p-2 border border-solid border-black" th:text="${dongho.getBomay()}"></td>
+                <td class="p-2 border border-solid border-black" th:text="${dongho.getThongtin()}"></td>
+                <td class="p-2 border border-solid border-black" th:text="${dongho.getNGAYTHEM()}"></td>
+                <td class="p-2 border border-solid border-black">
+                    <a th:href="@{/admin/dongho/edit?id={id}(id=${dongho.getMadongho()})}"
+                        class="p-2 rounded bg-green-500 text-white">Edit</a>
+                    <a th:href="@{/admin/dongho/delete?id={id}(id=${dongho.getMadongho()})}"
+                        class="p-2 rounded bg-green-500 text-white">Delete</a>
+                </td>
+            </tr>
+        </table>
+        <a href="/admin/dongho/add" class="p-2 w-max bg-green-500 rounded block mt-4 text-white">Thêm đông hồ</a>
+    </div>
+</body>
+
 </html>

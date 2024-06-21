@@ -11,57 +11,57 @@
     />
   </head>
   <body>
-    <div class="col-3"></div>
-    <div class="container col-6">
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+    <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
       <h1>Sửa thông tin</h1>
       <form th:object="${dongho}" th:action="@{/admin/dongho/save}" action="#" method="post">
         <div>
-          <label th:for="madongho">Mã đồng hồ</label>
-          <input readonly type="number" th:field="*{madongho}" />
+          <label class="block font-medium" th:for="madongho">Mã đồng hồ</label>
+          <input class="block p-2 w-[80vw] min-w-[280px]" readonly type="number" th:field="*{madongho}" />
         </div>
         <div style="clear: both; display: block; height: 10px"></div>
         <div>
-          <label th:for="tendongho">Tên đồng hồ</label>
-          <input type="text" th:field="*{tendongho}" />
+          <label class="block font-medium" th:for="tendongho">Tên đồng hồ</label>
+          <input class="block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{tendongho}" />
         </div>
         <div style="clear: both; display: block; height: 10px"></div>
         <div>
-          <label th:for="giatien">Giá tiền</label>
-          <input type="number" th:field="*{giatien}" />
+          <label class="block font-medium" th:for="giatien">Giá tiền</label>
+          <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{giatien}" />
         </div>
         <div>
-          <label th:for="soluong">Số lượng</label>
-          <input type="number" th:field="*{soluong}" />
-        </div>
-        <div style="clear: both; display: block; height: 10px"></div>
-        <div>
-          <label th:for="tragop">Trả góp</label>
-          <input type="number" th:field="*{tragop}" />
+          <label class="block font-medium" th:for="soluong">Số lượng</label>
+          <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{soluong}" />
         </div>
         <div style="clear: both; display: block; height: 10px"></div>
         <div>
-          <label th:for="duongkinh">Đường kính</label>
-          <input type="number" th:field="*{duongkinh}" />
-        </div>
-        <div>
-          <label th:for="chongnuoc">Chống nước</label>
-          <input type="number" th:field="*{chongnuoc}" />
+          <label class="block font-medium" th:for="tragop">Trả góp</label>
+          <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{tragop}" />
         </div>
         <div style="clear: both; display: block; height: 10px"></div>
         <div>
-          <label th:for="bomay">Bộ máy</label>
-          <input type="text" th:field="*{bomay}" />
+          <label class="block font-medium" th:for="duongkinh">Đường kính</label>
+          <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{duongkinh}" />
+        </div>
+        <div>
+          <label class="block font-medium" th:for="chongnuoc">Chống nước</label>
+          <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{chongnuoc}" />
         </div>
         <div style="clear: both; display: block; height: 10px"></div>
         <div>
-          <label th:for="thongtin">Thông tin</label>
-          <input type="text" th:field="*{thongtin}" />
+          <label class="block font-medium" th:for="bomay">Bộ máy</label>
+          <input class="block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{bomay}" />
+        </div>
+        <div style="clear: both; display: block; height: 10px"></div>
+        <div>
+          <label class="block font-medium" th:for="thongtin">Thông tin</label>
+          <textarea class="w-[80vw] min-w-[280px]" rows="20" th:field="*{thongtin}"></textarea>
         </div>
 
-        <input type="date" id="datePicker" class="hidden" name="NGAYTHEM" />
+        <input class="hidden" type="date" id="datePicker" name="NGAYTHEM" />
 
         <div style="clear: both; display: block; height: 10px"></div>
-        <input type="submit" value="Lưu" />
+        <input class="p-2 w-max bg-green-500 rounded block mt-4 text-white" type="submit" value="Lưu" />
       </form>
     </div>
     <script>

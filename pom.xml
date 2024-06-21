@@ -13,7 +13,7 @@
 	<artifactId>dangquangwatch</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>dangquangwatch</name>
-	<description>Bán đồng hồ cho Đăng Quang Watch</description>
+	<description>Bán đồng hồ cho Đăng Quang</description>
 	<properties>
 		<java.version>22</java.version>
 		<start-class>edu.it10.dangquangwatch.DangQuangWatchApplication</start-class>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+</head>
+
+<body>
+  <nav id="sidebar" class="absolute z-10 left-0 top-0 p-1 bg-black box-content"
+    style="height: 100vh; width: 32px; transition: all 0.5s ease-in;" th:fragment="sidebar">
+    <section class="flex flex-col gap-3 text-white font-bold">
+      <button class="flex items-center gap-3 w-full px-[9px] py-1 h-8 rounded whitespace-nowrap overflow-hidden">
+        <img id="bars" class="flex-shrink-0 w-6 translate-x-[-6px] max-w-none" src="/svg/menu.svg" alt="menu">
+        <img id="xmark" class="flex-shrink-0 w-6 translate-x-[-6px] max-w-none" style="display: hidden;"
+          src="/svg/close.svg" alt="menu">
+        <p class="text-center" style="width: calc(100% - 32px);">
+          Quản trị
+        </p>
+      </button>
+      <a href="/admin/dongho/"
+        class="flex items-center gap-3 w-full px-[9px] py-1 h-8 hover:bg-yellow-600 rounded whitespace-nowrap overflow-hidden">
+        <img id="xmark" class="flex-shrink-0 w-6 translate-x-[-6px] max-w-none" style="display: hidden;"
+          src="/svg/watch.svg" alt="watch">
+        <p class="text-center" style="width: calc(100% - 32px);">
+          Đồng hồ
+        </p>
+      </a>
+      <a href="/admin/kinhmat/"
+        class="flex items-center gap-3 w-full px-[9px] py-1 h-8 hover:bg-yellow-600 rounded whitespace-nowrap overflow-hidden">
+        <img id="xmark" class="flex-shrink-0 w-6 translate-x-[-6px] max-w-none" style="display: hidden;"
+          src="/svg/glasses.svg" alt="watch">
+        <p class="text-center" style="width: calc(100% - 32px);">
+          Kính mắt
+        </p>
+      </a>
+      <a href="/admin/phukien/"
+        class="flex items-center gap-3 w-full px-[9px] py-1 h-8 hover:bg-yellow-600 rounded whitespace-nowrap overflow-hidden">
+        <img id="xmark" class="flex-shrink-0 w-6 translate-x-[-6px] max-w-none" style="display: hidden;"
+          src="/svg/accessories.svg" alt="watch">
+        <p class="text-center" style="width: calc(100% - 32px);">
+          Phụ kiện
+        </p>
+      </a>
+      <a href="/admin/trangsuc/"
+        class="flex items-center gap-3 w-full px-[9px] py-1 h-8 hover:bg-yellow-600 rounded whitespace-nowrap overflow-hidden">
+        <img id="xmark" class="flex-shrink-0 w-6 translate-x-[-6px] max-w-none" style="display: hidden;"
+          src="/svg/diamond.svg" alt="watch">
+        <p class="text-center" style="width: calc(100% - 32px);">
+          Trang sức
+        </p>
+      </a>
+      <a href="/admin/butky/"
+        class="flex items-center gap-3 w-full px-[9px] py-1 h-8 hover:bg-yellow-600 rounded whitespace-nowrap overflow-hidden">
+        <img id="xmark" class="flex-shrink-0 w-6 translate-x-[-6px] max-w-none" style="display: hidden;"
+          src="/svg/ink_pen.svg" alt="watch">
+        <p class="text-center" style="width: calc(100% - 32px);">
+          Bút ký
+        </p>
+      </a>
+      <a href="/admin/donhang/"
+        class="flex items-center gap-3 w-full px-[9px] py-1 h-8 hover:bg-yellow-600 rounded whitespace-nowrap overflow-hidden">
+        <img id="xmark" class="flex-shrink-0 w-6 translate-x-[-6px] max-w-none" style="display: hidden;"
+          src="/svg/order.svg" alt="watch">
+        <p class="text-center" style="width: calc(100% - 32px);">
+          Đơn hàng
+        </p>
+      </a>
+      <a href="/admin/thongke/"
+        class="flex items-center gap-3 w-full px-[9px] py-1 h-8 hover:bg-yellow-600 rounded whitespace-nowrap overflow-hidden">
+        <img id="xmark" class="flex-shrink-0 w-6 translate-x-[-6px] max-w-none" style="display: hidden;"
+          src="/svg/chart.svg" alt="watch">
+        <p class="text-center" style="width: calc(100% - 32px);">
+          Thống kê
+        </p>
+      </a>
+      <a href="/admin/khachhang/"
+        class="flex items-center gap-3 w-full px-[9px] py-1 h-8 hover:bg-yellow-600 rounded whitespace-nowrap overflow-hidden">
+        <img id="xmark" class="flex-shrink-0 w-6 translate-x-[-6px] max-w-none" style="display: hidden;"
+          src="/svg/customer.svg" alt="watch">
+        <p class="text-center" style="width: calc(100% - 32px);">
+          Khách hàng
+        </p>
+      </a>
+      <a href="/admin/accounts/"
+        class="flex items-center gap-3 w-full px-[9px] py-1 h-8 hover:bg-yellow-600 rounded whitespace-nowrap overflow-hidden">
+        <img id="xmark" class="flex-shrink-0 w-6 translate-x-[-6px] max-w-none" style="display: hidden;"
+          src="/svg/employee.svg" alt="watch">
+        <p class="text-center" style="width: calc(100% - 32px);">
+          Quản trị viên
+        </p>
+      </a>
+    </section>
+    <script>
+      const sidebar = document.getElementById("sidebar");
+      const bars = document.getElementById("bars");
+      const xmark = document.getElementById("xmark");
+
+      bars.addEventListener('click', () => {
+        sidebar.style.width = "300px";
+        bars.style.display = "none";
+        xmark.style.display = "block";
+      });
+
+      xmark.addEventListener('click', () => {
+        sidebar.style.width = "32px";
+        xmark.style.display = "none";
+        bars.style.display = "block";
+      });
+    </script>
+  </nav>
+</body>
+
+</html>

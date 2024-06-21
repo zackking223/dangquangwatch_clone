@@ -8,13 +8,15 @@
 </head>
 
 <body>
+  <div th:replace="~{fragments/sidebar :: sidebar}"></div>
   <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
     <h1 class="font-bold text-center my-2">Thêm mới</h1>
     <div class="col-md-auto">
       <form th:object="${phuKien}" th:action="@{/admin/phukien/save}" action="#" method="post">
         <div>
           <label class="block font-medium" th:for="tenPhuKien">Tên sản phẩm</label>
-          <input class="block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{tenPhuKien}" placeholder="Tên sản phẩm" />
+          <input class="block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{tenPhuKien}"
+            placeholder="Tên sản phẩm" />
         </div>
 
         <div style="clear: both; display: block; height: 10px"></div>
