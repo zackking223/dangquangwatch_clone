@@ -5,18 +5,21 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Objects;
 
 @Entity
 @Table(name = "anh_phukien")
+@JsonIgnoreProperties({ "phukien" })
+
 public class Anhphukien {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer maanh;
-
-    @Column(name = "maphukien")
-    private Integer maphukien;
 
     @Column(name = "url")
     private String url;
@@ -24,14 +27,19 @@ public class Anhphukien {
     @Column(name = "tenanh")
     private String tenanh;
 
+    @ManyToOne(targetEntity = PhuKien.class)
+    @JoinColumn(name = "maphukien")
+    private PhuKien phukien;
+    
+
     public Anhphukien() {
     }
 
-    public Anhphukien(Integer maanh, Integer maphukien, String url, String tenanh) {
+    public Anhphukien(Integer maanh, String url, String tenanh, PhuKien phukien) {
         this.maanh = maanh;
-        this.maphukien = maphukien;
         this.url = url;
         this.tenanh = tenanh;
+        this.phukien = phukien;
     }
 
     public Integer getMaanh() {
@@ -40,14 +48,6 @@ public class Anhphukien {
 
     public void setMaanh(Integer maanh) {
         this.maanh = maanh;
-    }
-
-    public Integer getMaphukien() {
-        return this.maphukien;
-    }
-
-    public void setMaphukien(Integer maphukien) {
-        this.maphukien = maphukien;
     }
 
     public String getUrl() {
@@ -66,13 +66,16 @@ public class Anhphukien {
         this.tenanh = tenanh;
     }
 
-    public Anhphukien maanh(Integer maanh) {
-        setMaanh(maanh);
-        return this;
+    public PhuKien getPhukien() {
+        return this.phukien;
     }
 
-    public Anhphukien maphukien(Integer maphukien) {
-        setMaphukien(maphukien);
+    public void setPhukien(PhuKien phukien) {
+        this.phukien = phukien;
+    }
+
+    public Anhphukien maanh(Integer maanh) {
+        setMaanh(maanh);
         return this;
     }
 
@@ -86,6 +89,11 @@ public class Anhphukien {
         return this;
     }
 
+    public Anhphukien phukien(PhuKien phukien) {
+        setPhukien(phukien);
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -94,23 +102,21 @@ public class Anhphukien {
             return false;
         }
         Anhphukien anhphukien = (Anhphukien) o;
-        return Objects.equals(maanh, anhphukien.maanh) && Objects.equals(maphukien, anhphukien.maphukien)
-                && Objects.equals(url, anhphukien.url) && Objects.equals(tenanh, anhphukien.tenanh);
+        return Objects.equals(maanh, anhphukien.maanh) && Objects.equals(url, anhphukien.url) && Objects.equals(tenanh, anhphukien.tenanh) && Objects.equals(phukien, anhphukien.phukien);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(maanh, maphukien, url, tenanh);
+        return Objects.hash(maanh, url, tenanh, phukien);
     }
 
     @Override
     public String toString() {
         return "{" +
-                " maanh='" + getMaanh() + "'" +
-                ", maphukien='" + getMaphukien() + "'" +
-                ", url='" + getUrl() + "'" +
-                ", tenanh='" + getTenanh() + "'" +
-                "}";
+            " maanh='" + getMaanh() + "'" +
+            ", url='" + getUrl() + "'" +
+            ", tenanh='" + getTenanh() + "'" +
+            ", phukien='" + getPhukien() + "'" +
+            "}";
     }
-
 }

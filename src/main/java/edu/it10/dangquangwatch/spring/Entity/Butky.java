@@ -5,8 +5,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+import java.text.NumberFormat;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -34,11 +38,30 @@ public class Butky {
     @Column(name = "thongtin")
     private String thongtin;
 
+    @OneToMany(mappedBy = "butky", targetEntity = Anhbutky.class)
+    private List<Anhbutky> images;
+
+    public String getFirstImageUrl() {
+        Iterator<Anhbutky> iterator = images.iterator();
+
+        if (iterator.hasNext()) {
+            Anhbutky retrieved = iterator.next();
+
+            return retrieved.getUrl();
+        }
+
+        return "/images/placeholder.png";
+    }
+
+    public String getGiatienFormatted() {
+        return NumberFormat.getInstance().format(this.giatien);
+    }
+
+
     public Butky() {
     }
 
-    public Butky(Integer mabutky, String tenbutky, Integer giatien, Integer soluong, Integer tragop, String NGAYTHEM,
-            String thongtin) {
+    public Butky(Integer mabutky, String tenbutky, Integer giatien, Integer soluong, Integer tragop, String NGAYTHEM, String thongtin, List<Anhbutky> images) {
         this.mabutky = mabutky;
         this.tenbutky = tenbutky;
         this.giatien = giatien;
@@ -46,6 +69,7 @@ public class Butky {
         this.tragop = tragop;
         this.NGAYTHEM = NGAYTHEM;
         this.thongtin = thongtin;
+        this.images = images;
     }
 
     public Integer getMabutky() {
@@ -104,6 +128,14 @@ public class Butky {
         this.thongtin = thongtin;
     }
 
+    public List<Anhbutky> getImages() {
+        return this.images;
+    }
+
+    public void setImages(List<Anhbutky> images) {
+        this.images = images;
+    }
+
     public Butky mabutky(Integer mabutky) {
         setMabutky(mabutky);
         return this;
@@ -139,6 +171,11 @@ public class Butky {
         return this;
     }
 
+    public Butky images(List<Anhbutky> images) {
+        setImages(images);
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -147,28 +184,25 @@ public class Butky {
             return false;
         }
         Butky butky = (Butky) o;
-        return Objects.equals(mabutky, butky.mabutky) && Objects.equals(tenbutky, butky.tenbutky)
-                && Objects.equals(giatien, butky.giatien) && Objects.equals(soluong, butky.soluong)
-                && Objects.equals(tragop, butky.tragop) && Objects.equals(NGAYTHEM, butky.NGAYTHEM)
-                && Objects.equals(thongtin, butky.thongtin);
+        return Objects.equals(mabutky, butky.mabutky) && Objects.equals(tenbutky, butky.tenbutky) && Objects.equals(giatien, butky.giatien) && Objects.equals(soluong, butky.soluong) && Objects.equals(tragop, butky.tragop) && Objects.equals(NGAYTHEM, butky.NGAYTHEM) && Objects.equals(thongtin, butky.thongtin) && Objects.equals(images, butky.images);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(mabutky, tenbutky, giatien, soluong, tragop, NGAYTHEM, thongtin);
+        return Objects.hash(mabutky, tenbutky, giatien, soluong, tragop, NGAYTHEM, thongtin, images);
     }
 
     @Override
     public String toString() {
         return "{" +
-                " mabutky='" + getMabutky() + "'" +
-                ", tenbutky='" + getTenbutky() + "'" +
-                ", giatien='" + getGiatien() + "'" +
-                ", soluong='" + getSoluong() + "'" +
-                ", tragop='" + getTragop() + "'" +
-                ", NGAYTHEM='" + getNGAYTHEM() + "'" +
-                ", thongtin='" + getThongtin() + "'" +
-                "}";
+            " mabutky='" + getMabutky() + "'" +
+            ", tenbutky='" + getTenbutky() + "'" +
+            ", giatien='" + getGiatien() + "'" +
+            ", soluong='" + getSoluong() + "'" +
+            ", tragop='" + getTragop() + "'" +
+            ", NGAYTHEM='" + getNGAYTHEM() + "'" +
+            ", thongtin='" + getThongtin() + "'" +
+            ", images='" + getImages() + "'" +
+            "}";
     }
-
 }

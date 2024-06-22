@@ -5,8 +5,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+import java.text.NumberFormat;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -34,11 +38,30 @@ public class Trangsuc {
   @Column(name = "thongtin")
   private String thongtin;
 
+  @OneToMany(mappedBy = "trangsuc", targetEntity = Anhtrangsuc.class)
+  private List<Anhtrangsuc> images;
+
+  public String getFirstImageUrl() {
+    Iterator<Anhtrangsuc> iterator = images.iterator();
+
+    if (iterator.hasNext()) {
+      Anhtrangsuc retrieved = iterator.next();
+
+      return retrieved.getUrl();
+    }
+
+    return "/images/placeholder.png";
+  }
+
+  public String getGiaFormatted() {
+    return NumberFormat.getInstance().format(this.gia);
+  }
+
 
   public Trangsuc() {
   }
 
-  public Trangsuc(Integer matrangsuc, String tentrangsuc, Integer gia, Integer soluong, Integer tragop, String NGAYTHEM, String thongtin) {
+  public Trangsuc(Integer matrangsuc, String tentrangsuc, Integer gia, Integer soluong, Integer tragop, String NGAYTHEM, String thongtin, List<Anhtrangsuc> images) {
     this.matrangsuc = matrangsuc;
     this.tentrangsuc = tentrangsuc;
     this.gia = gia;
@@ -46,6 +69,7 @@ public class Trangsuc {
     this.tragop = tragop;
     this.NGAYTHEM = NGAYTHEM;
     this.thongtin = thongtin;
+    this.images = images;
   }
 
   public Integer getMatrangsuc() {
@@ -104,6 +128,14 @@ public class Trangsuc {
     this.thongtin = thongtin;
   }
 
+  public List<Anhtrangsuc> getImages() {
+    return this.images;
+  }
+
+  public void setImages(List<Anhtrangsuc> images) {
+    this.images = images;
+  }
+
   public Trangsuc matrangsuc(Integer matrangsuc) {
     setMatrangsuc(matrangsuc);
     return this;
@@ -139,6 +171,11 @@ public class Trangsuc {
     return this;
   }
 
+  public Trangsuc images(List<Anhtrangsuc> images) {
+    setImages(images);
+    return this;
+  }
+
   @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -147,12 +184,12 @@ public class Trangsuc {
             return false;
         }
         Trangsuc trangsuc = (Trangsuc) o;
-        return Objects.equals(matrangsuc, trangsuc.matrangsuc) && Objects.equals(tentrangsuc, trangsuc.tentrangsuc) && Objects.equals(gia, trangsuc.gia) && Objects.equals(soluong, trangsuc.soluong) && Objects.equals(tragop, trangsuc.tragop) && Objects.equals(NGAYTHEM, trangsuc.NGAYTHEM) && Objects.equals(thongtin, trangsuc.thongtin);
+        return Objects.equals(matrangsuc, trangsuc.matrangsuc) && Objects.equals(tentrangsuc, trangsuc.tentrangsuc) && Objects.equals(gia, trangsuc.gia) && Objects.equals(soluong, trangsuc.soluong) && Objects.equals(tragop, trangsuc.tragop) && Objects.equals(NGAYTHEM, trangsuc.NGAYTHEM) && Objects.equals(thongtin, trangsuc.thongtin) && Objects.equals(images, trangsuc.images);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(matrangsuc, tentrangsuc, gia, soluong, tragop, NGAYTHEM, thongtin);
+    return Objects.hash(matrangsuc, tentrangsuc, gia, soluong, tragop, NGAYTHEM, thongtin, images);
   }
 
   @Override
@@ -165,7 +202,7 @@ public class Trangsuc {
       ", tragop='" + getTragop() + "'" +
       ", NGAYTHEM='" + getNGAYTHEM() + "'" +
       ", thongtin='" + getThongtin() + "'" +
+      ", images='" + getImages() + "'" +
       "}";
   }
-
 }

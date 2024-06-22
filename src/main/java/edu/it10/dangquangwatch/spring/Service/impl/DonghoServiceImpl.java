@@ -2,8 +2,12 @@ package edu.it10.dangquangwatch.spring.service.impl;
 
 import edu.it10.dangquangwatch.spring.entity.Dongho;  
 import edu.it10.dangquangwatch.spring.repository.DonghoRepository;  
-import edu.it10.dangquangwatch.spring.service.DonghoService;  
-import org.springframework.beans.factory.annotation.Autowired;  
+import edu.it10.dangquangwatch.spring.service.DonghoService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;  
 
 import java.util.List;  
@@ -31,5 +35,12 @@ public class DonghoServiceImpl implements DonghoService {
   @Override  
   public Optional<Dongho> findDonghoById(Integer madongho) {  
     return donghoRepository.findById(madongho);  
+  }
+
+  @Override
+  public List<Dongho> getAllDonghoByTendongho(String tendongho, int pageNum, int pageSize) {
+    Pageable pageable = PageRequest.of(pageNum, pageSize);
+
+    return donghoRepository.findByTendonghoContains(tendongho, pageable);
   }  
 }

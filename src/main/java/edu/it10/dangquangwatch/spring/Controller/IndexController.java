@@ -1,13 +1,12 @@
 package edu.it10.dangquangwatch.spring.controller;
 
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import edu.it10.dangquangwatch.spring.entity.Dongho;
 import edu.it10.dangquangwatch.spring.service.DonghoService;
 
 @RequestMapping("/")
@@ -18,17 +17,15 @@ public class IndexController {
 
     @GetMapping
     public String index(Model model) {
-        List<Dongho> donghos = donghoService.getAllDongho();
-
-        model.addAttribute("sanphambanchay", donghos);
-        model.addAttribute("donghoeposswiss", donghos);
-        model.addAttribute("diamondd", donghos);
-        model.addAttribute("philippeauguste", donghos);
-        model.addAttribute("jacqueslemans", donghos);
-        model.addAttribute("ariesgold", donghos);
-        model.addAttribute("atlanticswiss", donghos);
-        model.addAttribute("citizen", donghos);
-        model.addAttribute("tsarbomba", donghos);
+        model.addAttribute("sanphambanchay", donghoService.getAllDonghoByTendongho("", 0, 10));
+        model.addAttribute("donghoeposswiss", donghoService.getAllDonghoByTendongho("Epos Swiss", 0, 10));
+        model.addAttribute("diamondd", donghoService.getAllDonghoByTendongho("Diamond", 0, 10));
+        model.addAttribute("philippeauguste", donghoService.getAllDonghoByTendongho("Auguste", 0, 10));
+        model.addAttribute("jacqueslemans", donghoService.getAllDonghoByTendongho("Jacques", 0, 10));
+        model.addAttribute("ariesgold", donghoService.getAllDonghoByTendongho("Aries", 0, 10));
+        model.addAttribute("atlanticswiss", donghoService.getAllDonghoByTendongho("Atlantic", 0, 10));
+        model.addAttribute("citizen", donghoService.getAllDonghoByTendongho("Citizen", 0, 10));
+        model.addAttribute("tsarbomba", donghoService.getAllDonghoByTendongho("Tsar", 0, 10));
 
         return "index";
     }

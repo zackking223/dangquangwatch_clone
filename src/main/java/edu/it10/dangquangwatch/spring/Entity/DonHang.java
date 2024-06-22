@@ -5,7 +5,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import java.text.NumberFormat;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -24,15 +28,22 @@ public class DonHang {
   @Column(name = "NGAYTHEM")
   private String NGAYTHEM;
 
+  @OneToMany(mappedBy = "donhang", targetEntity = ChiTietDonHang.class)
+  private List<ChiTietDonHang> items;
+
+  public String getTongTienFormatted() {
+    return NumberFormat.getInstance().format(this.tongTien);
+  }
 
   public DonHang() {
   }
 
-  public DonHang(Integer maDonHang, String username, Integer tongTien, String NGAYTHEM) {
+  public DonHang(Integer maDonHang, String username, Integer tongTien, String NGAYTHEM, List<ChiTietDonHang> items) {
     this.maDonHang = maDonHang;
     this.username = username;
     this.tongTien = tongTien;
     this.NGAYTHEM = NGAYTHEM;
+    this.items = items;
   }
 
   public Integer getMaDonHang() {
@@ -67,6 +78,14 @@ public class DonHang {
     this.NGAYTHEM = NGAYTHEM;
   }
 
+  public List<ChiTietDonHang> getItems() {
+    return this.items;
+  }
+
+  public void setItems(List<ChiTietDonHang> items) {
+    this.items = items;
+  }
+
   public DonHang maDonHang(Integer maDonHang) {
     setMaDonHang(maDonHang);
     return this;
@@ -87,6 +106,11 @@ public class DonHang {
     return this;
   }
 
+  public DonHang items(List<ChiTietDonHang> items) {
+    setItems(items);
+    return this;
+  }
+
   @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -95,12 +119,12 @@ public class DonHang {
             return false;
         }
         DonHang donHang = (DonHang) o;
-        return Objects.equals(maDonHang, donHang.maDonHang) && Objects.equals(username, donHang.username) && Objects.equals(tongTien, donHang.tongTien) && Objects.equals(NGAYTHEM, donHang.NGAYTHEM);
+        return Objects.equals(maDonHang, donHang.maDonHang) && Objects.equals(username, donHang.username) && Objects.equals(tongTien, donHang.tongTien) && Objects.equals(NGAYTHEM, donHang.NGAYTHEM) && Objects.equals(items, donHang.items);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(maDonHang, username, tongTien, NGAYTHEM);
+    return Objects.hash(maDonHang, username, tongTien, NGAYTHEM, items);
   }
 
   @Override
@@ -110,6 +134,7 @@ public class DonHang {
       ", username='" + getUsername() + "'" +
       ", tongTien='" + getTongTien() + "'" +
       ", NGAYTHEM='" + getNGAYTHEM() + "'" +
+      ", items='" + getItems() + "'" +
       "}";
-  }
+  }  
 }

@@ -5,7 +5,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import java.text.NumberFormat;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -46,11 +51,30 @@ public class KinhMat {
   @Column(name = "NGAYTHEM")
   private String NGAYTHEM;
 
+  @OneToMany(mappedBy = "kinhmat", targetEntity = Anhkinhmat.class)
+  private List<Anhkinhmat> images;
+
+  public String getFirstImageUrl() {
+    Iterator<Anhkinhmat> iterator = images.iterator();
+
+    if (iterator.hasNext()) {
+      Anhkinhmat retrieved = iterator.next();
+
+      return retrieved.getUrl();
+    }
+
+    return "/images/placeholder.png";
+  }
+
+  public String getGiaTienFormatted() {
+    return NumberFormat.getInstance().format(this.giaTien);
+  }
+
+
   public KinhMat() {
   }
 
-  public KinhMat(int maKinhMat, String tenSanPham, int giaTien, int rongMat, int songMui, int daiGong, String tinhNang,
-      int traGop, int soLuong, String thongTin, String NGAYTHEM) {
+  public KinhMat(int maKinhMat, String tenSanPham, int giaTien, int rongMat, int songMui, int daiGong, String tinhNang, int traGop, int soLuong, String thongTin, String NGAYTHEM, List<Anhkinhmat> images) {
     this.maKinhMat = maKinhMat;
     this.tenSanPham = tenSanPham;
     this.giaTien = giaTien;
@@ -62,6 +86,7 @@ public class KinhMat {
     this.soLuong = soLuong;
     this.thongTin = thongTin;
     this.NGAYTHEM = NGAYTHEM;
+    this.images = images;
   }
 
   public int getMaKinhMat() {
@@ -152,6 +177,14 @@ public class KinhMat {
     this.NGAYTHEM = NGAYTHEM;
   }
 
+  public List<Anhkinhmat> getImages() {
+    return this.images;
+  }
+
+  public void setImages(List<Anhkinhmat> images) {
+    this.images = images;
+  }
+
   public KinhMat maKinhMat(int maKinhMat) {
     setMaKinhMat(maKinhMat);
     return this;
@@ -207,41 +240,43 @@ public class KinhMat {
     return this;
   }
 
+  public KinhMat images(List<Anhkinhmat> images) {
+    setImages(images);
+    return this;
+  }
+
   @Override
-  public boolean equals(Object o) {
-    if (o == this)
-      return true;
-    if (!(o instanceof KinhMat)) {
-      return false;
-    }
-    KinhMat kinhMat = (KinhMat) o;
-    return maKinhMat == kinhMat.maKinhMat && Objects.equals(tenSanPham, kinhMat.tenSanPham)
-        && giaTien == kinhMat.giaTien && rongMat == kinhMat.rongMat && songMui == kinhMat.songMui
-        && daiGong == kinhMat.daiGong && Objects.equals(tinhNang, kinhMat.tinhNang) && traGop == kinhMat.traGop
-        && soLuong == kinhMat.soLuong && Objects.equals(thongTin, kinhMat.thongTin)
-        && Objects.equals(NGAYTHEM, kinhMat.NGAYTHEM);
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof KinhMat)) {
+            return false;
+        }
+        KinhMat kinhMat = (KinhMat) o;
+        return maKinhMat == kinhMat.maKinhMat && Objects.equals(tenSanPham, kinhMat.tenSanPham) && giaTien == kinhMat.giaTien && rongMat == kinhMat.rongMat && songMui == kinhMat.songMui && daiGong == kinhMat.daiGong && Objects.equals(tinhNang, kinhMat.tinhNang) && traGop == kinhMat.traGop && soLuong == kinhMat.soLuong && Objects.equals(thongTin, kinhMat.thongTin) && Objects.equals(NGAYTHEM, kinhMat.NGAYTHEM) && Objects.equals(images, kinhMat.images);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(maKinhMat, tenSanPham, giaTien, rongMat, songMui, daiGong, tinhNang, traGop, soLuong, thongTin,
-        NGAYTHEM);
+    return Objects.hash(maKinhMat, tenSanPham, giaTien, rongMat, songMui, daiGong, tinhNang, traGop, soLuong, thongTin, NGAYTHEM, images);
   }
 
   @Override
   public String toString() {
     return "{" +
-        " maKinhMat='" + getMaKinhMat() + "'" +
-        ", tenSanPham='" + getTenSanPham() + "'" +
-        ", giaTien='" + getGiaTien() + "'" +
-        ", rongMat='" + getRongMat() + "'" +
-        ", songMui='" + getSongMui() + "'" +
-        ", daiGong='" + getDaiGong() + "'" +
-        ", tinhNang='" + getTinhNang() + "'" +
-        ", traGop='" + getTraGop() + "'" +
-        ", soLuong='" + getSoLuong() + "'" +
-        ", thongTin='" + getThongTin() + "'" +
-        ", NGAYTHEM='" + getNGAYTHEM() + "'" +
-        "}";
+      " maKinhMat='" + getMaKinhMat() + "'" +
+      ", tenSanPham='" + getTenSanPham() + "'" +
+      ", giaTien='" + getGiaTien() + "'" +
+      ", rongMat='" + getRongMat() + "'" +
+      ", songMui='" + getSongMui() + "'" +
+      ", daiGong='" + getDaiGong() + "'" +
+      ", tinhNang='" + getTinhNang() + "'" +
+      ", traGop='" + getTraGop() + "'" +
+      ", soLuong='" + getSoLuong() + "'" +
+      ", thongTin='" + getThongTin() + "'" +
+      ", NGAYTHEM='" + getNGAYTHEM() + "'" +
+      ", images='" + getImages() + "'" +
+      "}";
   }
+  
 }

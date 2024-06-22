@@ -1,22 +1,24 @@
 package edu.it10.dangquangwatch.spring.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne; 
 import jakarta.persistence.Table;
 import java.util.Objects;
 
 @Entity
 @Table(name = "chitietdonhang")
+@JsonIgnoreProperties({ "donhang" })
 public class ChiTietDonHang {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer maChiTietDonHang;
-
-  @Column(name = "madonhang")
-  private Integer maDonHang;
 
   @Column(name = "loaisanpham")
   private String loaiSanPham;
@@ -33,21 +35,22 @@ public class ChiTietDonHang {
   @Column(name = "NGAYTHEM")
   private String NGAYTHEM;
 
-  private String tenSanPham;
-  private String anhSanPham;
+  @ManyToOne(targetEntity = DonHang.class)
+  @JoinColumn(name = "madonhang")
+  private DonHang donhang;
 
 
   public ChiTietDonHang() {
   }
 
-  public ChiTietDonHang(Integer maChiTietDonHang, Integer maDonHang, String loaiSanPham, Integer soLuong, Integer giaTien, Integer maSanPham, String NGAYTHEM) {
+  public ChiTietDonHang(Integer maChiTietDonHang, String loaiSanPham, Integer soLuong, Integer giaTien, Integer maSanPham, String NGAYTHEM, DonHang donhang) {
     this.maChiTietDonHang = maChiTietDonHang;
-    this.maDonHang = maDonHang;
     this.loaiSanPham = loaiSanPham;
     this.soLuong = soLuong;
     this.giaTien = giaTien;
     this.maSanPham = maSanPham;
     this.NGAYTHEM = NGAYTHEM;
+    this.donhang = donhang;
   }
 
   public Integer getMaChiTietDonHang() {
@@ -56,14 +59,6 @@ public class ChiTietDonHang {
 
   public void setMaChiTietDonHang(Integer maChiTietDonHang) {
     this.maChiTietDonHang = maChiTietDonHang;
-  }
-
-  public Integer getMaDonHang() {
-    return this.maDonHang;
-  }
-
-  public void setMaDonHang(Integer maDonHang) {
-    this.maDonHang = maDonHang;
   }
 
   public String getLoaiSanPham() {
@@ -106,29 +101,16 @@ public class ChiTietDonHang {
     this.NGAYTHEM = NGAYTHEM;
   }
 
-  public String getTenSanPham() {
-    return this.tenSanPham;
+  public DonHang getDonhang() {
+    return this.donhang;
   }
 
-  public void setTenSanPham(String tenSanPham) {
-    this.tenSanPham = tenSanPham;
-  }
-
-  public String getAnhSanPham() {
-    return this.anhSanPham;
-  }
-
-  public void setAnhSanPham(String anhSanPham) {
-    this.anhSanPham = anhSanPham;
+  public void setDonhang(DonHang donhang) {
+    this.donhang = donhang;
   }
 
   public ChiTietDonHang maChiTietDonHang(Integer maChiTietDonHang) {
     setMaChiTietDonHang(maChiTietDonHang);
-    return this;
-  }
-
-  public ChiTietDonHang maDonHang(Integer maDonHang) {
-    setMaDonHang(maDonHang);
     return this;
   }
 
@@ -157,13 +139,8 @@ public class ChiTietDonHang {
     return this;
   }
 
-  public ChiTietDonHang tenSanPham(String tenSanPham) {
-    setTenSanPham(tenSanPham);
-    return this;
-  }
-
-  public ChiTietDonHang anhSanPham(String anhSanPham) {
-    setAnhSanPham(anhSanPham);
+  public ChiTietDonHang donhang(DonHang donhang) {
+    setDonhang(donhang);
     return this;
   }
 
@@ -175,27 +152,24 @@ public class ChiTietDonHang {
             return false;
         }
         ChiTietDonHang chiTietDonHang = (ChiTietDonHang) o;
-        return Objects.equals(maChiTietDonHang, chiTietDonHang.maChiTietDonHang) && Objects.equals(maDonHang, chiTietDonHang.maDonHang) && Objects.equals(loaiSanPham, chiTietDonHang.loaiSanPham) && Objects.equals(soLuong, chiTietDonHang.soLuong) && Objects.equals(giaTien, chiTietDonHang.giaTien) && Objects.equals(maSanPham, chiTietDonHang.maSanPham) && Objects.equals(NGAYTHEM, chiTietDonHang.NGAYTHEM) && Objects.equals(tenSanPham, chiTietDonHang.tenSanPham) && Objects.equals(anhSanPham, chiTietDonHang.anhSanPham);
+        return Objects.equals(maChiTietDonHang, chiTietDonHang.maChiTietDonHang) && Objects.equals(loaiSanPham, chiTietDonHang.loaiSanPham) && Objects.equals(soLuong, chiTietDonHang.soLuong) && Objects.equals(giaTien, chiTietDonHang.giaTien) && Objects.equals(maSanPham, chiTietDonHang.maSanPham) && Objects.equals(NGAYTHEM, chiTietDonHang.NGAYTHEM) && Objects.equals(donhang, chiTietDonHang.donhang);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(maChiTietDonHang, maDonHang, loaiSanPham, soLuong, giaTien, maSanPham, NGAYTHEM, tenSanPham, anhSanPham);
+    return Objects.hash(maChiTietDonHang, loaiSanPham, soLuong, giaTien, maSanPham, NGAYTHEM, donhang);
   }
 
   @Override
   public String toString() {
     return "{" +
       " maChiTietDonHang='" + getMaChiTietDonHang() + "'" +
-      ", maDonHang='" + getMaDonHang() + "'" +
       ", loaiSanPham='" + getLoaiSanPham() + "'" +
       ", soLuong='" + getSoLuong() + "'" +
       ", giaTien='" + getGiaTien() + "'" +
       ", maSanPham='" + getMaSanPham() + "'" +
       ", NGAYTHEM='" + getNGAYTHEM() + "'" +
-      ", tenSanPham='" + getTenSanPham() + "'" +
-      ", anhSanPham='" + getAnhSanPham() + "'" +
+      ", donhang='" + getDonhang() + "'" +
       "}";
   }
-  
 }

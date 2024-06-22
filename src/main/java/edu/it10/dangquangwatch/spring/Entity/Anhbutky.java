@@ -5,18 +5,21 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "anh_butky")
+@JsonIgnoreProperties({ "butky" })
+
 public class Anhbutky {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer maanh;
-
-    @Column(name = "mabutky")
-    private Integer mabutky;
 
     @Column(name = "url")
     private String url;
@@ -24,14 +27,18 @@ public class Anhbutky {
     @Column(name = "tenanh")
     private String tenanh;
 
+    @ManyToOne(targetEntity = Butky.class)
+    @JoinColumn(name = "mabutky")
+    private Butky butky;
+
     public Anhbutky() {
     }
 
-    public Anhbutky(Integer maanh, Integer mabutky, String url, String tenanh) {
+    public Anhbutky(Integer maanh, String url, String tenanh, Butky butky) {
         this.maanh = maanh;
-        this.mabutky = mabutky;
         this.url = url;
         this.tenanh = tenanh;
+        this.butky = butky;
     }
 
     public Integer getMaanh() {
@@ -40,14 +47,6 @@ public class Anhbutky {
 
     public void setMaanh(Integer maanh) {
         this.maanh = maanh;
-    }
-
-    public Integer getMabutky() {
-        return this.mabutky;
-    }
-
-    public void setMabutky(Integer mabutky) {
-        this.mabutky = mabutky;
     }
 
     public String getUrl() {
@@ -66,13 +65,16 @@ public class Anhbutky {
         this.tenanh = tenanh;
     }
 
-    public Anhbutky maanh(Integer maanh) {
-        setMaanh(maanh);
-        return this;
+    public Butky getButky() {
+        return this.butky;
     }
 
-    public Anhbutky mabutky(Integer mabutky) {
-        setMabutky(mabutky);
+    public void setButky(Butky butky) {
+        this.butky = butky;
+    }
+
+    public Anhbutky maanh(Integer maanh) {
+        setMaanh(maanh);
         return this;
     }
 
@@ -86,6 +88,11 @@ public class Anhbutky {
         return this;
     }
 
+    public Anhbutky butky(Butky butky) {
+        setButky(butky);
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -94,23 +101,22 @@ public class Anhbutky {
             return false;
         }
         Anhbutky anhbutky = (Anhbutky) o;
-        return Objects.equals(maanh, anhbutky.maanh) && Objects.equals(mabutky, anhbutky.mabutky)
-                && Objects.equals(url, anhbutky.url) && Objects.equals(tenanh, anhbutky.tenanh);
+        return Objects.equals(maanh, anhbutky.maanh) && Objects.equals(url, anhbutky.url)
+                && Objects.equals(tenanh, anhbutky.tenanh) && Objects.equals(butky, anhbutky.butky);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(maanh, mabutky, url, tenanh);
+        return Objects.hash(maanh, url, tenanh, butky);
     }
 
     @Override
     public String toString() {
         return "{" +
                 " maanh='" + getMaanh() + "'" +
-                ", mabutky='" + getMabutky() + "'" +
                 ", url='" + getUrl() + "'" +
                 ", tenanh='" + getTenanh() + "'" +
+                ", butky='" + getButky() + "'" +
                 "}";
     }
-
 }

@@ -3,7 +3,6 @@ package edu.it10.dangquangwatch.spring.entity;
 import java.text.NumberFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -56,7 +55,7 @@ public class Dongho {
   @Column(name = "gioitinh")
   private String gioitinh;
 
-  @OneToMany(mappedBy = "dongho", targetEntity = Anhdongho.class, orphanRemoval = true, fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "dongho", targetEntity = Anhdongho.class)
   private List<Anhdongho> images;
 
   public String getFirstImageUrl() {
