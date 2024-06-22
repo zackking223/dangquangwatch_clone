@@ -1,11 +1,11 @@
 <section class="relative w-full flex md:flex-row flex-col gap-2 items-center mb-4" th:fragment="ariesgold">
-  <div class="flex-shrink-0 md:w-[20%] sm:h-[445px] sm:mx-auto w-full overflow-visible">
+  <div class="flex-shrink-0 md:w-[20%] sm:h-[445px] sm:mx-0 mx-auto w-max overflow-visible">
     <a href="/dongho?search=ariesgold">
-      <img src="https://www.dangquangwatch.vn/view/pic/aries-gold-l58010l.jpg" class="w-[30vw] min-w-[310px] block rounded-md"
-        alt="ariesgold model">
+      <img src="https://www.dangquangwatch.vn/view/pic/aries-gold-l58010l.jpg"
+        class="w-[30vw] min-w-[310px] block rounded-md" alt="ariesgold model">
     </a>
   </div>
-  <div class="w-[80%] overflow-x-hidden">
+  <div class="relative w-[80%]">
     <ul class="flex gap-1 mb-[10px]">
       <li class="bg-yellow-400 font-bold rounded-full py-1 px-3 brandname relative">
         <a href="/dongho?search=ariesgold">Aries Gold</a>
@@ -17,16 +17,52 @@
         <a href="/dongho?search=ariesgold">Nữ</a>
       </li>
     </ul>
-    <section class="flex w-max bg-white rounded-md overflow-hidden">
-      <div class="w-[220px] bg-white rounded overflow-hidden p-2" th:each="dongho : ${ariesgold}">
-        <img th:src="${dongho.getFirstImageUrl()}" class="w-full aspect-square rounded" alt="anhdongho">
-        <div class="p-2 flex flex-col gap-2">
-          <a class="hover:text-yellow-400 text-sm h-20 overflow-hidden" th:href="@{'/dongho/' + ${dongho.getMadongho()}}"
-            th:text="@{${dongho.getTendongho()} + ' - Đồng hồ ' + ${dongho.getGioitinh()} + ' -  Size mặt ' + ${dongho.getDuongkinh()} + 'mm - ' + ${dongho.getChatlieu()} + ' - ' + ${dongho.getBomay()} + ' - Chịu nước ' + ${dongho.getChongnuoc()} + ' ATM'}">
-          </a>
-          <p class="font-bold text-red-600" th:text="@{${dongho.getGiatienFormatted()} + 'đ'}"></p>
+    <div id="ariesgold_container" class="w-full overflow-hidden bg-white rounded-md">
+      <section id="ariesgold" class="flex w-max overflow-hidden transition-transform duration-100 ease-in">
+        <div class="w-[220px] bg-white rounded overflow-hidden p-2" th:each="dongho : ${ariesgold}">
+          <img th:src="${dongho.getFirstImageUrl()}" class="w-full aspect-square rounded" alt="anhdongho">
+          <div class="p-2 flex flex-col gap-2">
+            <a class="hover:text-yellow-400 text-sm h-20 overflow-hidden"
+              th:href="@{'/dongho/' + ${dongho.getMadongho()}}"
+              th:text="@{${dongho.getTendongho()} + ' - Đồng hồ ' + ${dongho.getGioitinh()} + ' -  Size mặt ' + ${dongho.getDuongkinh()} + 'mm - ' + ${dongho.getChatlieu()} + ' - ' + ${dongho.getBomay()} + ' - Chịu nước ' + ${dongho.getChongnuoc()} + ' ATM'}">
+            </a>
+            <p class="font-bold text-red-600" th:text="@{${dongho.getGiatienFormatted()} + 'đ'}"></p>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
+
+    <button id="ariesgold-right"
+      class="absolute top-40 -right-2 px-1 py-3 md:text-3xl text-lg md:opacity-25 md:hover:opacity-100 bg-yellow-400">
+      🡺
+    </button>
+    <button id="ariesgold-left"
+      class="absolute top-40 -left-2 px-1 py-3 md:text-3xl text-lg md:opacity-25 md:hover:opacity-100 bg-yellow-400">
+      🡸
+    </button>
+    <script>
+      let posX_ariesgold = 0;
+      const step_ariesgold = -220;
+      const min_ariesgold = 0;
+      const ariesgold = document.getElementById("ariesgold");
+      const ariesgoldContainer = document.getElementById("ariesgold_container");
+      const max_ariesgold = ((Math.floor(ariesgold.offsetWidth / 220)) - Math.floor(ariesgoldContainer.offsetWidth / 220)) * -220;
+
+      document.getElementById("ariesgold-right").addEventListener("click", () => {
+        if ((posX_ariesgold + step_ariesgold) >= max_ariesgold) {
+          console.log("ariesgold right", max_ariesgold)
+          posX_ariesgold += step_ariesgold;
+          ariesgold.style.transform = "translateX(" + posX_ariesgold + "px)";
+        }
+      });
+
+      document.getElementById("ariesgold-left").addEventListener("click", () => {
+        if ((posX_ariesgold - step_ariesgold) <= min_ariesgold) {
+          console.log("ariesgold left", min_ariesgold)
+          posX_ariesgold -= step_ariesgold;
+          ariesgold.style.transform = "translateX(" + (posX_ariesgold) + "px)";
+        }
+      });
+    </script>
   </div>
 </section>

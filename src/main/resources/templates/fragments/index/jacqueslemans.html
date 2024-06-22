@@ -1,11 +1,11 @@
 <section class="relative w-full flex md:flex-row flex-col gap-2 items-center mb-4" th:fragment="jacqueslemans">
-  <div class="flex-shrink-0 md:w-[20%] sm:h-[445px] sm:mx-auto w-full overflow-visible">
+  <div class="flex-shrink-0 md:w-[20%] sm:h-[445px] sm:mx-0 mx-auto w-max overflow-visible">
     <a href="/dongho?search=jacqueslemans">
       <img src="https://www.dangquangwatch.vn/view/pic/jacques-lemans_pc2.jpg" class="w-[30vw] min-w-[310px] block rounded-md"
         alt="jacqueslemans model">
     </a>
   </div>
-  <div class="w-[80%] overflow-x-hidden">
+  <div class="relative w-[80%]">
     <ul class="flex gap-1 mb-[10px]">
       <li class="bg-yellow-400 font-bold rounded-full py-1 px-3 relative brandname">
         <a href="/dongho?search=jacqueslemans">Jacques Lemans</a>
@@ -14,16 +14,48 @@
         <a href="/dongho?search=jacqueslemans">Limited</a>
       </li>
     </ul>
-    <section class="flex w-max bg-white rounded-md overflow-hidden">
-      <div class="w-[220px] bg-white rounded overflow-hidden p-2" th:each="dongho : ${jacqueslemans}">
-        <img th:src="${dongho.getFirstImageUrl()}" class="w-full aspect-square rounded" alt="anhdongho">
-        <div class="p-2 flex flex-col gap-2">
-          <a class="hover:text-yellow-400 text-sm h-20 overflow-hidden" th:href="@{'/dongho/' + ${dongho.getMadongho()}}"
-            th:text="@{${dongho.getTendongho()} + ' - Đồng hồ ' + ${dongho.getGioitinh()} + ' -  Size mặt ' + ${dongho.getDuongkinh()} + 'mm - ' + ${dongho.getChatlieu()} + ' - ' + ${dongho.getBomay()} + ' - Chịu nước ' + ${dongho.getChongnuoc()} + ' ATM'}">
-          </a>
-          <p class="font-bold text-red-600" th:text="@{${dongho.getGiatienFormatted()} + 'đ'}"></p>
+    <div id="jacqueslemans_container" class="w-full overflow-hidden bg-white rounded-md">
+      <section id="jacqueslemans" class="flex w-max overflow-hidden transition-transform duration-100 ease-in">
+        <div class="w-[220px] bg-white rounded overflow-hidden p-2" th:each="dongho : ${jacqueslemans}">
+          <img th:src="${dongho.getFirstImageUrl()}" class="w-full aspect-square rounded" alt="anhdongho">
+          <div class="p-2 flex flex-col gap-2">
+            <a class="hover:text-yellow-400 text-sm h-20 overflow-hidden"
+              th:href="@{'/dongho/' + ${dongho.getMadongho()}}"
+              th:text="@{${dongho.getTendongho()} + ' - Đồng hồ ' + ${dongho.getGioitinh()} + ' -  Size mặt ' + ${dongho.getDuongkinh()} + 'mm - ' + ${dongho.getChatlieu()} + ' - ' + ${dongho.getBomay()} + ' - Chịu nước ' + ${dongho.getChongnuoc()} + ' ATM'}">
+            </a>
+            <p class="font-bold text-red-600" th:text="@{${dongho.getGiatienFormatted()} + 'đ'}"></p>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
+
+    <button id="jacqueslemans-right" class="absolute top-40 -right-2 px-1 py-3 md:text-3xl text-lg md:opacity-25 md:hover:opacity-100 bg-yellow-400">
+      🡺
+    </button>
+    <button id="jacqueslemans-left" class="absolute top-40 -left-2 px-1 py-3 md:text-3xl text-lg md:opacity-25 md:hover:opacity-100 bg-yellow-400">
+      🡸
+    </button>
+    <script>
+      let posX_jacqueslemans = 0;
+      const step_jacqueslemans = -220;
+      const min_jacqueslemans = 0;
+      const jacqueslemans = document.getElementById("jacqueslemans");
+      const jacqueslemansContainer = document.getElementById("jacqueslemans_container");
+      const max_jacqueslemans = ((Math.floor(jacqueslemans.offsetWidth / 220)) - Math.floor(jacqueslemansContainer.offsetWidth / 220)) * -220;
+
+      document.getElementById("jacqueslemans-right").addEventListener("click", () => {
+        if ((posX_jacqueslemans + step_jacqueslemans) >= max_jacqueslemans) {
+          posX_jacqueslemans += step_jacqueslemans;
+          jacqueslemans.style.transform = "translateX(" + posX_jacqueslemans + "px)";
+        }
+      });
+
+      document.getElementById("jacqueslemans-left").addEventListener("click", () => {
+        if ((posX_jacqueslemans - step_jacqueslemans) <= min_jacqueslemans) {
+          posX_jacqueslemans -= step_jacqueslemans;
+          jacqueslemans.style.transform = "translateX(" + (posX_jacqueslemans) + "px)";
+        }
+      });
+    </script>
   </div>
 </section>

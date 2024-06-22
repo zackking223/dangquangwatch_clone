@@ -1,11 +1,11 @@
 <section class="relative w-full flex md:flex-row flex-col gap-2 items-center mb-4" th:fragment="diamondd">
-  <div class="flex-shrink-0 md:w-[20%] sm:h-[445px] sm:mx-auto w-full overflow-visible">
+  <div class="flex-shrink-0 md:w-[20%] sm:h-[445px] sm:mx-0 mx-auto w-max overflow-visible">
     <a href="/dongho?search=diamondd">
-      <img src="https://www.dangquangwatch.vn/view/pic/diamond-d-lanngoc.jpg" class="w-[30vw] min-w-[310px] block rounded-md"
-        alt="diamondd model">
+      <img src="https://www.dangquangwatch.vn/view/pic/diamond-d-lanngoc.jpg"
+        class="w-[30vw] min-w-[310px] block rounded-md" alt="diamondd model">
     </a>
   </div>
-  <div class="w-[80%] overflow-x-hidden">
+  <div class="relative w-[80%]">
     <ul class="flex gap-1 mb-[10px]">
       <li class="bg-yellow-400 font-bold rounded-full py-1 px-3 brandname relative">
         <a href="/dongho?search=diamondd">Diamond D</a>
@@ -17,16 +17,50 @@
         <a href="/dongho?search=diamondd">Dây da</a>
       </li>
     </ul>
-    <section class="flex w-max bg-white rounded-md overflow-hidden">
-      <div class="w-[220px] bg-white rounded overflow-hidden p-2" th:each="dongho : ${diamondd}">
-        <img th:src="${dongho.getFirstImageUrl()}" class="w-full aspect-square rounded" alt="anhdongho">
-        <div class="p-2 flex flex-col gap-2">
-          <a class="hover:text-yellow-400 text-sm h-20 overflow-hidden" th:href="@{'/dongho/' + ${dongho.getMadongho()}}"
-            th:text="@{${dongho.getTendongho()} + ' - Đồng hồ ' + ${dongho.getGioitinh()} + ' -  Size mặt ' + ${dongho.getDuongkinh()} + 'mm - ' + ${dongho.getChatlieu()} + ' - ' + ${dongho.getBomay()} + ' - Chịu nước ' + ${dongho.getChongnuoc()} + ' ATM'}">
-          </a>
-          <p class="font-bold text-red-600" th:text="@{${dongho.getGiatienFormatted()} + 'đ'}"></p>
+    <div id="diamondd_container" class="w-full overflow-hidden bg-white rounded-md">
+      <section id="diamondd" class="flex w-max overflow-hidden transition-transform duration-100 ease-in">
+        <div class="w-[220px] bg-white rounded overflow-hidden p-2" th:each="dongho : ${diamondd}">
+          <img th:src="${dongho.getFirstImageUrl()}" class="w-full aspect-square rounded" alt="anhdongho">
+          <div class="p-2 flex flex-col gap-2">
+            <a class="hover:text-yellow-400 text-sm h-20 overflow-hidden"
+              th:href="@{'/dongho/' + ${dongho.getMadongho()}}"
+              th:text="@{${dongho.getTendongho()} + ' - Đồng hồ ' + ${dongho.getGioitinh()} + ' -  Size mặt ' + ${dongho.getDuongkinh()} + 'mm - ' + ${dongho.getChatlieu()} + ' - ' + ${dongho.getBomay()} + ' - Chịu nước ' + ${dongho.getChongnuoc()} + ' ATM'}">
+            </a>
+            <p class="font-bold text-red-600" th:text="@{${dongho.getGiatienFormatted()} + 'đ'}"></p>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
+
+    <button id="diamondd-right"
+      class="absolute top-40 -right-2 px-1 py-3 md:text-3xl text-lg md:opacity-25 md:hover:opacity-100 bg-yellow-400">
+      🡺
+    </button>
+    <button id="diamondd-left"
+      class="absolute top-40 -left-2 px-1 py-3 md:text-3xl text-lg md:opacity-25 md:hover:opacity-100 bg-yellow-400">
+      🡸
+    </button>
+    <script>
+      let posX_diamondd = 0;
+      const step_diamondd = -220;
+      const min_diamondd = 0;
+      const diamondd = document.getElementById("diamondd");
+      const diamonddContainer = document.getElementById("diamondd_container");
+      const max_diamondd = ((Math.floor(diamondd.offsetWidth / 220)) - Math.floor(diamonddContainer.offsetWidth / 220)) * -220;
+
+      document.getElementById("diamondd-right").addEventListener("click", () => {
+        if ((posX_diamondd + step_diamondd) >= max_diamondd) {
+          posX_diamondd += step_diamondd;
+          diamondd.style.transform = "translateX(" + posX_diamondd + "px)";
+        }
+      });
+
+      document.getElementById("diamondd-left").addEventListener("click", () => {
+        if ((posX_diamondd - step_diamondd) <= min_diamondd) {
+          posX_diamondd -= step_diamondd;
+          diamondd.style.transform = "translateX(" + (posX_diamondd) + "px)";
+        }
+      });
+    </script>
   </div>
 </section>
