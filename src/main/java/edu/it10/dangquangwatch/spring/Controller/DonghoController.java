@@ -8,7 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;  
-import org.springframework.web.bind.annotation.RequestParam;  
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;  
 import java.util.Optional;  
@@ -25,7 +26,12 @@ public class DonghoController {
     model.addAttribute("donghos", donghos);  
 
     return "admin/dongho/index";  
-  }  
+  }
+  
+  @GetMapping(value = "/getall")
+  public @ResponseBody List<Dongho> getAllDongHo() {
+    return donghoService.getAllDongho();
+  }
 
   @GetMapping(value = "/add")  
   public String addDongho(Model model) {  

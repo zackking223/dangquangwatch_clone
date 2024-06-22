@@ -1,0 +1,19 @@
+<!-- SAN PHAM BAN CHAY -->
+<div class="w-full mb-4" th:fragment="donghoeposswiss">
+  <section class="w-full bg-white flex items-center h-[65px] border-b-[3px] border-b-red-600 rounded-t-sm mb-2">
+    <h1 class="text-2xl w-max mx-auto font-bold">ĐỒNG HỒ EPOS SWISS</h1>
+  </section>
+
+  <section class="grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 w-full gap-2">
+    <div class="w-full max-w-[363px] bg-white rounded overflow-hidden" th:each="dongho : ${donghoeposswiss}">
+      <img th:src="${dongho.getFirstImageUrl()}"
+        class="w-full aspect-square" alt="anhdongho">
+      <div class="p-2 flex flex-col gap-2">
+        <a class="hover:text-yellow-400 text-sm" th:href="@{'/dongho/' + ${dongho.getMadongho()}}" 
+          th:text="@{${dongho.getTendongho()} + ' - Đồng hồ ' + ${dongho.getGioitinh()} + ' -  Size mặt ' + ${dongho.getDuongkinh()} + 'mm - ' + ${dongho.getChatlieu()} + ' - ' + ${dongho.getBomay()} + ' - Chịu nước ' + ${dongho.getChongnuoc()} + ' ATM'}">
+        </a>
+        <p class="font-bold text-red-600" th:text="@{${dongho.getGiatienFormatted()} + 'đ'}"></p>
+      </div>
+    </div>
+  </section>
+</div>

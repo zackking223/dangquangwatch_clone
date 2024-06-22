@@ -1,0 +1,35 @@
+<section class="relative w-full flex md:flex-row flex-col gap-2 items-center mb-4" th:fragment="citizen">
+  <div class="flex-shrink-0 md:w-[20%] sm:mx-auto w-full overflow-visible">
+    <a href="/dongho?search=citizen">
+      <img src="https://www.dangquangwatch.vn/assets/img/CT_C01.jpg" class="w-[30vw] min-w-[310px] block rounded-md"
+        alt="citizen model">
+    </a>
+  </div>
+  <div class="w-[80%] overflow-x-hidden">
+    <ul class="flex gap-1 mb-[10px]">
+      <li class="bg-yellow-400 font-bold rounded-full py-1 px-3 brandname relative">
+        <a href="/dongho?search=citizen">Citizen</a>
+      </li>
+      <li class="bg-white hover:bg-slate-200 transition-all ease-in duration-75 rounded-full py-1 px-3">
+        <a href="/dongho?search=citizen">Nam</a>
+      </li>
+      <li class="bg-white hover:bg-slate-200 transition-all ease-in duration-75 rounded-full py-1 px-3">
+        <a href="/dongho?search=citizen">Nữ</a>
+      </li>
+      <li class="bg-white hover:bg-slate-200 transition-all ease-in duration-75 rounded-full py-1 px-3">
+        <a href="/dongho?search=citizen">Cơ tự động</a>
+      </li>
+    </ul>
+    <section class="flex w-max bg-white rounded-md overflow-hidden">
+      <div class="w-[220px] bg-white rounded overflow-hidden p-2" th:each="dongho : ${citizen}">
+        <img th:src="${dongho.getFirstImageUrl()}" class="w-full aspect-square rounded" alt="anhdongho">
+        <div class="p-2 flex flex-col gap-2">
+          <a class="hover:text-yellow-400 text-sm h-20 overflow-hidden" th:href="@{'/dongho/' + ${dongho.getMadongho()}}"
+            th:text="@{${dongho.getTendongho()} + ' - Đồng hồ ' + ${dongho.getGioitinh()} + ' -  Size mặt ' + ${dongho.getDuongkinh()} + 'mm - ' + ${dongho.getChatlieu()} + ' - ' + ${dongho.getBomay()} + ' - Chịu nước ' + ${dongho.getChongnuoc()} + ' ATM'}">
+          </a>
+          <p class="font-bold text-red-600" th:text="@{${dongho.getGiatienFormatted()} + 'đ'}"></p>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>

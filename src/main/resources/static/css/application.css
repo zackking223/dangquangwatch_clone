@@ -7,3 +7,14 @@
         @apply text-2xl;
     }
 }
+
+.brandname::after {
+    content: "";
+    border-bottom: 8px solid #FFF;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    display: block;
+    position: absolute;
+    bottom: -10px;
+    left: calc(50% - 12px);
+}

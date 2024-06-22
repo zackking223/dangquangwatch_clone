@@ -3,6 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/images/LogoMobile.png">
     <title>Đồng hồ, Kính mắt cao cấp Chính hãng 100% | Đăng Quang Watch</title>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" />
@@ -11,62 +13,23 @@
 
 <body class="bg-gray-200">
     <div th:replace="~{fragments/header :: header}"></div>
-    <div th:replace="~{fragments/productsbar :: productsbar}"></div>
-    <div class="w-full bg-gray-400">
-        <img src="/images/banner.jpg" alt="banner" class="w-full max-w-[1215px] mx-auto">
-    </div>
-    <div class="w-full max-w-[1215px] mx-auto">
-        <!-- CAC LOAI DONG HO & KINH -->
-        <ul class="w-full py-3 gap-x-2 grid grid-cols-4">
-            <li
-                class="shadow-sm hover:shadow-md transition-all ease-in duration-75 hover:shadow-black w-full h-full bg-white rounded-lg">
-                <a href="/" class="flex items-center gap-2 py-3 pl-4">
-                    <img src="/images/dh_nam.jpg" class="block rounded-full w-[62px] h-[62px]" alt="dong ho nam">
-                    <p class="font-bold">
-                        Đồng hồ nam
-                    </p>
-                </a>
-            </li>
-            <li
-                class="shadow-sm hover:shadow-md transition-all ease-in duration-75 hover:shadow-black w-full h-full bg-white rounded-lg">
-                <a href="/" class="flex items-center gap-2 py-3 pl-4">
-                    <img src="/images/dong_ho_nu.jpg" class="block rounded-full w-[62px] h-[62px]" alt="dong ho nam">
-                    <p class="font-bold">
-                        Đồng hồ nữ
-                    </p>
-                </a>
-            </li>
-            <li
-                class="shadow-sm hover:shadow-md transition-all ease-in duration-75 hover:shadow-black w-full h-full bg-white rounded-lg">
-                <a href="/" class="flex items-center gap-2 py-3 pl-4">
-                    <img src="/images/certificate.png" class="block rounded-full w-[62px] h-[62px]" alt="dong ho nam">
-                    <p class="font-bold">
-                        Đồng hồ Thụy Sĩ
-                    </p>
-                </a>
-            </li>
-            <li
-                class="shadow-sm hover:shadow-md transition-all ease-in duration-75 hover:shadow-black w-full h-full bg-white rounded-lg">
-                <a href="/" class="flex items-center gap-2 py-3 pl-4">
-                    <img src="/images/kinh_mat_thoi_trang.jpg" class="block rounded-full w-[62px] h-[62px]"
-                        alt="dong ho nam">
-                    <p class="font-bold">
-                        Kính mắt thời trang
-                    </p>
-                </a>
-            </li>
-        </ul>
+    <div th:replace="~{fragments/index/productsbar :: productsbar}"></div>
+    <div th:replace="~{fragments/index/banner :: banner}"></div>
+    
+    <div class="w-full xl:max-w-[1215px] max-w-[1021px] mx-auto">
+        <div th:replace="~{fragments/index/categories :: categories}"></div>
 
-        <!-- SAN PHAM BAN CHAY -->
-        <section class="grid xl:grid-cols-5 lg:grid-cols-4 sm:grid-cols-3 grid-cols-2 w-full gap-2">
-            <div class="w-full min-w-[363px]">
-                <div class="w-full h-[60%] aspect-square">
-                    <img src="/" alt="anhdongho">
-                </div>
+        <div th:replace="~{fragments/index/sanphambanchay :: sanphambanchay}"></div>
+        <div th:replace="~{fragments/index/brands :: brands}"></div>
 
-                
-            </div>
-        </section>
+        <div th:replace="~{fragments/index/donghoeposswiss :: donghoeposswiss}"></div>
+        <div th:replace="~{fragments/index/diamondd :: diamondd}"></div>
+        <div th:replace="~{fragments/index/philippeauguste :: philippeauguste}"></div>
+        <div th:replace="~{fragments/index/jacqueslemans :: jacqueslemans}"></div>
+        <div th:replace="~{fragments/index/ariesgold :: ariesgold}"></div>
+        <div th:replace="~{fragments/index/atlanticswiss :: atlanticswiss}"></div>
+        <div th:replace="~{fragments/index/citizen :: citizen}"></div>
+        <div th:replace="~{fragments/index/tsarbomba :: tsarbomba}"></div>
     </div>
 </body>
 

@@ -1,19 +1,25 @@
 package edu.it10.dangquangwatch.spring.entity;
 
+import java.text.NumberFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.Objects;
-import java.util.Set;
+
+import java.util.List;
+
+import java.util.Iterator;
 
 @Entity
 @Table(name = "dongho")
 public class Dongho {
   @Id
+  @Column(name = "madongho")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer madongho;
 
@@ -44,14 +50,36 @@ public class Dongho {
   @Column(name = "thongtin")
   private String thongtin;
 
-  @OneToMany(mappedBy = "dongHo", targetEntity = Anhdongho.class, orphanRemoval = true)
-  private Set<Anhdongho> anhDongHos;
+  @Column(name = "chatlieu")
+  private String chatlieu;
+
+  @Column(name = "gioitinh")
+  private String gioitinh;
+
+  @OneToMany(mappedBy = "dongho", targetEntity = Anhdongho.class, orphanRemoval = true, fetch = FetchType.EAGER)
+  private List<Anhdongho> images;
+
+  public String getFirstImageUrl() {
+    Iterator<Anhdongho> iterator = images.iterator();
+
+    if (iterator.hasNext()) {
+      Anhdongho retrieved = iterator.next();
+
+      return retrieved.getUrl();
+    }
+
+    return "/images/placeholder.png";
+  }
+
+  public String getGiatienFormatted() {
+    return NumberFormat.getInstance().format(this.giatien);
+  }
 
 
   public Dongho() {
   }
 
-  public Dongho(Integer madongho, String tendongho, Integer giatien, Integer soluong, Integer tragop, Integer duongkinh, Integer chongnuoc, String bomay, String NGAYTHEM, String thongtin, Set<Anhdongho> anhDongHos) {
+  public Dongho(Integer madongho, String tendongho, Integer giatien, Integer soluong, Integer tragop, Integer duongkinh, Integer chongnuoc, String bomay, String NGAYTHEM, String thongtin, String chatlieu, String gioitinh, List<Anhdongho> images) {
     this.madongho = madongho;
     this.tendongho = tendongho;
     this.giatien = giatien;
@@ -62,7 +90,9 @@ public class Dongho {
     this.bomay = bomay;
     this.NGAYTHEM = NGAYTHEM;
     this.thongtin = thongtin;
-    this.anhDongHos = anhDongHos;
+    this.chatlieu = chatlieu;
+    this.gioitinh = gioitinh;
+    this.images = images;
   }
 
   public Integer getMadongho() {
@@ -145,12 +175,28 @@ public class Dongho {
     this.thongtin = thongtin;
   }
 
-  public Set<Anhdongho> getAnhDongHos() {
-    return this.anhDongHos;
+  public String getChatlieu() {
+    return this.chatlieu;
   }
 
-  public void setAnhDongHos(Set<Anhdongho> anhDongHos) {
-    this.anhDongHos = anhDongHos;
+  public void setChatlieu(String chatlieu) {
+    this.chatlieu = chatlieu;
+  }
+
+  public String getGioitinh() {
+    return this.gioitinh;
+  }
+
+  public void setGioitinh(String gioitinh) {
+    this.gioitinh = gioitinh;
+  }
+
+  public List<Anhdongho> getImages() {
+    return this.images;
+  }
+
+  public void setImages(List<Anhdongho> images) {
+    this.images = images;
   }
 
   public Dongho madongho(Integer madongho) {
@@ -203,8 +249,18 @@ public class Dongho {
     return this;
   }
 
-  public Dongho anhDongHos(Set<Anhdongho> anhDongHos) {
-    setAnhDongHos(anhDongHos);
+  public Dongho chatlieu(String chatlieu) {
+    setChatlieu(chatlieu);
+    return this;
+  }
+
+  public Dongho gioitinh(String gioitinh) {
+    setGioitinh(gioitinh);
+    return this;
+  }
+
+  public Dongho images(List<Anhdongho> images) {
+    setImages(images);
     return this;
   }
 
@@ -216,12 +272,12 @@ public class Dongho {
             return false;
         }
         Dongho dongho = (Dongho) o;
-        return Objects.equals(madongho, dongho.madongho) && Objects.equals(tendongho, dongho.tendongho) && Objects.equals(giatien, dongho.giatien) && Objects.equals(soluong, dongho.soluong) && Objects.equals(tragop, dongho.tragop) && Objects.equals(duongkinh, dongho.duongkinh) && Objects.equals(chongnuoc, dongho.chongnuoc) && Objects.equals(bomay, dongho.bomay) && Objects.equals(NGAYTHEM, dongho.NGAYTHEM) && Objects.equals(thongtin, dongho.thongtin) && Objects.equals(anhDongHos, dongho.anhDongHos);
+        return Objects.equals(madongho, dongho.madongho) && Objects.equals(tendongho, dongho.tendongho) && Objects.equals(giatien, dongho.giatien) && Objects.equals(soluong, dongho.soluong) && Objects.equals(tragop, dongho.tragop) && Objects.equals(duongkinh, dongho.duongkinh) && Objects.equals(chongnuoc, dongho.chongnuoc) && Objects.equals(bomay, dongho.bomay) && Objects.equals(NGAYTHEM, dongho.NGAYTHEM) && Objects.equals(thongtin, dongho.thongtin) && Objects.equals(chatlieu, dongho.chatlieu) && Objects.equals(gioitinh, dongho.gioitinh) && Objects.equals(images, dongho.images);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(madongho, tendongho, giatien, soluong, tragop, duongkinh, chongnuoc, bomay, NGAYTHEM, thongtin, anhDongHos);
+    return Objects.hash(madongho, tendongho, giatien, soluong, tragop, duongkinh, chongnuoc, bomay, NGAYTHEM, thongtin, chatlieu, gioitinh, images);
   }
 
   @Override
@@ -237,8 +293,9 @@ public class Dongho {
       ", bomay='" + getBomay() + "'" +
       ", NGAYTHEM='" + getNGAYTHEM() + "'" +
       ", thongtin='" + getThongtin() + "'" +
-      ", anhDongHos='" + getAnhDongHos() + "'" +
+      ", chatlieu='" + getChatlieu() + "'" +
+      ", gioitinh='" + getGioitinh() + "'" +
+      ", images='" + getImages() + "'" +
       "}";
-  }
-  
+  }  
 }

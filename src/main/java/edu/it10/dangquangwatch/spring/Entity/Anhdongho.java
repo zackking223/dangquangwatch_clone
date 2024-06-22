@@ -10,8 +10,11 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "anh_dongho")
+@JsonIgnoreProperties({"dongho"})
 public class Anhdongho {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,18 +27,18 @@ public class Anhdongho {
   private String tenanh;
 
   @ManyToOne(targetEntity = Dongho.class)
-  @JoinColumn(name = "madongho", nullable = false)
-  private Dongho dongHo;
+  @JoinColumn(name = "madongho")
+  private Dongho dongho;
   
 
   public Anhdongho() {
   }
 
-  public Anhdongho(Integer maanh, String url, String tenanh, Dongho dongHo) {
+  public Anhdongho(Integer maanh, String url, String tenanh, Dongho dongho) {
     this.maanh = maanh;
     this.url = url;
     this.tenanh = tenanh;
-    this.dongHo = dongHo;
+    this.dongho = dongho;
   }
 
   public Integer getMaanh() {
@@ -62,12 +65,12 @@ public class Anhdongho {
     this.tenanh = tenanh;
   }
 
-  public Dongho getDongHo() {
-    return this.dongHo;
+  public Dongho getDongho() {
+    return this.dongho;
   }
 
-  public void setDongHo(Dongho dongHo) {
-    this.dongHo = dongHo;
+  public void setDongho(Dongho dongho) {
+    this.dongho = dongho;
   }
 
   public Anhdongho maanh(Integer maanh) {
@@ -85,8 +88,8 @@ public class Anhdongho {
     return this;
   }
 
-  public Anhdongho dongHo(Dongho dongHo) {
-    setDongHo(dongHo);
+  public Anhdongho dongho(Dongho dongho) {
+    setDongho(dongho);
     return this;
   }
 
@@ -98,12 +101,12 @@ public class Anhdongho {
             return false;
         }
         Anhdongho anhdongho = (Anhdongho) o;
-        return Objects.equals(maanh, anhdongho.maanh) && Objects.equals(url, anhdongho.url) && Objects.equals(tenanh, anhdongho.tenanh) && Objects.equals(dongHo, anhdongho.dongHo);
+        return Objects.equals(maanh, anhdongho.maanh) && Objects.equals(url, anhdongho.url) && Objects.equals(tenanh, anhdongho.tenanh) && Objects.equals(dongho, anhdongho.dongho);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(maanh, url, tenanh, dongHo);
+    return Objects.hash(maanh, url, tenanh, dongho);
   }
 
   @Override
@@ -112,7 +115,7 @@ public class Anhdongho {
       " maanh='" + getMaanh() + "'" +
       ", url='" + getUrl() + "'" +
       ", tenanh='" + getTenanh() + "'" +
-      ", dongHo='" + getDongHo() + "'" +
+      ", dongho='" + getDongho() + "'" +
       "}";
   }
 }
