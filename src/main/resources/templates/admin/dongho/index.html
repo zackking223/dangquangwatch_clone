@@ -22,6 +22,8 @@
                 <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Chống nước</th>
                 <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Bộ máy</th>
                 <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Thông tin</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Giới tính</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Chất liệu</th>
                 <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Ngày thêm</th>
                 <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Tùy chọn</th>
             </tr>
@@ -35,6 +37,8 @@
                 <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${dongho.getChongnuoc()}"></td>
                 <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${dongho.getBomay()}"></td>
                 <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${dongho.getThongtin()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${dongho.getGioitinh()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${dongho.getChatlieu()}"></td>
                 <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${dongho.getNGAYTHEM()}"></td>
                 <td class="p-2 border border-solid border-black max-w-[200px]">
                     <a th:href="@{/admin/dongho/edit?id={id}(id=${dongho.getMadongho()})}"

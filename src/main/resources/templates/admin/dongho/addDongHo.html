@@ -55,6 +55,18 @@
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
+                    <label class="block font-medium" th:for="gioitinh">Giới tính</label>
+                    <input class="block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{gioitinh}"
+                        placeholder="Bộ máy" />
+                </div>
+                <div style="clear: both; display: block; height: 10px"></div>
+                <div>
+                    <label class="block font-medium" th:for="chatlieu">Chất liệu</label>
+                    <input class="block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{chatlieu}"
+                        placeholder="Bộ máy" />
+                </div>
+                <div style="clear: both; display: block; height: 10px"></div>
+                <div>
                     <label class="block font-medium" th:for="thongtin">Thông tin</label>
                     <textarea class="w-[80vw] min-w-[280px]" rows="20" th:field="*{thongtin}"></textarea>
                 </div>
