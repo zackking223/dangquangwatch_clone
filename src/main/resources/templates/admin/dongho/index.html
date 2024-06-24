@@ -14,34 +14,34 @@
         <h1 class="font-bold text-center my-2">Quản lý đồng hồ</h1>
         <table>
             <tr>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Mã đồng hồ</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Tên đồng hồ</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Giá tiền</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Số lượng</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Trả góp</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Đường kính</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Chống nước</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Bộ máy</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Thông tin</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Giới tính</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Chất liệu</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Ngày thêm</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Tùy chọn</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Mã đồng hồ</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Tên đồng hồ</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Giá tiền</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Số lượng</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Trả góp</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Đường kính</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Chống nước</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Bộ máy</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Thông tin</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Giới tính</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Chất liệu</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Ngày thêm</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Tùy chọn</th>
             </tr>
             <tr th:each="dongho : ${donghos}">
-                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${dongho.getMadongho()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${dongho.getTendongho()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${dongho.getGiatien()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${dongho.getSoluong()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${dongho.getTragop()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${dongho.getDuongkinh()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${dongho.getChongnuoc()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${dongho.getBomay()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${dongho.getThongtin()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${dongho.getGioitinh()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${dongho.getChatlieu()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${dongho.getNGAYTHEM()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px]">
+                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${dongho.getMadongho()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${dongho.getTendongho()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${dongho.getGiatien()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${dongho.getSoluong()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${dongho.getTragop()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${dongho.getDuongkinh()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${dongho.getChongnuoc()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${dongho.getBomay()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${dongho.getThongtin()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${dongho.getGioitinh()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${dongho.getChatlieu()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${dongho.getNGAYTHEM()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
                     <a th:href="@{/admin/dongho/edit?id={id}(id=${dongho.getMadongho()})}"
                         class="p-2 rounded bg-green-500 text-white">Sửa</a>
                     <a th:href="@{/admin/dongho/delete?id={id}(id=${dongho.getMadongho()})}"

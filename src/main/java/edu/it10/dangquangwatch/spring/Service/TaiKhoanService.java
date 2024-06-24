@@ -18,9 +18,9 @@ public interface TaiKhoanService {
 
   public void updateTaiKhoan(TaiKhoan taiKhoan);
 
-  public TaiKhoan findTaiKhoanById(Integer maTaiKhoan);
+  public TaiKhoan getTaiKhoan(String username);
 
   public List<TaiKhoan> findTaiKhoanByUsername(String username);
 
-  public void deleteTaiKhoanById(Integer maTaiKhoan);
+  public void deleteTaiKhoanByUsername(String username);
 } 

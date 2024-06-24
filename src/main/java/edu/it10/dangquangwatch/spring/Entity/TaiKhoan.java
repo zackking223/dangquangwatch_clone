@@ -16,21 +16,29 @@ public class TaiKhoan {
   @Column(name = "password")
   private String password;
 
+  @Column(name = "hoten")
+  private String hoten;
+
   @Column(name = "diachi")
   private String diachi;
 
   @Column(name = "loai_tai_khoan")
   private String loai_tai_khoan;
 
+  @Column(name = "enabled")
+  private String enabled;
+
 
   public TaiKhoan() {
   }
 
-  public TaiKhoan(String username, String password, String diachi, String loai_tai_khoan) {
+  public TaiKhoan(String username, String password, String hoten, String diachi, String loai_tai_khoan, String enabled) {
     this.username = username;
     this.password = password;
+    this.hoten = hoten;
     this.diachi = diachi;
     this.loai_tai_khoan = loai_tai_khoan;
+    this.enabled = enabled;
   }
 
   public String getUsername() {
@@ -49,6 +57,14 @@ public class TaiKhoan {
     this.password = password;
   }
 
+  public String getHoten() {
+    return this.hoten;
+  }
+
+  public void setHoten(String hoten) {
+    this.hoten = hoten;
+  }
+
   public String getDiachi() {
     return this.diachi;
   }
@@ -65,6 +81,14 @@ public class TaiKhoan {
     this.loai_tai_khoan = loai_tai_khoan;
   }
 
+  public String getEnabled() {
+    return this.enabled;
+  }
+
+  public void setEnabled(String enabled) {
+    this.enabled = enabled;
+  }
+
   public TaiKhoan username(String username) {
     setUsername(username);
     return this;
@@ -72,6 +96,11 @@ public class TaiKhoan {
 
   public TaiKhoan password(String password) {
     setPassword(password);
+    return this;
+  }
+
+  public TaiKhoan hoten(String hoten) {
+    setHoten(hoten);
     return this;
   }
 
@@ -85,6 +114,11 @@ public class TaiKhoan {
     return this;
   }
 
+  public TaiKhoan enabled(String enabled) {
+    setEnabled(enabled);
+    return this;
+  }
+
   @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -93,12 +127,12 @@ public class TaiKhoan {
             return false;
         }
         TaiKhoan taiKhoan = (TaiKhoan) o;
-        return Objects.equals(username, taiKhoan.username) && Objects.equals(password, taiKhoan.password) && Objects.equals(diachi, taiKhoan.diachi) && Objects.equals(loai_tai_khoan, taiKhoan.loai_tai_khoan);
+        return Objects.equals(username, taiKhoan.username) && Objects.equals(password, taiKhoan.password) && Objects.equals(hoten, taiKhoan.hoten) && Objects.equals(diachi, taiKhoan.diachi) && Objects.equals(loai_tai_khoan, taiKhoan.loai_tai_khoan) && Objects.equals(enabled, taiKhoan.enabled);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(username, password, diachi, loai_tai_khoan);
+    return Objects.hash(username, password, hoten, diachi, loai_tai_khoan, enabled);
   }
 
   @Override
@@ -106,9 +140,11 @@ public class TaiKhoan {
     return "{" +
       " username='" + getUsername() + "'" +
       ", password='" + getPassword() + "'" +
+      ", hoten='" + getHoten() + "'" +
       ", diachi='" + getDiachi() + "'" +
       ", loai_tai_khoan='" + getLoai_tai_khoan() + "'" +
+      ", enabled='" + getEnabled() + "'" +
       "}";
   }
-  
+
 }

@@ -68,6 +68,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
   @Transactional
   public void dangKyKhachHang(TaiKhoan taiKhoan) {
     String plainText = taiKhoan.getPassword();
+    taiKhoan.setUsername(removeWhitespace(taiKhoan.getUsername()));
 
     taiKhoan.setLoai_tai_khoan("KHACHHANG");
     taiKhoan.setPassword(passwordEncoder.encode(plainText));
@@ -79,6 +80,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
   @Transactional
   public void dangKyQuanTri(TaiKhoan taiKhoan) {
     String plainText = taiKhoan.getPassword();
+    taiKhoan.setUsername(removeWhitespace(taiKhoan.getUsername()));
 
     taiKhoan.setLoai_tai_khoan("QUANTRI");
     taiKhoan.setDiachi("QUANTRI ko can dia chi");
@@ -90,12 +92,15 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
   @Override
   @Transactional
   public void updateTaiKhoan(TaiKhoan taiKhoan) {
+    String plainText = taiKhoan.getPassword();
+    taiKhoan.setUsername(removeWhitespace(taiKhoan.getUsername()));
+    taiKhoan.setPassword(passwordEncoder.encode(plainText));
     entityManager.merge(taiKhoan);
   }
 
   @Override
-  public TaiKhoan findTaiKhoanById(Integer maTaiKhoan) {
-    return entityManager.find(TaiKhoan.class, maTaiKhoan);
+  public TaiKhoan getTaiKhoan(String username) {
+    return entityManager.find(TaiKhoan.class, username);
   }
 
   @Override
@@ -108,9 +113,16 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 
   @Override
   @Transactional
-  public void deleteTaiKhoanById(Integer maTaiKhoan) {
-    TaiKhoan target = entityManager.find(TaiKhoan.class, maTaiKhoan);
+  public void deleteTaiKhoanByUsername(String username) {
+    TaiKhoan target = entityManager.find(TaiKhoan.class, username);
 
     entityManager.remove(target);
+  }
+
+  private static String removeWhitespace(String input) {
+    if (input == null) {
+        return null;
+    }
+    return input.replaceAll("\\s+", "");
   }
 }

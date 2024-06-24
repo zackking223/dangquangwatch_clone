@@ -15,24 +15,24 @@
         <h1 class="font-bold text-center my-2">Quản lý trang sức</h1>
         <table class="table table-active">
             <tr>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Mã trang sức</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Tên trang sức</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Giá tiền</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Số lượng</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Trả góp</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Thông tin</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Ngày thêm</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Tùy chọn</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Mã trang sức</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Tên trang sức</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Giá tiền</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Số lượng</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Trả góp</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Thông tin</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Ngày thêm</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Tùy chọn</th>
             </tr>
             <tr th:each="trangsuc : ${trangsucs}">
-                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${trangsuc.getMatrangsuc()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${trangsuc.getTentrangsuc()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${trangsuc.getGia()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${trangsuc.getSoluong()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${trangsuc.getTragop()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${trangsuc.getThongtin()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${trangsuc.getNGAYTHEM()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px]">
+                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${trangsuc.getMatrangsuc()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${trangsuc.getTentrangsuc()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${trangsuc.getGia()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${trangsuc.getSoluong()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${trangsuc.getTragop()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${trangsuc.getThongtin()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${trangsuc.getNGAYTHEM()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
                     <a class="p-2 rounded bg-green-500 text-white"
                         th:href="@{/admin/trangsuc/edit?id={id}(id=${trangsuc.getMatrangsuc()})}">Sửa</a>
                     <a class="p-2 rounded bg-red-500 text-white"
