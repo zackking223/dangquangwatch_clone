@@ -44,20 +44,24 @@
       const min_philippeauguste = 0;
       const philippeauguste = document.getElementById("philippeauguste");
       const philippeaugusteContainer = document.getElementById("philippeauguste_container");
-      const max_philippeauguste = ((Math.floor(philippeauguste.offsetWidth / 220)) - Math.floor(philippeaugusteContainer.offsetWidth / 220)) * -220;
+      const max_philippeauguste = ((Math.round(philippeauguste.offsetWidth / 220)) - Math.round(philippeaugusteContainer.offsetWidth / 220)) * -220;
 
       document.getElementById("philippeauguste-right").addEventListener("click", () => {
         if ((posX_philippeauguste + step_philippeauguste) >= max_philippeauguste) {
           posX_philippeauguste += step_philippeauguste;
-          philippeauguste.style.transform = "translateX(" + posX_philippeauguste + "px)";
+        } else {
+          posX_philippeauguste =  -philippeauguste.offsetWidth + philippeaugusteContainer.offsetWidth;
         }
+        philippeauguste.style.transform = "translateX(" + posX_philippeauguste + "px)";
       });
 
       document.getElementById("philippeauguste-left").addEventListener("click", () => {
         if ((posX_philippeauguste - step_philippeauguste) <= min_philippeauguste) {
           posX_philippeauguste -= step_philippeauguste;
-          philippeauguste.style.transform = "translateX(" + (posX_philippeauguste) + "px)";
+        } else {
+          posX_philippeauguste = 0;
         }
+        philippeauguste.style.transform = "translateX(" + (posX_philippeauguste) + "px)";
       });
     </script>
   </div>

@@ -47,20 +47,24 @@
       const min_atlanticswiss = 0;
       const atlanticswiss = document.getElementById("atlanticswiss");
       const atlanticswissContainer = document.getElementById("atlanticswiss_container");
-      const max_atlanticswiss = ((Math.floor(atlanticswiss.offsetWidth / 220)) - Math.floor(atlanticswissContainer.offsetWidth / 220)) * -220;
+      const max_atlanticswiss = ((Math.round(atlanticswiss.offsetWidth / 220)) - Math.round(atlanticswissContainer.offsetWidth / 220)) * -220;
 
       document.getElementById("atlanticswiss-right").addEventListener("click", () => {
         if ((posX_atlanticswiss + step_atlanticswiss) >= max_atlanticswiss) {
           posX_atlanticswiss += step_atlanticswiss;
-          atlanticswiss.style.transform = "translateX(" + posX_atlanticswiss + "px)";
+        } else {
+          posX_atlanticswiss =  -atlanticswiss.offsetWidth + atlanticswissContainer.offsetWidth;
         }
+        atlanticswiss.style.transform = "translateX(" + posX_atlanticswiss + "px)";
       });
 
       document.getElementById("atlanticswiss-left").addEventListener("click", () => {
         if ((posX_atlanticswiss - step_atlanticswiss) <= min_atlanticswiss) {
           posX_atlanticswiss -= step_atlanticswiss;
-          atlanticswiss.style.transform = "translateX(" + (posX_atlanticswiss) + "px)";
+        } else {
+          posX_atlanticswiss = 0;
         }
+        atlanticswiss.style.transform = "translateX(" + (posX_atlanticswiss) + "px)";
       });
     </script>
   </div>

@@ -41,20 +41,24 @@
       const min_jacqueslemans = 0;
       const jacqueslemans = document.getElementById("jacqueslemans");
       const jacqueslemansContainer = document.getElementById("jacqueslemans_container");
-      const max_jacqueslemans = ((Math.floor(jacqueslemans.offsetWidth / 220)) - Math.floor(jacqueslemansContainer.offsetWidth / 220)) * -220;
+      const max_jacqueslemans = ((Math.round(jacqueslemans.offsetWidth / 220)) - Math.round(jacqueslemansContainer.offsetWidth / 220)) * -220;
 
       document.getElementById("jacqueslemans-right").addEventListener("click", () => {
         if ((posX_jacqueslemans + step_jacqueslemans) >= max_jacqueslemans) {
           posX_jacqueslemans += step_jacqueslemans;
-          jacqueslemans.style.transform = "translateX(" + posX_jacqueslemans + "px)";
+        } else {
+          posX_jacqueslemans =  -jacqueslemans.offsetWidth + jacqueslemansContainer.offsetWidth;
         }
+        jacqueslemans.style.transform = "translateX(" + posX_jacqueslemans + "px)";
       });
 
       document.getElementById("jacqueslemans-left").addEventListener("click", () => {
         if ((posX_jacqueslemans - step_jacqueslemans) <= min_jacqueslemans) {
           posX_jacqueslemans -= step_jacqueslemans;
-          jacqueslemans.style.transform = "translateX(" + (posX_jacqueslemans) + "px)";
+        } else {
+          posX_jacqueslemans = 0;
         }
+        jacqueslemans.style.transform = "translateX(" + (posX_jacqueslemans) + "px)";
       });
     </script>
   </div>

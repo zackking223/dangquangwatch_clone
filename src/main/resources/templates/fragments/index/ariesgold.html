@@ -46,22 +46,24 @@
       const min_ariesgold = 0;
       const ariesgold = document.getElementById("ariesgold");
       const ariesgoldContainer = document.getElementById("ariesgold_container");
-      const max_ariesgold = ((Math.floor(ariesgold.offsetWidth / 220)) - Math.floor(ariesgoldContainer.offsetWidth / 220)) * -220;
+      const max_ariesgold = ((Math.round(ariesgold.offsetWidth / 220)) - Math.round(ariesgoldContainer.offsetWidth / 220)) * -220;
 
       document.getElementById("ariesgold-right").addEventListener("click", () => {
         if ((posX_ariesgold + step_ariesgold) >= max_ariesgold) {
-          console.log("ariesgold right", max_ariesgold)
           posX_ariesgold += step_ariesgold;
-          ariesgold.style.transform = "translateX(" + posX_ariesgold + "px)";
+        } else {
+          posX_ariesgold =  -ariesgold.offsetWidth + ariesgoldContainer.offsetWidth;
         }
+        ariesgold.style.transform = "translateX(" + posX_ariesgold + "px)";
       });
 
       document.getElementById("ariesgold-left").addEventListener("click", () => {
         if ((posX_ariesgold - step_ariesgold) <= min_ariesgold) {
-          console.log("ariesgold left", min_ariesgold)
           posX_ariesgold -= step_ariesgold;
-          ariesgold.style.transform = "translateX(" + (posX_ariesgold) + "px)";
+        } else {
+          posX_ariesgold = 0;
         }
+        ariesgold.style.transform = "translateX(" + (posX_ariesgold) + "px)";
       });
     </script>
   </div>

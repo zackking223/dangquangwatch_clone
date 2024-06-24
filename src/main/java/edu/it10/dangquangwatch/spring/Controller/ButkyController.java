@@ -2,7 +2,8 @@ package edu.it10.dangquangwatch.spring.controller;
 
 import edu.it10.dangquangwatch.spring.entity.Butky;  
 import edu.it10.dangquangwatch.spring.service.ButkyService;  
-import org.springframework.beans.factory.annotation.Autowired;  
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;  
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,10 +20,25 @@ public class ButkyController {
   @Autowired private ButkyService butkyService;  
 
   @GetMapping("/")  
-  public String index(Model model) {  
-    List<Butky> butkys = butkyService.getAllButky();  
+  public String index(Model model,@RequestParam("page") Optional<Integer> page, @RequestParam("search") Optional<String> tenbutky) {  
+    int pageNum = 0;
+    String searchStr = "";
 
-    model.addAttribute("butkys", butkys);  
+    if (tenbutky.isPresent()) {
+      searchStr = tenbutky.get();
+    }
+
+    if (page.isPresent()) {
+      pageNum = page.get() - 1;
+    }
+    
+    Page<Butky> data = butkyService.getAllButkyByTenbutky(searchStr, pageNum);
+    List<Butky> butkys = data.getContent();  
+
+    model.addAttribute("butkys", butkys);
+    model.addAttribute("page", pageNum);
+    model.addAttribute("search", searchStr);
+    model.addAttribute("sotrang", data.getTotalPages());  
 
     return "/admin/butky/index";  
   }  

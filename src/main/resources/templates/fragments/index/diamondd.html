@@ -46,20 +46,24 @@
       const min_diamondd = 0;
       const diamondd = document.getElementById("diamondd");
       const diamonddContainer = document.getElementById("diamondd_container");
-      const max_diamondd = ((Math.floor(diamondd.offsetWidth / 220)) - Math.floor(diamonddContainer.offsetWidth / 220)) * -220;
+      const max_diamondd = ((Math.round(diamondd.offsetWidth / 220)) - Math.round(diamonddContainer.offsetWidth / 220)) * -220;
 
       document.getElementById("diamondd-right").addEventListener("click", () => {
         if ((posX_diamondd + step_diamondd) >= max_diamondd) {
           posX_diamondd += step_diamondd;
-          diamondd.style.transform = "translateX(" + posX_diamondd + "px)";
+        } else {
+          posX_diamondd =  -diamondd.offsetWidth + diamonddContainer.offsetWidth;
         }
+        diamondd.style.transform = "translateX(" + posX_diamondd + "px)";
       });
 
       document.getElementById("diamondd-left").addEventListener("click", () => {
         if ((posX_diamondd - step_diamondd) <= min_diamondd) {
           posX_diamondd -= step_diamondd;
-          diamondd.style.transform = "translateX(" + (posX_diamondd) + "px)";
+        } else {
+          posX_diamondd = 0;
         }
+        diamondd.style.transform = "translateX(" + (posX_diamondd) + "px)";
       });
     </script>
   </div>

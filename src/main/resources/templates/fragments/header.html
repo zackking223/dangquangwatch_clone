@@ -1,13 +1,14 @@
-<div class="h-14 mb-4 w-full relative z-10" th:fragment="header">
+<div class="h-14 mb-4 w-full relative z-20" th:fragment="header">
     <header class="fixed z-10 h-14 w-full box-content py-2 bg-black">
         <section class="w-full max-w-[1215px] mx-auto flex items-center pl-3">
             <a href="/" class="flex-shrink-0">
                 <img src="/images/Logo.png" alt="Đăng Quang Watch" class="xl:block hidden w-[230px] h-14">
                 <img src="/images/LogoMobile.png" alt="Đăng Quang Watch" class="xl:hidden w-[60px] h-14">
             </a>
-    
-            <form action="" class="flex items-center h-[38px] w-max max-w-[395px] sm:ml-5 rounded sm:mr-auto ml-auto overflow-hidden">
-                <input type="text"
+
+            <form action=""
+                class="flex items-center h-[38px] w-max max-w-[395px] sm:ml-5 rounded sm:mr-auto ml-auto overflow-hidden">
+                <input type="text" name="search" th:value="${search}"
                     class="outline-none hidden sm:block w-[295px] h-full px-2 placeholder:italic placeholder:text-slate-500"
                     placeholder="Nhập từ khóa...">
                 <button
@@ -20,7 +21,7 @@
                     </p>
                 </button>
             </form>
-    
+
             <ul class="flex items-center text-sm text-white xl:mx-0 mr-2">
                 <li class="px-4 relative">
                     <a class="flex items-center gap-1" href="/cart">
@@ -30,7 +31,8 @@
                         <p class="hidden xl:block">
                             Giỏ hàng (0)
                         </p>
-                        <p class="absolute xl:hidden rounded-full w-[18px] h-[18px] text-center text-[12px] leading-[14px] border border-black right-0 top-[-2px] text-black bg-yellow-300">
+                        <p
+                            class="absolute xl:hidden rounded-full w-[18px] h-[18px] text-center text-[12px] leading-[14px] border border-black right-0 top-[-2px] text-black bg-yellow-300">
                             0
                         </p>
                     </a>

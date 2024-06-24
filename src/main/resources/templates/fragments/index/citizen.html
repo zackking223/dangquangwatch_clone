@@ -49,20 +49,24 @@
       const min_citizen = 0;
       const citizen = document.getElementById("citizen");
       const citizenContainer = document.getElementById("citizen_container");
-      const max_citizen = ((Math.floor(citizen.offsetWidth / 220)) - Math.floor(citizenContainer.offsetWidth / 220)) * -220;
+      const max_citizen = ((Math.round(citizen.offsetWidth / 220)) - Math.round(citizenContainer.offsetWidth / 220)) * -220;
 
       document.getElementById("citizen-right").addEventListener("click", () => {
         if ((posX_citizen + step_citizen) >= max_citizen) {
           posX_citizen += step_citizen;
-          citizen.style.transform = "translateX(" + posX_citizen + "px)";
+        } else {
+          posX_citizen =  -citizen.offsetWidth + citizenContainer.offsetWidth;
         }
+        citizen.style.transform = "translateX(" + posX_citizen + "px)";
       });
 
       document.getElementById("citizen-left").addEventListener("click", () => {
         if ((posX_citizen - step_citizen) <= min_citizen) {
           posX_citizen -= step_citizen;
-          citizen.style.transform = "translateX(" + (posX_citizen) + "px)";
+        } else {
+          posX_citizen = 0;
         }
+        citizen.style.transform = "translateX(" + (posX_citizen) + "px)";
       });
     </script>
   </div>

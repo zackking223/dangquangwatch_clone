@@ -3,7 +3,9 @@ package edu.it10.dangquangwatch.spring.service.impl;
 import edu.it10.dangquangwatch.spring.entity.Butky;  
 import edu.it10.dangquangwatch.spring.repository.ButkyRepository;  
 import edu.it10.dangquangwatch.spring.service.ButkyService;  
-import org.springframework.beans.factory.annotation.Autowired;  
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;  
 
 import java.util.List;  
@@ -31,5 +33,10 @@ public class ButkyServiceImpl implements ButkyService {
   @Override  
   public Optional<Butky> findButkyById(Integer mabutky) {  
     return butkyRepository.findById(mabutky);  
+  }
+
+  @Override
+  public Page<Butky> getAllButkyByTenbutky(String tenbutky, Integer pageNum) {
+    return butkyRepository.findByTenbutkyContains(tenbutky, PageRequest.of(pageNum, 10));
   }  
 }
