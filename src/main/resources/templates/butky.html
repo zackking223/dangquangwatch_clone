@@ -10,43 +10,47 @@
     <link rel="stylesheet" th:href="@{/css/application.css}">
 </head>
 <body>
-    <div class="container mx-auto py-8">
-        <div class="flex flex-col md:flex-row">
-            <div class="w-full md:w-1/2">
-                <img th:src="${butky.getFirstImageUrl()}" alt="Bút ký Philippe Auguste BUTPA-911/B" class="w-full h-auto">
-            </div>
-            <div class="w-full md:w-1/2 px-4 mt-8 md:mt-0">
-                <h1 class="text-2xl font-bold" th:text="${butky.getTenbutky()}">Bút ký Philippe Auguste BUTPA-911/B</h1>
-                <p class="text-gray-500 text-sm" th:text="${butky.getThongtin()}">Quà tặng đẳng cấp</p>
-                <p class="text-2xl font-bold my-4" th:text="${butky.getGiatienFormatted()}">550.000đ</p>
-                <div class="flex items-center my-4">
-                    <span class="mr-2">Số lượng:</span>
-                    <input type="number" class="border border-gray-400 rounded px-2 py-1 w-24" th:value="${butky.getSoluong()}">
+    <div class="container mx-auto my-4">
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <div class="flex flex-col md:flex-row">
+                <div class="md:w-1/3">
+                    <img class="w-full h-full object-cover" th:src="${butky.getFirstImageUrl()}" alt="Ảnh bút ký">
                 </div>
-                <div class="my-4">
-                    <span class="font-bold">Trả góp</span>
-                    <span th:text="${butky.getTragop()}">0%</span>
-                </div>
-                <div class="my-4">
-                    <span class="font-bold">Ngày thêm</span>
-                    <span th:text="${butky.getNGAYTHEM()}">2024-06-25</span>
-                </div>
-                <div class="flex items-center my-4">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">Thêm vào giỏ</button>
-                        <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Mua ngay</button>
-                </div>
-                <div class="my-4">
-                    <p class="font-bold">Ưu đãi dự kiến áp dụng:</p>
-                    <ul class="list-disc pl-4">
-                        <li>Giảm thêm 5% cho thành viên có thẻ Member</li>
-                        <li>Giảm thêm 10% cho thành viên có thẻ VIP</li>
-                        <li>Miễn phí vận chuyển toàn quốc</li>
-                    </ul>
-                </div>
-                <div class="my-4">
-                    <p class="font-bold">Liên hệ:</p>
-                    <p>Hotline: 1800.6005 (8:00 - 21:00)</p>
-                    <p>Nhắn tin Zalo: 098.668.1189</p>
+                <div class="md:w-2/3 p-6">
+                    <h1 class="text-2xl font-bold mb-4" th:text="${butky.getTenbutky()}"></h1>
+                    <p class="text-gray-600 mb-4" th:text="${butky.getThongtin()}"></p>
+                    <div class="flex items-center mb-4">
+                        <span class="text-2xl font-bold mr-2" th:text="${butky.getGiatienFormatted()}"></span>
+                    </div>
+                    <div class="flex items-center my-4">
+                        <span class="mr-2">Số lượng:</span>
+                        <input type="number" class="border border-gray-400 rounded px-2 py-1 w-24" th:value="${butky.getSoluong()}">
+                    </div>
+                    <div class="my-4">
+                        <span class="font-bold">Trả góp:</span>
+                        <span th:text="${butky.getTragop()} + '%'"></span>
+                    </div>
+                    <div class="my-4">
+                        <span class="font-bold">Ngày thêm:</span>
+                        <span th:text="${butky.getNGAYTHEM()}"></span>
+                    </div>
+                    <div class="flex items-center my-4">
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">Thêm vào giỏ</button>
+                            <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Mua ngay</button>
+                    </div>
+                    <div class="my-4">
+                        <p class="font-bold">Ưu đãi dự kiến áp dụng:</p>
+                        <ul class="list-disc pl-4">
+                            <li>Giảm thêm 5% cho thành viên có thẻ Member</li>
+                            <li>Giảm thêm 10% cho thành viên có thẻ VIP</li>
+                            <li>Miễn phí vận chuyển toàn quốc</li>
+                        </ul>
+                    </div>
+                    <div class="my-4">
+                        <p class="font-bold">Liên hệ:</p>
+                        <p>Hotline: 1800.6005 (8:00 - 21:00)</p>
+                        <p>Nhắn tin Zalo: 098.668.1189</p>
+                    </div>
                 </div>
             </div>
         </div>

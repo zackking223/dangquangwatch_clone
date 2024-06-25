@@ -10,17 +10,17 @@
     <link rel="stylesheet" th:href="@{/css/application.css}">
 </head>
 <body>
-    <div class="container mx-auto my-10">
+    <div class="container mx-auto my-4">
         <div class="bg-white shadow-md rounded-lg overflow-hidden">
             <div class="md:flex">
-                <div class="md:w-1/2">
-                    <img class="w-full h-full object-cover" th:src="${phukien.getFirstImageUrl()}" alt="Product Image">
+                <div class="md:w-1/3">
+                    <img class="w-full h-full object-cover" th:src="${phukien.getFirstImageUrl()}" alt="Ảnh phụ kiện">
                 </div>
-                <div class="md:w-1/2 p-6">
-                    <h1 class="text-2xl font-bold mb-4" th:text="${phukien.getTenPhuKien()}">Dây đeo Diamond D D-DM-W-12</h1>
-                    <p class="text-gray-600 mb-4" th:text="${phukien.getThongTin()}">Dây đeo đồng hồ được làm từ chất liệu da cao cấp, thiết kế thanh lịch và phù hợp với nhiều kiểu đồng hồ khác nhau.</p>
+                <div class="md:w-2/3 p-6">
+                    <h1 class="text-2xl font-bold mb-4" th:text="${phukien.getTenPhuKien()}"></h1>
+                    <p class="text-gray-600 mb-4" th:text="${phukien.getThongTin()}"></p>
                     <div class="flex items-center mb-4">
-                        <span class="text-2xl font-bold mr-2" th:text="${phukien.getGiaTienFormatted()}">499.000đ</span>
+                        <span class="text-2xl font-bold mr-2" th:text="${phukien.getGiaTienFormatted()}"></span>
                     </div>
                     <div class="mb-4">
                         <span class="text-gray-600">Số lượng:</span>
@@ -28,11 +28,11 @@
                     </div>
                     <div class="mb-4">
                         <span class="text-gray-600">Trả góp:</span>
-                        <span th:text="${phukien.getTraGop()}">0%</span>
+                        <span th:text="${phukien.getTraGop()} + '%'"></span>
                     </div>
                     <div class="mb-4">
                         <span class="text-gray-600">Ngày thêm:</span>
-                        <span th:text="${phukien.getNGAYTHEM()}">2024-06-25</span>
+                        <span th:text="${phukien.getNGAYTHEM()}"></span>
                     </div>
                     <div class="flex">
                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">Thêm vào giỏ</button>

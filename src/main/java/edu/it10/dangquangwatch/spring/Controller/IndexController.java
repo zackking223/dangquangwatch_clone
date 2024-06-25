@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.it10.dangquangwatch.spring.entity.Butky;
 import edu.it10.dangquangwatch.spring.entity.Dongho;
+import edu.it10.dangquangwatch.spring.entity.KinhMat;
 import edu.it10.dangquangwatch.spring.entity.PhuKien;
+import edu.it10.dangquangwatch.spring.entity.Trangsuc;
 import edu.it10.dangquangwatch.spring.service.DonghoService;
 import edu.it10.dangquangwatch.spring.service.ButkyService;
-// import edu.it10.dangquangwatch.spring.service.KinhMatService;
+import edu.it10.dangquangwatch.spring.service.KinhMatService;
 import edu.it10.dangquangwatch.spring.service.PhuKienService;
-// import edu.it10.dangquangwatch.spring.service.TrangsucService;
+import edu.it10.dangquangwatch.spring.service.TrangsucService;
 
 @RequestMapping("/")
 @Controller
@@ -24,12 +26,12 @@ public class IndexController {
     @Autowired
     private DonghoService donghoService;
 
-    // @Autowired
-    // private TrangsucService trangsucService;
+    @Autowired
+    private TrangsucService trangsucService;
     @Autowired
     private PhuKienService phuKienService;
-    // @Autowired
-    // private KinhMatService kinhMatService;
+    @Autowired
+    private KinhMatService kinhMatService;
     @Autowired
     private ButkyService butkyService;
 
@@ -61,6 +63,26 @@ public class IndexController {
         butkyEdit.ifPresent(butky -> model.addAttribute("title", butky.getTenbutky()));
         
         return "butky";
+    }
+
+    @GetMapping("kinhmat")
+    public String trangKinhMat(Model model, @RequestParam("id") Integer makinhmat) {
+        
+        Optional<KinhMat> kinhmatEdit = kinhMatService.findKinhMatById(makinhmat);
+        kinhmatEdit.ifPresent(kinhmat -> model.addAttribute("kinhmat", kinhmat));
+        kinhmatEdit.ifPresent(kinhmat -> model.addAttribute("title", kinhmat.getTenSanPham()));
+        
+        return "kinhmat";
+    }
+
+    @GetMapping("trangsuc")
+    public String trangTrangSuc(Model model, @RequestParam("id") Integer matrangsuc) {
+        
+        Optional<Trangsuc> trangsucEdit = trangsucService.findTrangsucById(matrangsuc);
+        trangsucEdit.ifPresent(trangsuc -> model.addAttribute("trangsuc", trangsuc));
+        trangsucEdit.ifPresent(trangsuc -> model.addAttribute("title", trangsuc.getTentrangsuc()));
+        
+        return "trangsuc";
     }
 
     @GetMapping
