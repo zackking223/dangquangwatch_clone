@@ -22,12 +22,12 @@ public class ButkyController {
 
   @GetMapping("/")
   public String index(Model model, @RequestParam("page") Optional<Integer> page,
-      @RequestParam("search") Optional<String> tenbutky) {
+      @RequestParam("search") Optional<String> search) {
     int pageNum = 0;
     String searchStr = "";
 
-    if (tenbutky.isPresent()) {
-      searchStr = tenbutky.get();
+    if (search.isPresent()) {
+      searchStr = search.get();
     }
 
     if (page.isPresent()) {

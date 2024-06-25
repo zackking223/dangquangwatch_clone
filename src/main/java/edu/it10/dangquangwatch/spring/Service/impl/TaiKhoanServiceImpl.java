@@ -71,7 +71,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
     taiKhoan.setUsername(removeWhitespace(taiKhoan.getUsername()));
 
     taiKhoan.setLoai_tai_khoan("ROLE_KHACHHANG");
-    taiKhoan.setPassword(passwordEncoder.encode(plainText));
+    taiKhoan.setPassword("{bcrypt}" + passwordEncoder.encode(plainText));
 
     entityManager.persist(taiKhoan);
   }
@@ -84,7 +84,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 
     taiKhoan.setLoai_tai_khoan("ROLE_QUANTRI");
     taiKhoan.setDiachi("QUANTRI ko can dia chi");
-    taiKhoan.setPassword(passwordEncoder.encode(plainText));
+    taiKhoan.setPassword("{bcrypt}" + passwordEncoder.encode(plainText));
 
     entityManager.persist(taiKhoan);
   }
@@ -94,7 +94,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
   public void updateTaiKhoan(TaiKhoan taiKhoan) {
     String plainText = taiKhoan.getPassword();
     taiKhoan.setUsername(removeWhitespace(taiKhoan.getUsername()));
-    taiKhoan.setPassword(passwordEncoder.encode(plainText));
+    taiKhoan.setPassword("{bcrypt}" + passwordEncoder.encode(plainText));
     entityManager.merge(taiKhoan);
   }
 

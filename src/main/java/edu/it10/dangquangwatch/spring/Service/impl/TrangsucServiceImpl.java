@@ -3,7 +3,9 @@ package edu.it10.dangquangwatch.spring.service.impl;
 import edu.it10.dangquangwatch.spring.entity.Trangsuc;  
 import edu.it10.dangquangwatch.spring.repository.TrangsucRepository;  
 import edu.it10.dangquangwatch.spring.service.TrangsucService;  
-import org.springframework.beans.factory.annotation.Autowired;  
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;  
 
 import java.util.List;  
@@ -32,4 +34,9 @@ public class TrangsucServiceImpl implements TrangsucService {
   public Optional<Trangsuc> findTrangsucById(Integer matrangsuc) {  
     return trangsucRepository.findById(matrangsuc);  
   }  
+
+  @Override
+  public Page<Trangsuc> searchTrangsuc(String searchStr, Integer pageNum) {
+    return trangsucRepository.searchTrangsuc(searchStr, PageRequest.of(pageNum, 10));
+  }
 }

@@ -9,10 +9,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import edu.it10.dangquangwatch.spring.entity.Butky;
+import edu.it10.dangquangwatch.spring.entity.Dongho;
+import edu.it10.dangquangwatch.spring.entity.PhuKien;
 import edu.it10.dangquangwatch.spring.service.DonghoService;
-// import edu.it10.dangquangwatch.spring.service.ButkyService;
+import edu.it10.dangquangwatch.spring.service.ButkyService;
 // import edu.it10.dangquangwatch.spring.service.KinhMatService;
-// import edu.it10.dangquangwatch.spring.service.PhuKienService;
+import edu.it10.dangquangwatch.spring.service.PhuKienService;
 // import edu.it10.dangquangwatch.spring.service.TrangsucService;
 
 @RequestMapping("/")
@@ -20,17 +23,49 @@ import edu.it10.dangquangwatch.spring.service.DonghoService;
 public class IndexController {
     @Autowired
     private DonghoService donghoService;
+
     // @Autowired
     // private TrangsucService trangsucService;
-    // @Autowired
-    // private PhuKienService phuKienService;
+    @Autowired
+    private PhuKienService phuKienService;
     // @Autowired
     // private KinhMatService kinhMatService;
-    // @Autowired
-    // private ButkyService butkyService;
+    @Autowired
+    private ButkyService butkyService;
+
+    @GetMapping("dongho")
+    public String trangDongHo(Model model, @RequestParam("id") Integer madongho) {
+        
+        Optional<Dongho> donghoEdit = donghoService.findDonghoById(madongho);
+        donghoEdit.ifPresent(dongho -> model.addAttribute("dongho", dongho));
+        donghoEdit.ifPresent(dongho -> model.addAttribute("title", dongho.getTendongho()));
+        
+        return "dongho";
+    }
+
+    @GetMapping("phukien")
+    public String trangPhuKien(Model model, @RequestParam("id") Integer maphukien) {
+        
+        Optional<PhuKien> phukienEdit = phuKienService.findPhuKienById(maphukien);
+        phukienEdit.ifPresent(phukien -> model.addAttribute("phukien", phukien));
+        phukienEdit.ifPresent(phukien -> model.addAttribute("title", phukien.getTenPhuKien()));
+        
+        return "phukien";
+    }
+
+    @GetMapping("butky")
+    public String trangButKy(Model model, @RequestParam("id") Integer mabutky) {
+        
+        Optional<Butky> butkyEdit = butkyService.findButkyById(mabutky);
+        butkyEdit.ifPresent(butky -> model.addAttribute("butky", butky));
+        butkyEdit.ifPresent(butky -> model.addAttribute("title", butky.getTenbutky()));
+        
+        return "butky";
+    }
 
     @GetMapping
-    public String index(@RequestParam("search") Optional<String> search, @RequestParam("page") Optional<Integer> page, Model model) {
+    public String index(@RequestParam("search") Optional<String> search, @RequestParam("page") Optional<Integer> page,
+            Model model) {
         if (search.isPresent()) {
             String searchStr = search.get();
 
@@ -39,7 +74,8 @@ public class IndexController {
             }
 
             int pageNum = 0;
-            if (page.isPresent()) pageNum = page.get();
+            if (page.isPresent())
+                pageNum = page.get();
 
             model.addAttribute("search", searchStr);
             model.addAttribute("donghos", donghoService.getAllDonghoByTendongho(searchStr, pageNum).getContent());

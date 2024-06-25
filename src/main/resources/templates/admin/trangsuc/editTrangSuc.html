@@ -47,9 +47,14 @@
           <textarea class="w-[80vw] min-w-[280px]" rows="20" th:field="*{thongtin}"></textarea>
         </div>
 
+        <input type="date" id="datePicker" class="hidden" name="NGAYTHEM" />
+
         <div style="clear: both; display: block; height: 10px"></div>
         <input class="p-2 w-max bg-green-500 rounded block mt-4 text-white" type="submit" value="Lưu" />
       </form>
     </div>
+    <script>
+      document.getElementById('datePicker').valueAsDate = new Date();
+    </script>
   </body>
 </html>

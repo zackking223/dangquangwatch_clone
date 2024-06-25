@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import edu.it10.dangquangwatch.spring.entity.KinhMat;
@@ -20,8 +22,8 @@ public class KinhMatServiceImpl implements KinhMatService {
   }
 
   @Override
-  public List<KinhMat> searchKinhMat(String tenSanPham) {
-    return kinhMatRepository.findByTenSanPhamContains(tenSanPham);
+  public Page<KinhMat> searchKinhMat(String searchStr, Integer pageNum) {
+    return kinhMatRepository.searchKinhMat(searchStr, PageRequest.of(pageNum, 10));
   }
 
   @Override

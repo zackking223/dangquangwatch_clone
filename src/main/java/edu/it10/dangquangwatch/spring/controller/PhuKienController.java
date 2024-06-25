@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,11 +22,25 @@ public class PhuKienController {
   private PhuKienService phuKienService;
 
   @GetMapping("/")
-  public String index(Model model) {
-    List<PhuKien> phuKiens = phuKienService.getAllPhuKien();
+  public String index(Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("search") Optional<String> search) {
+    int pageNum = 0;
+    String searchStr = "";
 
-    model.addAttribute("phuKiens", phuKiens);
+    if (search.isPresent()) {
+      searchStr = search.get();
+    }
 
+    if (page.isPresent()) {
+      pageNum = page.get() - 1;
+    }
+
+    Page<PhuKien> data = phuKienService.searchPhuKien(searchStr, pageNum);
+    List<PhuKien> phukiens = data.getContent();
+
+    model.addAttribute("phuKiens", phukiens);
+    model.addAttribute("page", pageNum);
+    model.addAttribute("search", searchStr);
+    model.addAttribute("sotrang", data.getTotalPages()); 
     return "admin/phukien/index";
   }
 

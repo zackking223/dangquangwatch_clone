@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import edu.it10.dangquangwatch.spring.entity.KinhMat;
 import edu.it10.dangquangwatch.spring.service.KinhMatService;
 
@@ -19,10 +21,25 @@ public class KinhMatController {
   @Autowired private KinhMatService kinhMatService;
 
   @GetMapping("/")  
-  public String index(Model model) {  
-    List<KinhMat> kinhMats = kinhMatService.getAllKinhMat();  
+  public String index(Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("search") Optional<String> search) {  
+      int pageNum = 0;
+    String searchStr = "";
 
-    model.addAttribute("kinhMats", kinhMats);  
+    if (search.isPresent()) {
+      searchStr = search.get();
+    }
+
+    if (page.isPresent()) {
+      pageNum = page.get() - 1;
+    }
+
+    Page<KinhMat> data = kinhMatService.searchKinhMat(searchStr, pageNum);
+    List<KinhMat> kinhmats = data.getContent();
+
+    model.addAttribute("kinhMats", kinhmats);
+    model.addAttribute("page", pageNum);
+    model.addAttribute("search", searchStr);
+    model.addAttribute("sotrang", data.getTotalPages()); 
 
     return "admin/kinhmat/index";  
   }  

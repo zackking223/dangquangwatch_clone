@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import edu.it10.dangquangwatch.spring.entity.PhuKien;
@@ -20,8 +22,8 @@ public class PhuKienServiceImpl implements PhuKienService {
   }
 
   @Override
-  public List<PhuKien> searchPhuKien(String tenPhuKien) {
-    return phuKienRepository.findByTenPhuKienContains(tenPhuKien);
+  public Page<PhuKien> searchPhuKien(String searchStr, Integer pageNum) {
+    return phuKienRepository.searchPhuKien(searchStr, PageRequest.of(pageNum, 10));
   }
 
   @Override

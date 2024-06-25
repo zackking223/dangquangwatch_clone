@@ -2,7 +2,8 @@ package edu.it10.dangquangwatch.spring.controller;
 
 import edu.it10.dangquangwatch.spring.entity.Trangsuc;  
 import edu.it10.dangquangwatch.spring.service.TrangsucService;  
-import org.springframework.beans.factory.annotation.Autowired;  
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;  
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,10 +20,25 @@ public class TrangsucController {
   @Autowired private TrangsucService trangsucService;  
 
   @GetMapping("/")  
-  public String index(Model model) {  
-    List<Trangsuc> trangsucs = trangsucService.getAllTrangsuc();  
+  public String index(Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("search") Optional<String> search) {  
+    int pageNum = 0;
+    String searchStr = "";
 
-    model.addAttribute("trangsucs", trangsucs);  
+    if (search.isPresent()) {
+      searchStr = search.get();
+    }
+
+    if (page.isPresent()) {
+      pageNum = page.get() - 1;
+    }
+
+    Page<Trangsuc> data = trangsucService.searchTrangsuc(searchStr, pageNum);
+    List<Trangsuc> trangsucs = data.getContent();
+
+    model.addAttribute("trangsucs", trangsucs);
+    model.addAttribute("page", pageNum);
+    model.addAttribute("search", searchStr);
+    model.addAttribute("sotrang", data.getTotalPages()); 
 
     return "/admin/trangsuc/index";  
   }  
