@@ -19,6 +19,8 @@ import edu.it10.dangquangwatch.spring.service.ButkyService;
 import edu.it10.dangquangwatch.spring.service.KinhMatService;
 import edu.it10.dangquangwatch.spring.service.PhuKienService;
 import edu.it10.dangquangwatch.spring.service.TrangsucService;
+import org.springframework.web.bind.annotation.PostMapping;
+
 
 @RequestMapping("/")
 @Controller
@@ -85,6 +87,11 @@ public class IndexController {
         return "trangsuc";
     }
 
+    @PostMapping("/")
+    public String postIndex() {
+        return "redirect: /";
+    }
+    
     @GetMapping
     public String index(@RequestParam("search") Optional<String> search, @RequestParam("page") Optional<Integer> page,
             Model model) {
