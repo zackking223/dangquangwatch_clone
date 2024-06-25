@@ -3,12 +3,16 @@ package edu.it10.dangquangwatch.spring.service;
 import edu.it10.dangquangwatch.spring.entity.Dongho;  
 
 import java.util.List;  
-import java.util.Optional; 
+import java.util.Optional;
+
+import org.springframework.data.domain.Page; 
 
 public interface DonghoService {  
   List<Dongho> getAllDongho();  
 
-  List<Dongho> getAllDonghoByTendongho(String tendongho, int pageNum, int pageSize);  
+  Page<Dongho> getAllDonghoByTendongho(String tendongho, int pageNum);  
+
+  Page<Dongho> searchDongho(String searchStr, Dongho searchData, int pageNum);
 
   void saveDongho(Dongho dongho);  
 

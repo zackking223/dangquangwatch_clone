@@ -22,7 +22,7 @@ public class SpringSecurityConfig {
 
     // define query to retrieve the authorities/roles by username
     jdbcUserDetailsManager.setAuthoritiesByUsernameQuery(
-        "Select username, loai_tai_khoan from taikhoan where username=?");
+        "Select username, loai_tai_khoan as 'role' from taikhoan where username=?");
     // Automaticly look at tables `users` and `authorities`
     return jdbcUserDetailsManager;
   }
@@ -31,7 +31,8 @@ public class SpringSecurityConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
         .authorizeHttpRequests(configurer -> configurer
-            .requestMatchers("/admin/**").authenticated() // Yêu cầu đăng nhập cho các đường dẫn bắt đầu bằng /admin/
+            .requestMatchers("/admin/**").hasRole("QUANTRI") // Yêu cầu đăng nhập cho các đường dẫn bắt đầu bằng /admin/
+            .requestMatchers("/cart/**").authenticated()
             .anyRequest().permitAll() // Các đường dẫn còn lại không yêu cầu đăng nhập
         )
         .formLogin(Customizer.withDefaults());

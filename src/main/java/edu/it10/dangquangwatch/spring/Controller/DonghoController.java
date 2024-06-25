@@ -2,7 +2,8 @@ package edu.it10.dangquangwatch.spring.controller;
 
 import edu.it10.dangquangwatch.spring.entity.Dongho;  
 import edu.it10.dangquangwatch.spring.service.DonghoService;  
-import org.springframework.beans.factory.annotation.Autowired;  
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;  
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,10 +21,28 @@ public class DonghoController {
   @Autowired private DonghoService donghoService;  
 
   @GetMapping("/")  
-  public String index(Model model) {  
-    List<Dongho> donghos = donghoService.getAllDongho();  
+  public String index(@RequestParam("search") Optional<String> search, @RequestParam("page") Optional<Integer> page, Optional<Dongho> dongho, Model model) {
+    model.addAttribute("dongho", new Dongho());
+    Page<Dongho> data;
+    String searchStr = "";
+    int pageNum = 0;
+    Dongho fieldData = new Dongho();
 
-    model.addAttribute("donghos", donghos);  
+    if (search.isPresent()) searchStr = search.get();
+    if (page.isPresent()) pageNum = page.get() - 1;
+    
+    if (dongho.isPresent()) {
+      fieldData = dongho.get();
+      data = donghoService.searchDongho(searchStr, fieldData, pageNum);  
+    } else {
+      data = donghoService.getAllDonghoByTendongho(searchStr, pageNum);
+    }
+    
+    model.addAttribute("dongho", fieldData);  
+    model.addAttribute("donghos", data.getContent());
+    model.addAttribute("page", pageNum);
+    model.addAttribute("search", searchStr);
+    model.addAttribute("sotrang", data.getTotalPages());  
 
     return "admin/dongho/index";  
   }

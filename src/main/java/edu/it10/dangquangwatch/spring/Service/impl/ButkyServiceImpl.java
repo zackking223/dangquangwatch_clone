@@ -8,10 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
@@ -40,11 +37,7 @@ public class ButkyServiceImpl implements ButkyService {
   }
 
   @Override
-  public Page<Butky> getAllButkyByTenbutky(String searchStr, Integer pageNum) {
-    List<String> values = new ArrayList<String>(Arrays.asList(searchStr.split(" , ")));
-    List<String> upperValues = values.stream()
-        .map(String::toUpperCase)
-        .collect(Collectors.toList());
-    return butkyRepository.searchButKy(upperValues, PageRequest.of(pageNum, 10));
+  public Page<Butky> searchButky(String searchStr, Integer pageNum) {
+    return butkyRepository.searchButKy(searchStr, PageRequest.of(pageNum, 10));
   }
 }

@@ -50,7 +50,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 
   @Override
   public List<TaiKhoan> getAllTaiKhoanQuanTri() {
-    TypedQuery<TaiKhoan> query = entityManager.createQuery("FROM TaiKhoan where loai_tai_khoan = 'QUANTRI'",
+    TypedQuery<TaiKhoan> query = entityManager.createQuery("FROM TaiKhoan where loai_tai_khoan = 'ROLE_QUANTRI'",
         TaiKhoan.class);
 
     return query.getResultList();
@@ -58,7 +58,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 
   @Override
   public List<TaiKhoan> getAllTaiKhoanKhachHang() {
-    TypedQuery<TaiKhoan> query = entityManager.createQuery("FROM TaiKhoan where loai_tai_khoan = 'KHACHHANG'",
+    TypedQuery<TaiKhoan> query = entityManager.createQuery("FROM TaiKhoan where loai_tai_khoan = 'ROLE_KHACHHANG'",
         TaiKhoan.class);
 
     return query.getResultList();
@@ -70,7 +70,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
     String plainText = taiKhoan.getPassword();
     taiKhoan.setUsername(removeWhitespace(taiKhoan.getUsername()));
 
-    taiKhoan.setLoai_tai_khoan("KHACHHANG");
+    taiKhoan.setLoai_tai_khoan("ROLE_KHACHHANG");
     taiKhoan.setPassword(passwordEncoder.encode(plainText));
 
     entityManager.persist(taiKhoan);
@@ -82,7 +82,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
     String plainText = taiKhoan.getPassword();
     taiKhoan.setUsername(removeWhitespace(taiKhoan.getUsername()));
 
-    taiKhoan.setLoai_tai_khoan("QUANTRI");
+    taiKhoan.setLoai_tai_khoan("ROLE_QUANTRI");
     taiKhoan.setDiachi("QUANTRI ko can dia chi");
     taiKhoan.setPassword(passwordEncoder.encode(plainText));
 

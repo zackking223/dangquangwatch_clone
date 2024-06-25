@@ -8,7 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne; 
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.util.Objects;
 
@@ -20,6 +20,9 @@ public class ChiTietDonHang {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer maChiTietDonHang;
 
+  /**
+   * enum('dongho', 'phukien', 'kinhmat', 'butky', 'trangsuc')
+   */
   @Column(name = "loaisanpham")
   private String loaiSanPham;
 
@@ -39,11 +42,16 @@ public class ChiTietDonHang {
   @JoinColumn(name = "madonhang")
   private DonHang donhang;
 
+  @Column(name = "tensanpham")
+  private String tensanpham;
+
+  @Column(name = "anhsanpham")
+  private String anhsanpham;
 
   public ChiTietDonHang() {
   }
 
-  public ChiTietDonHang(Integer maChiTietDonHang, String loaiSanPham, Integer soLuong, Integer giaTien, Integer maSanPham, String NGAYTHEM, DonHang donhang) {
+  public ChiTietDonHang(Integer maChiTietDonHang, String loaiSanPham, Integer soLuong, Integer giaTien, Integer maSanPham, String NGAYTHEM, DonHang donhang, String tensanpham, String anhsanpham) {
     this.maChiTietDonHang = maChiTietDonHang;
     this.loaiSanPham = loaiSanPham;
     this.soLuong = soLuong;
@@ -51,6 +59,8 @@ public class ChiTietDonHang {
     this.maSanPham = maSanPham;
     this.NGAYTHEM = NGAYTHEM;
     this.donhang = donhang;
+    this.tensanpham = tensanpham;
+    this.anhsanpham = anhsanpham;
   }
 
   public Integer getMaChiTietDonHang() {
@@ -109,6 +119,22 @@ public class ChiTietDonHang {
     this.donhang = donhang;
   }
 
+  public String getTensanpham() {
+    return this.tensanpham;
+  }
+
+  public void setTensanpham(String tensanpham) {
+    this.tensanpham = tensanpham;
+  }
+
+  public String getAnhsanpham() {
+    return this.anhsanpham;
+  }
+
+  public void setAnhsanpham(String anhsanpham) {
+    this.anhsanpham = anhsanpham;
+  }
+
   public ChiTietDonHang maChiTietDonHang(Integer maChiTietDonHang) {
     setMaChiTietDonHang(maChiTietDonHang);
     return this;
@@ -144,6 +170,16 @@ public class ChiTietDonHang {
     return this;
   }
 
+  public ChiTietDonHang tensanpham(String tensanpham) {
+    setTensanpham(tensanpham);
+    return this;
+  }
+
+  public ChiTietDonHang anhsanpham(String anhsanpham) {
+    setAnhsanpham(anhsanpham);
+    return this;
+  }
+
   @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -152,12 +188,12 @@ public class ChiTietDonHang {
             return false;
         }
         ChiTietDonHang chiTietDonHang = (ChiTietDonHang) o;
-        return Objects.equals(maChiTietDonHang, chiTietDonHang.maChiTietDonHang) && Objects.equals(loaiSanPham, chiTietDonHang.loaiSanPham) && Objects.equals(soLuong, chiTietDonHang.soLuong) && Objects.equals(giaTien, chiTietDonHang.giaTien) && Objects.equals(maSanPham, chiTietDonHang.maSanPham) && Objects.equals(NGAYTHEM, chiTietDonHang.NGAYTHEM) && Objects.equals(donhang, chiTietDonHang.donhang);
+        return Objects.equals(maChiTietDonHang, chiTietDonHang.maChiTietDonHang) && Objects.equals(loaiSanPham, chiTietDonHang.loaiSanPham) && Objects.equals(soLuong, chiTietDonHang.soLuong) && Objects.equals(giaTien, chiTietDonHang.giaTien) && Objects.equals(maSanPham, chiTietDonHang.maSanPham) && Objects.equals(NGAYTHEM, chiTietDonHang.NGAYTHEM) && Objects.equals(donhang, chiTietDonHang.donhang) && Objects.equals(tensanpham, chiTietDonHang.tensanpham) && Objects.equals(anhsanpham, chiTietDonHang.anhsanpham);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(maChiTietDonHang, loaiSanPham, soLuong, giaTien, maSanPham, NGAYTHEM, donhang);
+    return Objects.hash(maChiTietDonHang, loaiSanPham, soLuong, giaTien, maSanPham, NGAYTHEM, donhang, tensanpham, anhsanpham);
   }
 
   @Override
@@ -170,6 +206,8 @@ public class ChiTietDonHang {
       ", maSanPham='" + getMaSanPham() + "'" +
       ", NGAYTHEM='" + getNGAYTHEM() + "'" +
       ", donhang='" + getDonhang() + "'" +
+      ", tensanpham='" + getTensanpham() + "'" +
+      ", anhsanpham='" + getAnhsanpham() + "'" +
       "}";
   }
 }

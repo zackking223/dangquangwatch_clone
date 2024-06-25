@@ -34,7 +34,7 @@ public class ButkyController {
       pageNum = page.get() - 1;
     }
 
-    Page<Butky> data = butkyService.getAllButkyByTenbutky(searchStr, pageNum);
+    Page<Butky> data = butkyService.searchButky(searchStr, pageNum);
     List<Butky> butkys = data.getContent();
 
     model.addAttribute("butkys", butkys);

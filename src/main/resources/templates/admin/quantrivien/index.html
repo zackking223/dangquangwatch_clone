@@ -15,18 +15,16 @@
         <h1 class="font-bold text-center my-2">Quản lý tài khoản</h1>
         <table class="table table-active">
             <tr>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Username</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Password</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Họ tên</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Enable</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Tùy chọn</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">Username</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">Password</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">Họ tên</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">Tùy chọn</th>
             </tr>
             <tr th:each="taikhoan : ${taikhoans}">
-                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${taikhoan.getUsername()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${taikhoan.getPassword()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${taikhoan.getHoten()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${taikhoan.getEnabled()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+                <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden" th:text="${taikhoan.getUsername()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden" th:text="${taikhoan.getPassword()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden" th:text="${taikhoan.getHoten()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden">
                     <a class="p-2 rounded bg-green-500 text-white"
                         th:href="@{/admin/accounts/edit?id={id}(id=${taikhoan.getUsername()})}">Sửa</a>
                     <a class="p-2 rounded bg-red-500 text-white"
