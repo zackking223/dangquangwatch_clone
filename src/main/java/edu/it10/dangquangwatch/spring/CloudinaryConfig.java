@@ -1,4 +1,4 @@
-package edu.it10.dangquangwatch.cloudinary;
+package edu.it10.dangquangwatch.spring;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
