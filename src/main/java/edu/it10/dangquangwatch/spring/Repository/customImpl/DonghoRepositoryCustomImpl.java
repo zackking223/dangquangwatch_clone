@@ -1,6 +1,5 @@
 package edu.it10.dangquangwatch.spring.repository.customImpl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -8,13 +7,14 @@ import org.springframework.data.domain.Pageable;
 import edu.it10.dangquangwatch.spring.entity.Dongho;
 import edu.it10.dangquangwatch.spring.repository.custom.DonghoRepositoryCustom;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 
 import java.util.List;
 
 public class DonghoRepositoryCustomImpl implements DonghoRepositoryCustom {
-  @Autowired
+  @PersistenceContext
   EntityManager entityManager;
 
   @Override

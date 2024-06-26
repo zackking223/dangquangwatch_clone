@@ -10,11 +10,13 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.util.Objects;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "anh_dongho")
-@JsonIgnoreProperties({"dongho"})
+@JsonIgnoreProperties({ "dongho" })
 public class Anhdongho {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,16 +31,23 @@ public class Anhdongho {
   @ManyToOne(targetEntity = Dongho.class)
   @JoinColumn(name = "madongho")
   private Dongho dongho;
-  
+
+  private MultipartFile file;
+
+  public Integer getMadongho() {
+    return dongho.getMadongho();
+  }
+
 
   public Anhdongho() {
   }
 
-  public Anhdongho(Integer maanh, String url, String tenanh, Dongho dongho) {
+  public Anhdongho(Integer maanh, String url, String tenanh, Dongho dongho, MultipartFile file) {
     this.maanh = maanh;
     this.url = url;
     this.tenanh = tenanh;
     this.dongho = dongho;
+    this.file = file;
   }
 
   public Integer getMaanh() {
@@ -73,6 +82,14 @@ public class Anhdongho {
     this.dongho = dongho;
   }
 
+  public MultipartFile getFile() {
+    return this.file;
+  }
+
+  public void setFile(MultipartFile file) {
+    this.file = file;
+  }
+
   public Anhdongho maanh(Integer maanh) {
     setMaanh(maanh);
     return this;
@@ -93,6 +110,11 @@ public class Anhdongho {
     return this;
   }
 
+  public Anhdongho file(MultipartFile file) {
+    setFile(file);
+    return this;
+  }
+
   @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -101,12 +123,12 @@ public class Anhdongho {
             return false;
         }
         Anhdongho anhdongho = (Anhdongho) o;
-        return Objects.equals(maanh, anhdongho.maanh) && Objects.equals(url, anhdongho.url) && Objects.equals(tenanh, anhdongho.tenanh) && Objects.equals(dongho, anhdongho.dongho);
+        return Objects.equals(maanh, anhdongho.maanh) && Objects.equals(url, anhdongho.url) && Objects.equals(tenanh, anhdongho.tenanh) && Objects.equals(dongho, anhdongho.dongho) && Objects.equals(file, anhdongho.file);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(maanh, url, tenanh, dongho);
+    return Objects.hash(maanh, url, tenanh, dongho, file);
   }
 
   @Override
@@ -116,6 +138,7 @@ public class Anhdongho {
       ", url='" + getUrl() + "'" +
       ", tenanh='" + getTenanh() + "'" +
       ", dongho='" + getDongho() + "'" +
+      ", file='" + getFile() + "'" +
       "}";
   }
 }

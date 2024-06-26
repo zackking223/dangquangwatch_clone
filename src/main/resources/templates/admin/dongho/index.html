@@ -16,7 +16,7 @@
             <div>
                 <label class="block font-medium" th:for="tendongho">Tên đồng hồ / Thông tin</label>
                 <input class="block p-2 w-full" name="search" type="text"
-                    placeholder="Tên / thông tin đồng hồ" />
+                    placeholder="Tên / thông tin đồng hồ" th:value="${search}" />
             </div>
             
             <section class="grid grid-cols-3 gap-2">
@@ -136,7 +136,6 @@
                     class="p-2 aspect-square border border-b hover:text-blue-500"
                     th:href="@{'/admin/dongho/?page=' + ${i} + '&search=' + ${search} + '&giatien=' + ${dongho.getGiatien() ?: ''} + '&soluong=' + ${dongho.getSoluong() ?: ''} + '&tragop=' + ${dongho.getTragop() ?: ''} + '&duongkinh=' + ${dongho.getDuongkinh() ?: ''} + '&chongnuoc=' + ${dongho.getChongnuoc() ?: ''} + '&bomay=' + ${dongho.getBomay() ?: ''} + '&chatlieu=' + ${dongho.getChatlieu() ?: ''} + '&gioitinh=' + ${dongho.getGioitinh() ?: ''}}" th:text="${i}"></a>
             </li>
-            <!-- ?search=&giatien=&soluong=&tragop=&duongkinh=&chongnuoc=&bomay=&chatlieu=Sapphire&gioitinh=Nam -->
         </ul>
         <a href="/admin/dongho/add" class="p-2 w-max bg-green-500 rounded block mt-4 text-white">Thêm đông hồ</a>
     </div>

@@ -19,6 +19,8 @@ import edu.it10.dangquangwatch.spring.service.ButkyService;
 import edu.it10.dangquangwatch.spring.service.KinhMatService;
 import edu.it10.dangquangwatch.spring.service.PhuKienService;
 import edu.it10.dangquangwatch.spring.service.TrangsucService;
+import jakarta.websocket.server.PathParam;
+
 import org.springframework.web.bind.annotation.PostMapping;
 
 
@@ -37,50 +39,53 @@ public class IndexController {
     @Autowired
     private ButkyService butkyService;
 
-    @GetMapping("dongho")
-    public String trangDongHo(Model model, @RequestParam("id") Integer madongho) {
-        
-        Optional<Dongho> donghoEdit = donghoService.findDonghoById(madongho);
+    @GetMapping("dongho/{id}")
+    public String trangDongHo(Model model, @PathParam("id") String madongho) {
+        int id = convertToNum(madongho);
+        Optional<Dongho> donghoEdit = donghoService.findDonghoById(id);
         donghoEdit.ifPresent(dongho -> model.addAttribute("dongho", dongho));
         donghoEdit.ifPresent(dongho -> model.addAttribute("title", dongho.getTendongho()));
         
         return "dongho";
     }
 
-    @GetMapping("phukien")
-    public String trangPhuKien(Model model, @RequestParam("id") Integer maphukien) {
-        
-        Optional<PhuKien> phukienEdit = phuKienService.findPhuKienById(maphukien);
+    @GetMapping("phukien/{id}")
+    public String trangPhuKien(Model model, @PathParam("id") String maphukien) {
+        int id = convertToNum(maphukien);
+        Optional<PhuKien> phukienEdit = phuKienService.findPhuKienById(id);
         phukienEdit.ifPresent(phukien -> model.addAttribute("phukien", phukien));
         phukienEdit.ifPresent(phukien -> model.addAttribute("title", phukien.getTenPhuKien()));
         
         return "phukien";
     }
 
-    @GetMapping("butky")
-    public String trangButKy(Model model, @RequestParam("id") Integer mabutky) {
-        
-        Optional<Butky> butkyEdit = butkyService.findButkyById(mabutky);
+    @GetMapping("butky/{id}")
+    public String trangButKy(Model model, @PathParam("id") String mabutky) {
+        int id = convertToNum(mabutky);
+
+        Optional<Butky> butkyEdit = butkyService.findButkyById(id);
         butkyEdit.ifPresent(butky -> model.addAttribute("butky", butky));
         butkyEdit.ifPresent(butky -> model.addAttribute("title", butky.getTenbutky()));
         
         return "butky";
     }
 
-    @GetMapping("kinhmat")
-    public String trangKinhMat(Model model, @RequestParam("id") Integer makinhmat) {
-        
-        Optional<KinhMat> kinhmatEdit = kinhMatService.findKinhMatById(makinhmat);
+    @GetMapping("kinhmat/{id}")
+    public String trangKinhMat(Model model, @PathParam("id") String makinhmat) {
+        int id = convertToNum(makinhmat);
+
+        Optional<KinhMat> kinhmatEdit = kinhMatService.findKinhMatById(id);
         kinhmatEdit.ifPresent(kinhmat -> model.addAttribute("kinhmat", kinhmat));
         kinhmatEdit.ifPresent(kinhmat -> model.addAttribute("title", kinhmat.getTenSanPham()));
         
         return "kinhmat";
     }
 
-    @GetMapping("trangsuc")
-    public String trangTrangSuc(Model model, @RequestParam("id") Integer matrangsuc) {
-        
-        Optional<Trangsuc> trangsucEdit = trangsucService.findTrangsucById(matrangsuc);
+    @GetMapping("trangsuc/{id}")
+    public String trangTrangSuc(Model model, @PathParam("id") String matrangsuc) {
+        int id = convertToNum(matrangsuc);
+
+        Optional<Trangsuc> trangsucEdit = trangsucService.findTrangsucById(id);
         trangsucEdit.ifPresent(trangsuc -> model.addAttribute("trangsuc", trangsuc));
         trangsucEdit.ifPresent(trangsuc -> model.addAttribute("title", trangsuc.getTentrangsuc()));
         
@@ -132,5 +137,25 @@ public class IndexController {
     @GetMapping("error")
     public String errorRedirect() {
         return "redirect: /";
+    }
+
+    public Integer convertToNum(String id) {
+        if (isNumeric(id)) {
+            return Integer.parseInt(id);
+        } else {
+            return 1;
+        }
+    }
+
+    public boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            Double.parseDouble(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
     }
 }

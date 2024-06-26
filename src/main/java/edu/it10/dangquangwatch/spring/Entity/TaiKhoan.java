@@ -3,11 +3,17 @@ package edu.it10.dangquangwatch.spring.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import java.util.List;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "taikhoan")
+@JsonIgnoreProperties({"donHangList"})
 public class TaiKhoan {
   @Id
   @Column(name = "username")
@@ -28,17 +34,21 @@ public class TaiKhoan {
   @Column(name = "enabled")
   private String enabled;
 
+  @OneToMany(mappedBy = "taikhoan")
+  private List<DonHang> donHangList;
+
 
   public TaiKhoan() {
   }
 
-  public TaiKhoan(String username, String password, String hoten, String diachi, String loai_tai_khoan, String enabled) {
+  public TaiKhoan(String username, String password, String hoten, String diachi, String loai_tai_khoan, String enabled, List<DonHang> donHangList) {
     this.username = username;
     this.password = password;
     this.hoten = hoten;
     this.diachi = diachi;
     this.loai_tai_khoan = loai_tai_khoan;
     this.enabled = enabled;
+    this.donHangList = donHangList;
   }
 
   public String getUsername() {
@@ -89,6 +99,14 @@ public class TaiKhoan {
     this.enabled = enabled;
   }
 
+  public List<DonHang> getDonHangList() {
+    return this.donHangList;
+  }
+
+  public void setDonHangList(List<DonHang> donHangList) {
+    this.donHangList = donHangList;
+  }
+
   public TaiKhoan username(String username) {
     setUsername(username);
     return this;
@@ -119,6 +137,11 @@ public class TaiKhoan {
     return this;
   }
 
+  public TaiKhoan donHangList(List<DonHang> donHangList) {
+    setDonHangList(donHangList);
+    return this;
+  }
+
   @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -127,12 +150,12 @@ public class TaiKhoan {
             return false;
         }
         TaiKhoan taiKhoan = (TaiKhoan) o;
-        return Objects.equals(username, taiKhoan.username) && Objects.equals(password, taiKhoan.password) && Objects.equals(hoten, taiKhoan.hoten) && Objects.equals(diachi, taiKhoan.diachi) && Objects.equals(loai_tai_khoan, taiKhoan.loai_tai_khoan) && Objects.equals(enabled, taiKhoan.enabled);
+        return Objects.equals(username, taiKhoan.username) && Objects.equals(password, taiKhoan.password) && Objects.equals(hoten, taiKhoan.hoten) && Objects.equals(diachi, taiKhoan.diachi) && Objects.equals(loai_tai_khoan, taiKhoan.loai_tai_khoan) && Objects.equals(enabled, taiKhoan.enabled) && Objects.equals(donHangList, taiKhoan.donHangList);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(username, password, hoten, diachi, loai_tai_khoan, enabled);
+    return Objects.hash(username, password, hoten, diachi, loai_tai_khoan, enabled, donHangList);
   }
 
   @Override
@@ -144,7 +167,7 @@ public class TaiKhoan {
       ", diachi='" + getDiachi() + "'" +
       ", loai_tai_khoan='" + getLoai_tai_khoan() + "'" +
       ", enabled='" + getEnabled() + "'" +
+      ", donHangList='" + getDonHangList() + "'" +
       "}";
-  }
-
+  } 
 }
