@@ -22,8 +22,8 @@ public class ButkyServiceImpl implements ButkyService {
   }
 
   @Override
-  public void saveButky(Butky butky) {
-    butkyRepository.save(butky);
+  public Butky saveButky(Butky butky) {
+    return butkyRepository.save(butky);
   }
 
   @Override

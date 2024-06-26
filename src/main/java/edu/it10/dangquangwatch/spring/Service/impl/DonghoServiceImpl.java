@@ -23,8 +23,8 @@ public class DonghoServiceImpl implements DonghoService {
   }  
 
   @Override  
-  public void saveDongho(Dongho dongho) {  
-    donghoRepository.save(dongho);  
+  public Dongho saveDongho(Dongho dongho) {  
+    return donghoRepository.save(dongho);  
   }  
 
   @Override  

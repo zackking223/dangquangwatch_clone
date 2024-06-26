@@ -61,24 +61,25 @@
                 <div>
                     <label class="block font-medium" th:for="bomay">Bộ máy</label>
                     <input class="block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{bomay}"
-                        placeholder="Bộ máy" />
+                        placeholder="Automatic" />
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="gioitinh">Giới tính</label>
-                    <input class="block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{gioitinh}"
-                        placeholder="Bộ máy" />
+                    <select class="block p-2 w-[80vw] min-w-[280px]" name="gioitinh">
+                        <option value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
+                    </select>
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="chatlieu">Chất liệu</label>
-                    <input class="block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{chatlieu}"
-                        placeholder="Bộ máy" />
+                    <input class="block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{chatlieu}" placeholder="Sapphire"/>
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="thongtin">Thông tin</label>
-                    <textarea class="w-[80vw] min-w-[280px]" rows="20" th:field="*{thongtin}"></textarea>
+                    <textarea class="p-2 w-[80vw] min-w-[280px]" rows="5" th:field="*{thongtin}"></textarea>
                 </div>
 
                 <input class="hidden" type="date" id="datePicker" name="NGAYTHEM" />

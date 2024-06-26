@@ -12,7 +12,7 @@ public interface ButkyService {
   
   Page<Butky> searchButky(String searchStr, Integer pageNum);
 
-  void saveButky(Butky butky);  
+  Butky saveButky(Butky butky);  
 
   void deleteButky(Integer mabutky);  
 

@@ -19,8 +19,15 @@ public class ImageUploadServiceImpl implements ImageUploadService {
   @Autowired
   Cloudinary cloudinary;
 
+  private static final List<String> ACCEPTED_IMAGE_TYPES = List.of("image/jpeg", "image/png", "image/gif", "image/bmp",
+      "image/webp");
+
   @Override
   public Map<String, String> uploadImage(MultipartFile file) throws IOException {
+    if (!isImage(file)) {
+      throw new IllegalArgumentException("File is not an accepted image type");
+    }
+
     var uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
     return Map.of(
         "url", (String) uploadResult.get("url"),
@@ -32,7 +39,7 @@ public class ImageUploadServiceImpl implements ImageUploadService {
   public List<Map<String, String>> uploadImages(List<MultipartFile> files) throws IOException {
     List<Map<String, String>> uploadResults = new ArrayList<>();
     for (MultipartFile file : files) {
-      var uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
+      var uploadResult = uploadImage(file);
       uploadResults.add(Map.of(
           "url", (String) uploadResult.get("url"),
           "public_id", (String) uploadResult.get("public_id"),
@@ -45,5 +52,9 @@ public class ImageUploadServiceImpl implements ImageUploadService {
   @Override
   public Map<String, String> deleteImage(String publicId) throws IOException {
     return cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
+  }
+
+  private boolean isImage(MultipartFile file) {
+    return ACCEPTED_IMAGE_TYPES.contains(file.getContentType());
   }
 }

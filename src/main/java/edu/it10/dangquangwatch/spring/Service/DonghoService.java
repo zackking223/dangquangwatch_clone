@@ -14,7 +14,7 @@ public interface DonghoService {
 
   Page<Dongho> searchDongho(String searchStr, Dongho searchData, int pageNum);
 
-  void saveDongho(Dongho dongho);  
+  Dongho saveDongho(Dongho dongho);  
 
   void deleteDongho(Integer madongho);  
 

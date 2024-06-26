@@ -39,7 +39,7 @@
           <label class="block font-medium" for="tinhtrang">Tình trạng</label>
           <select class="block p-2 w-full" name="tinhtrang" id="tinhtrang" th:value>
             <option value="">Chưa chọn</option>
-            <option th:each="tt : ${tinhtrang_list}" th:value="${tt}" th:text="${tt}" th:selected="${tt == tinhtrang}">
+            <option th:each="tt : ${tinhtrang_options}" th:value="${tt}" th:text="${tt}" th:selected="${tt == tinhtrang}">
             </option>
           </select>
         </div>
@@ -47,7 +47,7 @@
           <label class="block font-medium" for="thanhtoan">Thanh toán</label>
           <select class="block p-2 w-full" name="thanhtoan" id="thanhtoan" th:value>
             <option value="">Chưa chọn</option>
-            <option th:each="tt : ${thanhtoan_list}" th:value="${tt}" th:text="${tt}" th:selected="${tt == thanhtoan}">
+            <option th:each="tt : ${thanhtoan_options}" th:value="${tt}" th:text="${tt}" th:selected="${tt == thanhtoan}">
             </option>
           </select>
         </div>

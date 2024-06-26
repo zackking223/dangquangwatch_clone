@@ -10,7 +10,7 @@ import org.springframework.data.domain.Page;
 public interface TrangsucService {  
   List<Trangsuc> getAllTrangsuc();  
 
-  void saveTrangsuc(Trangsuc trangsuc);  
+  Trangsuc saveTrangsuc(Trangsuc trangsuc);  
 
   Page<Trangsuc> searchTrangsuc(String searchStr, Integer pageNum);
 

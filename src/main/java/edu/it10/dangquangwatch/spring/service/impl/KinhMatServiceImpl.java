@@ -27,8 +27,8 @@ public class KinhMatServiceImpl implements KinhMatService {
   }
 
   @Override
-  public void saveKinhMat(KinhMat kinhMat) {
-    kinhMatRepository.save(kinhMat);
+  public KinhMat saveKinhMat(KinhMat kinhMat) {
+    return kinhMatRepository.save(kinhMat);
   }
 
   @Override

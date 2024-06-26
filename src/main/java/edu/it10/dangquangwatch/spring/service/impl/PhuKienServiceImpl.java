@@ -27,8 +27,8 @@ public class PhuKienServiceImpl implements PhuKienService {
   }
 
   @Override
-  public void savePhuKien(PhuKien phuKien) {
-    phuKienRepository.save(phuKien);
+  public PhuKien savePhuKien(PhuKien phuKien) {
+    return phuKienRepository.save(phuKien);
   }
 
   @Override

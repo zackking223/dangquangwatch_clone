@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Controller
@@ -71,25 +72,57 @@ public class DonghoController {
 
   @GetMapping(value = "/edit")
   public String editDongho(@RequestParam("id") Integer madongho, Model model) {
+    List<String> gioitinh_options = new ArrayList<String>();
+    gioitinh_options.add("Nam");
+    gioitinh_options.add("Nữ");
+
     Optional<Dongho> donghoEdit = donghoService.findDonghoById(madongho);
-    donghoEdit.ifPresent(dongho -> model.addAttribute("dongho", dongho));
+    donghoEdit.ifPresent(dongho -> {
+      model.addAttribute("dongho", dongho);
+      model.addAttribute("images", dongho.getImages());
+      model.addAttribute("gioitinh", dongho.getGioitinh());
+      model.addAttribute("gioitinh_options", gioitinh_options);
+    });
     return "admin/dongho/editDongHo";
+  }
+
+  @PostMapping("update")
+  public String save(Dongho dongho) {
+    donghoService.saveDongho(dongho);
+    return "redirect:/admin/dongho/edit?id=" + dongho.getMadongho();
   }
 
   @PostMapping(value = "save")
   public String save(Dongho dongho, @RequestParam("file") List<MultipartFile> files) throws IOException {
-    for (MultipartFile file : files) {
-      Anhdongho anhdongho = new Anhdongho();
-      anhdongho.setFile(file);
-      anhdongho.setDongho(dongho);
+    if (dongho.getMadongho() != null) {
+      for (MultipartFile file : files) {
+        Anhdongho anhdongho = new Anhdongho();
+        anhdongho.setFile(file);
+        anhdongho.setDongho(dongho);
 
-      try {
-        anhdonghoService.saveAnhdongho(anhdongho);
-      } catch (IOException e) {
-        e.printStackTrace();
+        try {
+          anhdonghoService.saveAnhdongho(anhdongho);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+      donghoService.saveDongho(dongho);
+    } else {
+      Dongho data = donghoService.saveDongho(dongho);
+
+      for (MultipartFile file : files) {
+        Anhdongho anhdongho = new Anhdongho();
+        anhdongho.setFile(file);
+        anhdongho.setDongho(data);
+
+        try {
+          anhdonghoService.saveAnhdongho(anhdongho);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
       }
     }
-    donghoService.saveDongho(dongho);
+
     return "redirect:/admin/dongho/";
   }
 

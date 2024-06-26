@@ -30,10 +30,10 @@ public class DonHangRepositoryCustomImpl implements DonHangRepositoryCustom {
       conditions.add("UPPER(tk.hoten) LIKE UPPER(:hoten)");
     }
     if (diachi != null && !diachi.isEmpty()) {
-      conditions.add("UPPER(dh.diachi) LIKE UPPER(:diachi)");
+      conditions.add("UPPER(dh.diaChi) LIKE UPPER(:diachi)");
     }
     if (tinhtrang != null && !tinhtrang.isEmpty()) {
-      conditions.add("UPPER(dh.tinhtrang) LIKE UPPER(:tinhtrang)");
+      conditions.add("UPPER(dh.tinhTrang) LIKE UPPER(:tinhtrang)");
     }
     if (thanhtoan != null && !thanhtoan.isEmpty()) {
       conditions.add("UPPER(dh.thanhToan) LIKE UPPER(:thanhtoan)");

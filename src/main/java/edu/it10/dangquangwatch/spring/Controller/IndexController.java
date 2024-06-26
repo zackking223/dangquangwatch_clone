@@ -38,8 +38,7 @@ public class IndexController {
     private ButkyService butkyService;
 
     @GetMapping("/dongho/{id}")
-    public String trangDongHo(Model model, @PathParam("id") String madongho) {
-        int id = convertToNum(madongho);
+    public String trangDongHo(Model model, @PathParam("id") Integer id) {
         Optional<Dongho> donghoEdit = donghoService.findDonghoById(id);
         donghoEdit.ifPresent(dongho -> model.addAttribute("dongho", dongho));
         donghoEdit.ifPresent(dongho -> model.addAttribute("title", dongho.getTendongho()));
@@ -48,8 +47,7 @@ public class IndexController {
     }
 
     @GetMapping("/phukien/{id}")
-    public String trangPhuKien(Model model, @PathParam("id") String maphukien) {
-        int id = convertToNum(maphukien);
+    public String trangPhuKien(Model model, @PathParam("id") Integer id) {
         Optional<PhuKien> phukienEdit = phuKienService.findPhuKienById(id);
         phukienEdit.ifPresent(phukien -> model.addAttribute("phukien", phukien));
         phukienEdit.ifPresent(phukien -> model.addAttribute("title", phukien.getTenPhuKien()));
@@ -58,9 +56,7 @@ public class IndexController {
     }
 
     @GetMapping("/butky/{id}")
-    public String trangButKy(Model model, @PathParam("id") String mabutky) {
-        int id = convertToNum(mabutky);
-
+    public String trangButKy(Model model, @PathParam("id") Integer id) {
         Optional<Butky> butkyEdit = butkyService.findButkyById(id);
         butkyEdit.ifPresent(butky -> model.addAttribute("butky", butky));
         butkyEdit.ifPresent(butky -> model.addAttribute("title", butky.getTenbutky()));
@@ -69,9 +65,7 @@ public class IndexController {
     }
 
     @GetMapping("/kinhmat/{id}")
-    public String trangKinhMat(Model model, @PathParam("id") String makinhmat) {
-        int id = convertToNum(makinhmat);
-
+    public String trangKinhMat(Model model, @PathParam("id") Integer id) {
         Optional<KinhMat> kinhmatEdit = kinhMatService.findKinhMatById(id);
         kinhmatEdit.ifPresent(kinhmat -> model.addAttribute("kinhmat", kinhmat));
         kinhmatEdit.ifPresent(kinhmat -> model.addAttribute("title", kinhmat.getTenSanPham()));
@@ -80,9 +74,7 @@ public class IndexController {
     }
 
     @GetMapping("/trangsuc/{id}")
-    public String trangTrangSuc(Model model, @PathParam("id") String matrangsuc) {
-        int id = convertToNum(matrangsuc);
-
+    public String trangTrangSuc(Model model, @PathParam("id") Integer id) {
         Optional<Trangsuc> trangsucEdit = trangsucService.findTrangsucById(id);
         trangsucEdit.ifPresent(trangsuc -> model.addAttribute("trangsuc", trangsuc));
         trangsucEdit.ifPresent(trangsuc -> model.addAttribute("title", trangsuc.getTentrangsuc()));

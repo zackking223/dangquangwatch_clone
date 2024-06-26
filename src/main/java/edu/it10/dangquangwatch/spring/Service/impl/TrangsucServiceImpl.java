@@ -21,8 +21,8 @@ public class TrangsucServiceImpl implements TrangsucService {
   }  
 
   @Override  
-  public void saveTrangsuc(Trangsuc trangsuc) {  
-    trangsucRepository.save(trangsuc);  
+  public Trangsuc saveTrangsuc(Trangsuc trangsuc) {  
+    return trangsucRepository.save(trangsuc);  
   }  
 
   @Override  

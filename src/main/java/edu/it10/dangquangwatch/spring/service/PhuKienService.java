@@ -12,7 +12,7 @@ public interface PhuKienService {
 
   Page<PhuKien> searchPhuKien(String searchStr, Integer pageNum);
 
-  void savePhuKien(PhuKien phuKien);
+  PhuKien savePhuKien(PhuKien phuKien);
 
   void deletePhuKien(Integer maPhuKien);
 

@@ -12,7 +12,7 @@ public interface KinhMatService {
 
   Page<KinhMat> searchKinhMat(String searchStr, Integer pageNum);
 
-  void saveKinhMat(KinhMat kinhMat);  
+  KinhMat saveKinhMat(KinhMat kinhMat);  
 
   void deleteKinhMat(Integer maKinhMat);  
 
