@@ -38,7 +38,7 @@ public class Anhphukien {
     private MultipartFile file;
 
     public boolean isCloud() {
-        return tenanh.contains("http://res.cloudinary.com");
+        return url.contains("http://res.cloudinary.com");
     }
 
     public Anhphukien() {

@@ -39,7 +39,7 @@ public class Anhbutky {
     private MultipartFile file;
 
     public boolean isCloud() {
-        return tenanh.contains("http://res.cloudinary.com");
+        return url.contains("http://res.cloudinary.com");
     }
 
     public Anhbutky() {

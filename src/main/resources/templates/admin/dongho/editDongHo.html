@@ -12,17 +12,21 @@
   <div th:replace="~{fragments/sidebar :: sidebar}"></div>
   <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg ml-auto">
     <h1>Sửa thông tin</h1>
-    <form th:object="${dongho}" th:action="@{/admin/dongho/save}" action="#" method="post" enctype="multipart/form-data">
+    <form th:object="${dongho}" th:action="@{/admin/dongho/save}" action="#" method="post"
+      enctype="multipart/form-data">
       <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="file">Chọn ảnh:</label>
-        <input type="file" id="file" name="file" class="form-input mt-1 block w-full" multiple="multiple" accept="image/*"
-          onchange="previewImages(event)" required>
+        <input type="file" id="file" name="file" class="form-input mt-1 block w-full" multiple="multiple"
+          accept="image/*" onchange="previewImages(event)" required>
       </div>
-      <div class="flex flex-wrap w-full">
-        <div th:each="img : ${dongho.getImages()}" class="relative m-2">
+      <div class="flex flex-wrap w-full items-center">
+        <form action="/admin/dongho/deleteimage" method="post" th:each="img : ${dongho.getImages()}" class="h-32 relative m-2 overflow-visible">
           <img th:src="${img.getUrl()}" th:alt="${img.getTenanh()}" class="w-32 h-32 object-cover">
-          <form action="" method="post"><button></button></form>
-        </div>
+          <input type="number" name="id" class="hidden" th:value="${img.getMaanh()}">
+          <button th:if="${img.isCloud()}" class="p-1 rounded bg-red-500 absolute -top-1 -right-1">
+            <img src="/svg/delete.svg" alt="delete" class="w-4 h-4">
+          </button>
+        </form>
       </div>
       <div id="preview-container" class="mb-4 flex flex-wrap">
         <!-- Images preview will be shown here -->
@@ -80,15 +84,13 @@
         <textarea class="w-[80vw] min-w-[280px]" rows="20" th:field="*{thongtin}"></textarea>
       </div>
 
-      <input class="hidden" type="date" id="datePicker" name="NGAYTHEM" />
+      <input class="hidden" type="date" id="datePicker" th:field="*{NGAYTHEM}" />
 
       <div style="clear: both; display: block; height: 10px"></div>
       <input class="p-2 w-max bg-green-500 rounded block mt-4 text-white" type="submit" value="Lưu" />
     </form>
   </div>
   <script>
-    document.getElementById('datePicker').valueAsDate = new Date();
-
     function previewImages(event) {
       var files = event.target.files;
       var container = document.getElementById('preview-container');

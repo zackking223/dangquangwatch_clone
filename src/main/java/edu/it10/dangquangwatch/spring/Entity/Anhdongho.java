@@ -42,7 +42,7 @@ public class Anhdongho {
   }
 
   public boolean isCloud() {
-    return tenanh.contains("http://res.cloudinary.com");
+    return url.contains("http://res.cloudinary.com");
   }
 
   public Anhdongho() {
