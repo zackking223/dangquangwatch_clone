@@ -8,9 +8,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Objects;
+
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name = "anh_phukien")
@@ -31,15 +34,19 @@ public class Anhphukien {
     @JoinColumn(name = "maphukien")
     private PhuKien phukien;
     
+    @Transient
+    private MultipartFile file;
+
 
     public Anhphukien() {
     }
 
-    public Anhphukien(Integer maanh, String url, String tenanh, PhuKien phukien) {
+    public Anhphukien(Integer maanh, String url, String tenanh, PhuKien phukien, MultipartFile file) {
         this.maanh = maanh;
         this.url = url;
         this.tenanh = tenanh;
         this.phukien = phukien;
+        this.file = file;
     }
 
     public Integer getMaanh() {
@@ -74,6 +81,14 @@ public class Anhphukien {
         this.phukien = phukien;
     }
 
+    public MultipartFile getFile() {
+        return this.file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
     public Anhphukien maanh(Integer maanh) {
         setMaanh(maanh);
         return this;
@@ -94,6 +109,11 @@ public class Anhphukien {
         return this;
     }
 
+    public Anhphukien file(MultipartFile file) {
+        setFile(file);
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -102,12 +122,12 @@ public class Anhphukien {
             return false;
         }
         Anhphukien anhphukien = (Anhphukien) o;
-        return Objects.equals(maanh, anhphukien.maanh) && Objects.equals(url, anhphukien.url) && Objects.equals(tenanh, anhphukien.tenanh) && Objects.equals(phukien, anhphukien.phukien);
+        return Objects.equals(maanh, anhphukien.maanh) && Objects.equals(url, anhphukien.url) && Objects.equals(tenanh, anhphukien.tenanh) && Objects.equals(phukien, anhphukien.phukien) && Objects.equals(file, anhphukien.file);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(maanh, url, tenanh, phukien);
+        return Objects.hash(maanh, url, tenanh, phukien, file);
     }
 
     @Override
@@ -117,6 +137,8 @@ public class Anhphukien {
             ", url='" + getUrl() + "'" +
             ", tenanh='" + getTenanh() + "'" +
             ", phukien='" + getPhukien() + "'" +
+            ", file='" + getFile() + "'" +
             "}";
     }
+    
 }
