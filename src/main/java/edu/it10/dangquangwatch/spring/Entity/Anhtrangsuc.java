@@ -8,7 +8,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+
 import java.util.Objects;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -30,15 +34,19 @@ public class Anhtrangsuc {
   @JoinColumn(name = "matrangsuc")
   private Trangsuc trangsuc;
 
+  @Transient
+  private MultipartFile file;
+
 
   public Anhtrangsuc() {
   }
 
-  public Anhtrangsuc(Integer maanh, String url, String tenanh, Trangsuc trangsuc) {
+  public Anhtrangsuc(Integer maanh, String url, String tenanh, Trangsuc trangsuc, MultipartFile file) {
     this.maanh = maanh;
     this.url = url;
     this.tenanh = tenanh;
     this.trangsuc = trangsuc;
+    this.file = file;
   }
 
   public Integer getMaanh() {
@@ -73,6 +81,14 @@ public class Anhtrangsuc {
     this.trangsuc = trangsuc;
   }
 
+  public MultipartFile getFile() {
+    return this.file;
+  }
+
+  public void setFile(MultipartFile file) {
+    this.file = file;
+  }
+
   public Anhtrangsuc maanh(Integer maanh) {
     setMaanh(maanh);
     return this;
@@ -93,6 +109,11 @@ public class Anhtrangsuc {
     return this;
   }
 
+  public Anhtrangsuc file(MultipartFile file) {
+    setFile(file);
+    return this;
+  }
+
   @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -101,12 +122,12 @@ public class Anhtrangsuc {
             return false;
         }
         Anhtrangsuc anhtrangsuc = (Anhtrangsuc) o;
-        return Objects.equals(maanh, anhtrangsuc.maanh) && Objects.equals(url, anhtrangsuc.url) && Objects.equals(tenanh, anhtrangsuc.tenanh) && Objects.equals(trangsuc, anhtrangsuc.trangsuc);
+        return Objects.equals(maanh, anhtrangsuc.maanh) && Objects.equals(url, anhtrangsuc.url) && Objects.equals(tenanh, anhtrangsuc.tenanh) && Objects.equals(trangsuc, anhtrangsuc.trangsuc) && Objects.equals(file, anhtrangsuc.file);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(maanh, url, tenanh, trangsuc);
+    return Objects.hash(maanh, url, tenanh, trangsuc, file);
   }
 
   @Override
@@ -116,6 +137,8 @@ public class Anhtrangsuc {
       ", url='" + getUrl() + "'" +
       ", tenanh='" + getTenanh() + "'" +
       ", trangsuc='" + getTrangsuc() + "'" +
+      ", file='" + getFile() + "'" +
       "}";
   }
+
 }

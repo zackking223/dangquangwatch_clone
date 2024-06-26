@@ -8,7 +8,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+
 import java.util.Objects;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -31,14 +35,19 @@ public class Anhbutky {
     @JoinColumn(name = "mabutky")
     private Butky butky;
 
+    @Transient
+    private MultipartFile file;
+
+
     public Anhbutky() {
     }
 
-    public Anhbutky(Integer maanh, String url, String tenanh, Butky butky) {
+    public Anhbutky(Integer maanh, String url, String tenanh, Butky butky, MultipartFile file) {
         this.maanh = maanh;
         this.url = url;
         this.tenanh = tenanh;
         this.butky = butky;
+        this.file = file;
     }
 
     public Integer getMaanh() {
@@ -73,6 +82,14 @@ public class Anhbutky {
         this.butky = butky;
     }
 
+    public MultipartFile getFile() {
+        return this.file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
     public Anhbutky maanh(Integer maanh) {
         setMaanh(maanh);
         return this;
@@ -93,6 +110,11 @@ public class Anhbutky {
         return this;
     }
 
+    public Anhbutky file(MultipartFile file) {
+        setFile(file);
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -101,22 +123,23 @@ public class Anhbutky {
             return false;
         }
         Anhbutky anhbutky = (Anhbutky) o;
-        return Objects.equals(maanh, anhbutky.maanh) && Objects.equals(url, anhbutky.url)
-                && Objects.equals(tenanh, anhbutky.tenanh) && Objects.equals(butky, anhbutky.butky);
+        return Objects.equals(maanh, anhbutky.maanh) && Objects.equals(url, anhbutky.url) && Objects.equals(tenanh, anhbutky.tenanh) && Objects.equals(butky, anhbutky.butky) && Objects.equals(file, anhbutky.file);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(maanh, url, tenanh, butky);
+        return Objects.hash(maanh, url, tenanh, butky, file);
     }
 
     @Override
     public String toString() {
         return "{" +
-                " maanh='" + getMaanh() + "'" +
-                ", url='" + getUrl() + "'" +
-                ", tenanh='" + getTenanh() + "'" +
-                ", butky='" + getButky() + "'" +
-                "}";
+            " maanh='" + getMaanh() + "'" +
+            ", url='" + getUrl() + "'" +
+            ", tenanh='" + getTenanh() + "'" +
+            ", butky='" + getButky() + "'" +
+            ", file='" + getFile() + "'" +
+            "}";
     }
+
 }
