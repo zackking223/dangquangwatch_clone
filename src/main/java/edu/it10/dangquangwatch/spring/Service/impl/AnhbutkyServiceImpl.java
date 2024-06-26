@@ -11,12 +11,11 @@ import org.springframework.stereotype.Service;
 import edu.it10.dangquangwatch.spring.entity.Anhbutky;
 import edu.it10.dangquangwatch.spring.repository.AnhbutkyRepository;
 import edu.it10.dangquangwatch.spring.service.AnhbutkyService;
-import edu.it10.dangquangwatch.spring.service.ImageUploadService;
 
 @Service
 public class AnhbutkyServiceImpl implements AnhbutkyService {
   @Autowired AnhbutkyRepository anhbutkyRepository;
-  @Autowired ImageUploadService imageUploadService;
+  @Autowired ImageUploadServiceImpl imageUploadService;
 
   @Override
   public List<Anhbutky> getAllAnhbutky() {

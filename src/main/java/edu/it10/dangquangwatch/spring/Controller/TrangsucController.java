@@ -1,6 +1,8 @@
 package edu.it10.dangquangwatch.spring.controller;  
 
-import edu.it10.dangquangwatch.spring.entity.Trangsuc;  
+import edu.it10.dangquangwatch.spring.entity.Anhtrangsuc;
+import edu.it10.dangquangwatch.spring.entity.Trangsuc;
+import edu.it10.dangquangwatch.spring.service.AnhtrangsucService;
 import edu.it10.dangquangwatch.spring.service.TrangsucService;  
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,15 +11,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping; 
-import org.springframework.web.bind.annotation.RequestParam;  
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;  
 import java.util.Optional;  
 
 @Controller
 @RequestMapping(path = "/admin/trangsuc")  
 public class TrangsucController {  
-  @Autowired private TrangsucService trangsucService;  
+  @Autowired 
+  private TrangsucService trangsucService;  
+  @Autowired
+  private AnhtrangsucService anhtrangsucService;
 
   @GetMapping("/")  
   public String index(Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("search") Optional<String> search) {  
@@ -57,10 +64,44 @@ public class TrangsucController {
   }  
 
   @PostMapping(value = "/save")  
-  public String save(Trangsuc trangsuc) {  
+  public String save(Trangsuc trangsuc, @RequestParam("file") Optional<MultipartFile> fileData) throws IOException {
+    MultipartFile file = null;
+
+    if (fileData.isPresent())
+      file = fileData.get();
+
+    if (file != null && !file.isEmpty()) {
+      Anhtrangsuc anhtrangsuc = new Anhtrangsuc();
+      anhtrangsuc.setTrangsuc(trangsuc);
+      anhtrangsuc.setFile(file);
+
+      anhtrangsucService.saveAnhtrangsuc(anhtrangsuc);
+    }
     trangsucService.saveTrangsuc(trangsuc);  
     return "redirect:/admin/trangsuc/";  
   }  
+
+  @PostMapping("/uploadimage")
+  public String uploadImage(@RequestParam("file") List<MultipartFile> files, @RequestParam("id") Integer matrangsuc,
+      Model model) {
+    Optional<Trangsuc> trangsuc = trangsucService.findTrangsucById(matrangsuc);
+
+    trangsuc.ifPresent(dh -> {
+      for (MultipartFile file : files) {
+        Anhtrangsuc anhtrangsuc = new Anhtrangsuc();
+        anhtrangsuc.setFile(file);
+        anhtrangsuc.setTrangsuc(dh);
+
+        try {
+          anhtrangsucService.saveAnhtrangsuc(anhtrangsuc);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    });
+
+    return "redirect:/admin/trangsuc/edit?id=" + matrangsuc;
+  }
 
   @GetMapping(value = "/delete")  
   public String deleteTrangsuc(@RequestParam("id") Integer matrangsuc, Model model) {  

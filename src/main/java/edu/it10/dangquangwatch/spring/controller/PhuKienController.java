@@ -1,5 +1,6 @@
 package edu.it10.dangquangwatch.spring.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,8 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import edu.it10.dangquangwatch.spring.entity.Anhphukien;
 import edu.it10.dangquangwatch.spring.entity.PhuKien;
+import edu.it10.dangquangwatch.spring.service.AnhphukienService;
 import edu.it10.dangquangwatch.spring.service.PhuKienService;
 
 @Controller
@@ -20,6 +24,8 @@ import edu.it10.dangquangwatch.spring.service.PhuKienService;
 public class PhuKienController {
   @Autowired
   private PhuKienService phuKienService;
+  @Autowired
+  private AnhphukienService anhphukienService;
 
   @GetMapping("/")
   public String index(Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("search") Optional<String> search) {
@@ -58,9 +64,43 @@ public class PhuKienController {
   }
 
   @PostMapping("/save")
-  public String save(PhuKien phuKien) {
+  public String save(PhuKien phuKien, @RequestParam("file") Optional<MultipartFile> fileData) throws IOException {
+    MultipartFile file = null;
+
+    if (fileData.isPresent())
+      file = fileData.get();
+
+    if (file != null && !file.isEmpty()) {
+      Anhphukien anhphukien = new Anhphukien();
+      anhphukien.setPhukien(phuKien);
+      anhphukien.setFile(file);
+
+      anhphukienService.saveAnhphukien(anhphukien);
+    }
     phuKienService.savePhuKien(phuKien);
     return "redirect:/admin/phukien/";
+  }
+
+  @PostMapping("/uploadimage")
+  public String uploadImage(@RequestParam("file") List<MultipartFile> files, @RequestParam("id") Integer maphukien,
+      Model model) {
+    Optional<PhuKien> phukien = phuKienService.findPhuKienById(maphukien);
+
+    phukien.ifPresent(dh -> {
+      for (MultipartFile file : files) {
+        Anhphukien anhphukien = new Anhphukien();
+        anhphukien.setFile(file);
+        anhphukien.setPhukien(dh);
+
+        try {
+          anhphukienService.saveAnhphukien(anhphukien);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    });
+
+    return "redirect:/admin/phukien/edit?id=" + maphukien;
   }
 
   @GetMapping("/delete")
