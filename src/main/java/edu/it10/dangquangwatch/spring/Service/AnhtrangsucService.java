@@ -11,7 +11,7 @@ public interface AnhtrangsucService {
 
   void saveAnhtrangsuc(Anhtrangsuc anhtrAnhtrangsuc) throws IOException;
 
-  void deleteAnhtrangsuc(Integer maanh);
+  void deleteAnhtrangsuc(Integer maanh) throws IOException;
 
   Optional<Anhtrangsuc> findAnhtrangsucById(Integer maanh);
 }

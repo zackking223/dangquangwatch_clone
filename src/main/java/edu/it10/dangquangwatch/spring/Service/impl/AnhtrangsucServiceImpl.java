@@ -14,8 +14,10 @@ import edu.it10.dangquangwatch.spring.service.AnhtrangsucService;
 
 @Service
 public class AnhtrangsucServiceImpl implements AnhtrangsucService {
-  @Autowired AnhtrangsucRepository anhtrangsucRepository;
-  @Autowired ImageUploadServiceImpl imageUploadService;
+  @Autowired
+  AnhtrangsucRepository anhtrangsucRepository;
+  @Autowired
+  ImageUploadServiceImpl imageUploadService;
 
   @Override
   public List<Anhtrangsuc> getAllAnhtrangsuc() {
@@ -25,7 +27,7 @@ public class AnhtrangsucServiceImpl implements AnhtrangsucService {
   @Override
   public void saveAnhtrangsuc(Anhtrangsuc anhtrangsuc) throws IOException {
     Map<String, String> uploadResult = imageUploadService.uploadImage(anhtrangsuc.getFile());
-    
+
     anhtrangsuc.setTenanh(uploadResult.get("public_id"));
     anhtrangsuc.setUrl(uploadResult.get("url"));
 
@@ -33,13 +35,21 @@ public class AnhtrangsucServiceImpl implements AnhtrangsucService {
   }
 
   @Override
-  public void deleteAnhtrangsuc(Integer maanh) {
-    anhtrangsucRepository.deleteById(maanh);
+  public void deleteAnhtrangsuc(Integer maanh) throws IOException {
+    Optional<Anhtrangsuc> data = anhtrangsucRepository.findById(maanh);
+
+    if (data.isPresent()) {
+      if (data.get().isCloud()) {
+        String tenanh = data.get().getTenanh();
+        imageUploadService.deleteImage(tenanh);
+      }
+      anhtrangsucRepository.deleteById(maanh);
+    }
   }
 
   @Override
   public Optional<Anhtrangsuc> findAnhtrangsucById(Integer maanh) {
     return anhtrangsucRepository.findById(maanh);
   }
-  
+
 }

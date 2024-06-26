@@ -11,7 +11,7 @@ public interface AnhkinhmatService {
 
   void saveAnhkinhmat(Anhkinhmat anhkinhmat) throws IOException;
 
-  void deleteAnhkinhmat(Integer maanh);
+  void deleteAnhkinhmat(Integer maanh) throws IOException;
 
   Optional<Anhkinhmat> findAnhkinhmatById(Integer maanh);
 }

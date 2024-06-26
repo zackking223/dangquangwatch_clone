@@ -37,6 +37,9 @@ public class Anhtrangsuc {
   @Transient
   private MultipartFile file;
 
+  public boolean isCloud() {
+    return tenanh.contains("http://res.cloudinary.com");
+  }
 
   public Anhtrangsuc() {
   }
@@ -115,14 +118,16 @@ public class Anhtrangsuc {
   }
 
   @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof Anhtrangsuc)) {
-            return false;
-        }
-        Anhtrangsuc anhtrangsuc = (Anhtrangsuc) o;
-        return Objects.equals(maanh, anhtrangsuc.maanh) && Objects.equals(url, anhtrangsuc.url) && Objects.equals(tenanh, anhtrangsuc.tenanh) && Objects.equals(trangsuc, anhtrangsuc.trangsuc) && Objects.equals(file, anhtrangsuc.file);
+  public boolean equals(Object o) {
+    if (o == this)
+      return true;
+    if (!(o instanceof Anhtrangsuc)) {
+      return false;
+    }
+    Anhtrangsuc anhtrangsuc = (Anhtrangsuc) o;
+    return Objects.equals(maanh, anhtrangsuc.maanh) && Objects.equals(url, anhtrangsuc.url)
+        && Objects.equals(tenanh, anhtrangsuc.tenanh) && Objects.equals(trangsuc, anhtrangsuc.trangsuc)
+        && Objects.equals(file, anhtrangsuc.file);
   }
 
   @Override
@@ -133,12 +138,12 @@ public class Anhtrangsuc {
   @Override
   public String toString() {
     return "{" +
-      " maanh='" + getMaanh() + "'" +
-      ", url='" + getUrl() + "'" +
-      ", tenanh='" + getTenanh() + "'" +
-      ", trangsuc='" + getTrangsuc() + "'" +
-      ", file='" + getFile() + "'" +
-      "}";
+        " maanh='" + getMaanh() + "'" +
+        ", url='" + getUrl() + "'" +
+        ", tenanh='" + getTenanh() + "'" +
+        ", trangsuc='" + getTrangsuc() + "'" +
+        ", file='" + getFile() + "'" +
+        "}";
   }
 
 }

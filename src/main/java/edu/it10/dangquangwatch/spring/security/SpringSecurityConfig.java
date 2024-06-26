@@ -5,6 +5,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -12,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
@@ -63,7 +65,10 @@ public class SpringSecurityConfig {
             .logoutSuccessUrl("/login?logout")
             .invalidateHttpSession(true) // Invalidate the session
             .deleteCookies("JSESSIONID") // Delete cookies
-            .permitAll());
+            .permitAll())
+        .exceptionHandling(exHandl -> 
+          exHandl.accessDeniedHandler(deniedHandler())
+        );
 
     // Use HTTP Basic authentication
     http.httpBasic(Customizer.withDefaults());
@@ -77,6 +82,20 @@ public class SpringSecurityConfig {
   @Bean
   public AuthenticationSuccessHandler successHandler() {
     return new CustomAuthenticationSuccessHandler();
+  }
+
+  @Bean
+  public AccessDeniedHandler deniedHandler() {
+    return new CustomAccessDeniedHandler();
+  }
+
+  private static class CustomAccessDeniedHandler implements AccessDeniedHandler {
+
+    @Override
+    public void handle(HttpServletRequest request, HttpServletResponse response,
+        AccessDeniedException accessDeniedException) throws IOException, ServletException {
+      response.sendRedirect("/access-denied");
+    }
   }
 
   private static class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {

@@ -37,6 +37,9 @@ public class Anhkinhmat {
     @Transient
     private MultipartFile file;
 
+    public boolean isCloud() {
+        return tenanh.contains("http://res.cloudinary.com");
+    }
 
     public Anhkinhmat() {
     }
@@ -122,7 +125,9 @@ public class Anhkinhmat {
             return false;
         }
         Anhkinhmat anhkinhmat = (Anhkinhmat) o;
-        return Objects.equals(maanh, anhkinhmat.maanh) && Objects.equals(url, anhkinhmat.url) && Objects.equals(tenanh, anhkinhmat.tenanh) && Objects.equals(kinhmat, anhkinhmat.kinhmat) && Objects.equals(file, anhkinhmat.file);
+        return Objects.equals(maanh, anhkinhmat.maanh) && Objects.equals(url, anhkinhmat.url)
+                && Objects.equals(tenanh, anhkinhmat.tenanh) && Objects.equals(kinhmat, anhkinhmat.kinhmat)
+                && Objects.equals(file, anhkinhmat.file);
     }
 
     @Override
@@ -133,12 +138,12 @@ public class Anhkinhmat {
     @Override
     public String toString() {
         return "{" +
-            " maanh='" + getMaanh() + "'" +
-            ", url='" + getUrl() + "'" +
-            ", tenanh='" + getTenanh() + "'" +
-            ", kinhmat='" + getKinhmat() + "'" +
-            ", file='" + getFile() + "'" +
-            "}";
+                " maanh='" + getMaanh() + "'" +
+                ", url='" + getUrl() + "'" +
+                ", tenanh='" + getTenanh() + "'" +
+                ", kinhmat='" + getKinhmat() + "'" +
+                ", file='" + getFile() + "'" +
+                "}";
     }
 
 }

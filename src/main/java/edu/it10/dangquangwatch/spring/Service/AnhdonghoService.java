@@ -11,7 +11,7 @@ public interface AnhdonghoService {
 
   void saveAnhdongho(Anhdongho anhdongho) throws IOException;
 
-  void deleteAnhdongho(Integer maanh);
+  void deleteAnhdongho(Integer maanh) throws IOException;
 
   Optional<Anhdongho> findAnhdonghoById(Integer maanh);
 }

@@ -38,6 +38,9 @@ public class Anhbutky {
     @Transient
     private MultipartFile file;
 
+    public boolean isCloud() {
+        return tenanh.contains("http://res.cloudinary.com");
+    }
 
     public Anhbutky() {
     }
@@ -123,7 +126,9 @@ public class Anhbutky {
             return false;
         }
         Anhbutky anhbutky = (Anhbutky) o;
-        return Objects.equals(maanh, anhbutky.maanh) && Objects.equals(url, anhbutky.url) && Objects.equals(tenanh, anhbutky.tenanh) && Objects.equals(butky, anhbutky.butky) && Objects.equals(file, anhbutky.file);
+        return Objects.equals(maanh, anhbutky.maanh) && Objects.equals(url, anhbutky.url)
+                && Objects.equals(tenanh, anhbutky.tenanh) && Objects.equals(butky, anhbutky.butky)
+                && Objects.equals(file, anhbutky.file);
     }
 
     @Override
@@ -134,12 +139,12 @@ public class Anhbutky {
     @Override
     public String toString() {
         return "{" +
-            " maanh='" + getMaanh() + "'" +
-            ", url='" + getUrl() + "'" +
-            ", tenanh='" + getTenanh() + "'" +
-            ", butky='" + getButky() + "'" +
-            ", file='" + getFile() + "'" +
-            "}";
+                " maanh='" + getMaanh() + "'" +
+                ", url='" + getUrl() + "'" +
+                ", tenanh='" + getTenanh() + "'" +
+                ", butky='" + getButky() + "'" +
+                ", file='" + getFile() + "'" +
+                "}";
     }
 
 }

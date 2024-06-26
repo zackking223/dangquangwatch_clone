@@ -14,8 +14,10 @@ import edu.it10.dangquangwatch.spring.service.AnhkinhmatService;
 
 @Service
 public class AnhkinhmatServiceImpl implements AnhkinhmatService {
-  @Autowired AnhkinhmatRepository anhkinhmatRepository;
-  @Autowired ImageUploadServiceImpl imageUploadService;
+  @Autowired
+  AnhkinhmatRepository anhkinhmatRepository;
+  @Autowired
+  ImageUploadServiceImpl imageUploadService;
 
   @Override
   public List<Anhkinhmat> getAllAnhkinhmat() {
@@ -25,7 +27,7 @@ public class AnhkinhmatServiceImpl implements AnhkinhmatService {
   @Override
   public void saveAnhkinhmat(Anhkinhmat anhkinhmat) throws IOException {
     Map<String, String> uploadResult = imageUploadService.uploadImage(anhkinhmat.getFile());
-    
+
     anhkinhmat.setTenanh(uploadResult.get("public_id"));
     anhkinhmat.setUrl(uploadResult.get("url"));
 
@@ -33,13 +35,21 @@ public class AnhkinhmatServiceImpl implements AnhkinhmatService {
   }
 
   @Override
-  public void deleteAnhkinhmat(Integer maanh) {
-    anhkinhmatRepository.deleteById(maanh);
+  public void deleteAnhkinhmat(Integer maanh) throws IOException {
+    Optional<Anhkinhmat> data = anhkinhmatRepository.findById(maanh);
+
+    if (data.isPresent()) {
+      if (data.get().isCloud()) {
+        String tenanh = data.get().getTenanh();
+        imageUploadService.deleteImage(tenanh);
+      }
+      anhkinhmatRepository.deleteById(maanh);
+    }
   }
 
   @Override
   public Optional<Anhkinhmat> findAnhkinhmatById(Integer maanh) {
     return anhkinhmatRepository.findById(maanh);
   }
-  
+
 }

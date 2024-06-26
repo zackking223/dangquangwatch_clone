@@ -33,10 +33,13 @@ public class Anhphukien {
     @ManyToOne(targetEntity = PhuKien.class)
     @JoinColumn(name = "maphukien")
     private PhuKien phukien;
-    
+
     @Transient
     private MultipartFile file;
 
+    public boolean isCloud() {
+        return tenanh.contains("http://res.cloudinary.com");
+    }
 
     public Anhphukien() {
     }
@@ -122,7 +125,9 @@ public class Anhphukien {
             return false;
         }
         Anhphukien anhphukien = (Anhphukien) o;
-        return Objects.equals(maanh, anhphukien.maanh) && Objects.equals(url, anhphukien.url) && Objects.equals(tenanh, anhphukien.tenanh) && Objects.equals(phukien, anhphukien.phukien) && Objects.equals(file, anhphukien.file);
+        return Objects.equals(maanh, anhphukien.maanh) && Objects.equals(url, anhphukien.url)
+                && Objects.equals(tenanh, anhphukien.tenanh) && Objects.equals(phukien, anhphukien.phukien)
+                && Objects.equals(file, anhphukien.file);
     }
 
     @Override
@@ -133,12 +138,12 @@ public class Anhphukien {
     @Override
     public String toString() {
         return "{" +
-            " maanh='" + getMaanh() + "'" +
-            ", url='" + getUrl() + "'" +
-            ", tenanh='" + getTenanh() + "'" +
-            ", phukien='" + getPhukien() + "'" +
-            ", file='" + getFile() + "'" +
-            "}";
+                " maanh='" + getMaanh() + "'" +
+                ", url='" + getUrl() + "'" +
+                ", tenanh='" + getTenanh() + "'" +
+                ", phukien='" + getPhukien() + "'" +
+                ", file='" + getFile() + "'" +
+                "}";
     }
-    
+
 }

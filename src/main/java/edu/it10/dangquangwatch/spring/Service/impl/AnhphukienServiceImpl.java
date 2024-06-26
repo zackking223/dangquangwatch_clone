@@ -14,8 +14,10 @@ import edu.it10.dangquangwatch.spring.service.AnhphukienService;
 
 @Service
 public class AnhphukienServiceImpl implements AnhphukienService {
-  @Autowired AnhphukienRepository anhphukienRepository;
-  @Autowired ImageUploadServiceImpl imageUploadService;
+  @Autowired
+  AnhphukienRepository anhphukienRepository;
+  @Autowired
+  ImageUploadServiceImpl imageUploadService;
 
   @Override
   public List<Anhphukien> getAllAnhphukien() {
@@ -25,7 +27,7 @@ public class AnhphukienServiceImpl implements AnhphukienService {
   @Override
   public void saveAnhphukien(Anhphukien anhphukien) throws IOException {
     Map<String, String> uploadResult = imageUploadService.uploadImage(anhphukien.getFile());
-    
+
     anhphukien.setTenanh(uploadResult.get("public_id"));
     anhphukien.setUrl(uploadResult.get("url"));
 
@@ -33,13 +35,21 @@ public class AnhphukienServiceImpl implements AnhphukienService {
   }
 
   @Override
-  public void deleteAnhphukien(Integer maanh) {
-    anhphukienRepository.deleteById(maanh);
+  public void deleteAnhphukien(Integer maanh) throws IOException {
+    Optional<Anhphukien> data = anhphukienRepository.findById(maanh);
+
+    if (data.isPresent()) {
+      if (data.get().isCloud()) {
+        String tenanh = data.get().getTenanh();
+        imageUploadService.deleteImage(tenanh);
+      }
+      anhphukienRepository.deleteById(maanh);
+    }
   }
 
   @Override
   public Optional<Anhphukien> findAnhphukienById(Integer maanh) {
     return anhphukienRepository.findById(maanh);
   }
-  
+
 }

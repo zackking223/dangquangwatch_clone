@@ -27,7 +27,7 @@ public class ImageUploadServiceImpl implements ImageUploadService {
         "public_id", (String) uploadResult.get("public_id"),
         "original_filename", (String) uploadResult.get("original_filename"));
   }
-  
+
   @Override
   public List<Map<String, String>> uploadImages(List<MultipartFile> files) throws IOException {
     List<Map<String, String>> uploadResults = new ArrayList<>();
@@ -39,5 +39,11 @@ public class ImageUploadServiceImpl implements ImageUploadService {
           "original_filename", (String) uploadResult.get("original_filename")));
     }
     return uploadResults;
+  }
+
+  @SuppressWarnings("unchecked")
+  @Override
+  public Map<String, String> deleteImage(String publicId) throws IOException {
+    return cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
   }
 }

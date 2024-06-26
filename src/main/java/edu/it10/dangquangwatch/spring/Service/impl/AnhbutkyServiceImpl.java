@@ -14,8 +14,10 @@ import edu.it10.dangquangwatch.spring.service.AnhbutkyService;
 
 @Service
 public class AnhbutkyServiceImpl implements AnhbutkyService {
-  @Autowired AnhbutkyRepository anhbutkyRepository;
-  @Autowired ImageUploadServiceImpl imageUploadService;
+  @Autowired
+  AnhbutkyRepository anhbutkyRepository;
+  @Autowired
+  ImageUploadServiceImpl imageUploadService;
 
   @Override
   public List<Anhbutky> getAllAnhbutky() {
@@ -25,7 +27,7 @@ public class AnhbutkyServiceImpl implements AnhbutkyService {
   @Override
   public void saveAnhbutky(Anhbutky anhbutky) throws IOException {
     Map<String, String> uploadResult = imageUploadService.uploadImage(anhbutky.getFile());
-    
+
     anhbutky.setTenanh(uploadResult.get("public_id"));
     anhbutky.setUrl(uploadResult.get("url"));
 
@@ -33,13 +35,21 @@ public class AnhbutkyServiceImpl implements AnhbutkyService {
   }
 
   @Override
-  public void deleteAnhbutky(Integer maanh) {
-    anhbutkyRepository.deleteById(maanh);
+  public void deleteAnhbutky(Integer maanh) throws IOException {
+    Optional<Anhbutky> data = anhbutkyRepository.findById(maanh);
+
+    if (data.isPresent()) {
+      if (data.get().isCloud()) {
+        String tenanh = data.get().getTenanh();
+        imageUploadService.deleteImage(tenanh);
+      }
+      anhbutkyRepository.deleteById(maanh);
+    }
   }
 
   @Override
   public Optional<Anhbutky> findAnhbutkyById(Integer maanh) {
     return anhbutkyRepository.findById(maanh);
   }
-  
+
 }

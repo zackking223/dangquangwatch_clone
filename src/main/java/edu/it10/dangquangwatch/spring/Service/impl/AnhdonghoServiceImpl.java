@@ -33,8 +33,16 @@ public class AnhdonghoServiceImpl implements AnhdonghoService {
   }
 
   @Override
-  public void deleteAnhdongho(Integer maanh) {
-    anhdonghoRepository.deleteById(maanh);
+  public void deleteAnhdongho(Integer maanh) throws IOException {
+    Optional<Anhdongho> data = anhdonghoRepository.findById(maanh);
+
+    if (data.isPresent()) {
+      if (data.get().isCloud()) {
+        String tenanh = data.get().getTenanh();
+        imageUploadService.deleteImage(tenanh);
+      }
+      anhdonghoRepository.deleteById(maanh);
+    }
   }
 
   @Override

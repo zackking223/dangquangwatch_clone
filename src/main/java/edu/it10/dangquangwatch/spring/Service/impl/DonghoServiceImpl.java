@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;  
 
 import java.util.List;  
@@ -40,7 +39,7 @@ public class DonghoServiceImpl implements DonghoService {
 
   @Override
   public Page<Dongho> getAllDonghoByTendongho(String tendongho, int pageNum) {
-    Pageable pageable = PageRequest.of(pageNum, 10, Sort.by("NGAYTHEM"));
+    Pageable pageable = PageRequest.of(pageNum, 10);
     return donghoRepository.findByTendonghoContains(tendongho, pageable);
   }
 

@@ -77,18 +77,17 @@ public class DonghoController {
   }
 
   @PostMapping(value = "save")
-  public String save(Dongho dongho, @RequestParam("file") Optional<MultipartFile> fileData) throws IOException {
-    MultipartFile file = null;
-
-    if (fileData.isPresent())
-      file = fileData.get();
-
-    if (file != null && !file.isEmpty()) {
+  public String save(Dongho dongho, @RequestParam("file") List<MultipartFile> files) throws IOException {
+    for (MultipartFile file : files) {
       Anhdongho anhdongho = new Anhdongho();
-      anhdongho.setDongho(dongho);
       anhdongho.setFile(file);
+      anhdongho.setDongho(dongho);
 
-      anhdonghoService.saveAnhdongho(anhdongho);
+      try {
+        anhdonghoService.saveAnhdongho(anhdongho);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
     donghoService.saveDongho(dongho);
     return "redirect:/admin/dongho/";
@@ -116,9 +115,15 @@ public class DonghoController {
     return "redirect:/admin/dongho/edit?id=" + madongho;
   }
 
-  @GetMapping(value = "/delete")
+  @GetMapping("/delete")
   public String deleteDongho(@RequestParam("id") Integer madongho, Model model) {
     donghoService.deleteDongho(madongho);
+    return "redirect:/admin/dongho/";
+  }
+
+  @PostMapping("/deleteimage")
+  public String deleteImage(@RequestParam("id") Integer maanh) throws IOException {
+    anhdonghoService.deleteAnhdongho(maanh);
     return "redirect:/admin/dongho/";
   }
 }

@@ -11,7 +11,7 @@ public interface AnhphukienService {
 
   void saveAnhphukien(Anhphukien anhphukien) throws IOException;
 
-  void deleteAnhphukien(Integer maanh);
+  void deleteAnhphukien(Integer maanh) throws IOException;
 
   Optional<Anhphukien> findAnhphukienById(Integer maanh);
 }

@@ -13,7 +13,16 @@
     <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg ml-auto">
         <h1 class="font-bold text-center my-2">Đồng hồ mới</h1>
         <div class="col-md-auto">
-            <form th:object="${dongho}" th:action="@{/admin/dongho/save}" action="#" method="post">
+            <form th:object="${dongho}" th:action="@{/admin/dongho/save}" action="#" method="post"
+                enctype="multipart/form-data">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="file">Chọn ảnh:</label>
+                    <input type="file" id="file" name="file" class="form-input mt-1 block w-full" multiple="multiple"
+                        accept="image/*" onchange="previewImages(event)" required>
+                </div>
+                <div id="preview-container" class="mb-4 flex flex-wrap">
+                    <!-- Images preview will be shown here -->
+                </div>
                 <div>
                     <label class="block font-medium" th:for="tendongho">Tên đồng hồ</label>
                     <input class="block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{tendongho}"
@@ -81,6 +90,22 @@
     </div>
     <script>
         document.getElementById('datePicker').valueAsDate = new Date();
+
+        function previewImages(event) {
+            var files = event.target.files;
+            var container = document.getElementById('preview-container');
+            container.innerHTML = '';
+            for (var i = 0; i < files.length; i++) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('w-32', 'h-32', 'object-cover', 'm-2');
+                    container.appendChild(img);
+                };
+                reader.readAsDataURL(files[i]);
+            }
+        }
     </script>
 </body>
 

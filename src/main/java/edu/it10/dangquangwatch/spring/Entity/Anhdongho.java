@@ -41,6 +41,10 @@ public class Anhdongho {
     return dongho.getMadongho();
   }
 
+  public boolean isCloud() {
+    return tenanh.contains("http://res.cloudinary.com");
+  }
+
   public Anhdongho() {
   }
 
