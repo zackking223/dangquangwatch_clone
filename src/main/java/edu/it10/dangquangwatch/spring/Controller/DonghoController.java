@@ -4,7 +4,6 @@ import edu.it10.dangquangwatch.spring.entity.Anhdongho;
 import edu.it10.dangquangwatch.spring.entity.Dongho;
 import edu.it10.dangquangwatch.spring.service.AnhdonghoService;
 import edu.it10.dangquangwatch.spring.service.DonghoService;
-import edu.it10.dangquangwatch.spring.service.ImageUploadService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -29,8 +27,6 @@ public class DonghoController {
   private DonghoService donghoService;
   @Autowired
   private AnhdonghoService anhdonghoService;
-  @Autowired
-  private ImageUploadService imageUploadService;
 
   @GetMapping("/")
   public String index(@RequestParam("search") Optional<String> search, @RequestParam("page") Optional<Integer> page,
@@ -81,35 +77,43 @@ public class DonghoController {
   }
 
   @PostMapping(value = "save")
-  public String save(Dongho dongho, @RequestParam("file") Optional<MultipartFile> fileData) {
+  public String save(Dongho dongho, @RequestParam("file") Optional<MultipartFile> fileData) throws IOException {
     MultipartFile file = null;
 
     if (fileData.isPresent())
       file = fileData.get();
 
     if (file != null && !file.isEmpty()) {
-      try {
-        Map<String, String> uploadResult = imageUploadService.uploadImage(file);
-        Anhdongho anhdongho = new Anhdongho();
+      Anhdongho anhdongho = new Anhdongho();
+      anhdongho.setDongho(dongho);
+      anhdongho.setFile(file);
 
-        anhdongho.setDongho(dongho);
-        anhdongho.setTenanh(uploadResult.get("public_id"));
-        anhdongho.setUrl(uploadResult.get("url"));
-
-        anhdonghoService.saveAnhdongho(anhdongho);
-      } catch (IOException e) {
-        e.printStackTrace();
-        return "admin/dongho/index";
-      }
+      anhdonghoService.saveAnhdongho(anhdongho);
     }
     donghoService.saveDongho(dongho);
     return "redirect:/admin/dongho/";
   }
 
   @PostMapping("/uploadimage")
-  public String uploadImage(@RequestParam("file") List<MultipartFile> files, @RequestParam("id") Optional<Integer> madongho,
+  public String uploadImage(@RequestParam("file") List<MultipartFile> files, @RequestParam("id") Integer madongho,
       Model model) {
-      return "admin/dongho/index";
+    Optional<Dongho> dongho = donghoService.findDonghoById(madongho);
+
+    dongho.ifPresent(dh -> {
+      for (MultipartFile file : files) {
+        Anhdongho anhdongho = new Anhdongho();
+        anhdongho.setFile(file);
+        anhdongho.setDongho(dh);
+
+        try {
+          anhdonghoService.saveAnhdongho(anhdongho);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    });
+
+    return "redirect:/admin/dongho/edit?id=" + madongho;
   }
 
   @GetMapping(value = "/delete")

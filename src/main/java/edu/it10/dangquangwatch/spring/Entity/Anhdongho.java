@@ -8,6 +8,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+
 import java.util.Objects;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -32,12 +34,12 @@ public class Anhdongho {
   @JoinColumn(name = "madongho")
   private Dongho dongho;
 
+  @Transient
   private MultipartFile file;
 
   public Integer getMadongho() {
     return dongho.getMadongho();
   }
-
 
   public Anhdongho() {
   }
