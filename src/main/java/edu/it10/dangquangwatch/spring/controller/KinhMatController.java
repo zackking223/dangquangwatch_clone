@@ -65,18 +65,17 @@ public class KinhMatController {
   }  
 
   @PostMapping("/save")  
-  public String save(KinhMat kinhMat, @RequestParam("file") Optional<MultipartFile> fileData) throws IOException {  
-    MultipartFile file = null;
-
-    if (fileData.isPresent())
-      file = fileData.get();
-
-    if (file != null && !file.isEmpty()) {
+  public String save(KinhMat kinhMat, @RequestParam("file") List<MultipartFile> files) throws IOException {  
+    for (MultipartFile file : files) {
       Anhkinhmat anhkinhmat = new Anhkinhmat();
-      anhkinhmat.setKinhmat(kinhMat);
       anhkinhmat.setFile(file);
+      anhkinhmat.setKinhmat(kinhMat);
 
-      anhkinhmatService.saveAnhkinhmat(anhkinhmat);
+      try {
+        anhkinhmatService.saveAnhkinhmat(anhkinhmat);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
     kinhMatService.saveKinhMat(kinhMat);  
     return "redirect:/admin/kinhmat/";  
@@ -108,5 +107,11 @@ public class KinhMatController {
   public String deleteKinhMat(@RequestParam("id") Integer maKinhMat, Model model) {  
     kinhMatService.deleteKinhMat(maKinhMat);  
     return "redirect:/admin/kinhmat/";  
+  }
+
+  @PostMapping("/deleteimage")
+  public String deleteImage(@RequestParam("id") Integer maanh) throws IOException {
+    anhkinhmatService.deleteAnhkinhmat(maanh);
+    return "redirect:/admin/kinhmat/";
   }
 }

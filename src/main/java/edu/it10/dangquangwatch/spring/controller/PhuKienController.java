@@ -64,18 +64,17 @@ public class PhuKienController {
   }
 
   @PostMapping("/save")
-  public String save(PhuKien phuKien, @RequestParam("file") Optional<MultipartFile> fileData) throws IOException {
-    MultipartFile file = null;
-
-    if (fileData.isPresent())
-      file = fileData.get();
-
-    if (file != null && !file.isEmpty()) {
+  public String save(PhuKien phuKien, @RequestParam("file") List<MultipartFile> files) throws IOException {
+    for (MultipartFile file : files) {
       Anhphukien anhphukien = new Anhphukien();
-      anhphukien.setPhukien(phuKien);
       anhphukien.setFile(file);
+      anhphukien.setPhukien(phuKien);
 
-      anhphukienService.saveAnhphukien(anhphukien);
+      try {
+        anhphukienService.saveAnhphukien(anhphukien);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
     phuKienService.savePhuKien(phuKien);
     return "redirect:/admin/phukien/";
@@ -106,6 +105,12 @@ public class PhuKienController {
   @GetMapping("/delete")
   public String deletePhuKien(@RequestParam("id") Integer maPhuKien, Model model) {
     phuKienService.deletePhuKien(maPhuKien);
+    return "redirect:/admin/phukien/";
+  }
+
+  @PostMapping("/deleteimage")
+  public String deleteImage(@RequestParam("id") Integer maanh) throws IOException {
+    anhphukienService.deleteAnhphukien(maanh);
     return "redirect:/admin/phukien/";
   }
 }

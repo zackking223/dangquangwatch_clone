@@ -64,18 +64,17 @@ public class TrangsucController {
   }  
 
   @PostMapping(value = "/save")  
-  public String save(Trangsuc trangsuc, @RequestParam("file") Optional<MultipartFile> fileData) throws IOException {
-    MultipartFile file = null;
-
-    if (fileData.isPresent())
-      file = fileData.get();
-
-    if (file != null && !file.isEmpty()) {
+  public String save(Trangsuc trangsuc, @RequestParam("file") List<MultipartFile> files) throws IOException {
+    for (MultipartFile file : files) {
       Anhtrangsuc anhtrangsuc = new Anhtrangsuc();
-      anhtrangsuc.setTrangsuc(trangsuc);
       anhtrangsuc.setFile(file);
+      anhtrangsuc.setTrangsuc(trangsuc);
 
-      anhtrangsucService.saveAnhtrangsuc(anhtrangsuc);
+      try {
+        anhtrangsucService.saveAnhtrangsuc(anhtrangsuc);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
     trangsucService.saveTrangsuc(trangsuc);  
     return "redirect:/admin/trangsuc/";  
@@ -108,4 +107,10 @@ public class TrangsucController {
     trangsucService.deleteTrangsuc(matrangsuc);  
     return "redirect:/admin/trangsuc/";  
   }  
+
+  @PostMapping("/deleteimage")
+  public String deleteImage(@RequestParam("id") Integer maanh) throws IOException {
+    anhtrangsucService.deleteAnhtrangsuc(maanh);
+    return "redirect:/admin/trangsuc/";
+  }
 }

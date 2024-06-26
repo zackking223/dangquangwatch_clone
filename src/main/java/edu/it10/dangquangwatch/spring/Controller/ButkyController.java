@@ -65,18 +65,17 @@ public class ButkyController {
   }
 
   @PostMapping(value = "/save")
-  public String save(Butky butky, @RequestParam("file") Optional<MultipartFile> fileData) throws IOException {
-    MultipartFile file = null;
-
-    if (fileData.isPresent())
-      file = fileData.get();
-
-    if (file != null && !file.isEmpty()) {
+  public String save(Butky butky, @RequestParam("file") List<MultipartFile> files) throws IOException {
+    for (MultipartFile file : files) {
       Anhbutky anhbutky = new Anhbutky();
-      anhbutky.setButky(butky);
       anhbutky.setFile(file);
+      anhbutky.setButky(butky);
 
-      anhbutkyService.saveAnhbutky(anhbutky);
+      try {
+        anhbutkyService.saveAnhbutky(anhbutky);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
     butkyService.saveButky(butky);
     return "redirect:/admin/butky/";
@@ -107,6 +106,12 @@ public class ButkyController {
   @GetMapping(value = "/delete")
   public String deleteButky(@RequestParam("id") Integer mabutky, Model model) {
     butkyService.deleteButky(mabutky);
+    return "redirect:/admin/butky/";
+  }
+
+  @PostMapping("/deleteimage")
+  public String deleteImage(@RequestParam("id") Integer maanh) throws IOException {
+    anhbutkyService.deleteAnhbutky(maanh);
     return "redirect:/admin/butky/";
   }
 }
