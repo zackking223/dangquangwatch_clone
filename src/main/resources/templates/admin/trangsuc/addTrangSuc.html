@@ -11,10 +11,10 @@
 
 <body>
     <div th:replace="~{fragments/sidebar :: sidebar}"></div>
-    <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg ml-auto">
+    <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
         <h1 class="font-bold text-center my-2">Trang sức mới</h1>
         <div class="col-md-auto">
-            <form th:object="${trangsuc}" th:action="@{save}" action="#" method="post">
+            <form th:object="${trangsuc}" th:action="@{/admin/trangsuc/save}" action="#" method="post">
                 <div>
                     <label class="block font-medium" th:for="matrangsuc">Mã trang sức</label>
                     <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{matrangsuc}"
@@ -47,7 +47,7 @@
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="thongtin">Thông tin</label>
-                    <textarea class="w-[80vw] min-w-[280px]" rows="20" th:field="*{thongtin}"></textarea>
+                    <textarea class="w-[80vw] min-w-[280px] p-2" rows="5" th:field="*{thongtin}" placeholder="Thông tin sản phẩm"></textarea>
                 </div>
 
                 <input class="hidden" type="date" id="datePicker" name="NGAYTHEM" />
