@@ -7,13 +7,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import edu.it10.dangquangwatch.spring.entity.ChiTietDonHang;
 import edu.it10.dangquangwatch.spring.entity.DonHang;
 import edu.it10.dangquangwatch.spring.repository.DonHangRepository;
 import edu.it10.dangquangwatch.spring.service.DonHangService;
+import jakarta.transaction.Transactional;
 
 @Service
 public class DonHangServiceImpl implements DonHangService {
   @Autowired DonHangRepository donHangRepository;
+  @Autowired ChiTietDonHangServiceImpl ctdhService;
 
   @Override
   public Page<DonHang> getAllDonHang(int page) {
@@ -31,11 +34,20 @@ public class DonHangServiceImpl implements DonHangService {
   }
 
   @Override
+  @Transactional
   public void saveDonHang(DonHang donHang) {
-    donHangRepository.save(donHang);
+    DonHang result = donHangRepository.save(donHang);
+
+    for (ChiTietDonHang item : donHang.getItems()) {
+      item.setDonhang(result);
+      item.setNGAYTHEM(result.getNGAYTHEM());
+
+      ctdhService.saveCTDH(item);
+    }
   }
 
   @Override
+  @Transactional
   public void deleteDonHang(int madonhang) {
     donHangRepository.deleteById(madonhang);
   }

@@ -1,3 +1,13 @@
+function getCurrentDateFormatted() {
+  const today = new Date();
+
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0
+  const day = String(today.getDate()).padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+}
+
 function getCart() {
   let cart = JSON.parse(localStorage.getItem("cart"));
 
@@ -5,9 +15,10 @@ function getCart() {
     cart = {
       tongTong: 0,
       diaChi: "",
-      ghiChu: "",
+      ghiChu: "Không có",
       thanhToan: "Khi nhận hàng",
-      NGAYTHEM: new Date(),
+      tinhTrang: "Chờ xác nhận",
+      NGAYTHEM: getCurrentDateFormatted(),
       items: []
     };
   };
@@ -20,9 +31,10 @@ const resetCart = () => {
   let cart = {
     tongTong: 0,
     diaChi: "",
-    ghiChu: "",
+    ghiChu: "Không có",
     thanhToan: "Khi nhận hàng",
-    NGAYTHEM: new Date(),
+    tinhTrang: "Chờ xác nhận",
+    NGAYTHEM: getCurrentDateFormatted(),
     items: []
   };
 
@@ -126,7 +138,7 @@ const addItem = (tensanpham, maSanPham, loaiSanPham, giaTien, anhsanpham) => {
       soLuong: 1,
       giaTien,
       anhsanpham,
-      NGAYTHEM: new Date()
+      NGAYTHEM: getCurrentDateFormatted()
     });
   }
 
@@ -135,9 +147,13 @@ const addItem = (tensanpham, maSanPham, loaiSanPham, giaTien, anhsanpham) => {
 }
 
 const dathang = async () => {
-  document.getElementById("dathang-btn").disabled = true;
+  document.getElementById("dathang-btn").style.visibility = "hidden";
+  document.getElementById("hidden-btn").classList.remove("hidden");
 
   let cart = getCart();
+
+  cart.diaChi = document.getElementById("diaChi").value;
+  cart.ghiChu = document.getElementById("ghiChu").value;
 
   await fetch('/profile/dathang', {
     method: "POST",

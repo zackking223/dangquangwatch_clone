@@ -1,5 +1,7 @@
 package edu.it10.dangquangwatch.spring.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +21,7 @@ import jakarta.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -57,11 +60,13 @@ public class ProfileController {
     thanhtoan_options.add("Đã thanh toán");
     thanhtoan_options.add("Đã hoàn tiền");
     thanhtoan_options.add("Đã nhận hàng");
-    
+
     String tinhtrangStr = "";
-    if (tinhtrang.isPresent()) tinhtrangStr = tinhtrang.get();
+    if (tinhtrang.isPresent())
+      tinhtrangStr = tinhtrang.get();
     String thanhtoanStr = "";
-    if (thanhtoan.isPresent()) thanhtoanStr = thanhtoan.get();
+    if (thanhtoan.isPresent())
+      thanhtoanStr = thanhtoan.get();
     int pageNum = 0;
     if (page.isPresent())
       pageNum = page.get() - 1;
@@ -85,19 +90,40 @@ public class ProfileController {
     return "donhang";
   }
 
+  private String getCurrentDateFormatted() {
+    // Lấy ngày hiện tại
+    LocalDate today = LocalDate.now();
+
+    // Định dạng ngày theo yyyy-MM-dd
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    String formattedDate = today.format(formatter);
+
+    // In ra ngày hiện tại theo định dạng yyyy-MM-dd
+    return formattedDate;
+  }
+
   @PostMapping("/dathang")
-  public @ResponseBody String placeOrder(HttpServletRequest request, DonHang donHang) {
+  public @ResponseBody String placeOrder(HttpServletRequest request, @RequestBody DonHang donHang) {
     HttpSession session = request.getSession(false);
     String username = (String) session.getAttribute("username");
 
     TaiKhoan taiKhoan = taiKhoanService.getTaiKhoan(username);
 
-    donHang.setTaikhoan(taiKhoan);
+    donHang.setTinhTrang("Chờ xác nhận");
 
-    // for (ChiTietDonHang item : donHang.getItems()) {
-    //   item.setDonhang(donHang);
-    //   ctdhService.saveCTDH(item);
-    // }
+    if (donHang.getDiaChi() == null || donHang.getDiaChi().isEmpty()) {
+      donHang.setDiaChi(taiKhoan.getDiachi());
+    }
+
+    if (donHang.getGhiChu() == null || donHang.getGhiChu().isEmpty()) {
+      donHang.setGhiChu("Không có");
+    }
+
+    if (donHang.getNGAYTHEM() == null) {
+      donHang.setNGAYTHEM(getCurrentDateFormatted());
+    }
+
+    donHang.setTaikhoan(taiKhoan);
 
     donHangService.saveDonHang(donHang);
 

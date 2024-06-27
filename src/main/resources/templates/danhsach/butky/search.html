@@ -32,7 +32,7 @@
             <p class="font-bold text-red-600" th:text="@{${butky.getGiatienFormatted()} + 'đ'}"></p>
             <div class="flex gap-2">
               <button th:data-tsp="${butky.getTenbutky()}" th:data-msp="${butky.getMabutky()}"
-                th:data-gt="${butky.getGiaTien()}" th:data-asp="${butky.getFirstImageUrl()}"
+                th:data-gt="${butky.getGiatien()}" th:data-asp="${butky.getFirstImageUrl()}"
                 onclick="addItem(this.getAttribute('data-tsp'),parseInt(this.getAttribute('data-msp')), 'butky',parseInt(this.getAttribute('data-gt')), this.getAttribute('data-asp')); redirectToCart()"
                 class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded flex gap-2 items-center">
                 <img src="/svg/tocheckout.svg" class="w-5 h-5" alt="tocheckout">
@@ -41,7 +41,7 @@
                 </p>
               </button>
               <button th:data-tsp="${butky.getTenbutky()}" th:data-msp="${butky.getMabutky()}"
-                th:data-gt="${butky.getGiaTien()}" th:data-asp="${butky.getFirstImageUrl()}"
+                th:data-gt="${butky.getGiatien()}" th:data-asp="${butky.getFirstImageUrl()}"
                 onclick="addItem(this.getAttribute('data-tsp'),parseInt(this.getAttribute('data-msp')), 'butky',parseInt(this.getAttribute('data-gt')), this.getAttribute('data-asp'));"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex gap-2 items-center">
                 <img src="/svg/addtocart.svg" class="w-5 h-5" alt="addtocart">

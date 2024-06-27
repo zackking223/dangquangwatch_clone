@@ -15,8 +15,15 @@
   <div th:replace="~{fragments/header :: header}"></div>
   <div th:replace="~{fragments/productsbar :: productsbar}"></div>
   <div class="w-full xl:max-w-[1215px] max-w-[1021px] mx-auto my-9">
-    <div id="cart-container" class="bg-white shadow-md rounded-lg overflow-hidden p-4 min-h-[800px]">
+    <div class="bg-white shadow-md rounded-lg overflow-hidden p-4 min-h-[800px]">
+      <div class="flex gap-2 w-max mx-auto my-4 items-center">
+        <h1 class="text-xl"><a href="/profile/donhang">Đơn hàng</a></h1>
+        <h1 class="text-2xl text-yellow-500 font-bold underline"><a href="/profile/giohang">Giỏ hàng</a></h1>
+      </div>
 
+      <section id="cart-container" class="w-full">
+        <!-- DANH SACH DON HANG -->
+      </section>
     </div>
   </div>
 
@@ -55,12 +62,38 @@
         <div>
             ${cartItems}
         </div>
+        <form onsubmit="null" class="p-4 mt-2 flex flex-col gap-2">
+          <div class="mb-2">
+            <label class="block font-medium mb-1 mt-2" for="thanhToan">Phương thức thanh toán</label>
+            <select class="w-full p-2 rounded border border-black cursor-not-allowed" id="thanhToan" disabled>
+              <option>Thanh toán khi nhận hàng</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-medium mb-1 mt-2" for="diaChi">Địa chỉ giao</label>
+            <textarea class="w-full p-2 rounded border border-black" rows="3" id="diaChi"
+              placeholder="Đống Đa, Hà Nội"></textarea>
+          </div>
+          <div>
+            <label class="block font-medium mb-1 mt-2" for="ghiChu">Ghi chú</label>
+            <textarea class="w-full p-2 rounded border border-black" rows="3" id="ghiChu"
+              placeholder="Ghi chú cho người giao">Không có</textarea>
+          </div>
+        </form>
         <div class="w-full flex gap-2 p-4">
             <p class="text-lg font-semibold w-max mr-auto" id="tongtiendonhang">Tổng Tiền: ${cart.tongTien} đ</p>
             <button
                 id="dathang-btn"
                 onclick="dathang()"
                 class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded flex gap-2 items-center">
+                <img src="/svg/tocheckout.svg" class="w-5 h-5" alt="tocheckout">
+                <p>
+                    Đặt hàng
+                </p>
+            </button>
+            <button
+                id="hidden-btn"
+                class="bg-slate-500 text-white font-bold py-2 px-4 rounded flex gap-2 items-center cursor-wait hidden">
                 <img src="/svg/tocheckout.svg" class="w-5 h-5" alt="tocheckout">
                 <p>
                     Đặt hàng
