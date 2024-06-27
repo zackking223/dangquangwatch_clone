@@ -1,5 +1,8 @@
 package edu.it10.dangquangwatch.spring.controller;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +45,10 @@ public class IndexController {
         int id = convertToNum(slug);
 
         Optional<Dongho> donghoEdit = donghoService.findDonghoById(id);
-        donghoEdit.ifPresent(dongho -> model.addAttribute("dongho", dongho));
-        donghoEdit.ifPresent(dongho -> model.addAttribute("title", dongho.getTendongho()));
+        donghoEdit.ifPresent(dongho -> {
+            model.addAttribute("dongho", dongho);
+            model.addAttribute("title", dongho.getTendongho());
+        });
 
         return "dongho";
     }
@@ -219,11 +224,34 @@ public class IndexController {
             }
 
             int pageNum = 0;
-            if (page.isPresent())
+            if (page.isPresent()) {
                 pageNum = page.get();
+            }
+
+            List<Integer> soTrang_list = new ArrayList<Integer>();
+            Page<Dongho> dongho_page = donghoService.getAllDonghoByTendongho(searchStr, pageNum);
+            soTrang_list.add(dongho_page.getTotalPages());
+            
+            Page<Trangsuc> trangsuc_page = trangsucService.searchTrangsuc(searchStr, pageNum);
+            soTrang_list.add(trangsuc_page.getTotalPages());
+            
+            Page<PhuKien> phukien_page = phuKienService.searchPhuKien(searchStr, pageNum);
+            soTrang_list.add(phukien_page.getTotalPages());
+            
+            Page<Butky> butky_page = butkyService.searchButky(searchStr, pageNum);
+            soTrang_list.add(butky_page.getTotalPages());
+            
+            Page<KinhMat> kinhmat_page = kinhMatService.searchKinhMat(searchStr, pageNum);
+            soTrang_list.add(kinhmat_page.getTotalPages());
 
             model.addAttribute("search", searchStr);
-            model.addAttribute("donghos", donghoService.getAllDonghoByTendongho(searchStr, pageNum).getContent());
+            model.addAttribute("donghos", dongho_page.getContent());
+            model.addAttribute("trangsucs", trangsuc_page.getContent());
+            model.addAttribute("kinhmats", kinhmat_page.getContent());
+            model.addAttribute("phukiens", phukien_page.getContent());
+            model.addAttribute("trangsucs", trangsuc_page.getContent());
+            model.addAttribute("page", pageNum);
+            model.addAttribute("sotrang", Collections.max(soTrang_list));
 
             return "search";
         } else {

@@ -24,7 +24,7 @@
                     <h1 class="text-2xl font-bold mb-4" th:text="${dongho.getTendongho()}"></h1>
                     <p class="text-gray-600 mb-4" th:text="${dongho.getThongtin()}"></p>
                     <div class="flex items-center mb-4">
-                        <span class="text-2xl font-bold mr-2" th:text="${dongho.getGiatienFormatted()}"></span>
+                        <span class="text-2xl font-bold mr-2" th:text="${dongho.getGiatienFormatted() + 'đ'}"></span>
                     </div>
                     <div class="mb-4">
                         <span class="text-gray-600">Số lượng:</span>
@@ -59,11 +59,25 @@
                         <span class="text-gray-600">Ngày thêm:</span>
                         <span th:text="${dongho.getNGAYTHEM()}"></span>
                     </div>
-                    <div class="flex">
-                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">Thêm
-                            vào giỏ</button>
-                        <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Mua
-                            ngay</button>
+                    <div class="flex gap-2">
+                        <button th:data-tsp="${dongho.getTendongho()}" th:data-msp="${dongho.getMadongho()}"
+                            th:data-gt="${dongho.getGiatien()}" th:data-asp="${dongho.getFirstImageUrl()}"
+                            onclick="addItem(this.getAttribute('data-tsp'),parseInt(this.getAttribute('data-msp')), 'dongho',parseInt(this.getAttribute('data-gt')), this.getAttribute('data-asp')); redirectToCart()"
+                            class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded flex gap-2 items-center">
+                            <img src="/svg/tocheckout.svg" class="w-5 h-5" alt="tocheckout">
+                            <p>
+                                Mua ngay
+                            </p>
+                        </button>
+                        <button th:data-tsp="${dongho.getTendongho()}" th:data-msp="${dongho.getMadongho()}"
+                            th:data-gt="${dongho.getGiatien()}" th:data-asp="${dongho.getFirstImageUrl()}"
+                            onclick="addItem(this.getAttribute('data-tsp'),parseInt(this.getAttribute('data-msp')), 'dongho',parseInt(this.getAttribute('data-gt')), this.getAttribute('data-asp'));"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex gap-2 items-center">
+                            <img src="/svg/addtocart.svg" class="w-5 h-5" alt="addtocart">
+                            <p>
+                                Thêm vào giỏ
+                            </p>
+                        </button>
                     </div>
                 </div>
             </div>

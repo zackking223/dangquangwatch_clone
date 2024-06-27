@@ -55,11 +55,25 @@
                         <span class="text-gray-600">Ngày thêm:</span>
                         <span th:text="${kinhmat.getNGAYTHEM()}"></span>
                     </div>
-                    <div class="flex">
-                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">Thêm
-                            vào giỏ</button>
-                        <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Mua
-                            ngay</button>
+                    <div class="flex gap-2 my-4">
+                        <button th:data-tsp="${kinhmat.getTenSanPham()}" th:data-msp="${kinhmat.getMaKinhMat()}"
+                            th:data-gt="${kinhmat.getGiaTien()}" th:data-asp="${kinhmat.getFirstImageUrl()}"
+                            onclick="addItem(this.getAttribute('data-tsp'),parseInt(this.getAttribute('data-msp')), 'kinhmat',parseInt(this.getAttribute('data-gt')), this.getAttribute('data-asp')); redirectToCart()"
+                            class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded flex gap-2 items-center">
+                            <img src="/svg/tocheckout.svg" class="w-5 h-5" alt="tocheckout">
+                            <p>
+                                Mua ngay
+                            </p>
+                        </button>
+                        <button th:data-tsp="${kinhmat.getTenSanPham()}" th:data-msp="${kinhmat.getMaKinhMat()}"
+                            th:data-gt="${kinhmat.getGiaTien()}" th:data-asp="${kinhmat.getFirstImageUrl()}"
+                            onclick="addItem(this.getAttribute('data-tsp'),parseInt(this.getAttribute('data-msp')), 'kinhmat',parseInt(this.getAttribute('data-gt')), this.getAttribute('data-asp'));"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex gap-2 items-center">
+                            <img src="/svg/addtocart.svg" class="w-5 h-5" alt="addtocart">
+                            <p>
+                                Thêm vào giỏ
+                            </p>
+                        </button>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/images/LogoMobile.png">
+  <title>Giỏ hàng</title>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" />
+  <link rel="stylesheet" th:href="@{/css/application.css}">
+</head>
+
+<body class="bg-slate-200 overflow-x-hidden">
+  <div th:replace="~{fragments/header :: header}"></div>
+  <div th:replace="~{fragments/productsbar :: productsbar}"></div>
+  <div class="w-full xl:max-w-[1215px] max-w-[1021px] mx-auto my-9">
+    <div id="cart-container" class="bg-white shadow-md rounded-lg overflow-hidden p-4 min-h-[800px]">
+
+    </div>
+  </div>
+
+  <div th:replace="~{fragments/footer :: footer}"></div>
+  <script>
+    function renderCart() {
+      const cartContainer = document.getElementById('cart-container');
+      const cart = getCart();
+
+      cartContainer.innerHTML = ''; // Xóa nội dung cũ
+
+      if (cart.items.length === 0) {
+        cartContainer.innerHTML = '<p class="text-center text-gray-500">Giỏ hàng trống</p>';
+        return;
+      }
+
+      const cartItems = cart.items.map(item => `
+        <div class="flex items-center justify-between border-b p-4">
+            <img src="${item.anhsanpham}" alt="${item.tensanpham}" class="w-16 h-16 object-cover">
+            <div class="flex-1 ml-4">
+                <a href="/${item.loaiSanPham}/${item.maSanPham}" class="text-lg font-semibold">${item.tensanpham}</a>
+                <p class="text-gray-600">Loại: ${item.loaiSanPham}</p>
+                <p class="text-gray-600">Mã: ${item.maSanPham}</p>
+                <p class="text-gray-600">Giá: ${item.giaTien} đ</p>
+            </div>
+            <div class="flex items-center">
+                <button class="reduce-item bg-red-500 text-white px-2 py-1 mr-2" data-loai="${item.loaiSanPham}" data-ma="${item.maSanPham}">-</button>
+                <span id="${item.maSanPham}-${item.loaiSanPham}">${item.soLuong}</span>
+                <button class="add-item bg-green-500 text-white px-2 py-1 ml-2" data-loai="${item.loaiSanPham}" data-ma="${item.maSanPham}">+</button>
+            </div>
+            <button class="remove-item bg-gray-500 text-white px-2 py-1 ml-4" data-loai="${item.loaiSanPham}" data-ma="${item.maSanPham}">Xóa</button>
+        </div>
+    `).join('');
+
+      cartContainer.innerHTML = `
+        <div>
+            ${cartItems}
+        </div>
+        <div class="w-full flex gap-2 p-4">
+            <p class="text-lg font-semibold w-max mr-auto" id="tongtiendonhang">Tổng Tiền: ${cart.tongTien} đ</p>
+            <button
+                id="dathang-btn"
+                onclick="dathang()"
+                class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded flex gap-2 items-center">
+                <img src="/svg/tocheckout.svg" class="w-5 h-5" alt="tocheckout">
+                <p>
+                    Đặt hàng
+                </p>
+            </button>
+        </div>
+    `;
+
+      // Gán sự kiện cho các nút
+      cartContainer.querySelectorAll('.add-item').forEach(button => {
+        button.addEventListener('click', () => {
+          const loaiSanPham = button.getAttribute('data-loai');
+          const maSanPham = button.getAttribute('data-ma');
+          increaseItem(loaiSanPham, maSanPham);
+          renderCart();
+        });
+      });
+
+      cartContainer.querySelectorAll('.reduce-item').forEach(button => {
+        button.addEventListener('click', () => {
+          const loaiSanPham = button.getAttribute('data-loai');
+          const maSanPham = button.getAttribute('data-ma');
+          reduceItem(loaiSanPham, maSanPham);
+          renderCart();
+        });
+      });
+
+      cartContainer.querySelectorAll('.remove-item').forEach(button => {
+        button.addEventListener('click', () => {
+          const loaiSanPham = button.getAttribute('data-loai');
+          const maSanPham = button.getAttribute('data-ma');
+          removeItem(loaiSanPham, maSanPham);
+          renderCart();
+        });
+      });
+    }
+    renderCart();
+  </script>
+</body>
+
+</html>

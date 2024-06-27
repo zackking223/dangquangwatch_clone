@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" />
     <link rel="stylesheet" th:href="@{/css/application.css}">
 </head>
+
 <body>
     <div th:replace="~{fragments/header :: header}"></div>
     <div th:replace="~{fragments/productsbar :: productsbar}"></div>
@@ -26,7 +28,8 @@
                     </div>
                     <div class="mb-4">
                         <span class="text-gray-600">Số lượng:</span>
-                        <input type="number" class="border border-gray-400 rounded px-2 py-1 w-24" th:value="${trangsuc.getSoluong()}" readonly>
+                        <input type="number" class="border border-gray-400 rounded px-2 py-1 w-24"
+                            th:value="${trangsuc.getSoluong()}" readonly>
                     </div>
                     <div class="mb-4">
                         <span class="text-gray-600">Trả góp:</span>
@@ -36,9 +39,25 @@
                         <span class="text-gray-600">Ngày thêm:</span>
                         <span th:text="${trangsuc.getNGAYTHEM()}"></span>
                     </div>
-                    <div class="flex">
-                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">Thêm vào giỏ</button>
-                        <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Mua ngay</button>
+                    <div class="flex gap-2 my-4">
+                        <button th:data-tsp="${trangsuc.getTentrangsuc()}" th:data-msp="${trangsuc.getMatrangsuc()}"
+                            th:data-gt="${trangsuc.getGia()}" th:data-asp="${trangsuc.getFirstImageUrl()}"
+                            onclick="addItem(this.getAttribute('data-tsp'),parseInt(this.getAttribute('data-msp')), 'trangsuc',parseInt(this.getAttribute('data-gt')), this.getAttribute('data-asp')); redirectToCart()"
+                            class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded flex gap-2 items-center">
+                            <img src="/svg/tocheckout.svg" class="w-5 h-5" alt="tocheckout">
+                            <p>
+                                Mua ngay
+                            </p>
+                        </button>
+                        <button th:data-tsp="${trangsuc.getTentrangsuc()}" th:data-msp="${trangsuc.getMatrangsuc()}"
+                            th:data-gt="${trangsuc.getGia()}" th:data-asp="${trangsuc.getFirstImageUrl()}"
+                            onclick="addItem(this.getAttribute('data-tsp'),parseInt(this.getAttribute('data-msp')), 'trangsuc',parseInt(this.getAttribute('data-gt')), this.getAttribute('data-asp'));"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex gap-2 items-center">
+                            <img src="/svg/addtocart.svg" class="w-5 h-5" alt="addtocart">
+                            <p>
+                                Thêm vào giỏ
+                            </p>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -46,4 +65,5 @@
     </div>
     <div th:replace="~{fragments/footer :: footer}"></div>
 </body>
+
 </html>

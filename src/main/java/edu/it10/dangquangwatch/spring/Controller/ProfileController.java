@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/profile")
@@ -85,7 +86,7 @@ public class ProfileController {
   }
 
   @PostMapping("/dathang")
-  public String placeOrder(HttpServletRequest request, DonHang donHang) {
+  public @ResponseBody String placeOrder(HttpServletRequest request, DonHang donHang) {
     HttpSession session = request.getSession(false);
     String username = (String) session.getAttribute("username");
 
@@ -93,9 +94,14 @@ public class ProfileController {
 
     donHang.setTaikhoan(taiKhoan);
 
+    // for (ChiTietDonHang item : donHang.getItems()) {
+    //   item.setDonhang(donHang);
+    //   ctdhService.saveCTDH(item);
+    // }
+
     donHangService.saveDonHang(donHang);
 
-    return "redirect:/profile/donhang";
+    return "Đặt hàng thành công!";
   }
 
   @PostMapping("/huydon")
