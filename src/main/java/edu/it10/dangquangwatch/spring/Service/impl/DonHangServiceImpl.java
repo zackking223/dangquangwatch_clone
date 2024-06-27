@@ -39,4 +39,9 @@ public class DonHangServiceImpl implements DonHangService {
   public void deleteDonHang(int madonhang) {
     donHangRepository.deleteById(madonhang);
   }
+
+  @Override
+  public Page<DonHang> getMyDonHang(String searchStr, String tinhtrang, String thanhtoan, String username, int page) {
+    return donHangRepository.getMyDonHang(searchStr, tinhtrang, thanhtoan, username, PageRequest.of(page, 10));
+  }
 }

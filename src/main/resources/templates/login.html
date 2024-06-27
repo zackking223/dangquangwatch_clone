@@ -20,18 +20,23 @@
       </a>
     </section>
   </header>
-  
-  <form method="post" action="/login" class="absolute flex flex-col gap-2 left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] rounded-lg shadow shadow-black bg-white p-4">
-    <div id="error" class="p-2 bg-red-500 rounded-md text-white hover:cursor-pointer" th:if="${errorMessage}" th:text="${errorMessage}"></div>
+
+  <form method="post" action="/login"
+    class="absolute flex flex-col gap-2 left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] rounded-lg shadow shadow-black bg-white p-4">
+    <h1 class="text-2xl font-bold text-center my-2">Đăng nhập</h1>
+    <div id="error" class="p-2 bg-red-500 rounded-md text-white hover:cursor-pointer" th:if="${errorMessage}"
+      th:text="${errorMessage}"></div>
+    <div id="notification" class="p-2 bg-red-500 rounded-md text-white hover:cursor-pointer" th:if="${notification}"
+      th:text="${notification}"></div>
     <div>
       <label class="block font-medium" for="username">Username:</label>
-      <input class="block p-2 max-w-[300px] w-screen rounded border border-black overflow-hidden" type="text" name="username"
-        placeholder="Tên đăng nhập" required>
+      <input class="block p-2 max-w-[300px] w-screen rounded border border-black overflow-hidden" type="text"
+        name="username" placeholder="Tên đăng nhập" required>
     </div>
     <div>
       <label class="block font-medium" for="password">Password:</label>
-      <input class="block p-2 max-w-[300px] w-screen rounded border border-black overflow-hidden" type="password" name="password"
-        placeholder="Mật khẩu" required>
+      <input class="block p-2 max-w-[300px] w-screen rounded border border-black overflow-hidden" type="password"
+        name="password" placeholder="Mật khẩu" required>
     </div>
     <div>
       <button class="block p-2 w-max bg-blue-500 font-bold text-white rounded" type="submit">Đăng nhập</button>

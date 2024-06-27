@@ -48,7 +48,7 @@ public class SpringSecurityConfig {
     http
         .authorizeHttpRequests(configurer -> configurer
             .requestMatchers("/admin/**").hasRole("QUANTRI") // Yêu cầu đăng nhập cho các đường dẫn bắt đầu bằng /admin/
-            .requestMatchers("/cart/**").authenticated()
+            .requestMatchers("/profile/**").authenticated()
             .anyRequest().permitAll() // Các đường dẫn còn lại không yêu cầu đăng nhập
         )
         // .loginPage("/login")

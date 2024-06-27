@@ -59,8 +59,17 @@ public class PhuKienController {
   @GetMapping("/edit")
   public String editPhuKien(@RequestParam("id") Integer maPhuKien, Model model) {
     Optional<PhuKien> phuKienEdit = phuKienService.findPhuKienById(maPhuKien);
-    phuKienEdit.ifPresent(phuKien -> model.addAttribute("phuKien", phuKien));
+    phuKienEdit.ifPresent(phuKien -> {
+      model.addAttribute("phuKien", phuKien);
+      model.addAttribute("images", phuKien.getImages());
+    });
     return "admin/phukien/editPhuKien";
+  }
+
+  @PostMapping("/update")
+  public String update(PhuKien phuKien) {
+    phuKienService.savePhuKien(phuKien);
+    return "redirect:/admin/phukien/";
   }
 
   @PostMapping("/save")

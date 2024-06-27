@@ -12,52 +12,93 @@
   <div th:replace="~{fragments/sidebar :: sidebar}"></div>
   <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg ml-auto">
     <h1 class="font-bold text-center my-2">Sửa thông tin</h1>
-    <div class="col-md-auto">
-      <form th:object="${phuKien}" th:action="@{/admin/phukien/save}" action="#" method="post">
-        <div>
-          <label class="block font-medium" th:for="maPhuKien">Mã phụ kiện</label>
-          <input readonly class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{maPhuKien}" placeholder="Mã phụ kiện"/>
-        </div>
 
-        <div style="clear: both; display: block; height: 10px"></div>
-        <div>
-          <label class="block font-medium" th:for="tenPhuKien">Tên sản phẩm</label>
-          <input class="block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{tenPhuKien}" />
-        </div>
-
-        <div style="clear: both; display: block; height: 10px"></div>
-        <div>
-          <label class="block font-medium" th:for="soLuong">Số lượng</label>
-          <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{soLuong}" />
-        </div>
-
-        <div style="clear: both; display: block; height: 10px"></div>
-        <div>
-          <label class="block font-medium" th:for="giaTien">Giá tiền</label>
-          <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{giaTien}" />
-        </div>
-
-        <div style="clear: both; display: block; height: 10px"></div>
-        <div>
-          <label class="block font-medium" th:for="traGop">Trả góp</label>
-          <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{traGop}" />
-        </div>
-
-        <div style="clear: both; display: block; height: 10px"></div>
-        <div>
-          <label class="block font-medium" th:for="thongTin">Thông tin</label>
-          <textarea rows="5" class="w-[80vw] min-w-[280px] p-2" th:field="*{thongTin}"></textarea>
-        </div>
-
-        <input type="date" id="datePicker" class="hidden" name="NGAYTHEM" />
-
-        <div style="clear: both; display: block; height: 10px"></div>
-        <input type="submit" class="p-2 w-max bg-green-500 rounded block mt-4 text-white" value="Lưu" />
+    <div class="flex flex-wrap w-full items-center mb-4">
+      <form action="/admin/phukien/deleteimage" method="post" th:each="img : ${images}"
+        class="h-32 relative m-2 overflow-visible">
+        <img th:src="${img.getUrl()}" th:alt="${img.getTenanh()}" class="w-32 h-32 object-cover">
+        <input type="number" name="id" class="hidden" th:value="${img.getMaanh()}">
+        <button th:if="${img.isCloud()}" class="p-1 rounded bg-red-500 absolute -top-1 -right-1">
+          <img src="/svg/delete.svg" alt="delete" class="w-4 h-4">
+        </button>
       </form>
     </div>
+
+    <form class="mb-4" action="/admin/phukien/uploadimage" method="post" enctype="multipart/form-data">
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="file">Chọn ảnh:</label>
+        <input type="file" id="file" name="file" class="form-input mt-1 block w-full" multiple="multiple"
+          accept="image/*" onchange="previewImages(event)">
+      </div>
+
+      <div id="preview-container" class="mb-4 flex flex-wrap">
+        <!-- Images preview will be shown here -->
+      </div>
+      <input class="p-2 w-max bg-blue-500 rounded block mt-4 text-white text-xs" type="submit" value="Tải ảnh mới" />
+    </form>
+
+    <form th:object="${phuKien}" th:action="@{/admin/phukien/update}" action="#" method="post">
+      <div>
+        <label class="block font-medium" th:for="maPhuKien">Mã phụ kiện</label>
+        <input readonly class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{maPhuKien}"
+          placeholder="Mã phụ kiện" />
+      </div>
+
+      <div style="clear: both; display: block; height: 10px"></div>
+      <div>
+        <label class="block font-medium" th:for="tenPhuKien">Tên sản phẩm</label>
+        <input class="block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{tenPhuKien}" />
+      </div>
+
+      <div style="clear: both; display: block; height: 10px"></div>
+      <div>
+        <label class="block font-medium" th:for="soLuong">Số lượng</label>
+        <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{soLuong}" />
+      </div>
+
+      <div style="clear: both; display: block; height: 10px"></div>
+      <div>
+        <label class="block font-medium" th:for="giaTien">Giá tiền</label>
+        <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{giaTien}" />
+      </div>
+
+      <div style="clear: both; display: block; height: 10px"></div>
+      <div>
+        <label class="block font-medium" th:for="traGop">Trả góp</label>
+        <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{traGop}" />
+      </div>
+
+      <div style="clear: both; display: block; height: 10px"></div>
+      <div>
+        <label class="block font-medium" th:for="thongTin">Thông tin</label>
+        <textarea rows="5" class="w-[80vw] min-w-[280px] p-2" th:field="*{thongTin}"></textarea>
+      </div>
+
+      <input class="hidden" type="text" id="datePicker" th:field="*{NGAYTHEM}" />
+
+      <div style="clear: both; display: block; height: 10px"></div>
+      <input type="submit" class="p-2 w-max bg-green-500 rounded block mt-4 text-white" value="Lưu" />
+    </form>
   </div>
   <script>
-    document.getElementById('datePicker').valueAsDate = new Date();
+    function previewImages(event) {
+      var files = event.target.files;
+      var container = document.getElementById('preview-container');
+      container.innerHTML = '';
+      var p = document.createElement("p");
+      p.textContent = "Ảnh mới: ";
+      container.append(p);
+      for (var i = 0; i < files.length; i++) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          var img = document.createElement('img');
+          img.src = e.target.result;
+          img.classList.add('w-32', 'h-32', 'object-cover', 'm-2');
+          container.appendChild(img);
+        };
+        reader.readAsDataURL(files[i]);
+      }
+    }
   </script>
 </body>
 

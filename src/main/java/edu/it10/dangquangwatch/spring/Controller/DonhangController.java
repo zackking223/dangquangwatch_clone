@@ -105,9 +105,31 @@ public class DonhangController {
     return "admin/donhang/editDonHang";
   }
 
-  @PostMapping(value = "save")
+  @PostMapping(value = "/save")
   public String save(DonHang donHang) {
     donHangService.saveDonHang(donHang);
+    return "redirect:/admin/donHang/";
+  }
+
+  @PostMapping(value = "/huy")
+  public String huy(@RequestParam("madonhang") Integer madonhang) {
+    Optional<DonHang> data = donHangService.findDonHangById(madonhang);
+    if (data.isPresent()) {
+      DonHang dh = data.get();
+      dh.setTinhTrang("Đã hủy");
+      donHangService.saveDonHang(dh);
+    }
+    return "redirect:/admin/donHang/";
+  }
+
+  @PostMapping(value = "/xacnhan")
+  public String xacnhan(@RequestParam("madonhang") Integer madonhang) {
+    Optional<DonHang> data = donHangService.findDonHangById(madonhang);
+    if (data.isPresent()) {
+      DonHang dh = data.get();
+      dh.setTinhTrang("Đã xác nhận");
+      donHangService.saveDonHang(dh);
+    }
     return "redirect:/admin/donHang/";
   }
 

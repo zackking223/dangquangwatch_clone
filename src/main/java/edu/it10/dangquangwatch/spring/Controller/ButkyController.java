@@ -60,8 +60,17 @@ public class ButkyController {
   @GetMapping(value = "/edit")
   public String editButky(@RequestParam("id") Integer mabutky, Model model) {
     Optional<Butky> butkyEdit = butkyService.findButkyById(mabutky);
-    butkyEdit.ifPresent(butky -> model.addAttribute("butky", butky));
+    butkyEdit.ifPresent(butky -> {
+      model.addAttribute("butky", butky);
+      model.addAttribute("images", butky.getImages());
+    });
     return "/admin/butky/editButky";
+  }
+
+  @PostMapping("/update")
+  public String update(Butky butky) {
+    butkyService.saveButky(butky);
+    return "redirect:/admin/butky/";
   }
 
   @PostMapping(value = "/save")

@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.it10.dangquangwatch.spring.entity.Butky;
@@ -19,7 +20,6 @@ import edu.it10.dangquangwatch.spring.service.ButkyService;
 import edu.it10.dangquangwatch.spring.service.KinhMatService;
 import edu.it10.dangquangwatch.spring.service.PhuKienService;
 import edu.it10.dangquangwatch.spring.service.TrangsucService;
-import jakarta.websocket.server.PathParam;
 
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -38,7 +38,9 @@ public class IndexController {
     private ButkyService butkyService;
 
     @GetMapping("/dongho/{id}")
-    public String trangDongHo(Model model, @PathParam("id") Integer id) {
+    public String trangDongHo(Model model, @PathVariable("id") String slug) {
+        int id = convertToNum(slug);
+
         Optional<Dongho> donghoEdit = donghoService.findDonghoById(id);
         donghoEdit.ifPresent(dongho -> model.addAttribute("dongho", dongho));
         donghoEdit.ifPresent(dongho -> model.addAttribute("title", dongho.getTendongho()));
@@ -47,7 +49,9 @@ public class IndexController {
     }
 
     @GetMapping("/phukien/{id}")
-    public String trangPhuKien(Model model, @PathParam("id") Integer id) {
+    public String trangPhuKien(Model model, @PathVariable("id") String slug) {
+        int id = convertToNum(slug);
+
         Optional<PhuKien> phukienEdit = phuKienService.findPhuKienById(id);
         phukienEdit.ifPresent(phukien -> model.addAttribute("phukien", phukien));
         phukienEdit.ifPresent(phukien -> model.addAttribute("title", phukien.getTenPhuKien()));
@@ -56,7 +60,9 @@ public class IndexController {
     }
 
     @GetMapping("/butky/{id}")
-    public String trangButKy(Model model, @PathParam("id") Integer id) {
+    public String trangButKy(Model model, @PathVariable("id") String slug) {
+        int id = convertToNum(slug);
+
         Optional<Butky> butkyEdit = butkyService.findButkyById(id);
         butkyEdit.ifPresent(butky -> model.addAttribute("butky", butky));
         butkyEdit.ifPresent(butky -> model.addAttribute("title", butky.getTenbutky()));
@@ -65,7 +71,9 @@ public class IndexController {
     }
 
     @GetMapping("/kinhmat/{id}")
-    public String trangKinhMat(Model model, @PathParam("id") Integer id) {
+    public String trangKinhMat(Model model, @PathVariable("id") String slug) {
+        int id = convertToNum(slug);
+
         Optional<KinhMat> kinhmatEdit = kinhMatService.findKinhMatById(id);
         kinhmatEdit.ifPresent(kinhmat -> model.addAttribute("kinhmat", kinhmat));
         kinhmatEdit.ifPresent(kinhmat -> model.addAttribute("title", kinhmat.getTenSanPham()));
@@ -74,7 +82,9 @@ public class IndexController {
     }
 
     @GetMapping("/trangsuc/{id}")
-    public String trangTrangSuc(Model model, @PathParam("id") Integer id) {
+    public String trangTrangSuc(Model model, @PathVariable("id") String slug) {
+        int id = convertToNum(slug);
+
         Optional<Trangsuc> trangsucEdit = trangsucService.findTrangsucById(id);
         trangsucEdit.ifPresent(trangsuc -> model.addAttribute("trangsuc", trangsuc));
         trangsucEdit.ifPresent(trangsuc -> model.addAttribute("title", trangsuc.getTentrangsuc()));
@@ -195,7 +205,7 @@ public class IndexController {
 
     @PostMapping("/")
     public String postIndex() {
-        return "redirect: /";
+        return "redirect:/";
     }
 
     @GetMapping("/")
@@ -237,7 +247,7 @@ public class IndexController {
 
     @GetMapping("/error")
     public String errorRedirect() {
-        return "redirect: /";
+        return "redirect:/";
     }
 
     public Integer convertToNum(String id) {

@@ -32,7 +32,7 @@ public class DonHang {
   private String ghiChu;
 
   /**
-   * "Chờ xác nhận" / "Đã xác nhận" / "Đang vận chuyển" / "Đã nhận hàng"
+   * "Chờ xác nhận" / "Đã xác nhận" / "Đang vận chuyển" / "Đã nhận hàng" / "Đã hủy"
    */
   @Column(name = "tinhtrang")
   private String tinhTrang;

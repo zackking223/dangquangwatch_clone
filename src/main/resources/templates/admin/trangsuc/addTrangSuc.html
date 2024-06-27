@@ -14,7 +14,16 @@
     <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
         <h1 class="font-bold text-center my-2">Trang sức mới</h1>
         <div class="col-md-auto">
-            <form th:object="${trangsuc}" th:action="@{/admin/trangsuc/save}" action="#" method="post">
+            <form th:object="${trangsuc}" th:action="@{/admin/trangsuc/save}" action="#" method="post"
+                enctype="multipart/form-data">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="file">Chọn ảnh:</label>
+                    <input type="file" id="file" name="file" class="form-input mt-1 block w-full" multiple="multiple"
+                        accept="image/*" onchange="previewImages(event)" required>
+                </div>
+                <div id="preview-container" class="mb-4 flex flex-wrap">
+                    <!-- Images preview will be shown here -->
+                </div>
                 <div>
                     <label class="block font-medium" th:for="matrangsuc">Mã trang sức</label>
                     <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{matrangsuc}"
@@ -47,7 +56,8 @@
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="thongtin">Thông tin</label>
-                    <textarea class="w-[80vw] min-w-[280px] p-2" rows="5" th:field="*{thongtin}" placeholder="Thông tin sản phẩm"></textarea>
+                    <textarea class="w-[80vw] min-w-[280px] p-2" rows="5" th:field="*{thongtin}"
+                        placeholder="Thông tin sản phẩm"></textarea>
                 </div>
 
                 <input class="hidden" type="date" id="datePicker" name="NGAYTHEM" />
@@ -59,6 +69,22 @@
     </div>
     <script>
         document.getElementById('datePicker').valueAsDate = new Date();
+
+        function previewImages(event) {
+            var files = event.target.files;
+            var container = document.getElementById('preview-container');
+            container.innerHTML = '';
+            for (var i = 0; i < files.length; i++) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('w-32', 'h-32', 'object-cover', 'm-2');
+                    container.appendChild(img);
+                };
+                reader.readAsDataURL(files[i]);
+            }
+        }
     </script>
 </body>
 

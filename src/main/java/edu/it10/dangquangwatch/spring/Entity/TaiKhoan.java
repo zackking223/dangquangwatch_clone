@@ -37,6 +37,9 @@ public class TaiKhoan {
   @OneToMany(mappedBy = "taikhoan")
   private List<DonHang> donHangList;
 
+  public boolean isAdmin() {
+    return loai_tai_khoan == "ROLE_QUANTRI";
+  }
 
   public TaiKhoan() {
   }

@@ -98,22 +98,26 @@
         </td>
         <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
           th:text="${donhang.getNGAYTHEM()}"></td>
-        <td class="p-2 border border-solid border-black max-w-[200px] flex flex-col items-center gap-2 overflow-hidden">
-          <form action="/donhang/xacnhan" th:if="${donhang.getTinhTrang() == 'Chờ xác nhận'}">
-            <button class="block p-2 rounded bg-blue-500 text-white">Xác nhận</button>
-          </form>
-          <form action="/donhang/huy">
-            <button class="block p-2 rounded bg-orange-500 text-white" th:if="${donhang.getTinhTrang() == 'Đã xác nhận'}">Hủy
-              đơn</button>
-          </form>
-          <a th:href="@{/admin/donhang/edit?id={id}(id=${donhang.getMaDonHang()})}"
-            class="block w-max p-2 rounded bg-green-500 text-white">Sửa</a>
-          <a th:href="@{/admin/donhang/delete?id={id}(id=${donhang.getMaDonHang()})}"
-            class="block w-max p-2 rounded bg-red-500 text-white">Xóa</a>
+        <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+          <div class="flex flex-col items-center gap-2">
+            <form action="/admin/donhang/xacnhan" th:if="${donhang.getTinhTrang() == 'Chờ xác nhận'}">
+              <input type="number" name="madonhang" class="hidden">
+              <button class="block p-2 rounded bg-blue-500 text-white">Xác nhận</button>
+            </form>
+            <form action="/admin/donhang/huy" th:if="${donhang.getTinhTrang() == 'Đã xác nhận'}">
+              <input type="number" name="madonhang" class="hidden">
+              <button class="block p-2 rounded bg-orange-500 text-white">Hủy
+                đơn</button>
+            </form>
+            <a th:href="@{/admin/donhang/edit?id={id}(id=${donhang.getMaDonHang()})}"
+              class="block w-max p-2 rounded bg-green-500 text-white">Sửa</a>
+            <a th:href="@{/admin/donhang/delete?id={id}(id=${donhang.getMaDonHang()})}"
+              class="block w-max p-2 rounded bg-red-500 text-white">Xóa</a>
+          </div>
         </td>
       </tr>
     </table>
-    <ul class="flex items-center flex-wrap w-full gap-2 mt-4">
+    <ul th:if="${sotrang > 1}" class="flex items-center flex-wrap w-full gap-2 mt-4">
       <li>Trang:</li>
       <li th:each="i:${#numbers.sequence(1,sotrang,1)}">
         <a th:classappend="${page + 1 == i} ? 'bg-black text-white' : 'bg-white text-black'"

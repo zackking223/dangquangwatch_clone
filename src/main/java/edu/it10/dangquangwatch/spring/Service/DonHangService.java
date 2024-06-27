@@ -8,6 +8,8 @@ import edu.it10.dangquangwatch.spring.entity.DonHang;
 
 public interface DonHangService {
   Page<DonHang> getAllDonHang(int page);
+  
+  Page<DonHang> getMyDonHang(String searchStr, String tinhtrang, String thanhtoan, String username, int page);
 
   Optional<DonHang> findDonHangById(int madonhang);
 

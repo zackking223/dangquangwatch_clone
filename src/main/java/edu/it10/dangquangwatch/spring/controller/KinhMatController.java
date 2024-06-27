@@ -60,10 +60,19 @@ public class KinhMatController {
   @GetMapping("/edit")  
   public String editKinhMat(@RequestParam("id") Integer maKinhMat, Model model) {  
     Optional<KinhMat> kinhMatEdit = kinhMatService.findKinhMatById(maKinhMat);  
-    kinhMatEdit.ifPresent(kinhMat -> model.addAttribute("kinhMat", kinhMat));  
+    kinhMatEdit.ifPresent(kinhMat -> {
+      model.addAttribute("kinhMat", kinhMat);
+      model.addAttribute("images",kinhMat.getImages());
+    });  
     return "admin/kinhmat/editKinhMat";  
   }  
 
+  @PostMapping("/update")  
+  public String update(KinhMat kinhMat) {  
+    kinhMatService.saveKinhMat(kinhMat);  
+    return "redirect:/admin/kinhmat/";  
+  } 
+  
   @PostMapping("/save")  
   public String save(KinhMat kinhMat, @RequestParam("file") List<MultipartFile> files) throws IOException {  
     for (MultipartFile file : files) {

@@ -86,13 +86,13 @@ public class DonghoController {
     return "admin/dongho/editDongHo";
   }
 
-  @PostMapping("update")
-  public String save(Dongho dongho) {
+  @PostMapping("/update")
+  public String update(Dongho dongho) {
     donghoService.saveDongho(dongho);
     return "redirect:/admin/dongho/edit?id=" + dongho.getMadongho();
   }
 
-  @PostMapping(value = "save")
+  @PostMapping(value = "/save")
   public String save(Dongho dongho, @RequestParam("file") List<MultipartFile> files) throws IOException {
     if (dongho.getMadongho() != null) {
       for (MultipartFile file : files) {

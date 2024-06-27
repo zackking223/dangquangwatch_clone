@@ -43,7 +43,7 @@
                 </td>
             </tr>
         </table>
-        <ul class="flex items-center flex-wrap w-full gap-2 mt-4">
+        <ul th:if="${sotrang > 1}" class="flex items-center flex-wrap w-full gap-2 mt-4">
             <li>Trang:</li>
             <li th:each="i:${#numbers.sequence(1,sotrang,1)}">
                 <a th:classappend="${page + 1 == i} ? 'bg-black text-white' : 'bg-white text-black'" class="p-2 aspect-square border border-b hover:text-blue-500" th:href="@{'/admin/phukien/?search=' + ${search} + '&page=' + ${i}}" th:text="${i}"></a>

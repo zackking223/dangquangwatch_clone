@@ -59,10 +59,19 @@ public class TrangsucController {
   @GetMapping(value = "/edit")  
   public String editTrangsuc(@RequestParam("id") Integer matrangsuc, Model model) {  
     Optional<Trangsuc> trangsucEdit = trangsucService.findTrangsucById(matrangsuc);  
-    trangsucEdit.ifPresent(trangsuc -> model.addAttribute("trangsuc", trangsuc));  
+    trangsucEdit.ifPresent(trangsuc -> {
+      model.addAttribute("trangsuc", trangsuc);
+      model.addAttribute("images", trangsuc.getImages());
+    });  
     return "/admin/trangsuc/editTrangsuc";  
   }  
 
+  @PostMapping(value = "/update")  
+  public String update(Trangsuc trangsuc) {
+    trangsucService.saveTrangsuc(trangsuc);  
+    return "redirect:/admin/trangsuc/";  
+  }  
+  
   @PostMapping(value = "/save")  
   public String save(Trangsuc trangsuc, @RequestParam("file") List<MultipartFile> files) throws IOException {
     for (MultipartFile file : files) {
