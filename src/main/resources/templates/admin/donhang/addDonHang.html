@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/images/LogoMobile.png">
+    <title>Thêm đơn hàng</title>
+    <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}" />
+</head>
+
+<body>
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+    <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
+        <h1 class="font-bold text-center my-2">Đơn hàng mới</h1>
+        <div class="col-md-auto">
+            <form th:object="${donHang}" th:action="@{/admin/donhang/save}" action="#" method="post">
+                <div>
+                    <label class="block font-medium" th:for="username">Mã khách hàng</label>
+                    <input class="block p-2 w-[80vw] min-w-[280px]" type="text" name="username"
+                        placeholder="Mã khách hàng" />
+                </div>
+                <div style="clear: both; display: block; height: 10px"></div>
+                <div>
+                    <label class="block font-medium" th:for="tongTien">Tổng tiền</label>
+                    <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{tongTien}"
+                        placeholder="Tổng tiền" />
+                </div>
+                <div style="clear: both; display: block; height: 10px"></div>
+                <div>
+                    <label class="block font-medium" th:for="diaChi">Địa chỉ</label>
+                    <input class="block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{diaChi}"
+                        placeholder="Địa chỉ" />
+                </div>
+                <div style="clear: both; display: block; height: 10px"></div>
+                <div>
+                    <label class="block font-medium" th:for="ghiChu">Ghi chú</label>
+                    <input class="block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{ghiChu}"
+                        placeholder="Ghi chú" />
+                </div>
+                <div style="clear: both; display: block; height: 10px"></div>
+                <div>
+                    <label class="block font-medium" th:for="tinhTrang">Tình trạng</label>
+                    <select class="block p-2 w-[80vw] min-w-[280px]" name="tinhTrang">
+                        <option value="Chờ xác nhận">Chờ xác nhận</option>
+                        <option value="Đã xác nhận">Đã xác nhận</option>
+                        <option value="Đang vận chuyển">Đang vận chuyển</option>
+                        <option value="Đã nhận hàng">Đã nhận hàng</option>
+                        <option value="Đã hủy">Đã hủy</option>
+                    </select>
+                </div>
+                <div style="clear: both; display: block; height: 10px"></div>
+                <div>
+                    <label class="block font-medium" th:for="thanhToan">Phương thức thanh toán</label>
+                    <select class="block p-2 w-[80vw] min-w-[280px]" name="thanhToan">
+                        <option value="Đã thanh toán">Đã thanh toán</option>
+                        <option value="Khi nhận hàng">Khi nhận hàng</option>
+                    </select>
+                </div>
+
+                <input class="hidden" type="date" id="datePicker" name="NGAYTHEM" />
+
+                <div style="clear: both; display: block; height: 10px"></div>
+                <input class="p-2 w-max bg-green-500 rounded block mt-4 text-white" type="submit" value="Thêm" />
+            </form>
+        </div>
+        <script>
+            document.getElementById('datePicker').valueAsDate = new Date();
+        </script>
+    </div>
+</body>
+
+</html>

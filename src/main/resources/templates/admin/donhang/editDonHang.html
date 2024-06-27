@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/images/LogoMobile.png">
+    <title>Sửa đơn hàng</title>
+    <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}" />
+</head>
+
+<body>
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+    <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg ml-auto">
+        <h1 class="font-bold text-center my-2">Đơn hàng</h1>
+        <div class="col-md-auto">
+            <form th:object="${donHang}" action="/admin/donhang/save" method="post">
+                <div>
+                    <label class="block font-medium" th:for="maDonHang">Mã đơn hàng</label>
+                    <input class="block p-2 w-[80vw] min-w-[280px]" readonly type="number" th:field="*{maDonHang}" />
+                </div>
+                <div style="clear: both; display: block; height: 10px"></div>
+                <div>
+                    <label class="block font-medium" th:for="username">Tên khách hàng</label>
+                    <input class="block p-2 w-[80vw] min-w-[280px]" type="text" th:value="${donHang.getTaikhoan().getUsername()}" name="username"
+                        placeholder="Mã khách hàng" />
+                </div>
+                <div style="clear: both; display: block; height: 10px"></div>
+                <div>
+                    <label class="block font-medium" th:for="tongTien">Tổng tiền</label>
+                    <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{tongTien}"
+                        placeholder="Tổng tiền" />
+                </div>
+                <div>
+                    <label class="block font-medium" th:for="diaChi">Địa chỉ</label>
+                    <input class="block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{diaChi}"
+                        placeholder="Địa chỉ" />
+                </div>
+                <div style="clear: both; display: block; height: 10px"></div>
+                <div>
+                    <label class="block font-medium" th:for="ghiChu">Ghi chú</label>
+                    <input class="block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{ghiChu}"
+                        placeholder="Ghi chú" />
+                </div>
+                <div style="clear: both; display: block; height: 10px"></div>
+                <div>
+                    <label class="block font-medium" for="tinhTrang">Tình trạng</label>
+                    <select class="block p-2 w-full" name="tinhTrang" id="tinhTrang" th:value>
+                      <option value="">Chưa chọn</option>
+                      <option th:each="tt : ${tinhtrang_options}" th:value="${tt}" th:text="${tt}" th:selected="${tt == donHang.getTinhTrang()}">
+                      </option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block font-medium" for="thanhToan">Thanh toán</label>
+                    <select class="block p-2 w-full" name="thanhToan" id="thanhToan" th:value>
+                      <option value="">Chưa chọn</option>
+                      <option th:each="tt : ${thanhtoan_options}" th:value="${tt}" th:text="${tt}" th:selected="${tt == donHang.getThanhToan()}">
+                      </option>
+                    </select>
+                  </div>
+
+                <input class="hidden" type="date" id="datePicker" th:field="*{NGAYTHEM}" />
+
+                <div style="clear: both; display: block; height: 10px"></div>
+                <input class="p-2 w-max bg-green-500 rounded block mt-4 text-white" type="submit" value="Lưu" />
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

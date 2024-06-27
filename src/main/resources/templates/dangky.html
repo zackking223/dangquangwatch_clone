@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="/images/LogoMobile.png">
-  <title>Đăng nhập</title>
+  <title>Đăng ký</title>
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" />
   <link rel="stylesheet" th:href="@{/css/application.css}">
@@ -21,9 +21,9 @@
     </section>
   </header>
 
-  <form method="post" action="/login"
+  <form method="post" action="/dangky"
     class="absolute flex flex-col gap-2 left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] rounded-lg shadow shadow-black bg-white p-4">
-    <h1 class="text-2xl font-bold text-center my-2">Đăng nhập</h1>
+    <h1 class="text-2xl font-bold text-center my-2">Đăng ký</h1>
     <div id="error" class="p-2 bg-red-500 rounded-md text-white hover:cursor-pointer" th:if="${errorMessage}"
       th:text="${errorMessage}"></div>
     <div id="notification" class="p-2 bg-red-500 rounded-md text-white hover:cursor-pointer" th:if="${notification}"
@@ -38,9 +38,18 @@
       <input class="block p-2 max-w-[300px] w-screen rounded border border-black overflow-hidden" type="password"
         name="password" placeholder="Mật khẩu" required>
     </div>
-    <div class="flex gap-2 my-4">
-      <button class="block p-2 w-max bg-blue-500 font-bold text-white rounded" type="submit">Đăng nhập</button>
-      <a href="/dangky" class="block p-2 w-max bg-orange-500 font-bold text-white rounded" type="submit">Đăng Ký</a>
+    <div>
+      <label class="block font-medium" for="hoten">Họ tên:</label>
+      <input class="block p-2 max-w-[300px] w-screen rounded border border-black overflow-hidden" type="text"
+        name="hoten" placeholder="Họ tên" required>
+    </div>
+    <div>
+        <label class="block font-medium" for="diachi">Địa chi:</label>
+        <input class="block p-2 max-w-[300px] w-screen rounded border border-black overflow-hidden" type="text"
+          name="diachi" placeholder="Địa chỉ" required>
+      </div>
+    <div class="gap-2 my-4">
+      <button class="block p-2 w-max bg-blue-500 font-bold text-white rounded" type="submit">Đăng ký</button>
     </div>
   </form>
   <script>

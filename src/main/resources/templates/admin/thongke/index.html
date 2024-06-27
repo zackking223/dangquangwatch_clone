@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/png" href="/images/LogoMobile.png">
+    <title>Thống kê</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}" />
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        padding: 20px;
+    }
+    form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+    select, input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+</head>
+<body>
+    <form id="statForm">
+        <h2>Thống kê sản phẩm</h2>
+        <label for="category">Chọn danh mục:</label>
+        <select id="category" name="category">
+            <option value="dong-ho">Đồng hồ</option>
+            <option value="but-ky">Bút ký</option>
+            <option value="kinh-mat">Kính mắt</option>
+            <option value="phu-kien">Phụ kiện</option>
+            <option value="trang-suc">Trang sức</option>
+        </select>
+
+        <label for="start_date">Từ ngày:</label>
+        <input type="date" id="start_date" name="start_date">
+
+        <label for="end_date">Đến ngày:</label>
+        <input type="date" id="end_date" name="end_date">
+
+        <button type="submit">Thực hiện thống kê</button>
+    </form>
+
+    <div id="result">
+        <!-- Kết quả thống kê sẽ được hiển thị ở đây -->
+    </div>
+
+    <script>
+        document.getElementById('statForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Ngăn chặn form submit mặc định
+
+            // Lấy giá trị từ form
+            var category = document.getElementById('category').value;
+            var startDate = document.getElementById('start_date').value;
+            var endDate = document.getElementById('end_date').value;
+
+            // Gửi request để lấy dữ liệu thống kê từ server (giả sử là Ajax)
+
+            // Ví dụ: Mock data để hiển thị kết quả
+            var mockData = [
+                { product_name: 'Đồng hồ Rolex', total_sales: 150 },
+                { product_name: 'Bút Montblanc', total_sales: 80 },
+                { product_name: 'Kính Rayban', total_sales: 120 },
+            ];
+
+            // Hiển thị kết quả vào bảng
+            var resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<h2>Kết quả thống kê</h2>';
+            resultDiv.innerHTML += '<table><tr><th>Sản phẩm</th><th>Doanh số</th></tr>';
+            for (var i = 0; i < mockData.length; i++) {
+                resultDiv.innerHTML += '<tr><td>' + mockData[i].product_name + '</td><td>' + mockData[i].total_sales + '</td></tr>';
+            }
+            resultDiv.innerHTML += '</table>';
+        });
+    </script>
+</body>
+</html>

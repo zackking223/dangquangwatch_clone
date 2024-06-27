@@ -14,13 +14,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.it10.dangquangwatch.spring.entity.DonHang;
+import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
 import edu.it10.dangquangwatch.spring.service.DonHangService;
+import edu.it10.dangquangwatch.spring.service.TaiKhoanService;
 
 @Controller
 @RequestMapping("/admin/donhang")
 public class DonhangController {
   @Autowired
   DonHangService donHangService;
+  @Autowired
+  TaiKhoanService taiKhoanService;
 
   @GetMapping("/")
   public String index(@RequestParam("hoten") Optional<String> hoten,
@@ -100,15 +104,34 @@ public class DonhangController {
 
   @GetMapping(value = "/edit")
   public String editDonHang(@RequestParam("id") Integer madonHang, Model model) {
+    List<String> tinhtrang_options = new ArrayList<String>();
+    tinhtrang_options.add("Đã hủy");
+    tinhtrang_options.add("Chờ xác nhận");
+    tinhtrang_options.add("Đã xác nhận");
+    tinhtrang_options.add("Đang giao hàng");
+    tinhtrang_options.add("Đã nhận hàng");
+
+    List<String> thanhtoan_options = new ArrayList<String>();
+    thanhtoan_options.add("Chưa thanh toán");
+    thanhtoan_options.add("Khi nhận hàng");
+    thanhtoan_options.add("Đã thanh toán");
+    thanhtoan_options.add("Đã hoàn tiền");
+    thanhtoan_options.add("Đã nhận hàng");
     Optional<DonHang> donHangEdit = donHangService.findDonHangById(madonHang);
-    donHangEdit.ifPresent(donHang -> model.addAttribute("donHang", donHang));
+    donHangEdit.ifPresent(donHang -> {
+      model.addAttribute("donHang", donHang);
+      model.addAttribute("tinhtrang_options", tinhtrang_options);
+      model.addAttribute("thanhtoan_options", thanhtoan_options);
+    });
     return "admin/donhang/editDonHang";
   }
 
   @PostMapping(value = "/save")
-  public String save(DonHang donHang) {
+  public String save(DonHang donHang, @RequestParam("username") String username) {
+    TaiKhoan taikhoan = taiKhoanService.getTaiKhoan(username);
+    donHang.setTaikhoan(taikhoan);
     donHangService.saveDonHang(donHang);
-    return "redirect:/admin/donHang/";
+    return "redirect:/admin/donhang/";
   }
 
   @PostMapping(value = "/huy")
@@ -119,7 +142,7 @@ public class DonhangController {
       dh.setTinhTrang("Đã hủy");
       donHangService.saveDonHang(dh);
     }
-    return "redirect:/admin/donHang/";
+    return "redirect:/admin/donhang/";
   }
 
   @PostMapping(value = "/xacnhan")
@@ -130,12 +153,12 @@ public class DonhangController {
       dh.setTinhTrang("Đã xác nhận");
       donHangService.saveDonHang(dh);
     }
-    return "redirect:/admin/donHang/";
+    return "redirect:/admin/donhang/";
   }
 
   @GetMapping(value = "/delete")
   public String deleteDonHang(@RequestParam("id") Integer madonHang, Model model) {
     donHangService.deleteDonHang(madonHang);
-    return "redirect:/admin/donHang/";
+    return "redirect:/admin/donhang/";
   }
 }

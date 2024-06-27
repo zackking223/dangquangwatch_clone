@@ -32,7 +32,7 @@ public class TaiKhoan {
   private String loai_tai_khoan;
 
   @Column(name = "enabled")
-  private String enabled;
+  private Integer enabled;
 
   @OneToMany(mappedBy = "taikhoan")
   private List<DonHang> donHangList;
@@ -41,10 +41,11 @@ public class TaiKhoan {
     return loai_tai_khoan == "ROLE_QUANTRI";
   }
 
+
   public TaiKhoan() {
   }
 
-  public TaiKhoan(String username, String password, String hoten, String diachi, String loai_tai_khoan, String enabled, List<DonHang> donHangList) {
+  public TaiKhoan(String username, String password, String hoten, String diachi, String loai_tai_khoan, Integer enabled, List<DonHang> donHangList) {
     this.username = username;
     this.password = password;
     this.hoten = hoten;
@@ -94,11 +95,11 @@ public class TaiKhoan {
     this.loai_tai_khoan = loai_tai_khoan;
   }
 
-  public String getEnabled() {
+  public Integer getEnabled() {
     return this.enabled;
   }
 
-  public void setEnabled(String enabled) {
+  public void setEnabled(Integer enabled) {
     this.enabled = enabled;
   }
 
@@ -135,7 +136,7 @@ public class TaiKhoan {
     return this;
   }
 
-  public TaiKhoan enabled(String enabled) {
+  public TaiKhoan enabled(Integer enabled) {
     setEnabled(enabled);
     return this;
   }
@@ -172,5 +173,6 @@ public class TaiKhoan {
       ", enabled='" + getEnabled() + "'" +
       ", donHangList='" + getDonHangList() + "'" +
       "}";
-  } 
+  }
+
 }

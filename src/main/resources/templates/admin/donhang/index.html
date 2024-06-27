@@ -57,41 +57,25 @@
     </form>
     <table>
       <tr>
-        <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Mã đơn hàng
-        </th>
-        <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Khách hàng
-        </th>
-        <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Tổng tiền
-        </th>
+        <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Mã đơn hàng</th>
+        <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Khách hàng</th>
+        <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Tổng tiền</th>
         <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Địa chỉ</th>
         <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Ghi chú</th>
-        <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Tình trạng
-        </th>
-        <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Thanh toán
-        </th>
-        <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Sản phẩm mua
-        </th>
-        <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Ngày thêm
-        </th>
-        <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Tùy chỉnh
-        </th>
+        <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Tình trạng</th>
+        <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Thanh toán</th>
+        <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Sản phẩm mua</th>
+        <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Ngày thêm</th>
+        <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Tùy chỉnh</th>
       </tr>
-      <tr th:each="donhang : ${donhangs}">
-        <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
-          th:text="${donhang.getMaDonHang()}"></td>
-        <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
-          th:text="@{${donhang.getTaikhoan().getUsername()} + ' - ' +${donhang.getTaikhoan().getHoten()}}"></td>
-        <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
-          th:text="${donhang.getTongTienFormatted()}"></td>
-        <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${donhang.getDiaChi()}">
-        </td>
-        <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
-          th:text="${donhang.getGhiChu() ?: ''}">
-        </td>
-        <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
-          th:text="${donhang.getTinhTrang()}"></td>
-        <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
-          th:text="${donhang.getThanhToan()}"></td>
+      <tr th:each="donhang : ${donhangs}" th:if="${donhangs}">
+        <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${donhang.getMaDonHang()}"></td>
+        <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="@{${donhang.getTaikhoan().getUsername()} + ' - ' +${donhang.getTaikhoan().getHoten()}}"></td>
+        <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${donhang.getTongTienFormatted()}"></td>
+        <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${donhang.getDiaChi()}"></td>
+        <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${donhang.getGhiChu() ?: ''}"></td>
+        <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"th:text="${donhang.getTinhTrang()}"></td>
+        <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"th:text="${donhang.getThanhToan()}"></td>
         <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
           <p class="my-1" th:each="sp : ${donhang.getItems()}"><a target="_blank" class="text-sm rounded-sm p-1 bg-slate-200 hover:text-yellow-400 hover:bg-slate-900" th:href="${sp.getLink()}"
               th:text="${sp.getTensanpham()}"></a> - <span th:text="${sp.getSoLuong()}"></span></p>
