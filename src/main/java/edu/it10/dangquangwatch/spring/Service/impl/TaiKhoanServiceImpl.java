@@ -169,7 +169,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
   public Page<TaiKhoan> searchTaiKhoanKhachHang(String searchStr, String from, String to, Integer page) {
     searchStr = "%" + searchStr + "%";
     TypedQuery<TaiKhoan> query = entityManager.createQuery(
-        "SELECT DISTINCT tk FROM TaiKhoan tk where tk.loai_tai_khoan = 'ROLE_KHACHHANG' and (tk.hoten LIKE :searchStr OR tk.diachi LIKE :searchStr OR tk.username LIKE :searchStr) and tk.NGAYTHEM >= \'"
+        "SELECT DISTINCT tk FROM TaiKhoan tk where tk.loai_tai_khoan = 'ROLE_KHACHHANG' and (tk.hoten LIKE :searchStr OR tk.diachi LIKE :searchStr OR tk.username LIKE :searchStr OR tk.sodienthoai LIKE :searchStr) and tk.NGAYTHEM >= \'"
             + from
             + "\' AND tk.NGAYTHEM <= \'" + to + "\'",
         TaiKhoan.class);
