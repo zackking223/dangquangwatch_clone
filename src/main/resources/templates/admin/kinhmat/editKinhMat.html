@@ -18,7 +18,7 @@
         class="h-32 relative m-2 overflow-visible">
         <img th:src="${img.getUrl()}" th:alt="${img.getTenanh()}" class="w-32 h-32 object-cover">
         <input type="number" name="id" class="hidden" th:value="${img.getMaanh()}">
-        <button th:if="${img.isCloud()}" class="p-1 rounded bg-red-500 absolute -top-1 -right-1">
+        <button class="p-1 rounded bg-red-500 absolute -top-1 -right-1">
           <img src="/svg/delete.svg" alt="delete" class="w-4 h-4">
         </button>
       </form>

@@ -19,10 +19,9 @@ public class ThongkeController {
 
   @GetMapping("/")
   public String index(Model model) {
+    ThongKe thongKe = thongKeService.getAllThongKe().getFirst();
 
-    List<ThongKe> thongKe = thongKeService.getAllThongKe();
-
-    model.addAttribute("thongKes", thongKe);
+    model.addAttribute("thongKe", thongKe);
 
     return "admin/thongke/index";
   }
