@@ -1,50 +1,79 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="/images/LogoMobile.png">
-    <title>Sửa thông tin</title>
-    <link
-      type="text/css"
-      rel="stylesheet"
-      href="/css/application.css"
-      th:href="@{/css/application.css}"
-    />
-  </head>
-  <body>
-    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
-    <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
-      <h1 class="font-bold text-center my-2">Sửa thông tin</h1>
-      <form th:object="${taikhoan}" th:action="@{/admin/khachhang/save}" action="#" method="post">
-        <div>
-          <label class="block font-medium" th:for="username">Username</label>
-          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{username}" />
-        </div>
-        <div style="clear: both; display: block; height: 10px"></div>
-        <div>
-          <label class="block font-medium" th:for="password">Password</label>
-          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="password" th:field="*{password}" />
-        </div>
-        <div style="clear: both; display: block; height: 10px"></div>
-        <div>
-          <label class="block font-medium" th:for="hoten">Họ tên</label>
-          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{hoten}" />
-        </div>
-        <div style="clear: both; display: block; height: 10px"></div>
-        <div>
-          <label class="block font-medium" th:for="diachi">Địa chỉ</label>
-          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{diachi}" />
-        </div>
-        <div style="clear: both; display: block; height: 10px"></div>
 
-        <input class="hidden" value="ROLE_KHACHHANG" type="text" th:field="*{loai_tai_khoan}"/>
-        <input class="hidden" value="1" type="number" th:field="*{enabled}"/>
-        <input class="hidden" type="date" th:field="*{NGAYTHEM}"/>
-        
-        <div style="clear: both; display: block; height: 10px"></div>
-        <input class="p-2 w-max bg-green-500 rounded block mt-4 text-white" type="submit" value="Lưu" />
-      </form>
-    </div>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/images/LogoMobile.png">
+  <title>Sửa thông tin</title>
+  <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}" />
+</head>
+
+<body>
+  <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+  <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
+    <h1 class="font-bold text-center my-2">Sửa thông tin</h1>
+    <form th:object="${taikhoan}" th:action="@{/admin/khachhang/save}" action="#" method="post">
+      <div>
+        <label class="block font-medium" th:for="username">Username</label>
+        <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
+          th:field="*{username}" />
+      </div>
+      <div style="clear: both; display: block; height: 10px"></div>
+      <div>
+        <label class="block font-medium" th:for="password">Password</label>
+        <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="password"
+          th:field="*{password}" />
+      </div>
+      <div style="clear: both; display: block; height: 10px"></div>
+      <div>
+        <label class="block font-medium" th:for="hoten">Họ tên</label>
+        <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{hoten}" />
+      </div>
+
+      <div style="clear: both; display: block; height: 10px"></div>
+      <div>
+        <label class="block font-medium" th:for="sodienthoai">Số điện thoại</label>
+        <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
+          th:field="*{sodienthoai}" placeholder="Địa chỉ" onkeypress='validate(event)' />
+      </div>
+
+      <div style="clear: both; display: block; height: 10px"></div>
+      <div>
+        <label class="block font-medium" th:for="diachi">Địa chỉ</label>
+        <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{diachi}" />
+      </div>
+      <div style="clear: both; display: block; height: 10px"></div>
+
+      <input class="hidden" value="ROLE_KHACHHANG" type="text" th:field="*{loai_tai_khoan}" />
+      <input class="hidden" value="1" type="number" th:field="*{enabled}" />
+      <input class="hidden" type="date" th:field="*{NGAYTHEM}" />
+
+      <div style="clear: both; display: block; height: 10px"></div>
+      <input class="p-2 w-max bg-green-500 rounded block mt-4 text-white" type="submit" value="Lưu" />
+    </form>
+  </div>
+  <script>
+    function validate(evt) {
+      if (evt.key == "Backspace" || evt.key == "Del") return true;
+
+      var theEvent = evt || window.event;
+
+      // Handle paste
+      if (theEvent.type === 'paste') {
+        key = event.clipboardData.getData('text/plain');
+      } else {
+        // Handle key press
+        var key = theEvent.keyCode || theEvent.which;
+        key = String.fromCharCode(key);
+      }
+      var regex = /[0-9]|\./;
+      if (!regex.test(key)) {
+        theEvent.returnValue = false;
+        if (theEvent.preventDefault) theEvent.preventDefault();
+      }
+    }
+  </script>
+</body>
+
 </html>

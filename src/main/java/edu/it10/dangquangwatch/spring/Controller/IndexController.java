@@ -23,6 +23,7 @@ import edu.it10.dangquangwatch.spring.service.ButkyService;
 import edu.it10.dangquangwatch.spring.service.KinhMatService;
 import edu.it10.dangquangwatch.spring.service.PhuKienService;
 import edu.it10.dangquangwatch.spring.service.TrangsucService;
+import jakarta.websocket.server.PathParam;
 
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -41,58 +42,96 @@ public class IndexController {
     private ButkyService butkyService;
 
     @GetMapping("/dongho/{id}")
-    public String trangDongHo(Model model, @PathVariable("id") String slug) {
+    public String trangDongHo(Model model, @PathParam("search") Optional<String> search,
+            @PathVariable("id") String slug) {
         int id = convertToNum(slug);
 
         Optional<Dongho> donghoEdit = donghoService.findDonghoById(id);
         donghoEdit.ifPresent(dongho -> {
+            String searchStr = "";
+            if (search.isPresent())
+                searchStr = search.get();
             model.addAttribute("dongho", dongho);
             model.addAttribute("title", dongho.getTendongho());
+            model.addAttribute("search", searchStr);
+            model.addAttribute("searchPath", "/dongho");
         });
 
         return "dongho";
     }
 
     @GetMapping("/phukien/{id}")
-    public String trangPhuKien(Model model, @PathVariable("id") String slug) {
+    public String trangPhuKien(Model model, @PathParam("search") Optional<String> search,
+            @PathVariable("id") String slug) {
         int id = convertToNum(slug);
 
         Optional<PhuKien> phukienEdit = phuKienService.findPhuKienById(id);
-        phukienEdit.ifPresent(phukien -> model.addAttribute("phukien", phukien));
-        phukienEdit.ifPresent(phukien -> model.addAttribute("title", phukien.getTenPhuKien()));
+        phukienEdit.ifPresent(phukien -> {
+            String searchStr = "";
+            if (search.isPresent())
+                searchStr = search.get();
+            model.addAttribute("phukien", phukien);
+            model.addAttribute("title", phukien.getTenPhuKien());
+            model.addAttribute("search", searchStr);
+            model.addAttribute("searchPath", "/dongho");
+        });
 
         return "phukien";
     }
 
     @GetMapping("/butky/{id}")
-    public String trangButKy(Model model, @PathVariable("id") String slug) {
+    public String trangButKy(Model model, @PathParam("search") Optional<String> search,
+            @PathVariable("id") String slug) {
         int id = convertToNum(slug);
 
         Optional<Butky> butkyEdit = butkyService.findButkyById(id);
-        butkyEdit.ifPresent(butky -> model.addAttribute("butky", butky));
-        butkyEdit.ifPresent(butky -> model.addAttribute("title", butky.getTenbutky()));
+        butkyEdit.ifPresent(butky -> {
+            String searchStr = "";
+            if (search.isPresent())
+                searchStr = search.get();
+            model.addAttribute("butky", butky);
+            model.addAttribute("title", butky.getTenbutky());
+            model.addAttribute("search", searchStr);
+            model.addAttribute("searchPath", "/dongho");
+        });
 
         return "butky";
     }
 
     @GetMapping("/kinhmat/{id}")
-    public String trangKinhMat(Model model, @PathVariable("id") String slug) {
+    public String trangKinhMat(Model model, @PathParam("search") Optional<String> search,
+            @PathVariable("id") String slug) {
         int id = convertToNum(slug);
 
         Optional<KinhMat> kinhmatEdit = kinhMatService.findKinhMatById(id);
-        kinhmatEdit.ifPresent(kinhmat -> model.addAttribute("kinhmat", kinhmat));
-        kinhmatEdit.ifPresent(kinhmat -> model.addAttribute("title", kinhmat.getTenSanPham()));
+        kinhmatEdit.ifPresent(kinhmat -> {
+            String searchStr = "";
+            if (search.isPresent())
+                searchStr = search.get();
+            model.addAttribute("kinhmat", kinhmat);
+            model.addAttribute("title", kinhmat.getTenSanPham());
+            model.addAttribute("search", searchStr);
+            model.addAttribute("searchPath", "/dongho");
+        });
 
         return "kinhmat";
     }
 
     @GetMapping("/trangsuc/{id}")
-    public String trangTrangSuc(Model model, @PathVariable("id") String slug) {
+    public String trangTrangSuc(Model model, @PathParam("search") Optional<String> search,
+            @PathVariable("id") String slug) {
         int id = convertToNum(slug);
 
         Optional<Trangsuc> trangsucEdit = trangsucService.findTrangsucById(id);
-        trangsucEdit.ifPresent(trangsuc -> model.addAttribute("trangsuc", trangsuc));
-        trangsucEdit.ifPresent(trangsuc -> model.addAttribute("title", trangsuc.getTentrangsuc()));
+        trangsucEdit.ifPresent(trangsuc -> {
+            String searchStr = "";
+            if (search.isPresent())
+                searchStr = search.get();
+            model.addAttribute("trangsuc", trangsuc);
+            model.addAttribute("title", trangsuc.getTentrangsuc());
+            model.addAttribute("search", searchStr);
+            model.addAttribute("searchPath", "/dongho");
+        });
 
         return "trangsuc";
     }
@@ -132,7 +171,7 @@ public class IndexController {
             searchStr = search.get();
         if (page.isPresent())
             pageNum = page.get() - 1;
-        data = donghoService.getAllDonghoByTendongho(searchStr,"2001-01-01", "3000-01-01", pageNum);
+        data = donghoService.getAllDonghoByTendongho(searchStr, "2001-01-01", "3000-01-01", pageNum);
 
         model.addAttribute("dongho", fieldData);
         model.addAttribute("donghos", data.getContent());
@@ -154,7 +193,7 @@ public class IndexController {
             searchStr = search.get();
         if (page.isPresent())
             pageNum = page.get() - 1;
-        data = kinhMatService.searchKinhMat(searchStr,"2001-01-01", "3000-01-01", pageNum);
+        data = kinhMatService.searchKinhMat(searchStr, "2001-01-01", "3000-01-01", pageNum);
 
         model.addAttribute("kinhmats", data.getContent());
         model.addAttribute("page", pageNum);
@@ -176,7 +215,7 @@ public class IndexController {
             searchStr = search.get();
         if (page.isPresent())
             pageNum = page.get() - 1;
-        data = phuKienService.searchPhuKien(searchStr,"2001-01-01", "3000-01-01", pageNum);
+        data = phuKienService.searchPhuKien(searchStr, "2001-01-01", "3000-01-01", pageNum);
 
         model.addAttribute("phukiens", data.getContent());
         model.addAttribute("page", pageNum);
@@ -198,7 +237,7 @@ public class IndexController {
             searchStr = search.get();
         if (page.isPresent())
             pageNum = page.get() - 1;
-        data = trangsucService.searchTrangsuc(searchStr,"2001-01-01", "3000-01-01", pageNum);
+        data = trangsucService.searchTrangsuc(searchStr, "2001-01-01", "3000-01-01", pageNum);
 
         model.addAttribute("trangsucs", data.getContent());
         model.addAttribute("page", pageNum);
@@ -229,19 +268,21 @@ public class IndexController {
             }
 
             List<Integer> soTrang_list = new ArrayList<Integer>();
-            Page<Dongho> dongho_page = donghoService.getAllDonghoByTendongho(searchStr,"2001-01-01", "3000-01-01", pageNum);
+            Page<Dongho> dongho_page = donghoService.getAllDonghoByTendongho(searchStr, "2001-01-01", "3000-01-01",
+                    pageNum);
             soTrang_list.add(dongho_page.getTotalPages());
-            
-            Page<Trangsuc> trangsuc_page = trangsucService.searchTrangsuc(searchStr,"2001-01-01", "3000-01-01", pageNum);
+
+            Page<Trangsuc> trangsuc_page = trangsucService.searchTrangsuc(searchStr, "2001-01-01", "3000-01-01",
+                    pageNum);
             soTrang_list.add(trangsuc_page.getTotalPages());
-            
-            Page<PhuKien> phukien_page = phuKienService.searchPhuKien(searchStr,"2001-01-01", "3000-01-01", pageNum);
+
+            Page<PhuKien> phukien_page = phuKienService.searchPhuKien(searchStr, "2001-01-01", "3000-01-01", pageNum);
             soTrang_list.add(phukien_page.getTotalPages());
-            
-            Page<Butky> butky_page = butkyService.searchButky(searchStr,"2001-01-01", "3000-01-01", pageNum);
+
+            Page<Butky> butky_page = butkyService.searchButky(searchStr, "2001-01-01", "3000-01-01", pageNum);
             soTrang_list.add(butky_page.getTotalPages());
-            
-            Page<KinhMat> kinhmat_page = kinhMatService.searchKinhMat(searchStr,"2001-01-01", "3000-01-01", pageNum);
+
+            Page<KinhMat> kinhmat_page = kinhMatService.searchKinhMat(searchStr, "2001-01-01", "3000-01-01", pageNum);
             soTrang_list.add(kinhmat_page.getTotalPages());
 
             model.addAttribute("search", searchStr);
@@ -260,15 +301,24 @@ public class IndexController {
     }
 
     private String renderIndex(Model model) {
-        model.addAttribute("sanphambanchay", donghoService.getAllDonghoByTendongho("","2001-01-01", "3000-01-01", 0).getContent());
-        model.addAttribute("donghoeposswiss", donghoService.getAllDonghoByTendongho("Epos Swiss","2001-01-01", "3000-01-01", 0).getContent());
-        model.addAttribute("diamondd", donghoService.getAllDonghoByTendongho("Diamond","2001-01-01", "3000-01-01", 0).getContent());
-        model.addAttribute("philippeauguste", donghoService.getAllDonghoByTendongho("Auguste","2001-01-01", "3000-01-01", 0).getContent());
-        model.addAttribute("jacqueslemans", donghoService.getAllDonghoByTendongho("Jacques","2001-01-01", "3000-01-01", 0).getContent());
-        model.addAttribute("ariesgold", donghoService.getAllDonghoByTendongho("Aries","2001-01-01", "3000-01-01", 0).getContent());
-        model.addAttribute("atlanticswiss", donghoService.getAllDonghoByTendongho("Atlantic","2001-01-01", "3000-01-01", 0).getContent());
-        model.addAttribute("citizen", donghoService.getAllDonghoByTendongho("Citizen","2001-01-01", "3000-01-01", 0).getContent());
-        model.addAttribute("tsarbomba", donghoService.getAllDonghoByTendongho("Tsar","2001-01-01", "3000-01-01", 0).getContent());
+        model.addAttribute("sanphambanchay",
+                donghoService.getAllDonghoByTendongho("", "2001-01-01", "3000-01-01", 0).getContent());
+        model.addAttribute("donghoeposswiss",
+                donghoService.getAllDonghoByTendongho("Epos Swiss", "2001-01-01", "3000-01-01", 0).getContent());
+        model.addAttribute("diamondd",
+                donghoService.getAllDonghoByTendongho("Diamond", "2001-01-01", "3000-01-01", 0).getContent());
+        model.addAttribute("philippeauguste",
+                donghoService.getAllDonghoByTendongho("Auguste", "2001-01-01", "3000-01-01", 0).getContent());
+        model.addAttribute("jacqueslemans",
+                donghoService.getAllDonghoByTendongho("Jacques", "2001-01-01", "3000-01-01", 0).getContent());
+        model.addAttribute("ariesgold",
+                donghoService.getAllDonghoByTendongho("Aries", "2001-01-01", "3000-01-01", 0).getContent());
+        model.addAttribute("atlanticswiss",
+                donghoService.getAllDonghoByTendongho("Atlantic", "2001-01-01", "3000-01-01", 0).getContent());
+        model.addAttribute("citizen",
+                donghoService.getAllDonghoByTendongho("Citizen", "2001-01-01", "3000-01-01", 0).getContent());
+        model.addAttribute("tsarbomba",
+                donghoService.getAllDonghoByTendongho("Tsar", "2001-01-01", "3000-01-01", 0).getContent());
 
         return "index";
     }

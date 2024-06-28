@@ -30,8 +30,11 @@ public class ThongKe {
     @Column(name = "kinhmat")
     private Integer kinhMat;
 
+    @Column(name = "donhang")
+    private Integer donHang;
+
     @Column(name = "donhangdahuy")
-    private Integer donHangDahuy;
+    private Integer donHangDaHuy;
 
     @Column(name = "donhangdagiao")
     private Integer donHangDaGiao;
@@ -39,8 +42,8 @@ public class ThongKe {
     @Column(name = "khachhang")
     private Integer khachHang;
 
-    @Column(name = "luongtruycap")
-    private Integer luongTruyCap;
+    @Column(name = "luottruycap")
+    private Integer luotTruyCap;
 
     @Column(name = "tilechuyendoi")
     private Integer tiLeChuyenDoi;
@@ -51,28 +54,64 @@ public class ThongKe {
     @Column(name = "von")
     private Integer von;
 
+    @Column(name = "donhangchoxacnhan")
+    private Integer donHangChoXacNhan;
+
+    @Column(name = "donhangdanggiao")
+    private Integer donHangDangGiao;
+
+    @Column(name = "luotdangkymoi")
+    private Integer luotDangKyMoi;
+
+    @Column(name = "chiphi")
+    private Integer chiPhi;
+
+    @Column(name = "luotxemsanpham")
+    private Integer luotXemSanPham;
+    
+    @Column(name = "luotthemgiohang")
+    private Integer luotThemGioHang;
+
+    @Column(name = "luotdathang")
+    private Integer luotDatHang;
+
+    @Column(name = "luotthanhtoan")
+    private Integer luotThanhToan;
+
+    @Column(name = "luothoanthanhdon")
+    private Integer luotHoanThanhDon;
+
     @Column(name = "NGAYTHEM")
     private String NGAYTHEM;
+
 
     public ThongKe() {
     }
 
-    public ThongKe(Integer mathongke, Integer dongHo, Integer butKy, Integer phuKien, Integer trangSuc, Integer kinhMat,
-            Integer donHangDahuy, Integer donHangDaGiao, Integer khachHang, Integer luongTruyCap, Integer tiLeChuyenDoi,
-            Integer doanhThu, Integer von, String NGAYTHEM) {
+    public ThongKe(Integer mathongke, Integer dongHo, Integer butKy, Integer phuKien, Integer trangSuc, Integer kinhMat, Integer donHang, Integer donHangDaHuy, Integer donHangDaGiao, Integer khachHang, Integer luotTruyCap, Integer tiLeChuyenDoi, Integer doanhThu, Integer von, Integer donHangChoXacNhan, Integer donHangDangGiao, Integer luotDangKyMoi, Integer chiPhi, Integer luotXemSanPham, Integer luotThemGioHang, Integer luotDatHang, Integer luotThanhToan, Integer luotHoanThanhDon, String NGAYTHEM) {
         this.mathongke = mathongke;
         this.dongHo = dongHo;
         this.butKy = butKy;
         this.phuKien = phuKien;
         this.trangSuc = trangSuc;
         this.kinhMat = kinhMat;
-        this.donHangDahuy = donHangDahuy;
+        this.donHang = donHang;
+        this.donHangDaHuy = donHangDaHuy;
         this.donHangDaGiao = donHangDaGiao;
         this.khachHang = khachHang;
-        this.luongTruyCap = luongTruyCap;
+        this.luotTruyCap = luotTruyCap;
         this.tiLeChuyenDoi = tiLeChuyenDoi;
         this.doanhThu = doanhThu;
         this.von = von;
+        this.donHangChoXacNhan = donHangChoXacNhan;
+        this.donHangDangGiao = donHangDangGiao;
+        this.luotDangKyMoi = luotDangKyMoi;
+        this.chiPhi = chiPhi;
+        this.luotXemSanPham = luotXemSanPham;
+        this.luotThemGioHang = luotThemGioHang;
+        this.luotDatHang = luotDatHang;
+        this.luotThanhToan = luotThanhToan;
+        this.luotHoanThanhDon = luotHoanThanhDon;
         this.NGAYTHEM = NGAYTHEM;
     }
 
@@ -124,12 +163,20 @@ public class ThongKe {
         this.kinhMat = kinhMat;
     }
 
-    public Integer getDonHangDahuy() {
-        return this.donHangDahuy;
+    public Integer getDonHang() {
+        return this.donHang;
     }
 
-    public void setDonHangDahuy(Integer donHangDahuy) {
-        this.donHangDahuy = donHangDahuy;
+    public void setDonHang(Integer donHang) {
+        this.donHang = donHang;
+    }
+
+    public Integer getDonHangDaHuy() {
+        return this.donHangDaHuy;
+    }
+
+    public void setDonHangDaHuy(Integer donHangDaHuy) {
+        this.donHangDaHuy = donHangDaHuy;
     }
 
     public Integer getDonHangDaGiao() {
@@ -148,12 +195,12 @@ public class ThongKe {
         this.khachHang = khachHang;
     }
 
-    public Integer getLuongTruyCap() {
-        return this.luongTruyCap;
+    public Integer getLuotTruyCap() {
+        return this.luotTruyCap;
     }
 
-    public void setLuongTruyCap(Integer luongTruyCap) {
-        this.luongTruyCap = luongTruyCap;
+    public void setLuotTruyCap(Integer luotTruyCap) {
+        this.luotTruyCap = luotTruyCap;
     }
 
     public Integer getTiLeChuyenDoi() {
@@ -178,6 +225,78 @@ public class ThongKe {
 
     public void setVon(Integer von) {
         this.von = von;
+    }
+
+    public Integer getDonHangChoXacNhan() {
+        return this.donHangChoXacNhan;
+    }
+
+    public void setDonHangChoXacNhan(Integer donHangChoXacNhan) {
+        this.donHangChoXacNhan = donHangChoXacNhan;
+    }
+
+    public Integer getDonHangDangGiao() {
+        return this.donHangDangGiao;
+    }
+
+    public void setDonHangDangGiao(Integer donHangDangGiao) {
+        this.donHangDangGiao = donHangDangGiao;
+    }
+
+    public Integer getLuotDangKyMoi() {
+        return this.luotDangKyMoi;
+    }
+
+    public void setLuotDangKyMoi(Integer luotDangKyMoi) {
+        this.luotDangKyMoi = luotDangKyMoi;
+    }
+
+    public Integer getChiPhi() {
+        return this.chiPhi;
+    }
+
+    public void setChiPhi(Integer chiPhi) {
+        this.chiPhi = chiPhi;
+    }
+
+    public Integer getLuotXemSanPham() {
+        return this.luotXemSanPham;
+    }
+
+    public void setLuotXemSanPham(Integer luotXemSanPham) {
+        this.luotXemSanPham = luotXemSanPham;
+    }
+
+    public Integer getLuotThemGioHang() {
+        return this.luotThemGioHang;
+    }
+
+    public void setLuotThemGioHang(Integer luotThemGioHang) {
+        this.luotThemGioHang = luotThemGioHang;
+    }
+
+    public Integer getLuotDatHang() {
+        return this.luotDatHang;
+    }
+
+    public void setLuotDatHang(Integer luotDatHang) {
+        this.luotDatHang = luotDatHang;
+    }
+
+    public Integer getLuotThanhToan() {
+        return this.luotThanhToan;
+    }
+
+    public void setLuotThanhToan(Integer luotThanhToan) {
+        this.luotThanhToan = luotThanhToan;
+    }
+
+    public Integer getLuotHoanThanhDon() {
+        return this.luotHoanThanhDon;
+    }
+
+    public void setLuotHoanThanhDon(Integer luotHoanThanhDon) {
+        this.luotHoanThanhDon = luotHoanThanhDon;
     }
 
     public String getNGAYTHEM() {
@@ -218,8 +337,13 @@ public class ThongKe {
         return this;
     }
 
-    public ThongKe donHangDahuy(Integer donHangDahuy) {
-        setDonHangDahuy(donHangDahuy);
+    public ThongKe donHang(Integer donHang) {
+        setDonHang(donHang);
+        return this;
+    }
+
+    public ThongKe donHangDaHuy(Integer donHangDaHuy) {
+        setDonHangDaHuy(donHangDaHuy);
         return this;
     }
 
@@ -233,8 +357,8 @@ public class ThongKe {
         return this;
     }
 
-    public ThongKe luongTruyCap(Integer luongTruyCap) {
-        setLuongTruyCap(luongTruyCap);
+    public ThongKe luotTruyCap(Integer luotTruyCap) {
+        setLuotTruyCap(luotTruyCap);
         return this;
     }
 
@@ -253,6 +377,51 @@ public class ThongKe {
         return this;
     }
 
+    public ThongKe donHangChoXacNhan(Integer donHangChoXacNhan) {
+        setDonHangChoXacNhan(donHangChoXacNhan);
+        return this;
+    }
+
+    public ThongKe donHangDangGiao(Integer donHangDangGiao) {
+        setDonHangDangGiao(donHangDangGiao);
+        return this;
+    }
+
+    public ThongKe luotDangKyMoi(Integer luotDangKyMoi) {
+        setLuotDangKyMoi(luotDangKyMoi);
+        return this;
+    }
+
+    public ThongKe chiPhi(Integer chiPhi) {
+        setChiPhi(chiPhi);
+        return this;
+    }
+
+    public ThongKe luotXemSanPham(Integer luotXemSanPham) {
+        setLuotXemSanPham(luotXemSanPham);
+        return this;
+    }
+
+    public ThongKe luotThemGioHang(Integer luotThemGioHang) {
+        setLuotThemGioHang(luotThemGioHang);
+        return this;
+    }
+
+    public ThongKe luotDatHang(Integer luotDatHang) {
+        setLuotDatHang(luotDatHang);
+        return this;
+    }
+
+    public ThongKe luotThanhToan(Integer luotThanhToan) {
+        setLuotThanhToan(luotThanhToan);
+        return this;
+    }
+
+    public ThongKe luotHoanThanhDon(Integer luotHoanThanhDon) {
+        setLuotHoanThanhDon(luotHoanThanhDon);
+        return this;
+    }
+
     public ThongKe NGAYTHEM(String NGAYTHEM) {
         setNGAYTHEM(NGAYTHEM);
         return this;
@@ -266,40 +435,41 @@ public class ThongKe {
             return false;
         }
         ThongKe thongKe = (ThongKe) o;
-        return Objects.equals(mathongke, thongKe.mathongke) && Objects.equals(dongHo, thongKe.dongHo)
-                && Objects.equals(butKy, thongKe.butKy) && Objects.equals(phuKien, thongKe.phuKien)
-                && Objects.equals(trangSuc, thongKe.trangSuc) && Objects.equals(kinhMat, thongKe.kinhMat)
-                && Objects.equals(donHangDahuy, thongKe.donHangDahuy)
-                && Objects.equals(donHangDaGiao, thongKe.donHangDaGiao) && Objects.equals(khachHang, thongKe.khachHang)
-                && Objects.equals(luongTruyCap, thongKe.luongTruyCap)
-                && Objects.equals(tiLeChuyenDoi, thongKe.tiLeChuyenDoi) && Objects.equals(doanhThu, thongKe.doanhThu)
-                && Objects.equals(von, thongKe.von) && Objects.equals(NGAYTHEM, thongKe.NGAYTHEM);
+        return Objects.equals(mathongke, thongKe.mathongke) && Objects.equals(dongHo, thongKe.dongHo) && Objects.equals(butKy, thongKe.butKy) && Objects.equals(phuKien, thongKe.phuKien) && Objects.equals(trangSuc, thongKe.trangSuc) && Objects.equals(kinhMat, thongKe.kinhMat) && Objects.equals(donHang, thongKe.donHang) && Objects.equals(donHangDaHuy, thongKe.donHangDaHuy) && Objects.equals(donHangDaGiao, thongKe.donHangDaGiao) && Objects.equals(khachHang, thongKe.khachHang) && Objects.equals(luotTruyCap, thongKe.luotTruyCap) && Objects.equals(tiLeChuyenDoi, thongKe.tiLeChuyenDoi) && Objects.equals(doanhThu, thongKe.doanhThu) && Objects.equals(von, thongKe.von) && Objects.equals(donHangChoXacNhan, thongKe.donHangChoXacNhan) && Objects.equals(donHangDangGiao, thongKe.donHangDangGiao) && Objects.equals(luotDangKyMoi, thongKe.luotDangKyMoi) && Objects.equals(chiPhi, thongKe.chiPhi) && Objects.equals(luotXemSanPham, thongKe.luotXemSanPham) && Objects.equals(luotThemGioHang, thongKe.luotThemGioHang) && Objects.equals(luotDatHang, thongKe.luotDatHang) && Objects.equals(luotThanhToan, thongKe.luotThanhToan) && Objects.equals(luotHoanThanhDon, thongKe.luotHoanThanhDon) && Objects.equals(NGAYTHEM, thongKe.NGAYTHEM);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(mathongke, dongHo, butKy, phuKien, trangSuc, kinhMat, donHangDahuy, donHangDaGiao,
-                khachHang, luongTruyCap, tiLeChuyenDoi, doanhThu, von, NGAYTHEM);
+        return Objects.hash(mathongke, dongHo, butKy, phuKien, trangSuc, kinhMat, donHang, donHangDaHuy, donHangDaGiao, khachHang, luotTruyCap, tiLeChuyenDoi, doanhThu, von, donHangChoXacNhan, donHangDangGiao, luotDangKyMoi, chiPhi, luotXemSanPham, luotThemGioHang, luotDatHang, luotThanhToan, luotHoanThanhDon, NGAYTHEM);
     }
 
     @Override
     public String toString() {
         return "{" +
-                " mathongke='" + getMathongke() + "'" +
-                ", dongHo='" + getDongHo() + "'" +
-                ", butKy='" + getButKy() + "'" +
-                ", phuKien='" + getPhuKien() + "'" +
-                ", trangSuc='" + getTrangSuc() + "'" +
-                ", kinhMat='" + getKinhMat() + "'" +
-                ", donHangDahuy='" + getDonHangDahuy() + "'" +
-                ", donHangDaGiao='" + getDonHangDaGiao() + "'" +
-                ", khachHang='" + getKhachHang() + "'" +
-                ", luongTruyCap='" + getLuongTruyCap() + "'" +
-                ", tiLeChuyenDoi='" + getTiLeChuyenDoi() + "'" +
-                ", doanhThu='" + getDoanhThu() + "'" +
-                ", von='" + getVon() + "'" +
-                ", NGAYTHEM='" + getNGAYTHEM() + "'" +
-                "}";
-    }
-
+            " mathongke='" + getMathongke() + "'" +
+            ", dongHo='" + getDongHo() + "'" +
+            ", butKy='" + getButKy() + "'" +
+            ", phuKien='" + getPhuKien() + "'" +
+            ", trangSuc='" + getTrangSuc() + "'" +
+            ", kinhMat='" + getKinhMat() + "'" +
+            ", donHang='" + getDonHang() + "'" +
+            ", donHangDaHuy='" + getDonHangDaHuy() + "'" +
+            ", donHangDaGiao='" + getDonHangDaGiao() + "'" +
+            ", khachHang='" + getKhachHang() + "'" +
+            ", luotTruyCap='" + getLuotTruyCap() + "'" +
+            ", tiLeChuyenDoi='" + getTiLeChuyenDoi() + "'" +
+            ", doanhThu='" + getDoanhThu() + "'" +
+            ", von='" + getVon() + "'" +
+            ", donHangChoXacNhan='" + getDonHangChoXacNhan() + "'" +
+            ", donHangDangGiao='" + getDonHangDangGiao() + "'" +
+            ", luotDangKyMoi='" + getLuotDangKyMoi() + "'" +
+            ", chiPhi='" + getChiPhi() + "'" +
+            ", luotXemSanPham='" + getLuotXemSanPham() + "'" +
+            ", luotThemGioHang='" + getLuotThemGioHang() + "'" +
+            ", luotDatHang='" + getLuotDatHang() + "'" +
+            ", luotThanhToan='" + getLuotThanhToan() + "'" +
+            ", luotHoanThanhDon='" + getLuotHoanThanhDon() + "'" +
+            ", NGAYTHEM='" + getNGAYTHEM() + "'" +
+            "}";
+    }  
 }

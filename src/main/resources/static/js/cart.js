@@ -154,7 +154,7 @@ const dathang = async () => {
   cart.diaChi = document.getElementById("diaChi").value;
   cart.ghiChu = document.getElementById("ghiChu").value;
 
-  await fetch('/profile/dathang', {
+  const response = await fetch('/profile/dathang', {
     method: "POST",
     headers: {
       'Content-Type': 'application/json'
@@ -162,8 +162,14 @@ const dathang = async () => {
     body: JSON.stringify(cart)
   });
 
-  resetCart();
-  redirectToCart();
+  const data = await response.json();
+  if (data.status) {
+    resetCart();
+    redirectToCart();
+  } else {
+    document.getElementById("error").classList.remove("hidden");
+    document.getElementById("error").value = data.message;
+  }
 }
 
 // Hàm chuyển hướng
@@ -172,6 +178,9 @@ const redirectToCart = () => {
 }
 
 function formatCurrencyVND(number) {
+  if (isNaN(number)) {
+    return '';
+  }
   number = parseInt(number);
   return number.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
 }

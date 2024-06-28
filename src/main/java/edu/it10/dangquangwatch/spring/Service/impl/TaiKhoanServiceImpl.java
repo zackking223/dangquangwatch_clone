@@ -178,4 +178,14 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 
     return new PageImpl<>(result, PageRequest.of(page, 10), result.size());
   }
+
+  @Override
+  @Transactional
+  public void doiMatKhau(String newpassword, String username) {
+    TaiKhoan taiKhoan = getTaiKhoan(username);
+
+    taiKhoan.setPassword("{bcrypt}" + passwordEncoder.encode(newpassword));
+
+    updateTaiKhoan(taiKhoan);
+  }
 }

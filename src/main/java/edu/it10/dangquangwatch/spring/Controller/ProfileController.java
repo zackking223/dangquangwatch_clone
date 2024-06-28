@@ -6,23 +6,27 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
+import edu.it10.dangquangwatch.spring.entity.ApiResponse;
 import edu.it10.dangquangwatch.spring.entity.DonHang;
 import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
 import edu.it10.dangquangwatch.spring.service.ChiTietDonHangService;
 import edu.it10.dangquangwatch.spring.service.DonHangService;
 import edu.it10.dangquangwatch.spring.service.TaiKhoanService;
+import edu.it10.dangquangwatch.spring.service.impl.EmptyOrNullListException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/profile")
@@ -84,7 +88,8 @@ public class ProfileController {
 
     String username = (String) session.getAttribute("username");
 
-    Page<DonHang> data = donHangService.getMyDonHang(searchStr, tinhtrangStr, thanhtoanStr, username, fromStr, toStr, pageNum);
+    Page<DonHang> data = donHangService.getMyDonHang(searchStr, tinhtrangStr, thanhtoanStr, username, fromStr, toStr,
+        pageNum);
 
     model.addAttribute("donhangs", data.getContent());
     model.addAttribute("sotrang", data.getTotalPages());
@@ -99,9 +104,24 @@ public class ProfileController {
     return "donhang";
   }
 
+  @ExceptionHandler(EmptyOrNullListException.class)
+  public ResponseEntity<String> handleEmptyOrNullListException(EmptyOrNullListException ex) {
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+  }
+
   @PostMapping("/dathang")
-  public @ResponseBody String placeOrder(HttpServletRequest request, @RequestBody DonHang donHang) {
+  public ResponseEntity<ApiResponse> placeOrder(HttpServletRequest request, @RequestBody DonHang donHang) {
     HttpSession session = request.getSession(false);
+    if (donHang.getItems() == null) {
+      ApiResponse response = new ApiResponse(false, "Danh sách sản phẩm trống!");
+      return ResponseEntity.ok(response);
+    }
+
+    if (donHang.getItems().size() < 1) {
+      ApiResponse response = new ApiResponse(false, "Phải có ít nhất 1 sản phẩm!");
+      return ResponseEntity.ok(response);
+    }
+
     String username = (String) session.getAttribute("username");
 
     TaiKhoan taiKhoan = taiKhoanService.getTaiKhoan(username);
@@ -124,7 +144,8 @@ public class ProfileController {
 
     donHangService.addDonHang(donHang);
 
-    return "Đặt hàng thành công!";
+    ApiResponse response = new ApiResponse(true, "Đặt hàng thành công!");
+    return ResponseEntity.ok(response);
   }
 
   @PostMapping("/huydon")
@@ -145,5 +166,32 @@ public class ProfileController {
     }
 
     return "redirect:/profile/donhang";
+  }
+
+  @GetMapping("/doithongtin")
+  public String doithongtin(HttpSession session, Model model) {
+    String username = (String) session.getAttribute("username");
+    TaiKhoan taikhoan = taiKhoanService.getTaiKhoan(username);
+
+    model.addAttribute("taikhoan", taikhoan);
+    return "doithongtin";
+  }
+
+  @PostMapping("/doithongtin")
+  public String updateThongTin(TaiKhoan taiKhoan) {
+    TaiKhoan existingTaiKhoan = taiKhoanService.getTaiKhoan(taiKhoan.getUsername());
+
+    if (taiKhoan.getPassword() == null) {
+      taiKhoan.setPassword(existingTaiKhoan.getPassword());
+    }
+
+    taiKhoanService.updateTaiKhoan(taiKhoan);
+    return "redirect:/profile/doithongtin";
+  }
+
+  @PostMapping("/doimatkhau")
+  public String doimatkhau(@RequestParam("newpassword") String newpassword, @RequestParam("username") String username) {
+    taiKhoanService.doiMatKhau(newpassword, username);
+    return "redirect:/profile/doithongtin";
   }
 }

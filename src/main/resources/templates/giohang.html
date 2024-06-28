@@ -14,13 +14,14 @@
 <body class="bg-slate-200 overflow-x-hidden">
   <div th:replace="~{fragments/header :: header}"></div>
   <div th:replace="~{fragments/productsbar :: productsbar}"></div>
-  <div class="w-full xl:max-w-[1215px] max-w-[1021px] mx-auto my-9">
-    <div class="bg-white shadow-md rounded-lg overflow-hidden p-4 min-h-[800px]">
-      <div class="flex gap-2 w-max mx-auto my-4 items-center">
-        <h1 class="text-xl"><a href="/profile/donhang">Đơn hàng</a></h1>
-        <h1 class="text-2xl text-yellow-500 font-bold underline"><a href="/profile/giohang">Giỏ hàng</a></h1>
-      </div>
 
+  <div class="w-full xl:max-w-[1215px] max-w-[1021px] mx-auto my-9">
+    <div class="flex gap-2 w-max mx-auto items-end">
+      <h1 class="p-2 bg-white rounded-tl rounded-tr text-xl hover:text-yellow-500"><a href="/profile/doithongtin">Đổi thông tin</a></h1>
+      <h1 class="p-2 bg-white rounded-tl rounded-tr text-xl hover:text-yellow-500"><a href="/profile/donhang">Đơn hàng</a></h1>
+      <h1 class="p-2 bg-white rounded-tl rounded-tr text-xl text-yellow-500 font-bold underline"><a href="/profile/giohang">Giỏ hàng</a></h1>
+    </div>
+    <div class="bg-white shadow-md rounded-lg overflow-hidden p-4 min-h-[800px]">
       <section id="cart-container" class="w-full">
         <!-- DANH SACH DON HANG -->
       </section>
@@ -99,6 +100,9 @@
                     Đặt hàng
                 </p>
             </button>
+        </div>
+        <div id="error" class="p-4 select-none rounded bg-red-500 text-white w-full text-center hidden">
+          Đã có lỗi xảy ra
         </div>
     `;
 

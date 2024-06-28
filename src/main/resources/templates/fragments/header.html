@@ -6,7 +6,7 @@
                 <img src="/images/LogoMobile.png" alt="Đăng Quang Watch" class="xl:hidden w-[60px] h-14">
             </a>
 
-            <form action=""
+            <form th:action="${searchPath ?: ''}"
                 class="flex items-center h-[38px] w-max max-w-[395px] sm:ml-5 rounded sm:mr-auto ml-auto overflow-hidden">
                 <input type="text" name="search" th:value="${search}"
                     class="outline-none hidden sm:block w-[295px] h-full px-2 placeholder:italic placeholder:text-slate-500"

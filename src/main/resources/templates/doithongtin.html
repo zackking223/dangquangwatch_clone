@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/images/LogoMobile.png">
+  <title th:text="${session.hoten}"></title>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" />
+  <link rel="stylesheet" th:href="@{/css/application.css}">
+</head>
+
+<body class="bg-slate-200 overflow-x-hidden">
+  <div th:replace="~{fragments/header :: header}"></div>
+  <div th:replace="~{fragments/productsbar :: productsbar}"></div>
+  <div class="w-full xl:max-w-[1215px] max-w-[1021px] mx-auto my-9">
+    <div class="flex gap-2 w-max mx-auto items-end">
+      <h1 class="p-2 bg-white rounded-tl rounded-tr text-xl text-yellow-500 font-bold underline"><a href="/profile/doithongtin">Đổi thông tin</a></h1>
+      <h1 class="p-2 bg-white rounded-tl rounded-tr text-xl hover:text-yellow-500"><a href="/profile/donhang">Đơn hàng</a></h1>
+      <h1 class="p-2 bg-white rounded-tl rounded-tr text-xl hover:text-yellow-500"><a href="/profile/giohang">Giỏ hàng</a></h1>
+    </div>
+    <div class="bg-white shadow-md rounded-lg overflow-hidden p-4 min-h-[800px]">
+
+      <form class="mx-auto w-max" th:object="${taikhoan}" th:action="@{/admin/khachhang/save}" action="#" method="post">
+        <div>
+          <label class="block font-medium" th:for="username">Username</label>
+          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
+            th:field="*{username}" />
+        </div>
+        <div style="clear: both; display: block; height: 10px"></div>
+        <div>
+          <label class="block font-medium" th:for="hoten">Họ tên</label>
+          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{hoten}" />
+        </div>
+
+        <div style="clear: both; display: block; height: 10px"></div>
+        <div>
+          <label class="block font-medium" th:for="sodienthoai">Số điện thoại</label>
+          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
+            th:field="*{sodienthoai}" placeholder="Địa chỉ" onkeypress='validate(event)' />
+        </div>
+
+        <div style="clear: both; display: block; height: 10px"></div>
+        <div>
+          <label class="block font-medium" th:for="diachi">Địa chỉ</label>
+          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
+            th:field="*{diachi}" />
+        </div>
+
+        <input class="hidden" value="ROLE_KHACHHANG" type="text" th:field="*{loai_tai_khoan}" />
+        <input class="hidden" value="1" type="number" th:field="*{enabled}" />
+        <input class="hidden" type="date" th:field="*{NGAYTHEM}" />
+
+        <input class="p-2 w-max bg-green-500 rounded block mt-4 text-white" type="submit" value="Lưu" />
+      </form>
+
+      <form class="mx-auto w-max mt-8" action="/profile/doimatkhau" method="post">
+        <input type="text" class="hidden" th:value="${taikhoan.getUsername()}" name="username">
+        <div>
+          <label class="block font-medium" th:for="sodienthoai">Mật khẩu mới</label>
+          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="password" name="newpassword"
+            placeholder="Địa chỉ" onkeypress='validate(event)' />
+          <input class="p-2 w-max bg-red-500 rounded block mt-4 text-white" type="submit" value="Đổi mật khẩu" />
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+
+</html>

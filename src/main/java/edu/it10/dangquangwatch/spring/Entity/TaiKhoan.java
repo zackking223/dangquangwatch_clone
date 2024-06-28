@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "taikhoan")
-@JsonIgnoreProperties({"donHangList"})
+@JsonIgnoreProperties({ "donHangList" })
 public class TaiKhoan {
   @Id
   @Column(name = "username")
@@ -24,6 +24,9 @@ public class TaiKhoan {
 
   @Column(name = "hoten")
   private String hoten;
+
+  @Column(name = "sodienthoai", unique = true)
+  private String sodienthoai;
 
   @Column(name = "diachi")
   private String diachi;
@@ -47,10 +50,12 @@ public class TaiKhoan {
   public TaiKhoan() {
   }
 
-  public TaiKhoan(String username, String password, String hoten, String diachi, String loai_tai_khoan, Integer enabled, String NGAYTHEM, List<DonHang> donHangList) {
+  public TaiKhoan(String username, String password, String hoten, String sodienthoai, String diachi,
+      String loai_tai_khoan, Integer enabled, String NGAYTHEM, List<DonHang> donHangList) {
     this.username = username;
     this.password = password;
     this.hoten = hoten;
+    this.sodienthoai = sodienthoai;
     this.diachi = diachi;
     this.loai_tai_khoan = loai_tai_khoan;
     this.enabled = enabled;
@@ -80,6 +85,14 @@ public class TaiKhoan {
 
   public void setHoten(String hoten) {
     this.hoten = hoten;
+  }
+
+  public String getSodienthoai() {
+    return this.sodienthoai;
+  }
+
+  public void setSodienthoai(String sodienthoai) {
+    this.sodienthoai = sodienthoai;
   }
 
   public String getDiachi() {
@@ -137,6 +150,11 @@ public class TaiKhoan {
     return this;
   }
 
+  public TaiKhoan sodienthoai(String sodienthoai) {
+    setSodienthoai(sodienthoai);
+    return this;
+  }
+
   public TaiKhoan diachi(String diachi) {
     setDiachi(diachi);
     return this;
@@ -163,32 +181,37 @@ public class TaiKhoan {
   }
 
   @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof TaiKhoan)) {
-            return false;
-        }
-        TaiKhoan taiKhoan = (TaiKhoan) o;
-        return Objects.equals(username, taiKhoan.username) && Objects.equals(password, taiKhoan.password) && Objects.equals(hoten, taiKhoan.hoten) && Objects.equals(diachi, taiKhoan.diachi) && Objects.equals(loai_tai_khoan, taiKhoan.loai_tai_khoan) && Objects.equals(enabled, taiKhoan.enabled) && Objects.equals(NGAYTHEM, taiKhoan.NGAYTHEM) && Objects.equals(donHangList, taiKhoan.donHangList);
+  public boolean equals(Object o) {
+    if (o == this)
+      return true;
+    if (!(o instanceof TaiKhoan)) {
+      return false;
+    }
+    TaiKhoan taiKhoan = (TaiKhoan) o;
+    return Objects.equals(username, taiKhoan.username) && Objects.equals(password, taiKhoan.password)
+        && Objects.equals(hoten, taiKhoan.hoten) && Objects.equals(sodienthoai, taiKhoan.sodienthoai)
+        && Objects.equals(diachi, taiKhoan.diachi) && Objects.equals(loai_tai_khoan, taiKhoan.loai_tai_khoan)
+        && Objects.equals(enabled, taiKhoan.enabled) && Objects.equals(NGAYTHEM, taiKhoan.NGAYTHEM)
+        && Objects.equals(donHangList, taiKhoan.donHangList);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(username, password, hoten, diachi, loai_tai_khoan, enabled, NGAYTHEM, donHangList);
+    return Objects.hash(username, password, hoten, sodienthoai, diachi, loai_tai_khoan, enabled, NGAYTHEM, donHangList);
   }
 
   @Override
   public String toString() {
     return "{" +
-      " username='" + getUsername() + "'" +
-      ", password='" + getPassword() + "'" +
-      ", hoten='" + getHoten() + "'" +
-      ", diachi='" + getDiachi() + "'" +
-      ", loai_tai_khoan='" + getLoai_tai_khoan() + "'" +
-      ", enabled='" + getEnabled() + "'" +
-      ", NGAYTHEM='" + getNGAYTHEM() + "'" +
-      ", donHangList='" + getDonHangList() + "'" +
-      "}";
+        " username='" + getUsername() + "'" +
+        ", password='" + getPassword() + "'" +
+        ", hoten='" + getHoten() + "'" +
+        ", sodienthoai='" + getSodienthoai() + "'" +
+        ", diachi='" + getDiachi() + "'" +
+        ", loai_tai_khoan='" + getLoai_tai_khoan() + "'" +
+        ", enabled='" + getEnabled() + "'" +
+        ", NGAYTHEM='" + getNGAYTHEM() + "'" +
+        ", donHangList='" + getDonHangList() + "'" +
+        "}";
   }
 }

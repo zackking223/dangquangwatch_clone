@@ -1,50 +1,323 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <link rel="icon" type="image/png" href="/images/LogoMobile.png">
-        <title>Thống kê</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}" />
-    </head>
-  <body>
-    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
-    <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg md:mx-auto pl-11">
-        <h1 class="font-bold text-center my-2">Thống kê</h1>
-        <section class="grid gap-2 grid-cols-4">
-          <div class="w-full shadow shadow-black rounded-lg p-4 bg-yellow-500 text-white">
-            <h1 class="font-bold text-2xl">Số lượng đồng hồ</h1>
-            <div class="p-2" th:text="${thongKe.getDongHo()}"></div>
-          </div>
-          <div class="w-full shadow shadow-black rounded-lg p-4 bg-rose-600 text-white">
-            <h1 class="font-bold text-2xl">Số lượng bút ký</h1>
-            <div class="p-2" th:text="${thongKe.getButKy()}"></div>
-          </div>
-          <div class="w-full shadow shadow-black rounded-lg p-4 bg-fuchsia-600 text-white">
-            <h1 class="font-bold text-2xl">Số lượng phụ kiện</h1>
-            <div class="p-2" th:text="${thongKe.getPhuKien()}"></div>
-          </div>
-          <div class="w-full shadow shadow-black rounded-lg p-4 bg-teal-600 text-white">
-            <h1 class="font-bold text-2xl">Số lượng trang sức</h1>
-            <div class="p-2" th:text="${thongKe.getTrangSuc()}"></div>
-          </div>
-          <div class="p-2" th:text="${thongKe.getKinhMat()}"></div>
-          <div class="p-2" th:text="${thongKe.getDonHangDahuy()}"></div>
-          <div class="p-2" th:text="${thongKe.getDonHangDaGiao()}"></div>
-          <div class="p-2" th:text="${thongKe.getKhachHang()}"></div>
-          <div class="p-2" th:text="${thongKe.getLuongTruyCap()}"></div>
-          <div class="p-2" th:text="${thongKe.getTiLeChuyenDoi()}"></div>
-          <div class="p-2" th:text="${thongKe.getDoanhThu()}"></div>
-          <div class="p-2" th:text="${thongKe.getVon()}"></div>
-          <div class="p-2" th:text="${thongKe.getNGAYTHEM()}"></div>
-        </section> 
-      <p>Từ ngày:
-        <input type="date" id="start_date" name="start_date" />
-      </p>
-      <p>Đến ngày:
-        <input type="date" id="end_date" name="end_date" />
-      </p>
-      <input class="p-2 w-max bg-green-500 rounded block mt-4 text-white" type="submit" value="Thực hiện thống kê">
-    </div>
-  </body>
+
+<head>
+  <link rel="icon" type="image/png" href="/images/LogoMobile.png">
+  <title>Thống kê</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+  <div class="p-6 w-full bg-slate-50 shadow-sm rounded-lg md:mx-auto pl-12">
+    <h1 class="font-bold text-center my-2">Tổng quan</h1>
+
+    <section class="grid my-3 gap-2 sm:grid-cols-2 grid-cols-1">
+      <div class="mx-auto w-full sm:row-span-2">
+        <canvas id="financialChart"></canvas>
+      </div>
+      <div class="w-full shadow shadow-black rounded-lg p-4 bg-green-500 text-white">
+        <h1 class="font-bold text-2xl flex items-center gap-2">Doanh thu <img class="w-7" src="/svg/doanhthu.svg"
+            alt="doanhthu"></h1>
+        <div class="p-2" th:text="${thongKe.getDoanhThu()}"></div>
+      </div>
+      <div class="w-full shadow shadow-black rounded-lg p-4 bg-red-500 text-white">
+        <h1 class="font-bold text-2xl flex items-center gap-2">Chi phí <img class="w-7" src="/svg/von.svg" alt="von">
+        </h1>
+        <div class="p-2" th:text="${thongKe.getChiPhi()}"></div>
+      </div>
+    </section>
+
+    <section class="grid my-3 gap-2 sm:grid-cols-2 grid-cols-1">
+      <div class="mx-auto w-full sm:row-span-2">
+        <canvas id="conversionFunnelChart"></canvas>
+      </div>
+      <div class="w-full shadow shadow-black rounded-lg p-4 bg-orange-500 text-white">
+        <h1 class="font-bold text-2xl flex items-center gap-2">Lượt chuyển đổi <img class="w-7"
+            src="/svg/tilechuyendoi.svg" alt="tilechuyendoi"></h1>
+        <div class="p-2" th:text="${thongKe.getTiLeChuyenDoi()}"></div>
+      </div>
+      <div class="w-full shadow shadow-black rounded-lg p-4 bg-teal-500 text-white">
+        <h1 class="font-bold text-2xl flex items-center gap-2">Lượt xem sản phẩm <img class="w-7" src="/svg/xemhang.svg"
+            alt="xemhang">
+        </h1>
+        <div class="p-2" th:text="${thongKe.getLuotXemSanPham()}"></div>
+      </div>
+    </section>
+
+    <h1 class="font-bold text-center mb-2 mt-4">Số lượng</h1>
+    <section class="grid my-3 gap-2 sm:grid-cols-3 grid-cols-2">
+      <div class="w-full shadow shadow-black rounded-lg p-4 bg-blue-500 text-white">
+        <h1 class="font-bold text-2xl flex items-center gap-2">Đồng hồ <img class="w-7" src="/svg/watch.svg"
+            alt="watch"></h1>
+        <div class="p-2" th:text="${thongKe.getDongHo()}"></div>
+      </div>
+      <div class="w-full shadow shadow-black rounded-lg p-4 bg-green-500 text-white">
+        <h1 class="font-bold text-2xl flex items-center gap-2">Bút ký <img class="w-6 h-6" src="/svg/ink_pen.svg"
+            alt="ink_pen"></h1>
+        <div class="p-2" th:text="${thongKe.getButKy()}"></div>
+      </div>
+      <div class="w-full shadow shadow-black rounded-lg p-4 bg-amber-500 text-white">
+        <h1 class="font-bold text-2xl flex items-center gap-2">Phụ kiện <img class="w-6 h-6" src="/svg/accessories.svg"
+            alt="accessories"></h1>
+        <div class="p-2" th:text="${thongKe.getPhuKien()}"></div>
+      </div>
+      <div class="w-full shadow shadow-black rounded-lg p-4 bg-red-500 text-white">
+        <h1 class="font-bold text-2xl flex items-center gap-2">Trang sức <img class="w-6 h-6" src="/svg/diamond.svg"
+            alt="diamond"></h1>
+        <div class="p-2" th:text="${thongKe.getTrangSuc()}"></div>
+      </div>
+      <div class="w-full shadow shadow-black rounded-lg p-4 bg-purple-500 text-white">
+        <h1 class="font-bold text-2xl flex items-center gap-2">Kính mắt <img class="w-6 h-6" src="/svg/glasses.svg"
+            alt="glasses"></h1>
+        <div class="p-2" th:text="${thongKe.getKinhMat()}"></div>
+      </div>
+      <div class="w-full shadow shadow-black rounded-lg p-4 bg-teal-500 text-white">
+        <h1 class="font-bold text-2xl flex items-center gap-2">Đơn hàng <img class="w-6 h-6" src="/svg/order.svg"
+            alt="order"></h1>
+        <div class="p-2" th:text="${thongKe.getDonHang()}"></div>
+      </div>
+    </section>
+
+    <section class="grid my-3 gap-2 sm:grid-cols-2 grid-cols-1">
+      <div class="w-full shadow shadow-black rounded-lg p-4 bg-orange-600 text-white sm:col-span-2">
+        <h1 class="font-bold text-2xl flex items-center gap-2">Khách hàng<img class="w-6 h-6" src="/svg/khachhang.svg"
+            alt="khachhang"></h1>
+        <div class="p-2" th:text="${thongKe.getKhachHang()}"></div>
+      </div>
+      <div class="w-full sm:row-span-3">
+        <canvas id="myChart" class="bg-white rounded-lg shadow-md"></canvas>
+      </div>
+      <div class="w-full shadow shadow-black rounded-lg p-4 bg-teal-600 text-white">
+        <h1 class="font-bold text-2xl flex items-center gap-2">Lượt truy cập <img class="w-6 h-6" src="/svg/truycap.svg"
+            alt="truycap"></h1>
+        <div class="p-2" th:text="${thongKe.getLuotTruyCap()}"></div>
+      </div>
+      <div class="w-full shadow shadow-black rounded-lg p-4 bg-rose-600 text-white">
+        <h1 class="font-bold text-2xl flex items-center gap-2">Khách hàng mới<img class="w-6 h-6" src="/svg/dangky.svg"
+            alt="dangky"></h1>
+        <div class="p-2" th:text="${thongKe.getLuotDangKyMoi()}"></div>
+      </div>
+    </section>
+
+    <h1 class="font-bold text-center mb-2 mt-4">Đơn hàng</h1>
+    <section class="grid my-3 gap-2 sm:grid-cols-3 grid-cols-1">
+      <div class="w-full sm:row-span-2">
+        <canvas id="orderStatusChart"></canvas>
+      </div>
+      <a href="/admin/donhang/?tinhtrang=Chờ+xác+nhận"
+        class="w-full shadow shadow-black rounded-lg p-4 bg-orange-500 text-white">
+        <h1 class="font-bold text-2xl flex items-center gap-2">Chờ xác nhận <img class="w-6 h-6" src="/svg/pending.svg"
+            alt="pending"></h1>
+        <div class="p-2" th:text="${thongKe.getDonHangChoXacNhan()}"></div>
+      </a>
+      <a href="/admin/donhang/?tinhtrang=Đang+giao+hàng"
+        class="w-full shadow shadow-black rounded-lg p-4 bg-cyan-500 text-white">
+        <h1 class="font-bold text-2xl flex items-center gap-2">Đang giao <img class="w-6 h-6" src="/svg/danggiao.svg"
+            alt="danggiao"></h1>
+        <div class="p-2" th:text="${thongKe.getDonHangDangGiao()}"></div>
+      </a>
+      <a href="/admin/donhang/?tinhtrang=Đã+hủy"
+        class="w-full shadow shadow-black rounded-lg p-4 bg-red-500 text-white">
+        <h1 class="font-bold text-2xl flex items-center gap-2">Bị hủy <img class="w-6 h-6" src="/svg/huydon.svg"
+            alt="huydon"></h1>
+        <div class="p-2" th:text="${thongKe.getDonHangDaHuy()}"></div>
+      </a>
+      <a href="/admin/donhang/?tinhtrang=Đã+nhận+hàng"
+        class="w-full shadow shadow-black rounded-lg p-4 bg-green-500 text-white">
+        <h1 class="font-bold text-2xl flex items-center gap-2">Đã giao <img class="w-6 h-6" src="/svg/dagiao.svg"
+            alt="dagiao"></h1>
+        <div class="p-2" th:text="${thongKe.getDonHangDaGiao()}"></div>
+      </a>
+    </section>
+
+    <script th:inline="javascript">
+      const doanhSoChartContainer = document.getElementById('financialChart').getContext('2d');
+      const financialChart = new Chart(doanhSoChartContainer, {
+        type: 'bar',
+        data: {
+          labels: ['Vốn', 'Doanh thu', 'Lợi nhuận'],
+          datasets: [{
+            label: 'Đơn vị VNĐ',
+            data: [
+              /*[[${thongKe.getVon()}]]*/ 0,
+              /*[[${thongKe.getDoanhThu()}]]*/ 0,
+              /*[[${thongKe.getDoanhThu() - thongKe.getChiPhi()}]]*/ 0
+            ],  // Thay giá trị ở đây bằng dữ liệu của bạn
+            backgroundColor: [
+              'rgba(59, 130, 246, 0.2)',
+              'rgba(34, 197, 94, 0.2)',
+              'rgba(239, 68, 68, 0.2)'
+            ],
+            borderColor: [
+              '#3b82f6',
+              '#22c55e',
+              '#ef4444'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+
+      const donHangChartContainer = document.getElementById('orderStatusChart').getContext('2d');
+      const orderStatusChart = new Chart(donHangChartContainer, {
+        type: 'pie',
+        data: {
+          labels: ['Đơn chưa xác nhận', 'Đơn đang giao', 'Đơn đã nhận', 'Đơn bị hủy'],
+          datasets: [{
+            label: 'Order Status',
+            data: [
+              /*[[${thongKe.getDonHangChoXacNhan()}]]*/ 0,
+              /*[[${thongKe.getDonHangDangGiao()}]]*/ 0,
+              /*[[${thongKe.getDonHangDaGiao()}]]*/ 0,
+              /*[[${thongKe.getDonHangDaHuy()}]]*/ 0
+            ],  // Thay giá trị ở đây bằng dữ liệu của bạn
+            backgroundColor: [
+              '#f97316',
+              '#06b6d4',
+              '#22c55e',
+              '#ef4444'
+            ],
+            borderColor: [
+              '#ea580c',
+              '#0891b2',
+              '#16a34a',
+              '#dc2626'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  let label = context.label || '';
+                  if (label) {
+                    label += ': ';
+                  }
+                  if (context.raw !== null) {
+                    label += context.raw;
+                  }
+                  return label;
+                }
+              }
+            }
+          }
+        }
+      });
+
+      const tiLeChuyenDoiChartContainer = document.getElementById('conversionFunnelChart').getContext('2d');
+      const conversionFunnelChart = new Chart(tiLeChuyenDoiChartContainer, {
+        type: 'bar',
+        data: {
+          labels: ['Lượt truy cập', 'Lượt xem sản phẩm', 'Lượt thêm vào giỏ hàng', 'Lượt đặt hàng', 'Lượt hoàn thành đơn'],
+          datasets: [{
+            label: 'Số lần',
+            data: [
+              /*[[${thongKe.getLuotTruyCap()}]]*/ 0, 
+              /*[[${thongKe.getLuotXemSanPham()}]]*/ 0, 
+              /*[[${thongKe.getLuotThemGioHang()}]]*/ 0, 
+              /*[[${thongKe.getLuotDatHang()}]]*/ 0, 
+              /*[[${thongKe.getLuotHoanThanhDon()}]]*/ 0
+            ],  // Thay giá trị ở đây bằng dữ liệu của bạn
+            backgroundColor: [
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 99, 132, 0.2)'
+            ],
+            borderColor: [
+              'rgba(75, 192, 192, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 99, 132, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          scales: {
+            x: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+
+      // Dữ liệu mẫu cho biểu đồ luot dang ky moi
+      const labels = ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6"];
+      const dataTruyCap = [1000, 1200, 1500, 1100, 1300, 1400]; // Số lượt truy cập
+      const dataDangKy = [50, 60, 80, 70, 90, 100]; // Số lượt đăng ký
+
+      // Tạo biểu đồ
+      const luotDKMoiChartContainer = document.getElementById('myChart').getContext('2d');
+      const luotDKMoi = new Chart(luotDKMoiChartContainer, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Lượt truy cập',
+            data: dataTruyCap,
+            fill: false,
+            borderColor: 'rgba(75, 192, 192, 1)',
+            tension: 0.1
+          }, {
+            label: 'Lượt đăng ký',
+            data: dataDangKy,
+            fill: false,
+            borderColor: 'rgba(255, 99, 132, 1)',
+            tension: 0.1
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            tooltip: {
+              mode: 'index',
+              intersect: false
+            }
+          },
+          scales: {
+            x: {
+              display: true,
+              title: {
+                display: true,
+                text: 'Thời gian'
+              }
+            },
+            y: {
+              display: true,
+              title: {
+                display: true,
+                text: 'Số lượng'
+              }
+            }
+          }
+        }
+      });
+    </script>
+  </div>
+</body>
+
 </html>

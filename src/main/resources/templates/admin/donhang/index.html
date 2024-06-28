@@ -89,7 +89,7 @@
         <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"th:text="${donhang.getThanhToan()}"></td>
         <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
           <p class="my-1" th:each="sp : ${donhang.getItems()}"><a target="_blank" class="text-sm rounded-sm p-1 bg-slate-200 hover:text-yellow-400 hover:bg-slate-900" th:href="${sp.getLink()}"
-              th:text="${sp.getTensanpham()}"></a> - <span th:text="${sp.getSoLuong()}"></span></p>
+              th:text="${sp.getTensanpham()}"></a> x <span th:text="${sp.getSoLuong()}"></span></p>
         </td>
         <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
           th:text="${donhang.getNGAYTHEM()}"></td>

@@ -40,13 +40,19 @@ public class DonHangServiceImpl implements DonHangService {
   @Override
   @Transactional
   public void addDonHang(DonHang donHang) {
-    DonHang result = donHangRepository.save(donHang);
-
-    for (ChiTietDonHang item : donHang.getItems()) {
-      item.setDonhang(result);
-      item.setNGAYTHEM(result.getNGAYTHEM());
-
-      ctdhService.saveCTDH(item);
+    if (donHang.getItems() != null) {
+      if (donHang.getItems().size() > 0) {
+        DonHang result = donHangRepository.save(donHang);
+    
+        for (ChiTietDonHang item : donHang.getItems()) {
+          item.setDonhang(result);
+          item.setNGAYTHEM(result.getNGAYTHEM());
+    
+          ctdhService.saveCTDH(item);
+        }
+      } else {
+        throw new EmptyOrNullListException("Phải có ít nhất 1 đơn hàng!");
+      }
     }
   }
 

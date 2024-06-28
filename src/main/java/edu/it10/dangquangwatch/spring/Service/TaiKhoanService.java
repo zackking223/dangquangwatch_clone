@@ -21,6 +21,8 @@ public interface TaiKhoanService {
 
   public void updateTaiKhoan(TaiKhoan taiKhoan);
 
+  public void doiMatKhau(String newpassword, String username);
+
   public TaiKhoan getTaiKhoan(String username);
 
   public Page<TaiKhoan> findTaiKhoanByUsername(String username, Integer page);

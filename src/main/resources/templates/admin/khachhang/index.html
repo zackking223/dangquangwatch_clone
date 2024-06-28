@@ -38,12 +38,20 @@
         </form>
         <table class="table table-active">
             <tr>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">Username</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">Password</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">Họ tên</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">Địa chỉ</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">Ngày thêm</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">Tùy chọn</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">
+                    Username</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">
+                    Password</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">Họ
+                    tên</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">Số
+                    điện thoại</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">Địa
+                    chỉ</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">Ngày
+                    thêm</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">Tùy
+                    chọn</th>
             </tr>
             <tr th:each="taikhoan : ${taikhoans}">
                 <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden"
@@ -52,6 +60,8 @@
                     th:text="${taikhoan.getPassword()}"></td>
                 <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden"
                     th:text="${taikhoan.getHoten()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden"
+                    th:text="${taikhoan.getSodienthoai()}"></td>
                 <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden"
                     th:text="${taikhoan.getDiachi()}"></td>
                 <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden"
