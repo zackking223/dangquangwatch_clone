@@ -9,5 +9,9 @@ import java.util.Optional;
 public interface ThongKeService {  
   List<ThongKe> getAllThongKe();   
 
-  Optional<ThongKe> findThongKeById(Integer mathongke);  
+  Optional<ThongKe> findThongKeById(Integer mathongke);
+  
+  void tangluottruycap();
+  
+  void tangluotxemsanpham();
 }

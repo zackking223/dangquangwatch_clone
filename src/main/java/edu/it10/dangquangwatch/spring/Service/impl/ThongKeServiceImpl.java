@@ -13,15 +13,41 @@ import edu.it10.dangquangwatch.spring.service.ThongKeService;
 @Service
 public class ThongKeServiceImpl implements ThongKeService {
     @Autowired
-    private ThongKeRepository thongkeRepository;
+    private ThongKeRepository thongKeRepository;
 
     @Override
     public List<ThongKe> getAllThongKe() {
-        return (List<ThongKe>) thongkeRepository.findAll();
+        return (List<ThongKe>) thongKeRepository.findAll();
     }
 
     @Override
     public Optional<ThongKe> findThongKeById(Integer mathongKe) {
-        return thongkeRepository.findById(mathongKe);
+        return thongKeRepository.findById(mathongKe);
+    }
+
+    @Override
+    public void tangluottruycap() {
+        // Lấy bản ghi ThongKe (ví dụ: bản ghi có id = 1)
+        ThongKe thongKe = thongKeRepository.findById(1)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy bản ghi thống kê"));
+
+        // Tăng giá trị
+        thongKe.setLuotTruyCap(thongKe.getLuotTruyCap() + 1);
+
+        // Lưu lại vào cơ sở dữ liệu
+        thongKeRepository.save(thongKe);
+    }
+
+    @Override
+    public void tangluotxemsanpham() {
+        // Lấy bản ghi ThongKe (ví dụ: bản ghi có id = 1)
+        ThongKe thongKe = thongKeRepository.findById(1)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy bản ghi thống kê"));
+
+        // Tăng giá trị
+        thongKe.setLuotXemSanPham(thongKe.getLuotXemSanPham() + 1);
+
+        // Lưu lại vào cơ sở dữ liệu
+        thongKeRepository.save(thongKe);
     }
 }
