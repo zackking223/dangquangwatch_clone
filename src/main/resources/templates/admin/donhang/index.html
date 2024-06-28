@@ -96,11 +96,11 @@
         <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
           <div class="flex flex-col items-center gap-2">
             <form action="/admin/donhang/xacnhan" th:if="${donhang.getTinhTrang() == 'Chờ xác nhận'}">
-              <input type="number" name="madonhang" class="hidden">
+              <input type="number" name="madonhang" class="hidden" th:value="${donhang.getMaDonHang()}">
               <button class="block p-2 rounded bg-blue-500 text-white">Xác nhận</button>
             </form>
             <form action="/admin/donhang/huy" th:if="${donhang.getTinhTrang() == 'Đã xác nhận'}">
-              <input type="number" name="madonhang" class="hidden">
+              <input type="number" name="madonhang" class="hidden" th:value="${donhang.getMaDonHang()}">
               <button class="block p-2 rounded bg-orange-500 text-white">Hủy
                 đơn</button>
             </form>

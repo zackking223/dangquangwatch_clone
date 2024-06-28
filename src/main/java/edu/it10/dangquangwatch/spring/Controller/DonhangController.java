@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.it10.dangquangwatch.spring.entity.DonHang;
 import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
+import edu.it10.dangquangwatch.spring.service.ChiTietDonHangService;
 import edu.it10.dangquangwatch.spring.service.DonHangService;
 import edu.it10.dangquangwatch.spring.service.TaiKhoanService;
 
@@ -25,6 +26,8 @@ public class DonhangController {
   DonHangService donHangService;
   @Autowired
   TaiKhoanService taiKhoanService;
+  @Autowired
+  ChiTietDonHangService ctdhService;
 
   @GetMapping("/")
   public String index(@RequestParam("hoten") Optional<String> hoten,
@@ -150,28 +153,28 @@ public class DonhangController {
   public String save(DonHang donHang, @RequestParam("username") String username) {
     TaiKhoan taikhoan = taiKhoanService.getTaiKhoan(username);
     donHang.setTaikhoan(taikhoan);
-    donHangService.saveDonHang(donHang);
+    donHangService.updateDonHang(donHang);
     return "redirect:/admin/donhang/";
   }
 
-  @PostMapping(value = "/huy")
+  @GetMapping(value = "/huy")
   public String huy(@RequestParam("madonhang") Integer madonhang) {
     Optional<DonHang> data = donHangService.findDonHangById(madonhang);
     if (data.isPresent()) {
       DonHang dh = data.get();
       dh.setTinhTrang("Đã hủy");
-      donHangService.saveDonHang(dh);
+      donHangService.updateDonHang(dh);
     }
     return "redirect:/admin/donhang/";
   }
 
-  @PostMapping(value = "/xacnhan")
+  @GetMapping(value = "/xacnhan")
   public String xacnhan(@RequestParam("madonhang") Integer madonhang) {
     Optional<DonHang> data = donHangService.findDonHangById(madonhang);
     if (data.isPresent()) {
       DonHang dh = data.get();
       dh.setTinhTrang("Đã xác nhận");
-      donHangService.saveDonHang(dh);
+      donHangService.updateDonHang(dh);
     }
     return "redirect:/admin/donhang/";
   }
@@ -179,6 +182,24 @@ public class DonhangController {
   @GetMapping(value = "/delete")
   public String deleteDonHang(@RequestParam("id") Integer madonHang, Model model) {
     donHangService.deleteDonHang(madonHang);
+    return "redirect:/admin/donhang/";
+  }
+
+  @GetMapping(value = "/incsanpham")
+  public String incSanPham(@RequestParam("id") Integer maCTDH, @RequestParam("madonhang") Integer madonhang, Model model) {
+    donHangService.incSP(maCTDH);
+    return "redirect:/admin/donhang/edit?id=" + madonhang;
+  }
+
+  @GetMapping(value = "/decsanpham")
+  public String decSanPham(@RequestParam("id") Integer maCTDH, @RequestParam("madonhang") Integer madonhang, Model model) {
+    donHangService.decSP(maCTDH);
+    return "redirect:/admin/donhang/edit?id=" + madonhang;
+  }
+
+  @GetMapping(value = "/deletesanpham")
+  public String deleteSanPham(@RequestParam("id") Integer maCTDH, Model model) {
+    donHangService.removeSP(maCTDH);
     return "redirect:/admin/donhang/";
   }
 }

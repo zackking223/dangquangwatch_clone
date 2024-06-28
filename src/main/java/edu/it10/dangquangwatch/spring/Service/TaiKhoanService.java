@@ -15,9 +15,9 @@ public interface TaiKhoanService {
   public Page<TaiKhoan> getAllTaiKhoanKhachHang(String from, String to, Integer page);
   public Page<TaiKhoan> searchTaiKhoanKhachHang(String searchStr, String from, String to, Integer page);
 
-  public void dangKyKhachHang(TaiKhoan taiKhoan);
+  public void dangKyKhachHang(TaiKhoan taiKhoan) throws Exception;
 
-  public void dangKyQuanTri(TaiKhoan taiKhoan);
+  public void dangKyQuanTri(TaiKhoan taiKhoan) throws Exception;
 
   public void updateTaiKhoan(TaiKhoan taiKhoan);
 

@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 
+import edu.it10.dangquangwatch.spring.entity.ChiTietDonHang;
 import edu.it10.dangquangwatch.spring.entity.DonHang;
 
 public interface DonHangService {
@@ -13,9 +14,19 @@ public interface DonHangService {
 
   Optional<DonHang> findDonHangById(int madonhang);
 
-  void saveDonHang(DonHang donHang);
+  void addDonHang(DonHang donHang);
+
+  void updateDonHang(DonHang donHang);
   
   void deleteDonHang(int madonhang);
+
+  void removeSP(int maCTDH);
+
+  void addSP(int madonhang, ChiTietDonHang ctdh);
+
+  void incSP(int maCTDH);
+
+  void decSP(int maCTDH);
   
   /**
    * @param searchStr : Tìm kiếm bằng tên người dùng & địa chỉ & tên sản phẩm mua

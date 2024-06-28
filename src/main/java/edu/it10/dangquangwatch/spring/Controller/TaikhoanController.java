@@ -30,7 +30,8 @@ public class TaikhoanController {
     String toStr = "3000-01-01";
     String usernameStr = "";
     int pageNum = 0;
-    if (page.isPresent()) pageNum = page.get() - 1;
+    if (page.isPresent())
+      pageNum = page.get() - 1;
     if (from.isPresent()) {
       if (!from.get().isEmpty()) {
         fromStr = from.get();
@@ -67,7 +68,12 @@ public class TaikhoanController {
   }
 
   @GetMapping(value = "/add")
-  public String addTaikhoan(Model model) {
+  public String addTaikhoan(Model model, @RequestParam("error") Optional<String> error) {
+    String errorMessage = null;
+    if (error.isPresent()) {
+      errorMessage = "Username đã tồn tại!";
+    }
+    model.addAttribute("errorMessage", errorMessage);
     model.addAttribute("taikhoan", new TaiKhoan());
     return "/admin/quantrivien/addQuanTriVien";
   }
@@ -85,7 +91,12 @@ public class TaikhoanController {
 
   @PostMapping(value = "/add")
   public String addTaiKhoan(TaiKhoan taikhoan) {
-    taikhoanService.dangKyQuanTri(taikhoan);
+    try {
+      taikhoanService.dangKyQuanTri(taikhoan);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return "redirect:/admin/accounts/add?error=dupname";
+    }
     return "redirect:/admin/accounts/";
   }
 
@@ -96,7 +107,7 @@ public class TaikhoanController {
   }
 
   @GetMapping(value = "/delete")
-  public String deleteTaiKhoan(@RequestParam("id") String username, Model model) {
+  public String deleteTaiKhoan(@RequestParam("id") String username) {
     taikhoanService.deleteTaiKhoanByUsername(username);
     return "redirect:/admin/accounts/";
   }

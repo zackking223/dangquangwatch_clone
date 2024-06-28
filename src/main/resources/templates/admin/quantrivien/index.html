@@ -44,6 +44,10 @@
                     Password</th>
                 <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">Họ
                     tên</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">Địa
+                    chỉ</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">Ngày
+                    thêm</th>
                 <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">Tùy
                     chọn</th>
             </tr>
@@ -54,11 +58,15 @@
                     th:text="${taikhoan.getPassword()}"></td>
                 <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden"
                     th:text="${taikhoan.getHoten()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden"
+                    th:text="${taikhoan.getDiachi()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden"
+                    th:text="${taikhoan.getNGAYTHEM()}"></td>
                 <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden">
                     <a class="p-2 rounded bg-green-500 text-white"
-                        th:href="@{/admin/accounts/edit?id={id}(id=${taikhoan.getUsername()})}">Sửa</a>
+                        th:href="@{/admin/khachhang/edit?id={id}(id=${taikhoan.getUsername()})}">Sửa</a>
                     <a class="p-2 rounded bg-red-500 text-white"
-                        th:href="@{/admin/accounts/delete?id={id}(id=${taikhoan.getUsername()})}">Xóa</a>
+                        th:href="@{/admin/khachhang/delete?id={id}(id=${taikhoan.getUsername()})}">Xóa</a>
                 </td>
             </tr>
         </table>
@@ -67,7 +75,8 @@
             <li th:each="i:${#numbers.sequence(1,sotrang,1)}">
                 <a th:classappend="${page + 1 == i} ? 'bg-black text-white' : 'bg-white text-black'"
                     class="p-2 aspect-square border border-b hover:text-blue-500"
-                    th:href="@{'/admin/donhang/?page=' + ${i} + '&search=' + ${search} + '&from=' + ${from} + '&to=' + ${to}}" th:text="${i}"></a>
+                    th:href="@{'/admin/donhang/?page=' + ${i} + '&search=' + ${search} + '&from=' + ${from} + '&to=' + ${to}}"
+                    th:text="${i}"></a>
             </li>
         </ul>
         <a href="/admin/accounts/add" class="p-2 w-max bg-green-500 rounded block mt-4 text-white">Thêm tài khoản</a>

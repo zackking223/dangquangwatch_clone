@@ -13,35 +13,43 @@
     <div th:replace="~{fragments/sidebar :: sidebar}"></div>
     <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
         <h1 class="font-bold text-center my-2">Tài khoản mới</h1>
-        <div class="col-md-auto">
+        <div>
+            <div id="error" class="p-2 bg-red-500 rounded-md text-white hover:cursor-pointer" th:if="${errorMessage}"
+                th:text="${errorMessage}"></div>
             <form th:object="${taikhoan}" th:action="@{/admin/accounts/add}" action="#" method="post">
                 <div>
                     <label class="block font-medium" th:for="username">Username</label>
-                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{username}"
-                        placeholder="Username" />
+                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
+                        th:field="*{username}" placeholder="Username" />
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="password">Password</label>
-                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="password" th:field="*{password}"
-                        placeholder="Password" />
+                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="password"
+                        th:field="*{password}" placeholder="Password" />
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="hoten">Họ tên</label>
-                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{hoten}"
-                        placeholder="Họ tên" />
+                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
+                        th:field="*{hoten}" placeholder="Họ tên" />
                 </div>
 
-                <input class="hidden" value="ROLE_QUANTRI" type="text" name="diachi"/>
-                <input class="hidden" value="ROLE_QUANTRI" type="text" name="loai_tai_khoan"/>
-                <input class="hidden" value="1" type="number" name="enabled"/>
+                <input class="hidden" value="ROLE_QUANTRI" type="text" name="diachi" />
+                <input class="hidden" value="ROLE_QUANTRI" type="text" name="loai_tai_khoan" />
+                <input class="hidden" value="1" type="number" name="enabled" />
 
                 <div style="clear: both; display: block; height: 10px"></div>
                 <input class="p-2 w-max bg-green-500 rounded block mt-4 text-white" type="submit" value="Thêm" />
             </form>
         </div>
     </div>
+    <script>
+        const err = document.getElementById("error");
+        err.addEventListener("click", () => {
+            err.classList.add("hidden");
+        })
+    </script>
 </body>
 
 </html>

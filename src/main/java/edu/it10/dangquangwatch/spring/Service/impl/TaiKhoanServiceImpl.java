@@ -2,6 +2,7 @@ package edu.it10.dangquangwatch.spring.service.impl;
 
 import java.util.List;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -80,19 +81,23 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 
   @Override
   @Transactional
-  public void dangKyKhachHang(TaiKhoan taiKhoan) {
+  public void dangKyKhachHang(TaiKhoan taiKhoan) throws Exception {
     String plainText = taiKhoan.getPassword();
     taiKhoan.setUsername(removeWhitespace(taiKhoan.getUsername()));
     taiKhoan.setNGAYTHEM(Helper.getCurrentDateFormatted());
     taiKhoan.setLoai_tai_khoan("ROLE_KHACHHANG");
     taiKhoan.setPassword("{bcrypt}" + passwordEncoder.encode(plainText));
 
-    entityManager.persist(taiKhoan);
+    try {
+      entityManager.persist(taiKhoan);
+    } catch (DataIntegrityViolationException ex) {
+      throw new Exception("Username đã tồn tại!");
+    }
   }
 
   @Override
   @Transactional
-  public void dangKyQuanTri(TaiKhoan taiKhoan) {
+  public void dangKyQuanTri(TaiKhoan taiKhoan) throws Exception {
     String plainText = taiKhoan.getPassword();
     taiKhoan.setUsername(removeWhitespace(taiKhoan.getUsername()));
     taiKhoan.setNGAYTHEM(Helper.getCurrentDateFormatted());
@@ -100,7 +105,11 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
     taiKhoan.setDiachi("QUANTRI ko can dia chi");
     taiKhoan.setPassword("{bcrypt}" + passwordEncoder.encode(plainText));
 
-    entityManager.persist(taiKhoan);
+    try {
+      entityManager.persist(taiKhoan);
+    } catch (DataIntegrityViolationException ex) {
+      throw new Exception("Username đã tồn tại!");
+    }
   }
 
   @Override
@@ -146,7 +155,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
   public Page<TaiKhoan> searchTaiKhoanQuanTri(String username, String from, String to, Integer page) {
     username = "%" + username + "%";
     TypedQuery<TaiKhoan> query = entityManager.createQuery(
-        "SELECT DISTINCT tk FROM TaiKhoan tk where tk.loai_tai_khoan = 'ROLE_KHACHHANG' and tk.username LIKE :username and tk.NGAYTHEM >= \'"
+        "SELECT DISTINCT tk FROM TaiKhoan tk where tk.loai_tai_khoan = 'ROLE_QUANTRI' and tk.username LIKE :username and tk.NGAYTHEM >= \'"
             + from
             + "\' AND tk.NGAYTHEM <= \'" + to + "\'",
         TaiKhoan.class);
@@ -160,7 +169,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
   public Page<TaiKhoan> searchTaiKhoanKhachHang(String searchStr, String from, String to, Integer page) {
     searchStr = "%" + searchStr + "%";
     TypedQuery<TaiKhoan> query = entityManager.createQuery(
-        "SELECT DISTINCT tk FROM TaiKhoan tk where tk.loai_tai_khoan = 'ROLE_KHACHHANG' and tk.hoten LIKE :searchStr OR tk.diachi LIKE :searchStr OR tk.username LIKE :searchStr and tk.NGAYTHEM >= \'"
+        "SELECT DISTINCT tk FROM TaiKhoan tk where tk.loai_tai_khoan = 'ROLE_KHACHHANG' and (tk.hoten LIKE :searchStr OR tk.diachi LIKE :searchStr OR tk.username LIKE :searchStr) and tk.NGAYTHEM >= \'"
             + from
             + "\' AND tk.NGAYTHEM <= \'" + to + "\'",
         TaiKhoan.class);

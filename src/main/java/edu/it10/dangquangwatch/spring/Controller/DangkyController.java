@@ -14,13 +14,16 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Optional;
+
 @Controller
 public class DangkyController {
   @Autowired
   TaiKhoanService taiKhoanService;
 
   @GetMapping("/dangky")
-  public String login(HttpServletRequest request, Model model) {
+  public String login(HttpServletRequest request, Model model,
+      @RequestParam("error") Optional<String> error) {
     HttpSession session = request.getSession(false);
     String errorMessage = null;
     if (session != null) {
@@ -29,13 +32,17 @@ public class DangkyController {
       if (ex != null) {
         errorMessage = ex.getMessage();
       }
+    } else if (error.isPresent()) {
+      errorMessage = "Username đã tồn tại!";
     }
     model.addAttribute("errorMessage", errorMessage);
     return "dangky";
   }
 
   @PostMapping("/dangky")
-  public String postDangky(HttpSession httpSession, @RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("diachi") String diachi, @RequestParam("hoten") String hoten) {
+  public String postDangky(HttpSession httpSession, Model model, @RequestParam("username") String username,
+      @RequestParam("password") String password, @RequestParam("diachi") String diachi,
+      @RequestParam("hoten") String hoten) {
     TaiKhoan taiKhoan = new TaiKhoan();
 
     taiKhoan.setUsername(username);
@@ -44,8 +51,12 @@ public class DangkyController {
     taiKhoan.setHoten(hoten);
     taiKhoan.setEnabled(1);
 
-    taiKhoanService.dangKyKhachHang(taiKhoan);
-
+    try {
+      taiKhoanService.dangKyKhachHang(taiKhoan);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return "redirect:/dangky?error=dupname";
+    }
     return "redirect:/login";
   }
 

@@ -122,7 +122,7 @@ public class ProfileController {
 
     donHang.setTaikhoan(taiKhoan);
 
-    donHangService.saveDonHang(donHang);
+    donHangService.updateDonHang(donHang);
 
     return "Đặt hàng thành công!";
   }
@@ -140,7 +140,7 @@ public class ProfileController {
 
       if (donHang.getTaikhoan().getUsername() == currentUser.getUsername() || currentUser.isAdmin()) {
         donHang.setTinhTrang("Đã hủy");
-        donHangService.saveDonHang(donHang);
+        donHangService.addDonHang(donHang);
       }
     }
 

@@ -57,7 +57,12 @@ public class KhachhangController {
   }
 
   @GetMapping(value = "/add")
-  public String addTaikhoan(Model model) {
+  public String addTaikhoan(Model model, @RequestParam("error") Optional<String> error) {
+    String errorMessage = null;
+    if (error.isPresent()) {
+      errorMessage = "Username đã tồn tại!";
+    }
+    model.addAttribute("errorMessage", errorMessage);
     model.addAttribute("taikhoan", new TaiKhoan());
     return "/admin/khachhang/addKhachHang";
   }
@@ -75,7 +80,12 @@ public class KhachhangController {
 
   @PostMapping(value = "/add")
   public String addTaiKhoan(TaiKhoan taikhoan) {
-    taikhoanService.dangKyKhachHang(taikhoan);
+    try {
+      taikhoanService.dangKyKhachHang(taikhoan);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return "redirect:/admin/khachhang/add?error=dupname";
+    }
     return "redirect:/admin/khachhang/";
   }
 
