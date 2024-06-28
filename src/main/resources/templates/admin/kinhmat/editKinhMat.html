@@ -10,7 +10,7 @@
 
 <body>
   <div th:replace="~{fragments/sidebar :: sidebar}"></div>
-  <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg ml-auto">
+  <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
     <h1 class="font-bold text-center my-2">Sửa thông tin</h1>
 
     <div class="flex flex-wrap w-full items-center mb-4">
@@ -27,7 +27,7 @@
     <form class="mb-4" action="/admin/kinhmat/uploadimage" method="post" enctype="multipart/form-data">
       <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="file">Chọn ảnh:</label>
-        <input type="file" id="file" name="file" class="form-input mt-1 block w-full" multiple="multiple"
+        <input type="file" id="file" name="file" class="border border-black rounded form-input mt-1 block w-full" multiple="multiple"
           accept="image/*" onchange="previewImages(event)">
       </div>
 
@@ -38,64 +38,64 @@
     </form>
 
     <form th:object="${kinhMat}" th:action="@{/admin/kinhmat/update}" action="#" method="post">
-      <div class="flex items-center">
+      <div>
         <label class="block font-medium" th:for="maKinhMat">Mã kính mắt</label>
-        <input readonly class="block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{maKinhMat}" />
+        <input readonly class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{maKinhMat}" />
       </div>
 
       <div style="clear: both; display: block; height: 10px"></div>
-      <div class="flex items-center">
+      <div>
         <label class="block font-medium" th:for="tenSanPham">Tên sản phẩm</label>
-        <input class="block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{tenSanPham}"
+        <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{tenSanPham}"
           placeholder="Tên sản phẩm" />
       </div>
 
       <div style="clear: both; display: block; height: 10px"></div>
-      <div class="flex items-center">
+      <div>
         <label class="block font-medium" th:for="soLuong">Số lượng</label>
-        <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{soLuong}" placeholder="0" />
+        <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{soLuong}" placeholder="0" />
       </div>
 
       <div style="clear: both; display: block; height: 10px"></div>
-      <div class="flex items-center">
+      <div>
         <label class="block font-medium" th:for="giaTien">Giá tiền</label>
-        <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{giaTien}" placeholder="3.000.000" />
+        <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{giaTien}" placeholder="3.000.000" />
       </div>
 
       <div style="clear: both; display: block; height: 10px"></div>
-      <div class="flex items-center">
+      <div>
         <label class="block font-medium" th:for="rongMat">Rộng mắt</label>
-        <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{rongMat}" placeholder="10" />
+        <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{rongMat}" placeholder="10" />
       </div>
 
       <div style="clear: both; display: block; height: 10px"></div>
-      <div class="flex items-center">
+      <div>
         <label class="block font-medium" th:for="songMui">Sống mũi</label>
-        <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{songMui}" placeholder="10" />
+        <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{songMui}" placeholder="10" />
       </div>
 
       <div style="clear: both; display: block; height: 10px"></div>
-      <div class="flex items-center">
+      <div>
         <label class="block font-medium" th:for="daiGong">Dài gọng</label>
-        <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{daiGong}" placeholder="10" />
+        <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{daiGong}" placeholder="10" />
       </div>
 
       <div style="clear: both; display: block; height: 10px"></div>
-      <div class="flex items-center">
+      <div>
         <label class="block font-medium" th:for="tinhNang">Tính năng</label>
-        <textarea class="w-[80vw] min-w-[280px] p-2" rows="5" th:field="*{tinhNang}"></textarea>
+        <textarea class="border border-black rounded w-[80vw] min-w-[280px] p-2" rows="2" th:field="*{tinhNang}"></textarea>
       </div>
 
       <div style="clear: both; display: block; height: 10px"></div>
-      <div class="flex items-center">
+      <div>
         <label class="block font-medium" th:for="traGop">Trả góp</label>
-        <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{traGop}" placeholder="0%" />
+        <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{traGop}" placeholder="0%" />
       </div>
 
       <div style="clear: both; display: block; height: 10px"></div>
-      <div class="flex items-center">
+      <div>
         <label class="block font-medium" th:for="thongTin">Thông tin</label>
-        <textarea class="w-[80vw] min-w-[280px] p-2" rows="5" th:field="*{thongTin}"></textarea>
+        <textarea class="border border-black rounded w-[80vw] min-w-[280px] p-2" rows="5" th:field="*{thongTin}"></textarea>
       </div>
 
       <input class="hidden" type="text" id="datePicker" th:field="*{NGAYTHEM}" />

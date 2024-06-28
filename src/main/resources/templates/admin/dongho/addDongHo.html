@@ -10,14 +10,14 @@
 
 <body>
     <div th:replace="~{fragments/sidebar :: sidebar}"></div>
-    <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg ml-auto">
+    <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
         <h1 class="font-bold text-center my-2">Đồng hồ mới</h1>
         <div class="col-md-auto">
             <form th:object="${dongho}" th:action="@{/admin/dongho/save}" action="#" method="post"
                 enctype="multipart/form-data">
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="file">Chọn ảnh:</label>
-                    <input type="file" id="file" name="file" class="form-input mt-1 block w-full" multiple="multiple"
+                    <input type="file" id="file" name="file" class="border border-black rounded form-input mt-1 block w-full" multiple="multiple"
                         accept="image/*" onchange="previewImages(event)" required>
                 </div>
                 <div id="preview-container" class="mb-4 flex flex-wrap">
@@ -25,48 +25,48 @@
                 </div>
                 <div>
                     <label class="block font-medium" th:for="tendongho">Tên đồng hồ</label>
-                    <input class="block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{tendongho}"
+                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{tendongho}"
                         placeholder="Tên đồng hồ" />
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="giatien">Giá tiền</label>
-                    <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{giatien}"
+                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{giatien}"
                         placeholder="Giá tiền" />
                 </div>
                 <div>
                     <label class="block font-medium" th:for="soluong">Số lượng</label>
-                    <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{soluong}"
+                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{soluong}"
                         placeholder="Số lượng" />
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="tragop">Trả góp</label>
-                    <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{tragop}"
+                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{tragop}"
                         placeholder="Trả góp" />
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="duongkinh">Đường kính</label>
-                    <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{duongkinh}"
+                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{duongkinh}"
                         placeholder="Đường kính" />
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="chongnuoc">Chống nước</label>
-                    <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{chongnuoc}"
+                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{chongnuoc}"
                         placeholder="Chống nước" />
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="bomay">Bộ máy</label>
-                    <input class="block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{bomay}"
+                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{bomay}"
                         placeholder="Automatic" />
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="gioitinh">Giới tính</label>
-                    <select class="block p-2 w-[80vw] min-w-[280px]" name="gioitinh">
+                    <select class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" name="gioitinh">
                         <option value="Nam">Nam</option>
                         <option value="Nữ">Nữ</option>
                     </select>
@@ -74,15 +74,15 @@
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="chatlieu">Chất liệu</label>
-                    <input class="block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{chatlieu}" placeholder="Sapphire"/>
+                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{chatlieu}" placeholder="Sapphire"/>
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="thongtin">Thông tin</label>
-                    <textarea class="p-2 w-[80vw] min-w-[280px]" rows="5" th:field="*{thongtin}"></textarea>
+                    <textarea class="border border-black rounded p-2 w-[80vw] min-w-[280px]" rows="5" th:field="*{thongtin}"></textarea>
                 </div>
 
-                <input class="hidden" type="date" id="datePicker" name="NGAYTHEM" />
+                <input class="border border-black rounded hidden" type="date" id="datePicker" name="NGAYTHEM" />
 
                 <div style="clear: both; display: block; height: 10px"></div>
                 <input class="p-2 w-max bg-green-500 rounded block mt-4 text-white" type="submit" value="Thêm" />

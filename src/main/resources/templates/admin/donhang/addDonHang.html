@@ -16,31 +16,31 @@
             <form th:object="${donHang}" th:action="@{/admin/donhang/save}" action="#" method="post">
                 <div>
                     <label class="block font-medium" th:for="username">Mã khách hàng</label>
-                    <input class="block p-2 w-[80vw] min-w-[280px]" type="text" name="username"
+                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" name="username"
                         placeholder="Mã khách hàng" />
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="tongTien">Tổng tiền</label>
-                    <input class="block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{tongTien}"
+                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{tongTien}"
                         placeholder="Tổng tiền" />
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="diaChi">Địa chỉ</label>
-                    <input class="block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{diaChi}"
+                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{diaChi}"
                         placeholder="Địa chỉ" />
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="ghiChu">Ghi chú</label>
-                    <input class="block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{ghiChu}"
+                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{ghiChu}"
                         placeholder="Ghi chú" />
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="tinhTrang">Tình trạng</label>
-                    <select class="block p-2 w-[80vw] min-w-[280px]" name="tinhTrang">
+                    <select class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" name="tinhTrang">
                         <option value="Chờ xác nhận">Chờ xác nhận</option>
                         <option value="Đã xác nhận">Đã xác nhận</option>
                         <option value="Đang vận chuyển">Đang vận chuyển</option>
@@ -51,7 +51,7 @@
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="thanhToan">Phương thức thanh toán</label>
-                    <select class="block p-2 w-[80vw] min-w-[280px]" name="thanhToan">
+                    <select class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" name="thanhToan">
                         <option value="Đã thanh toán">Đã thanh toán</option>
                         <option value="Khi nhận hàng">Khi nhận hàng</option>
                     </select>

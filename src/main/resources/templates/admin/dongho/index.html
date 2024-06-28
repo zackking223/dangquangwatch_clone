@@ -15,48 +15,48 @@
         <form th:object="${dongho}" action="" class="w-full max-w-[90vw] flex flex-col gap-2 my-2">
             <div>
                 <label class="block font-medium" th:for="tendongho">Tên đồng hồ / Thông tin</label>
-                <input class="block p-2 w-full" name="search" type="text" placeholder="Tên / thông tin đồng hồ"
+                <input class="border border-black rounded block p-2 w-full" name="search" type="text" placeholder="Tên / thông tin đồng hồ"
                     th:value="${search}" />
             </div>
 
             <section class="grid grid-cols-3 gap-2">
                 <div>
                     <label class="block font-medium" th:for="giatien">Giá tiền</label>
-                    <input class="block p-2 w-full" type="number" th:field="*{giatien}" />
+                    <input class="border border-black rounded block p-2 w-full" type="number" th:field="*{giatien}" />
                 </div>
                 <div>
                     <label class="block font-medium" th:for="soluong">Số lượng</label>
-                    <input class="block p-2 w-full" type="number" th:field="*{soluong}" />
+                    <input class="border border-black rounded block p-2 w-full" type="number" th:field="*{soluong}" />
                 </div>
                 <div>
                     <label class="block font-medium" th:for="tragop">Trả góp</label>
-                    <input class="block p-2 w-full" type="number" th:field="*{tragop}" />
+                    <input class="border border-black rounded block p-2 w-full" type="number" th:field="*{tragop}" />
                 </div>
             </section>
 
             <section class="grid grid-cols-2 gap-2">
                 <div>
                     <label class="block font-medium" th:for="duongkinh">Đường kính</label>
-                    <input class="block p-2 w-full" type="number" th:field="*{duongkinh}" placeholder="40" />
+                    <input class="border border-black rounded block p-2 w-full" type="number" th:field="*{duongkinh}" placeholder="40" />
                 </div>
                 <div>
                     <label class="block font-medium" th:for="chongnuoc">Chống nước</label>
-                    <input class="block p-2 w-full" type="number" th:field="*{chongnuoc}" placeholder="10" />
+                    <input class="border border-black rounded block p-2 w-full" type="number" th:field="*{chongnuoc}" placeholder="10" />
                 </div>
             </section>
 
             <section class="grid grid-cols-3 gap-2">
                 <div>
                     <label class="block font-medium" th:for="bomay">Bộ máy</label>
-                    <input class="block p-2 w-full" type="text" th:field="*{bomay}" placeholder="Cơ tự động" />
+                    <input class="border border-black rounded block p-2 w-full" type="text" th:field="*{bomay}" placeholder="Cơ tự động" />
                 </div>
                 <div>
                     <label class="block font-medium" th:for="chatlieu">Chất liệu</label>
-                    <input class="block p-2 w-full" type="text" th:field="*{chatlieu}" placeholder="Kính sapphire" />
+                    <input class="border border-black rounded block p-2 w-full" type="text" th:field="*{chatlieu}" placeholder="Kính sapphire" />
                 </div>
                 <div>
                     <label class="block font-medium" th:for="gioitinh">Giới tính</label>
-                    <select class="block p-2 w-full" name="gioitinh" id="gioitinh" th:field="*{gioitinh}">
+                    <select class="border border-black rounded block p-2 w-full" name="gioitinh" id="gioitinh" th:field="*{gioitinh}">
                         <option value="">Chưa chọn</option>
                         <option value="Nam">Nam</option>
                         <option value="Nữ">Nữ</option>

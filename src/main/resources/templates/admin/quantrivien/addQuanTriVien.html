@@ -11,25 +11,25 @@
 
 <body>
     <div th:replace="~{fragments/sidebar :: sidebar}"></div>
-    <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg ml-auto">
+    <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
         <h1 class="font-bold text-center my-2">Tài khoản mới</h1>
         <div class="col-md-auto">
             <form th:object="${taikhoan}" th:action="@{/admin/accounts/add}" action="#" method="post">
                 <div>
                     <label class="block font-medium" th:for="username">Username</label>
-                    <input class="block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{username}"
+                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{username}"
                         placeholder="Username" />
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="password">Password</label>
-                    <input class="block p-2 w-[80vw] min-w-[280px]" type="password" th:field="*{password}"
+                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="password" th:field="*{password}"
                         placeholder="Password" />
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="hoten">Họ tên</label>
-                    <input class="block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{hoten}"
+                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{hoten}"
                         placeholder="Họ tên" />
                 </div>
 
