@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import edu.it10.dangquangwatch.spring.controller.Helper;
 import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
 import edu.it10.dangquangwatch.spring.service.TaiKhoanService;
 import jakarta.persistence.EntityManager;
@@ -82,7 +83,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
   public void dangKyKhachHang(TaiKhoan taiKhoan) {
     String plainText = taiKhoan.getPassword();
     taiKhoan.setUsername(removeWhitespace(taiKhoan.getUsername()));
-
+    taiKhoan.setNGAYTHEM(Helper.getCurrentDateFormatted());
     taiKhoan.setLoai_tai_khoan("ROLE_KHACHHANG");
     taiKhoan.setPassword("{bcrypt}" + passwordEncoder.encode(plainText));
 
@@ -94,7 +95,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
   public void dangKyQuanTri(TaiKhoan taiKhoan) {
     String plainText = taiKhoan.getPassword();
     taiKhoan.setUsername(removeWhitespace(taiKhoan.getUsername()));
-
+    taiKhoan.setNGAYTHEM(Helper.getCurrentDateFormatted());
     taiKhoan.setLoai_tai_khoan("ROLE_QUANTRI");
     taiKhoan.setDiachi("QUANTRI ko can dia chi");
     taiKhoan.setPassword("{bcrypt}" + passwordEncoder.encode(plainText));

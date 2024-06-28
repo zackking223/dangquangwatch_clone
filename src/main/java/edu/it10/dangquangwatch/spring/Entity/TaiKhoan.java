@@ -34,6 +34,9 @@ public class TaiKhoan {
   @Column(name = "enabled")
   private Integer enabled;
 
+  @Column(name = "NGAYTHEM")
+  private String NGAYTHEM;
+
   @OneToMany(mappedBy = "taikhoan")
   private List<DonHang> donHangList;
 
@@ -41,17 +44,17 @@ public class TaiKhoan {
     return loai_tai_khoan == "ROLE_QUANTRI";
   }
 
-
   public TaiKhoan() {
   }
 
-  public TaiKhoan(String username, String password, String hoten, String diachi, String loai_tai_khoan, Integer enabled, List<DonHang> donHangList) {
+  public TaiKhoan(String username, String password, String hoten, String diachi, String loai_tai_khoan, Integer enabled, String NGAYTHEM, List<DonHang> donHangList) {
     this.username = username;
     this.password = password;
     this.hoten = hoten;
     this.diachi = diachi;
     this.loai_tai_khoan = loai_tai_khoan;
     this.enabled = enabled;
+    this.NGAYTHEM = NGAYTHEM;
     this.donHangList = donHangList;
   }
 
@@ -103,6 +106,14 @@ public class TaiKhoan {
     this.enabled = enabled;
   }
 
+  public String getNGAYTHEM() {
+    return this.NGAYTHEM;
+  }
+
+  public void setNGAYTHEM(String NGAYTHEM) {
+    this.NGAYTHEM = NGAYTHEM;
+  }
+
   public List<DonHang> getDonHangList() {
     return this.donHangList;
   }
@@ -141,6 +152,11 @@ public class TaiKhoan {
     return this;
   }
 
+  public TaiKhoan NGAYTHEM(String NGAYTHEM) {
+    setNGAYTHEM(NGAYTHEM);
+    return this;
+  }
+
   public TaiKhoan donHangList(List<DonHang> donHangList) {
     setDonHangList(donHangList);
     return this;
@@ -154,12 +170,12 @@ public class TaiKhoan {
             return false;
         }
         TaiKhoan taiKhoan = (TaiKhoan) o;
-        return Objects.equals(username, taiKhoan.username) && Objects.equals(password, taiKhoan.password) && Objects.equals(hoten, taiKhoan.hoten) && Objects.equals(diachi, taiKhoan.diachi) && Objects.equals(loai_tai_khoan, taiKhoan.loai_tai_khoan) && Objects.equals(enabled, taiKhoan.enabled) && Objects.equals(donHangList, taiKhoan.donHangList);
+        return Objects.equals(username, taiKhoan.username) && Objects.equals(password, taiKhoan.password) && Objects.equals(hoten, taiKhoan.hoten) && Objects.equals(diachi, taiKhoan.diachi) && Objects.equals(loai_tai_khoan, taiKhoan.loai_tai_khoan) && Objects.equals(enabled, taiKhoan.enabled) && Objects.equals(NGAYTHEM, taiKhoan.NGAYTHEM) && Objects.equals(donHangList, taiKhoan.donHangList);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(username, password, hoten, diachi, loai_tai_khoan, enabled, donHangList);
+    return Objects.hash(username, password, hoten, diachi, loai_tai_khoan, enabled, NGAYTHEM, donHangList);
   }
 
   @Override
@@ -171,8 +187,8 @@ public class TaiKhoan {
       ", diachi='" + getDiachi() + "'" +
       ", loai_tai_khoan='" + getLoai_tai_khoan() + "'" +
       ", enabled='" + getEnabled() + "'" +
+      ", NGAYTHEM='" + getNGAYTHEM() + "'" +
       ", donHangList='" + getDonHangList() + "'" +
       "}";
   }
-
 }
