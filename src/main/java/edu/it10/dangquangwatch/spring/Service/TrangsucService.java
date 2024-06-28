@@ -12,7 +12,7 @@ public interface TrangsucService {
 
   Trangsuc saveTrangsuc(Trangsuc trangsuc);  
 
-  Page<Trangsuc> searchTrangsuc(String searchStr, Integer pageNum);
+  Page<Trangsuc> searchTrangsuc(String searchStr, String from, String to, Integer pageNum);
 
   void deleteTrangsuc(Integer matrangsuc);  
 

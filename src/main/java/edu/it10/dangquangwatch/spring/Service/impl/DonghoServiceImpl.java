@@ -38,13 +38,13 @@ public class DonghoServiceImpl implements DonghoService {
   }
 
   @Override
-  public Page<Dongho> getAllDonghoByTendongho(String tendongho, int pageNum) {
+  public Page<Dongho> getAllDonghoByTendongho(String tendongho, String from, String to, int pageNum) {
     Pageable pageable = PageRequest.of(pageNum, 10);
-    return donghoRepository.findByTendonghoContains(tendongho, pageable);
+    return donghoRepository.findByTendonghoContains(tendongho, from, to, pageable);
   }
 
   @Override
-  public Page<Dongho> searchDongho(String searchStr, Dongho searchData, int pageNum) {
-    return donghoRepository.searchDongho(searchStr, searchData, PageRequest.of(pageNum, 10));
+  public Page<Dongho> searchDongho(String searchStr, Dongho searchData, String from, String to, int pageNum) {
+    return donghoRepository.searchDongho(searchStr, searchData, from, to, PageRequest.of(pageNum, 10));
   }  
 }

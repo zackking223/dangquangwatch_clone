@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DonghoRepository extends JpaRepository<Dongho, Integer>, DonghoRepositoryCustom {
-  @Query("SELECT DISTINCT d FROM Dongho d WHERE UPPER(d.tendongho) LIKE UPPER(CONCAT('%', :searchStr, '%')) OR UPPER(d.thongtin) LIKE UPPER(CONCAT('%', :searchStr, '%')) OR UPPER(d.chatlieu) LIKE UPPER(CONCAT('%', :searchStr, '%')) OR UPPER(d.gioitinh) LIKE UPPER(CONCAT('%', :searchStr, '%')) OR UPPER(d.bomay) LIKE UPPER(CONCAT('%', :searchStr, '%')) ORDER BY d.NGAYTHEM")
-  Page<Dongho> findByTendonghoContains(@Param("searchStr") String searchStr, Pageable pageable);
+  @Query("SELECT DISTINCT d FROM Dongho d WHERE UPPER(d.tendongho) LIKE UPPER(CONCAT('%', :searchStr, '%')) OR UPPER(d.thongtin) LIKE UPPER(CONCAT('%', :searchStr, '%')) OR UPPER(d.chatlieu) LIKE UPPER(CONCAT('%', :searchStr, '%')) OR UPPER(d.gioitinh) LIKE UPPER(CONCAT('%', :searchStr, '%')) OR UPPER(d.bomay) LIKE UPPER(CONCAT('%', :searchStr, '%')) AND d.NGAYTHEM >= :from AND d.NGAYTHEM <= :to ORDER BY d.NGAYTHEM")
+  Page<Dongho> findByTendonghoContains(@Param("searchStr") String searchStr, @Param("from") String from, @Param("to") String to, Pageable pageable);
 }

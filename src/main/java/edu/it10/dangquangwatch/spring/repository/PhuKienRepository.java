@@ -13,6 +13,6 @@ import edu.it10.dangquangwatch.spring.entity.PhuKien;
 public interface PhuKienRepository extends JpaRepository<PhuKien, Integer> {
   List<PhuKien> findByTenPhuKienContains(String tenPhuKien);
 
-  @Query("SELECT DISTINCT b FROM PhuKien b WHERE UPPER(b.tenPhuKien) LIKE UPPER(CONCAT('%', :searchStr, '%')) OR UPPER(b.thongTin) LIKE UPPER(CONCAT('%', :searchStr, '%')) ORDER BY b.NGAYTHEM DESC")
-  Page<PhuKien> searchPhuKien(@Param("searchStr") String searchStr, Pageable pageable);
+  @Query("SELECT DISTINCT b FROM PhuKien b WHERE (UPPER(b.tenPhuKien) LIKE UPPER(CONCAT('%', :searchStr, '%')) OR UPPER(b.thongTin) LIKE UPPER(CONCAT('%', :searchStr, '%'))) AND b.NGAYTHEM >= :from AND b.NGAYTHEM <= :to ORDER BY b.NGAYTHEM DESC")
+  Page<PhuKien> searchPhuKien(@Param("searchStr") String searchStr, @Param("from") String from, @Param("to") String to, Pageable pageable);
 }

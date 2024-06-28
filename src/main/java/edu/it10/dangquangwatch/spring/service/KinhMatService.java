@@ -10,7 +10,7 @@ import edu.it10.dangquangwatch.spring.entity.KinhMat;
 public interface KinhMatService {
   List<KinhMat> getAllKinhMat();  
 
-  Page<KinhMat> searchKinhMat(String searchStr, Integer pageNum);
+  Page<KinhMat> searchKinhMat(String searchStr, String from, String to, Integer pageNum);
 
   KinhMat saveKinhMat(KinhMat kinhMat);  
 

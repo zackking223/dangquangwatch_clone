@@ -10,7 +10,7 @@ import org.springframework.data.domain.Page;
 public interface ButkyService {  
   List<Butky> getAllButky();
   
-  Page<Butky> searchButky(String searchStr, Integer pageNum);
+  Page<Butky> searchButky(String searchStr, String from, String to, Integer pageNum);
 
   Butky saveButky(Butky butky);  
 

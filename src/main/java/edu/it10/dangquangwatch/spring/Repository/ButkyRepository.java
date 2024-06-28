@@ -14,6 +14,6 @@ import org.springframework.stereotype.Repository;
 public interface ButkyRepository extends JpaRepository<Butky, Integer> {
   Page<Butky> findByTenbutkyContains(@Param("searchStr") String searchStr, Pageable pageable);
   
-  @Query("SELECT DISTINCT b FROM Butky b WHERE UPPER(b.tenbutky) LIKE UPPER(CONCAT('%', :searchStr, '%')) OR UPPER(b.thongtin) LIKE UPPER(CONCAT('%', :searchStr, '%')) ORDER BY b.NGAYTHEM DESC")
-  Page<Butky> searchButKy(@Param("searchStr") String searchStr, Pageable pageable);
+  @Query("SELECT DISTINCT b FROM Butky b WHERE (UPPER(b.tenbutky) LIKE UPPER(CONCAT('%', :searchStr, '%')) OR UPPER(b.thongtin) LIKE UPPER(CONCAT('%', :searchStr, '%'))) AND b.NGAYTHEM >= :from AND b.NGAYTHEM <= :to ORDER BY b.NGAYTHEM DESC")
+  Page<Butky> searchButKy(@Param("searchStr") String searchStr, @Param("from") String from, @Param("to") String to, Pageable pageable);
 }

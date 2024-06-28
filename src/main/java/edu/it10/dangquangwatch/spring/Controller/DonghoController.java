@@ -30,8 +30,26 @@ public class DonghoController {
   private AnhdonghoService anhdonghoService;
 
   @GetMapping("/")
-  public String index(@RequestParam("search") Optional<String> search, @RequestParam("page") Optional<Integer> page,
+  public String index(
+      @RequestParam("search") Optional<String> search,
+      @RequestParam("page") Optional<Integer> page,
+      @RequestParam("from") Optional<String> from,
+      @RequestParam("to") Optional<String> to,
       Optional<Dongho> dongho, Model model) {
+    String fromStr = "2001-01-01";
+    String toStr = "3000-01-01";
+
+    if (from.isPresent()) {
+      if (!from.get().isEmpty()) {
+        fromStr = from.get();
+      }
+    }
+    if (to.isPresent()) {
+      if (!to.get().isEmpty()) {
+        toStr = to.get();
+      }
+    }
+
     model.addAttribute("dongho", new Dongho());
     Page<Dongho> data;
     String searchStr = "";
@@ -45,15 +63,17 @@ public class DonghoController {
 
     if (dongho.isPresent()) {
       fieldData = dongho.get();
-      data = donghoService.searchDongho(searchStr, fieldData, pageNum);
+      data = donghoService.searchDongho(searchStr, fieldData, fromStr, toStr, pageNum);
     } else {
-      data = donghoService.getAllDonghoByTendongho(searchStr, pageNum);
+      data = donghoService.getAllDonghoByTendongho(searchStr, fromStr, toStr, pageNum);
     }
 
     model.addAttribute("dongho", fieldData);
     model.addAttribute("donghos", data.getContent());
     model.addAttribute("page", pageNum);
     model.addAttribute("search", searchStr);
+    model.addAttribute("from", from.isPresent() ? from.get() : "");
+    model.addAttribute("to", to.isPresent() ? to.get() : "");
     model.addAttribute("sotrang", data.getTotalPages());
 
     return "admin/dongho/index";

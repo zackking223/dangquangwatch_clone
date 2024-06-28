@@ -38,3 +38,5 @@ build/
 .gitignore
 src/main/resources/application.properties
 stash
+
+src/main/resources/application.properties

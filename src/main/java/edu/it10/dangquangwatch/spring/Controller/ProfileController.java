@@ -1,7 +1,5 @@
 package edu.it10.dangquangwatch.spring.controller;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -46,7 +44,16 @@ public class ProfileController {
       @RequestParam("search") Optional<String> search,
       @RequestParam("tinhtrang") Optional<String> tinhtrang,
       @RequestParam("thanhtoan") Optional<String> thanhtoan,
+      @RequestParam("from") Optional<String> from,
+      @RequestParam("to") Optional<String> to,
       @RequestParam("page") Optional<Integer> page, Model model) {
+    String fromStr = "2001-01-01";
+    String toStr = "3000-01-01";
+    if (from.isPresent())
+      fromStr = from.get();
+    if (to.isPresent())
+      toStr = to.get();
+
     List<String> tinhtrang_options = new ArrayList<String>();
     tinhtrang_options.add("Đã hủy");
     tinhtrang_options.add("Chờ xác nhận");
@@ -77,7 +84,7 @@ public class ProfileController {
 
     String username = (String) session.getAttribute("username");
 
-    Page<DonHang> data = donHangService.getMyDonHang(searchStr, tinhtrangStr, thanhtoanStr, username, pageNum);
+    Page<DonHang> data = donHangService.getMyDonHang(searchStr, tinhtrangStr, thanhtoanStr, username, fromStr, toStr, pageNum);
 
     model.addAttribute("donhangs", data.getContent());
     model.addAttribute("sotrang", data.getTotalPages());
@@ -86,20 +93,10 @@ public class ProfileController {
     model.addAttribute("thanhtoan", thanhtoanStr);
     model.addAttribute("tinhtrang_options", tinhtrang_options);
     model.addAttribute("thanhtoan_options", thanhtoan_options);
+    model.addAttribute("from", from.isPresent() ? from.get() : "");
+    model.addAttribute("to", to.isPresent() ? to.get() : "");
     model.addAttribute("page", pageNum);
     return "donhang";
-  }
-
-  private String getCurrentDateFormatted() {
-    // Lấy ngày hiện tại
-    LocalDate today = LocalDate.now();
-
-    // Định dạng ngày theo yyyy-MM-dd
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    String formattedDate = today.format(formatter);
-
-    // In ra ngày hiện tại theo định dạng yyyy-MM-dd
-    return formattedDate;
   }
 
   @PostMapping("/dathang")
@@ -120,7 +117,7 @@ public class ProfileController {
     }
 
     if (donHang.getNGAYTHEM() == null) {
-      donHang.setNGAYTHEM(getCurrentDateFormatted());
+      donHang.setNGAYTHEM(Helper.getCurrentDateFormatted());
     }
 
     donHang.setTaikhoan(taiKhoan);

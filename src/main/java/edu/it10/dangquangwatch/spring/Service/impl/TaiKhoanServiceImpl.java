@@ -2,6 +2,9 @@ package edu.it10.dangquangwatch.spring.service.impl;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -42,26 +45,36 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
   }
 
   @Override
-  public List<TaiKhoan> getAllTaiKhoan() {
-    TypedQuery<TaiKhoan> query = entityManager.createQuery("FROM TaiKhoan", TaiKhoan.class);
-
-    return query.getResultList();
+  public Page<TaiKhoan> getAllTaiKhoan(String from, String to, Integer page) {
+    TypedQuery<TaiKhoan> query = entityManager.createQuery(
+        "SELECT tk FROM TaiKhoan tk WHERE tk.NGAYTHEM >= \'" + from + "\' AND tk.NGAYTHEM <= '" + to + "\'",
+        TaiKhoan.class);
+    List<TaiKhoan> result = query.getResultList();
+    return new PageImpl<>(result, PageRequest.of(page, 10), result.size());
   }
 
   @Override
-  public List<TaiKhoan> getAllTaiKhoanQuanTri() {
-    TypedQuery<TaiKhoan> query = entityManager.createQuery("FROM TaiKhoan where loai_tai_khoan = 'ROLE_QUANTRI'",
+  public Page<TaiKhoan> getAllTaiKhoanQuanTri(String from, String to, Integer page) {
+    TypedQuery<TaiKhoan> query = entityManager.createQuery(
+        "SELECT tk FROM TaiKhoan tk where tk.loai_tai_khoan = 'ROLE_QUANTRI' and tk.NGAYTHEM >= \'" + from
+            + "\' AND tk.NGAYTHEM <= \'" + to + "\'",
         TaiKhoan.class);
 
-    return query.getResultList();
+    List<TaiKhoan> result = query.getResultList();
+
+    return new PageImpl<>(result, PageRequest.of(page, 10), result.size());
   }
 
   @Override
-  public List<TaiKhoan> getAllTaiKhoanKhachHang() {
-    TypedQuery<TaiKhoan> query = entityManager.createQuery("FROM TaiKhoan where loai_tai_khoan = 'ROLE_KHACHHANG'",
+  public Page<TaiKhoan> getAllTaiKhoanKhachHang(String from, String to, Integer page) {
+    TypedQuery<TaiKhoan> query = entityManager.createQuery(
+        "SELECT tk FROM TaiKhoan tk where tk.loai_tai_khoan = 'ROLE_KHACHHANG' and tk.NGAYTHEM >= \'" + from
+            + "\' AND tk.NGAYTHEM <= \'" + to + "\'",
         TaiKhoan.class);
 
-    return query.getResultList();
+    List<TaiKhoan> result = query.getResultList();
+
+    return new PageImpl<>(result, PageRequest.of(page, 10), result.size());
   }
 
   @Override
@@ -104,11 +117,13 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
   }
 
   @Override
-  public List<TaiKhoan> findTaiKhoanByUsername(String username) {
+  public Page<TaiKhoan> findTaiKhoanByUsername(String username, Integer page) {
     username = "%" + username + "%";
     TypedQuery<TaiKhoan> query = entityManager.createQuery("FROM TaiKhoan WHERE username LIKE :data", TaiKhoan.class);
     query.setParameter("data", username);
-    return query.getResultList();
+    List<TaiKhoan> result = query.getResultList();
+
+    return new PageImpl<>(result, PageRequest.of(page, 10), result.size());
   }
 
   @Override
@@ -121,8 +136,36 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 
   private static String removeWhitespace(String input) {
     if (input == null) {
-        return null;
+      return null;
     }
     return input.replaceAll("\\s+", "");
+  }
+
+  @Override
+  public Page<TaiKhoan> searchTaiKhoanQuanTri(String username, String from, String to, Integer page) {
+    username = "%" + username + "%";
+    TypedQuery<TaiKhoan> query = entityManager.createQuery(
+        "SELECT DISTINCT tk FROM TaiKhoan tk where tk.loai_tai_khoan = 'ROLE_KHACHHANG' and tk.username LIKE :username and tk.NGAYTHEM >= \'"
+            + from
+            + "\' AND tk.NGAYTHEM <= \'" + to + "\'",
+        TaiKhoan.class);
+    query.setParameter("username", username);
+    List<TaiKhoan> result = query.getResultList();
+
+    return new PageImpl<>(result, PageRequest.of(page, 10), result.size());
+  }
+
+  @Override
+  public Page<TaiKhoan> searchTaiKhoanKhachHang(String searchStr, String from, String to, Integer page) {
+    searchStr = "%" + searchStr + "%";
+    TypedQuery<TaiKhoan> query = entityManager.createQuery(
+        "SELECT DISTINCT tk FROM TaiKhoan tk where tk.loai_tai_khoan = 'ROLE_KHACHHANG' and tk.hoten LIKE :searchStr OR tk.diachi LIKE :searchStr OR tk.username LIKE :searchStr and tk.NGAYTHEM >= \'"
+            + from
+            + "\' AND tk.NGAYTHEM <= \'" + to + "\'",
+        TaiKhoan.class);
+    query.setParameter("searchStr", searchStr);
+    List<TaiKhoan> result = query.getResultList();
+
+    return new PageImpl<>(result, PageRequest.of(page, 10), result.size());
   }
 }

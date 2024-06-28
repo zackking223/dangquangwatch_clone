@@ -16,15 +16,15 @@
       <section class="grid grid-cols-3 gap-2">
         <div>
           <label class="block font-medium" th:for="hoten">Tên khách hàng</label>
-          <input class="block p-2 w-full" name="hoten" th:value="${hoten}" type="text" placeholder="Tên khách hàng" />
+          <input class="block p-2 w-full border border-black rounded" name="hoten" th:value="${hoten}" type="text" placeholder="Tên khách hàng" />
         </div>
         <div>
           <label class="block font-medium" th:for="diachi">Địa chỉ giao</label>
-          <input class="block p-2 w-full" name="diachi" th:value="${diachi}" type="text" placeholder="Địa chỉ giao" />
+          <input class="block p-2 w-full border border-black rounded" name="diachi" th:value="${diachi}" type="text" placeholder="Địa chỉ giao" />
         </div>
         <div>
           <label class="block font-medium" th:for="tensanpham">Tên sản phẩm</label>
-          <input class="block p-2 w-full" name="tensanpham" th:value="${tensanpham}" type="text"
+          <input class="block p-2 w-full border border-black rounded" name="tensanpham" th:value="${tensanpham}" type="text"
             placeholder="Tên sản phẩm" />
         </div>
       </section>
@@ -32,12 +32,12 @@
       <section class="grid grid-cols-3 gap-2">
         <div>
           <label class="block font-medium" th:for="tongtien">Tổng tiền</label>
-          <input class="block p-2 w-full" name="tongtien" th:value="${tongtien}" type="number"
+          <input class="block p-2 w-full border border-black rounded" name="tongtien" th:value="${tongtien}" type="number"
             placeholder="1.000.000" />
         </div>
         <div>
           <label class="block font-medium" for="tinhtrang">Tình trạng</label>
-          <select class="block p-2 w-full" name="tinhtrang" id="tinhtrang" th:value>
+          <select class="block p-2 w-full border border-black rounded" name="tinhtrang" id="tinhtrang">
             <option value="">Chưa chọn</option>
             <option th:each="tt : ${tinhtrang_options}" th:value="${tt}" th:text="${tt}" th:selected="${tt == tinhtrang}">
             </option>
@@ -45,11 +45,22 @@
         </div>
         <div>
           <label class="block font-medium" for="thanhtoan">Thanh toán</label>
-          <select class="block p-2 w-full" name="thanhtoan" id="thanhtoan" th:value>
+          <select class="block p-2 w-full border border-black rounded" name="thanhtoan" id="thanhtoan">
             <option value="">Chưa chọn</option>
             <option th:each="tt : ${thanhtoan_options}" th:value="${tt}" th:text="${tt}" th:selected="${tt == thanhtoan}">
             </option>
           </select>
+        </div>
+      </section>
+
+      <section class="grid grid-cols-2 gap-2">
+        <div>
+          <label class="block font-medium" for="from">Từ ngày</label>
+          <input class="block p-2 w-full border border-black rounded" type="date" name="from" id="from" th:value="${from}">
+        </div>
+        <div>
+          <label class="block font-medium" for="to">Đến ngày</label>
+          <input class="block p-2 w-full border border-black rounded" type="date" name="to" id="to" th:value="${to}">
         </div>
       </section>
 
@@ -106,7 +117,7 @@
       <li th:each="i:${#numbers.sequence(1,sotrang,1)}">
         <a th:classappend="${page + 1 == i} ? 'bg-black text-white' : 'bg-white text-black'"
           class="p-2 aspect-square border border-b hover:text-blue-500"
-          th:href="@{'/admin/donhang/?page=' + ${i} + '&hoten=' + ${hoten} + '&diachi=' + ${diachi} + '&tensanpham=' + ${tensanpham} + '&tinhtrang=' + ${tinhtrang} + '&thanhtoan=' + ${thanhtoan} + '&tongtien=' + ${tongtien}}"
+          th:href="@{'/admin/donhang/?page=' + ${i} + '&hoten=' + ${hoten} + '&diachi=' + ${diachi} + '&tensanpham=' + ${tensanpham} + '&tinhtrang=' + ${tinhtrang} + '&thanhtoan=' + ${thanhtoan} + '&tongtien=' + ${tongtien} + '&from=' + ${from} + '&to=' + ${to}}"
           th:text="${i}"></a>
       </li>
     </ul>

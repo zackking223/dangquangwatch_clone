@@ -24,8 +24,8 @@ public class DonHangServiceImpl implements DonHangService {
   }
 
   @Override
-  public Page<DonHang> searchDonHang(String username, String diachi, String tensanpham, String tinhtrang, String thanhtoan, Integer tongtien, int page) {
-    return donHangRepository.searchDonHang(username, diachi, tensanpham, tinhtrang, thanhtoan, tongtien, PageRequest.of(page, 10));
+  public Page<DonHang> searchDonHang(String username, String diachi, String tensanpham, String tinhtrang, String thanhtoan, Integer tongtien, String from, String to, int page) {
+    return donHangRepository.searchDonHang(username, diachi, tensanpham, tinhtrang, thanhtoan, tongtien, from, to, PageRequest.of(page, 10));
   }
 
   @Override
@@ -53,7 +53,7 @@ public class DonHangServiceImpl implements DonHangService {
   }
 
   @Override
-  public Page<DonHang> getMyDonHang(String searchStr, String tinhtrang, String thanhtoan, String username, int page) {
-    return donHangRepository.getMyDonHang(searchStr, tinhtrang, thanhtoan, username, PageRequest.of(page, 10));
+  public Page<DonHang> getMyDonHang(String searchStr, String tinhtrang, String thanhtoan, String username, String from, String to, int page) {
+    return donHangRepository.getMyDonHang(searchStr, tinhtrang, thanhtoan, username, from, to, PageRequest.of(page, 10));
   }
 }

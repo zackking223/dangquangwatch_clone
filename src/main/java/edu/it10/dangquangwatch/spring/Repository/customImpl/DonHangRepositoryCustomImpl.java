@@ -18,7 +18,15 @@ public class DonHangRepositoryCustomImpl implements DonHangRepositoryCustom {
   private EntityManager entityManager;
 
   @Override
-  public Page<DonHang> searchDonHang(String hoten, String diachi, String tensanpham, String tinhtrang, String thanhtoan, Integer tongtien,
+  public Page<DonHang> searchDonHang(
+      String hoten,
+      String diachi,
+      String tensanpham,
+      String tinhtrang,
+      String thanhtoan,
+      Integer tongtien,
+      String from,
+      String to,
       Pageable pageable) {
     StringBuilder jpql = new StringBuilder("SELECT DISTINCT dh FROM DonHang dh " +
         "JOIN dh.taikhoan tk " +
@@ -44,6 +52,14 @@ public class DonHangRepositoryCustomImpl implements DonHangRepositoryCustom {
     if (tensanpham != null && !tensanpham.isEmpty()) {
       conditions.add(
           "EXISTS (SELECT 1 FROM ChiTietDonHang ctdh WHERE ctdh.donhang = dh AND UPPER(ctdh.tensanpham) LIKE UPPER(:tensanpham))");
+    }
+
+    if (from != null) {
+      conditions.add("dh.NGAYTHEM >= \'" + from + "\'");
+    }
+
+    if (to != null) {
+      conditions.add("dh.NGAYTHEM <= \'" + to + "\'");
     }
 
     if (!conditions.isEmpty()) {

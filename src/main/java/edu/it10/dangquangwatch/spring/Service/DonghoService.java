@@ -10,9 +10,9 @@ import org.springframework.data.domain.Page;
 public interface DonghoService {  
   List<Dongho> getAllDongho();  
 
-  Page<Dongho> getAllDonghoByTendongho(String tendongho, int pageNum);  
+  Page<Dongho> getAllDonghoByTendongho(String tendongho, String from, String to, int pageNum);  
 
-  Page<Dongho> searchDongho(String searchStr, Dongho searchData, int pageNum);
+  Page<Dongho> searchDongho(String searchStr, Dongho searchData, String from, String to, int pageNum);
 
   Dongho saveDongho(Dongho dongho);  
 

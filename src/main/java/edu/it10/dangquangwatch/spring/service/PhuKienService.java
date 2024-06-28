@@ -10,7 +10,7 @@ import edu.it10.dangquangwatch.spring.entity.PhuKien;
 public interface PhuKienService {
   List<PhuKien> getAllPhuKien();
 
-  Page<PhuKien> searchPhuKien(String searchStr, Integer pageNum);
+  Page<PhuKien> searchPhuKien(String searchStr, String from, String to, Integer pageNum);
 
   PhuKien savePhuKien(PhuKien phuKien);
 

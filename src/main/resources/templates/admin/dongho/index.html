@@ -15,10 +15,10 @@
         <form th:object="${dongho}" action="" class="w-full max-w-[90vw] flex flex-col gap-2 my-2">
             <div>
                 <label class="block font-medium" th:for="tendongho">Tên đồng hồ / Thông tin</label>
-                <input class="block p-2 w-full" name="search" type="text"
-                    placeholder="Tên / thông tin đồng hồ" th:value="${search}" />
+                <input class="block p-2 w-full" name="search" type="text" placeholder="Tên / thông tin đồng hồ"
+                    th:value="${search}" />
             </div>
-            
+
             <section class="grid grid-cols-3 gap-2">
                 <div>
                     <label class="block font-medium" th:for="giatien">Giá tiền</label>
@@ -44,17 +44,15 @@
                     <input class="block p-2 w-full" type="number" th:field="*{chongnuoc}" placeholder="10" />
                 </div>
             </section>
-            
+
             <section class="grid grid-cols-3 gap-2">
                 <div>
                     <label class="block font-medium" th:for="bomay">Bộ máy</label>
-                    <input class="block p-2 w-full" type="text" th:field="*{bomay}"
-                        placeholder="Cơ tự động" />
+                    <input class="block p-2 w-full" type="text" th:field="*{bomay}" placeholder="Cơ tự động" />
                 </div>
                 <div>
                     <label class="block font-medium" th:for="chatlieu">Chất liệu</label>
-                    <input class="block p-2 w-full" type="text" th:field="*{chatlieu}"
-                        placeholder="Kính sapphire" />
+                    <input class="block p-2 w-full" type="text" th:field="*{chatlieu}" placeholder="Kính sapphire" />
                 </div>
                 <div>
                     <label class="block font-medium" th:for="gioitinh">Giới tính</label>
@@ -65,6 +63,20 @@
                     </select>
                 </div>
             </section>
+
+            <section class="grid grid-cols-2 gap-2">
+                <div>
+                    <label class="block font-medium" for="from">Từ ngày</label>
+                    <input class="block p-2 w-full border border-black rounded" type="date" name="from" id="from"
+                        th:value="${from}">
+                </div>
+                <div>
+                    <label class="block font-medium" for="to">Đến ngày</label>
+                    <input class="block p-2 w-full border border-black rounded" type="date" name="to" id="to"
+                        th:value="${to}">
+                </div>
+            </section>
+
             <button class="p-2 w-max my-2 bg-blue-500 rounded block text-white flex-shrink-0">Tìm kiếm</button>
         </form>
         <table>
@@ -134,7 +146,8 @@
             <li th:each="i:${#numbers.sequence(1,sotrang,1)}">
                 <a th:classappend="${page + 1 == i} ? 'bg-black text-white' : 'bg-white text-black'"
                     class="p-2 aspect-square border border-b hover:text-blue-500"
-                    th:href="@{'/admin/dongho/?page=' + ${i} + '&search=' + ${search} + '&giatien=' + ${dongho.getGiatien() ?: ''} + '&soluong=' + ${dongho.getSoluong() ?: ''} + '&tragop=' + ${dongho.getTragop() ?: ''} + '&duongkinh=' + ${dongho.getDuongkinh() ?: ''} + '&chongnuoc=' + ${dongho.getChongnuoc() ?: ''} + '&bomay=' + ${dongho.getBomay() ?: ''} + '&chatlieu=' + ${dongho.getChatlieu() ?: ''} + '&gioitinh=' + ${dongho.getGioitinh() ?: ''}}" th:text="${i}"></a>
+                    th:href="@{'/admin/dongho/?page=' + ${i} + '&search=' + ${search} + '&from=' + ${from} + '&to=' + ${to} + '&giatien=' + ${dongho.getGiatien() ?: ''} + '&soluong=' + ${dongho.getSoluong() ?: ''} + '&tragop=' + ${dongho.getTragop() ?: ''} + '&duongkinh=' + ${dongho.getDuongkinh() ?: ''} + '&chongnuoc=' + ${dongho.getChongnuoc() ?: ''} + '&bomay=' + ${dongho.getBomay() ?: ''} + '&chatlieu=' + ${dongho.getChatlieu() ?: ''} + '&gioitinh=' + ${dongho.getGioitinh() ?: ''}}"
+                    th:text="${i}"></a>
             </li>
         </ul>
         <a href="/admin/dongho/add" class="p-2 w-max bg-green-500 rounded block mt-4 text-white">Thêm đông hồ</a>

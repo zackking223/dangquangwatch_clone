@@ -36,7 +36,7 @@ public class TrangsucServiceImpl implements TrangsucService {
   }  
 
   @Override
-  public Page<Trangsuc> searchTrangsuc(String searchStr, Integer pageNum) {
-    return trangsucRepository.searchTrangsuc(searchStr, PageRequest.of(pageNum, 10));
+  public Page<Trangsuc> searchTrangsuc(String searchStr, String from, String to, Integer pageNum) {
+    return trangsucRepository.searchTrangsuc(searchStr, from, to, PageRequest.of(pageNum, 10));
   }
 }

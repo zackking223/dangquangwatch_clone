@@ -37,7 +37,7 @@ public class ButkyServiceImpl implements ButkyService {
   }
 
   @Override
-  public Page<Butky> searchButky(String searchStr, Integer pageNum) {
-    return butkyRepository.searchButKy(searchStr, PageRequest.of(pageNum, 10));
+  public Page<Butky> searchButky(String searchStr, String from, String to, Integer pageNum) {
+    return butkyRepository.searchButKy(searchStr, from, to, PageRequest.of(pageNum, 10));
   }
 }

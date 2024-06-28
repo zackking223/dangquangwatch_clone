@@ -22,8 +22,8 @@ public class PhuKienServiceImpl implements PhuKienService {
   }
 
   @Override
-  public Page<PhuKien> searchPhuKien(String searchStr, Integer pageNum) {
-    return phuKienRepository.searchPhuKien(searchStr, PageRequest.of(pageNum, 10));
+  public Page<PhuKien> searchPhuKien(String searchStr, String from, String to, Integer pageNum) {
+    return phuKienRepository.searchPhuKien(searchStr, from, to, PageRequest.of(pageNum, 10));
   }
 
   @Override

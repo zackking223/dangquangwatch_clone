@@ -7,12 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
 import edu.it10.dangquangwatch.spring.service.TaiKhoanService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class LoginController {
@@ -35,13 +33,7 @@ public class LoginController {
   }
 
   @PostMapping("/login")
-  public String postLogin(HttpSession httpSession, @RequestParam("username") String username) {
-    TaiKhoan taiKhoan = taiKhoanService.getTaiKhoan(username);
-
-    httpSession.setAttribute("username", taiKhoan.getUsername());
-    httpSession.setAttribute("roles", taiKhoan.getLoai_tai_khoan());
-    httpSession.setAttribute("hoten", taiKhoan.getHoten());
-
+  public String postLogin() {
     return "redirect:/";
   }
 

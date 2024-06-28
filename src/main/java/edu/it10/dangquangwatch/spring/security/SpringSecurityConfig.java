@@ -114,6 +114,7 @@ public class SpringSecurityConfig {
       // Add fullname to session
       request.getSession().setAttribute("username", userDetail.getUsername());
       request.getSession().setAttribute("roles", userDetail.getAuthorities());
+      request.getSession().setAttribute("role", userData.getLoai_tai_khoan());
       request.getSession().setAttribute("hoten", userData.getHoten());
 
       // Redirect to default success URL

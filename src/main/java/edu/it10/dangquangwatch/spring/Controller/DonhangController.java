@@ -33,7 +33,24 @@ public class DonhangController {
       @RequestParam("tinhtrang") Optional<String> tinhtrang,
       @RequestParam("thanhtoan") Optional<String> thanhtoan,
       @RequestParam("tensanpham") Optional<String> tensanpham,
+      @RequestParam("from") Optional<String> from,
+      @RequestParam("to") Optional<String> to,
       @RequestParam("page") Optional<Integer> page, Model model) {
+
+    String fromStr = "2001-01-01";
+    String toStr = "3000-01-01";
+
+    if (from.isPresent()) {
+      if (!from.get().isEmpty()) {
+        fromStr = from.get();
+      }
+    }
+    if (to.isPresent()) {
+      if (!to.get().isEmpty()) {
+        toStr = to.get();
+      }
+    }
+
     List<String> tinhtrang_options = new ArrayList<String>();
     tinhtrang_options.add("Đã hủy");
     tinhtrang_options.add("Chờ xác nhận");
@@ -78,6 +95,8 @@ public class DonhangController {
         tinhtrangStr,
         thanhtoanStr,
         tongTienNum,
+        fromStr,
+        toStr,
         pageNum);
 
     model.addAttribute("hoten", hotenStr);
@@ -88,7 +107,8 @@ public class DonhangController {
     model.addAttribute("tinhtrang_options", tinhtrang_options);
     model.addAttribute("thanhtoan", thanhtoanStr);
     model.addAttribute("thanhtoan_options", thanhtoan_options);
-
+    model.addAttribute("from", from.isPresent() ? from.get() : "");
+    model.addAttribute("to", to.isPresent() ? to.get() : "");
     model.addAttribute("donhangs", data.getContent());
     model.addAttribute("page", pageNum);
     model.addAttribute("sotrang", data.getTotalPages());

@@ -27,8 +27,23 @@ public class ButkyController {
   private AnhbutkyService anhbutkyService;
 
   @GetMapping("/")
-  public String index(Model model, @RequestParam("page") Optional<Integer> page,
-      @RequestParam("search") Optional<String> search) {
+  public String index(Model model,
+      @RequestParam("page") Optional<Integer> page,
+      @RequestParam("search") Optional<String> search,
+      @RequestParam("from") Optional<String> from,
+      @RequestParam("to") Optional<String> to) {
+    String fromStr = "2001-01-01";
+    String toStr = "3000-01-01";
+    if (from.isPresent()) {
+      if (!from.get().isEmpty()) {
+        fromStr = from.get();
+      }
+    }
+    if (to.isPresent()) {
+      if (!to.get().isEmpty()) {
+        toStr = to.get();
+      }
+    }
     int pageNum = 0;
     String searchStr = "";
 
@@ -40,12 +55,14 @@ public class ButkyController {
       pageNum = page.get() - 1;
     }
 
-    Page<Butky> data = butkyService.searchButky(searchStr, pageNum);
+    Page<Butky> data = butkyService.searchButky(searchStr, fromStr, toStr, pageNum);
     List<Butky> butkys = data.getContent();
 
     model.addAttribute("butkys", butkys);
     model.addAttribute("page", pageNum);
     model.addAttribute("search", searchStr);
+    model.addAttribute("from", from.isPresent() ? from.get() : "");
+    model.addAttribute("to", to.isPresent() ? to.get() : "");
     model.addAttribute("sotrang", data.getTotalPages());
 
     return "/admin/butky/index";

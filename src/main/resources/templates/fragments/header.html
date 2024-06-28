@@ -23,41 +23,24 @@
             </form>
 
             <ul class="flex gap-4 items-center text-sm text-white xl:mx-0 px-2">
-                <li class="px-4 relative">
+                <li th:if="${session.role == 'ROLE_QUANTRI'}" class="relative">
+                    <a class="flex items-center gap-1" href="/admin/donhang/">
+                        <span class="material-symbols-outlined text-white hover:text-yellow-400 text-[28px] translate-y-[2px]">
+                            folder_managed
+                        </span>
+                    </a>
+                </li>
+                <li class="relative">
                     <a class="flex items-center gap-1" href="/profile/giohang">
                         <span class="material-symbols-outlined text-yellow-400 text-[28px] translate-y-[2px]">
                             shopping_cart
                         </span>
                     </a>
 
-                    <p id="cartnum" class="right-1 -top-1 px-[3px] w-max min-w-[16px] h-4 rounded-full absolute bg-white text-xs text-black text-center">0</p>
+                    <p id="cartnum"
+                        class="-right-1 -top-1 px-[3px] w-max min-w-[16px] h-4 rounded-full absolute bg-white text-xs text-black text-center">
+                        0</p>
                 </li>
-                <!-- <li class="hidden xl:flex items-center px-4 gap-1">
-                    <span class="material-symbols-outlined text-yellow-400 text-[28px]">
-                        call
-                    </span>
-                    <div class="">
-                        <p>
-                            Hotline mua hàng
-                        </p>
-                        <p class="text-yellow-400 text-base">
-                            1800 6005
-                        </p>
-                    </div>
-                </li>
-                <li class="hidden xl:flex items-center px-4 gap-1">
-                    <span class="material-symbols-outlined text-yellow-400 text-[28px]">
-                        store
-                    </span>
-                    <div class="">
-                        <p>
-                            Hệ thống cửa hàng
-                        </p>
-                        <p class="text-yellow-400 text-base">
-                            63 Tỉnh thành
-                        </p>
-                    </div>
-                </li> -->
                 <li class="flex flex-col" th:if="${session.hoten}">
                     <a class="hover:text-yellow-400" href="/profile/donhang" th:text="${session.hoten}"></a>
                     <a class="hover:text-yellow-400 underline" href="/logout">Đăng xuất</a>

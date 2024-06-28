@@ -13,19 +13,51 @@
     <div th:replace="~{fragments/sidebar :: sidebar}"></div>
     <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg md:mx-auto pl-11">
         <h1 class="font-bold text-center my-2">Quản lý tài khoản</h1>
+        <form action="" class="w-full max-w-[90vw] flex flex-col gap-2 my-2">
+            <section>
+                <div>
+                    <label class="block font-medium" for="search">Tìm kiếm</label>
+                    <input class="block p-2 w-full border border-black rounded" type="text" name="search" id="search"
+                        th:value="${search}">
+                </div>
+            </section>
+            <section class="grid grid-cols-2 gap-2">
+                <div>
+                    <label class="block font-medium" for="from">Từ ngày</label>
+                    <input class="block p-2 w-full border border-black rounded" type="date" name="from" id="from"
+                        th:value="${from}">
+                </div>
+                <div>
+                    <label class="block font-medium" for="to">Đến ngày</label>
+                    <input class="block p-2 w-full border border-black rounded" type="date" name="to" id="to"
+                        th:value="${to}">
+                </div>
+            </section>
+
+            <button class="p-2 w-max my-2 bg-blue-500 rounded block text-white flex-shrink-0">Tìm kiếm</button>
+        </form>
         <table class="table table-active">
             <tr>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">Username</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">Password</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">Họ tên</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">Địa chỉ</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">Tùy chọn</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">
+                    Username</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">
+                    Password</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">Họ
+                    tên</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">Địa
+                    chỉ</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">Tùy
+                    chọn</th>
             </tr>
             <tr th:each="taikhoan : ${taikhoans}">
-                <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden" th:text="${taikhoan.getUsername()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden" th:text="${taikhoan.getPassword()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden" th:text="${taikhoan.getHoten()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden" th:text="${taikhoan.getDiachi()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden"
+                    th:text="${taikhoan.getUsername()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden"
+                    th:text="${taikhoan.getPassword()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden"
+                    th:text="${taikhoan.getHoten()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden"
+                    th:text="${taikhoan.getDiachi()}"></td>
                 <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden">
                     <a class="p-2 rounded bg-green-500 text-white"
                         th:href="@{/admin/khachhang/edit?id={id}(id=${taikhoan.getUsername()})}">Sửa</a>
@@ -34,6 +66,15 @@
                 </td>
             </tr>
         </table>
+        <ul th:if="${sotrang > 1}" class="flex items-center flex-wrap w-full gap-2 mt-4">
+            <li>Trang:</li>
+            <li th:each="i:${#numbers.sequence(1,sotrang,1)}">
+                <a th:classappend="${page + 1 == i} ? 'bg-black text-white' : 'bg-white text-black'"
+                    class="p-2 aspect-square border border-b hover:text-blue-500"
+                    th:href="@{'/admin/donhang/?page=' + ${i} + '&search=' + ${search} + '&from=' + ${from} + '&to=' + ${to}}"
+                    th:text="${i}"></a>
+            </li>
+        </ul>
         <a href="/admin/khachhang/add" class="p-2 w-max bg-green-500 rounded block mt-4 text-white">Thêm tài khoản</a>
     </div>
 </body>

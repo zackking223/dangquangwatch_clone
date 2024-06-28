@@ -13,28 +13,59 @@
     <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg md:mx-auto pl-11">
         <h1 class="font-bold text-center my-2">Quản lý phụ kiện</h1>
         <form action="" class="w-full flex gap-2 my-2">
-            <input class="p-2 rounded block w-[60%] outline-none border border-black" type="text" name="search" th:value="${search}" placeholder="Tìm kiếm">
+            <section>
+                <label class="block font-medium" for="search">Tìm kiếm</label>
+                <input class="p-2 rounded block w-full outline-none border border-black" type="text" name="search"
+                    th:value="${search}" placeholder="Tìm kiếm">
+            </section>
+            <section class="grid grid-cols-2 gap-2">
+                <div>
+                    <label class="block font-medium" for="from">Từ ngày</label>
+                    <input class="block p-2 w-full border border-black rounded" type="date" name="from" id="from"
+                        th:value="${from}">
+                </div>
+                <div>
+                    <label class="block font-medium" for="to">Đến ngày</label>
+                    <input class="block p-2 w-full border border-black rounded" type="date" name="to" id="to"
+                        th:value="${to}">
+                </div>
+            </section>
             <button class="p-2 w-max bg-blue-500 rounded block text-white flex-shrink-0">Tìm kiếm</button>
         </form>
         <table class="table table-active">
             <tr>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Mã</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Tên phụ kiện</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Giá tiền</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Số lượng</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Trả góp</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Thông tin</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Ngày thêm</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Tùy chọn</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Mã
+                </th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Tên
+                    phụ kiện</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Giá
+                    tiền</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Số
+                    lượng</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Trả
+                    góp</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Thông
+                    tin</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Ngày
+                    thêm</th>
+                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Tùy
+                    chọn</th>
             </tr>
             <tr th:each="phuKien : ${phuKiens}">
-                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${phuKien.getMaPhuKien()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${phuKien.getTenPhuKien()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${phuKien.getGiaTien()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${phuKien.getSoLuong()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${phuKien.getTraGop()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${phuKien.getThongTin()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${phuKien.getNGAYTHEM()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+                    th:text="${phuKien.getMaPhuKien()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+                    th:text="${phuKien.getTenPhuKien()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+                    th:text="${phuKien.getGiaTien()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+                    th:text="${phuKien.getSoLuong()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+                    th:text="${phuKien.getTraGop()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+                    th:text="${phuKien.getThongTin()}"></td>
+                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+                    th:text="${phuKien.getNGAYTHEM()}"></td>
                 <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
                     <a class="p-2 rounded bg-green-500 text-white"
                         th:href="@{/admin/phukien/edit?id={id}(id=${phuKien.getMaPhuKien()})}">Sửa</a>
@@ -46,7 +77,10 @@
         <ul th:if="${sotrang > 1}" class="flex items-center flex-wrap w-full gap-2 mt-4">
             <li>Trang:</li>
             <li th:each="i:${#numbers.sequence(1,sotrang,1)}">
-                <a th:classappend="${page + 1 == i} ? 'bg-black text-white' : 'bg-white text-black'" class="p-2 aspect-square border border-b hover:text-blue-500" th:href="@{'/admin/phukien/?search=' + ${search} + '&page=' + ${i}}" th:text="${i}"></a>
+                <a th:classappend="${page + 1 == i} ? 'bg-black text-white' : 'bg-white text-black'"
+                    class="p-2 aspect-square border border-b hover:text-blue-500"
+                    th:href="@{'/admin/phukien/?search=' + ${search} + '&page=' + ${i} + '&from=' + ${from} + '&to=' + ${to}}"
+                    th:text="${i}"></a>
             </li>
         </ul>
         <a href="/admin/phukien/add" class="p-2 w-max bg-green-500 rounded block mt-4 text-white">Thêm mới</a>

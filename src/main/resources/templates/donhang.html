@@ -46,6 +46,17 @@
             </select>
           </div>
         </section>
+        <section class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block font-medium" for="from">Từ ngày</label>
+            <input class="block p-2 w-full border border-black rounded" type="date" name="from" id="from"
+              th:value="${from}">
+          </div>
+          <div>
+            <label class="block font-medium" for="to">Đến ngày</label>
+            <input class="block p-2 w-full border border-black rounded" type="date" name="to" id="to" th:value="${to}">
+          </div>
+        </section>
         <button class="p-2 w-max bg-blue-500 rounded block text-white flex-shrink-0 h-max">Tìm kiếm</button>
       </form>
       <table class="mx-auto">
@@ -112,7 +123,7 @@
         <li th:each="i:${#numbers.sequence(1,sotrang,1)}">
           <a th:classappend="${page + 1 == i} ? 'bg-black text-white' : 'bg-white text-black'"
             class="p-2 aspect-square border border-b hover:text-blue-500"
-            th:href="@{'/donhang/?page=' + ${i} + '&search=' + ${search} + '&tinhtrang=' + ${tinhtrang} + '&thanhtoan=' + ${thanhtoan}}"
+            th:href="@{'/donhang/?page=' + ${i} + '&search=' + ${search} + '&from=' + ${from} + '&to=' + ${to} + '&tinhtrang=' + ${tinhtrang} + '&thanhtoan=' + ${thanhtoan}}"
             th:text="${i}"></a>
         </li>
       </ul>

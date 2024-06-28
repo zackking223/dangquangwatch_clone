@@ -22,8 +22,8 @@ public class KinhMatServiceImpl implements KinhMatService {
   }
 
   @Override
-  public Page<KinhMat> searchKinhMat(String searchStr, Integer pageNum) {
-    return kinhMatRepository.searchKinhMat(searchStr, PageRequest.of(pageNum, 10));
+  public Page<KinhMat> searchKinhMat(String searchStr, String from, String to, Integer pageNum) {
+    return kinhMatRepository.searchKinhMat(searchStr, from, to, PageRequest.of(pageNum, 10));
   }
 
   @Override

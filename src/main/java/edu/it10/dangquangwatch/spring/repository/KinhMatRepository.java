@@ -13,6 +13,6 @@ import java.util.List;
 public interface KinhMatRepository extends JpaRepository<KinhMat, Integer> {
   List<KinhMat> findByTenSanPhamContains(String tenSanPham);
 
-  @Query("SELECT DISTINCT b FROM KinhMat b WHERE UPPER(b.tenSanPham) LIKE UPPER(CONCAT('%', :searchStr, '%')) OR UPPER(b.thongTin) LIKE UPPER(CONCAT('%', :searchStr, '%')) ORDER BY b.NGAYTHEM DESC")
-  Page<KinhMat> searchKinhMat(@Param("searchStr") String searchStr, Pageable pageable);
+  @Query("SELECT DISTINCT b FROM KinhMat b WHERE (UPPER(b.tenSanPham) LIKE UPPER(CONCAT('%', :searchStr, '%')) OR UPPER(b.thongTin) LIKE UPPER(CONCAT('%', :searchStr, '%'))) AND b.NGAYTHEM >= :from AND b.NGAYTHEM <= :to ORDER BY b.NGAYTHEM DESC")
+  Page<KinhMat> searchKinhMat(@Param("searchStr") String searchStr, @Param("from") String from, @Param("to") String to, Pageable pageable);
 }
