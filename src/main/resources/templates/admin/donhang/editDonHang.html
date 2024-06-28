@@ -13,52 +13,77 @@
     <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
         <h1 class="font-bold text-center my-2">Đơn hàng</h1>
         <div class="col-md-auto">
+            <ul class="flex flex-col gap-2">
+                <li th:each="item : ${donHang.getItems()}" class="flex items-center justify-between border-b p-4">
+                    <img th:src="${item.getAnhsanpham()}" alt="${item.getTensanpham()}" class="w-16 h-16 object-cover">
+                    <div class="flex-1 ml-4">
+                        <a th:href="@{'/'+${item.getLoaiSanPham()}+'/'${item.getMaSanPham()}}"
+                            class="text-lg font-semibold" th:text="${item.getTensanpham()}"></a>
+                        <p class="text-gray-600">Loại: <span th:text="${item.getLoaiSanPham()}"></span></p>
+                        <p class="text-gray-600">Mã: <span th:text="${item.getMaSanPham()}"></span></p>
+                        <p class="text-gray-600">Giá: <span th:text="${item.getGiaTienFormatted()} "></span> đ</p>
+                    </div>
+                    <div class="flex items-center">
+                        <a th:href="@{'/admin/donhang/decsanpham?id=' + ${item.getMaChiTietDonHang()} + '&madonhang=' + ${item.getMaDonHang()}}" class="bg-red-500 text-white px-2 py-1 mr-2">-</a>
+                        <span th:text="${item.soLuong}"></span>
+                        <a th:href="@{'/admin/donhang/incsanpham?id=' + ${item.getMaChiTietDonHang()} + '&madonhang=' + ${item.getMaDonHang()}}" class="bg-green-500 text-white px-2 py-1 ml-2">+</a>
+                    </div>
+                    <a th:href="@{'/admin/donhang/deletesanpham?id=' + ${item.getMaChiTietDonHang()} + '&madonhang=' + ${item.getMaDonHang()}}" class="remove-item bg-gray-500 text-white px-2 py-1 ml-4"
+                        data-ma="${item.maSanPham}">Xóa</a>
+                </li>
+            </ul>
+            </section>
             <form th:object="${donHang}" action="/admin/donhang/save" method="post">
                 <div>
                     <label class="block font-medium" th:for="maDonHang">Mã đơn hàng</label>
-                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" readonly type="number" th:field="*{maDonHang}" />
+                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" readonly type="number"
+                        th:field="*{maDonHang}" />
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="username">Tên khách hàng</label>
-                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:value="${donHang.getTaikhoan().getUsername()}" name="username"
-                        placeholder="Mã khách hàng" />
+                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
+                        th:value="${donHang.getTaikhoan().getUsername()}" name="username" placeholder="Mã khách hàng" />
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="tongTien">Tổng tiền</label>
-                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{tongTien}"
-                        placeholder="Tổng tiền" />
+                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number"
+                        th:field="*{tongTien}" placeholder="Tổng tiền" />
                 </div>
                 <div>
                     <label class="block font-medium" th:for="diaChi">Địa chỉ</label>
-                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{diaChi}"
-                        placeholder="Địa chỉ" />
+                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
+                        th:field="*{diaChi}" placeholder="Địa chỉ" />
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="ghiChu">Ghi chú</label>
-                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{ghiChu}"
-                        placeholder="Ghi chú" />
+                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
+                        th:field="*{ghiChu}" placeholder="Ghi chú" />
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" for="tinhTrang">Tình trạng</label>
-                    <select class="border border-black rounded block p-2 w-full" name="tinhTrang" id="tinhTrang" th:value>
-                      <option value="">Chưa chọn</option>
-                      <option th:each="tt : ${tinhtrang_options}" th:value="${tt}" th:text="${tt}" th:selected="${tt == donHang.getTinhTrang()}">
-                      </option>
+                    <select class="border border-black rounded block p-2 w-full" name="tinhTrang" id="tinhTrang"
+                        th:value>
+                        <option value="">Chưa chọn</option>
+                        <option th:each="tt : ${tinhtrang_options}" th:value="${tt}" th:text="${tt}"
+                            th:selected="${tt == donHang.getTinhTrang()}">
+                        </option>
                     </select>
-                  </div>
-                  <div style="clear: both; display: block; height: 10px"></div>
-                  <div>
+                </div>
+                <div style="clear: both; display: block; height: 10px"></div>
+                <div>
                     <label class="block font-medium" for="thanhToan">Thanh toán</label>
-                    <select class="border border-black rounded block p-2 w-full" name="thanhToan" id="thanhToan" th:value>
-                      <option value="">Chưa chọn</option>
-                      <option th:each="tt : ${thanhtoan_options}" th:value="${tt}" th:text="${tt}" th:selected="${tt == donHang.getThanhToan()}">
-                      </option>
+                    <select class="border border-black rounded block p-2 w-full" name="thanhToan" id="thanhToan"
+                        th:value>
+                        <option value="">Chưa chọn</option>
+                        <option th:each="tt : ${thanhtoan_options}" th:value="${tt}" th:text="${tt}"
+                            th:selected="${tt == donHang.getThanhToan()}">
+                        </option>
                     </select>
-                  </div>
+                </div>
 
                 <input class="hidden" type="date" id="datePicker" th:field="*{NGAYTHEM}" />
 

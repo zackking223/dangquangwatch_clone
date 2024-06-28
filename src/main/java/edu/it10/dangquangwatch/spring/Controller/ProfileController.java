@@ -122,7 +122,7 @@ public class ProfileController {
 
     donHang.setTaikhoan(taiKhoan);
 
-    donHangService.updateDonHang(donHang);
+    donHangService.addDonHang(donHang);
 
     return "Đặt hàng thành công!";
   }

@@ -13,7 +13,7 @@ function getCart() {
 
   if (cart == null) {
     cart = {
-      tongTong: 0,
+      tongTien: 0,
       diaChi: "",
       ghiChu: "Không có",
       thanhToan: "Khi nhận hàng",
@@ -29,7 +29,7 @@ function getCart() {
 
 const resetCart = () => {
   let cart = {
-    tongTong: 0,
+    tongTien: 0,
     diaChi: "",
     ghiChu: "Không có",
     thanhToan: "Khi nhận hàng",
@@ -109,12 +109,11 @@ const reduceItem = (loaiSanPham, maSanPham) => {
       });
 
       cart.tongTien -= parseFloat(product.giaTien) * parseFloat(product.soLuong);
+      saveCart(cart);
     } else {
       removeItem(product.loaiSanPham, product.maSanPham);
     }
   }
-
-  saveCart(cart);
 }
 
 const addItem = (tensanpham, maSanPham, loaiSanPham, giaTien, anhsanpham) => {
@@ -170,6 +169,11 @@ const dathang = async () => {
 // Hàm chuyển hướng
 const redirectToCart = () => {
   window.location.href = "/profile/giohang";
+}
+
+function formatCurrencyVND(number) {
+  number = parseInt(number);
+  return number.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
 }
 
 getCart();

@@ -10,6 +10,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+
+import java.text.NumberFormat;
 import java.util.Objects;
 
 @Entity
@@ -49,10 +51,18 @@ public class ChiTietDonHang {
   @Column(name = "anhsanpham")
   private String anhsanpham;
 
+  public Integer getMaDonHang() {
+    return this.donhang.getMaDonHang();
+  }
+
   public String getLink() {
     return "/" + this.loaiSanPham + "/" + this.maSanPham;
   }
-  
+
+  public String getGiaTienFormatted() {
+    return NumberFormat.getInstance().format(this.giaTien);
+  }
+
   public ChiTietDonHang() {
   }
 

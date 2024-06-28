@@ -104,7 +104,7 @@
               <button class="block p-2 rounded bg-orange-500 text-white">Hủy
                 đơn</button>
             </form>
-            <a th:href="@{/admin/donhang/edit?id={id}(id=${donhang.getMaDonHang()})}"
+            <a th:if="${donhang.getTinhTrang() == 'Chờ xác nhận' || donhang.getTinhTrang() == 'Đã xác nhận'}" th:href="@{/admin/donhang/edit?id={id}(id=${donhang.getMaDonHang()})}"
               class="block w-max p-2 rounded bg-green-500 text-white">Sửa</a>
             <a th:href="@{/admin/donhang/delete?id={id}(id=${donhang.getMaDonHang()})}"
               class="block w-max p-2 rounded bg-red-500 text-white">Xóa</a>
@@ -121,7 +121,6 @@
           th:text="${i}"></a>
       </li>
     </ul>
-    <a href="/admin/donhang/add" class="p-2 w-max bg-green-500 rounded block mt-4 text-white">Thêm đơn hàng</a>
   </div>
 </body>
 

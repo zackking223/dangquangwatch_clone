@@ -141,12 +141,17 @@ public class DonhangController {
     thanhtoan_options.add("Đã hoàn tiền");
     thanhtoan_options.add("Đã nhận hàng");
     Optional<DonHang> donHangEdit = donHangService.findDonHangById(madonHang);
-    donHangEdit.ifPresent(donHang -> {
-      model.addAttribute("donHang", donHang);
+    if (donHangEdit.isPresent()) {
+      if (!donHangEdit.get().getTinhTrang().equals("Chờ xác nhận") && !donHangEdit.get().getTinhTrang().equals("Đã xác nhận")) {
+        return "redirect:/admin/donhang/";
+      }
+      model.addAttribute("donHang", donHangEdit.get());
       model.addAttribute("tinhtrang_options", tinhtrang_options);
       model.addAttribute("thanhtoan_options", thanhtoan_options);
-    });
-    return "admin/donhang/editDonHang";
+      return "admin/donhang/editDonHang";
+    } else {
+      return "redirect:/admin/donhang/";
+    }
   }
 
   @PostMapping(value = "/save")

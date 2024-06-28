@@ -47,7 +47,7 @@
                 <a href="/${item.loaiSanPham}/${item.maSanPham}" class="text-lg font-semibold">${item.tensanpham}</a>
                 <p class="text-gray-600">Loại: ${item.loaiSanPham}</p>
                 <p class="text-gray-600">Mã: ${item.maSanPham}</p>
-                <p class="text-gray-600">Giá: ${item.giaTien} đ</p>
+                <p class="text-gray-600">Giá: ${formatCurrencyVND(item.giaTien)}</p>
             </div>
             <div class="flex items-center">
                 <button class="reduce-item bg-red-500 text-white px-2 py-1 mr-2" data-loai="${item.loaiSanPham}" data-ma="${item.maSanPham}">-</button>
@@ -81,7 +81,7 @@
           </div>
         </form>
         <div class="w-full flex gap-2 p-4">
-            <p class="text-lg font-semibold w-max mr-auto" id="tongtiendonhang">Tổng Tiền: ${cart.tongTien} đ</p>
+            <p class="text-lg font-semibold w-max mr-auto" id="tongtiendonhang">Tổng Tiền: ${formatCurrencyVND(cart.tongTien)}</p>
             <button
                 id="dathang-btn"
                 onclick="dathang()"
