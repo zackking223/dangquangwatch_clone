@@ -1,6 +1,5 @@
 package edu.it10.dangquangwatch.spring.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -41,7 +40,7 @@ public class TaiKhoan {
   @Column(name = "NGAYTHEM")
   private String NGAYTHEM;
 
-  @OneToMany(mappedBy = "taikhoan", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "taikhoan")
   private List<DonHang> donHangList;
 
   public boolean isAdmin() {

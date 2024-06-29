@@ -1,6 +1,5 @@
 package edu.it10.dangquangwatch.spring.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -39,7 +38,7 @@ public class Trangsuc {
   @Column(name = "thongtin")
   private String thongtin;
 
-  @OneToMany(mappedBy = "trangsuc", targetEntity = Anhtrangsuc.class, cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "trangsuc", targetEntity = Anhtrangsuc.class)
   private List<Anhtrangsuc> images;
 
   public String getFirstImageUrl() {
