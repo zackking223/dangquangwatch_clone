@@ -5,6 +5,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
@@ -37,6 +38,11 @@ public class DangkyController {
     }
     model.addAttribute("errorMessage", errorMessage);
     return "dangky";
+  }
+
+  @ExceptionHandler(Exception.class)
+  public String handleEmptyOrNullListException() {
+    return "redirect:/dangky?error=dupname";
   }
 
   @PostMapping("/dangky")

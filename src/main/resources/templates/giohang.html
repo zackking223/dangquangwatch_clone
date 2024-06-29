@@ -15,10 +15,10 @@
   <div th:replace="~{fragments/header :: header}"></div>
   <div th:replace="~{fragments/productsbar :: productsbar}"></div>
 
-  <div class="w-full xl:max-w-[1215px] max-w-[1021px] mx-auto my-9">
+  <div class="w-full xl:max-w-[1215px] max-w-[1021px] mx-auto my-9 min-h-[85vh]">
     <div class="flex gap-2 w-max mx-auto items-end">
-      <h1 class="p-2 bg-white rounded-tl rounded-tr text-xl hover:text-yellow-500"><a href="/profile/doithongtin">Đổi thông tin</a></h1>
-      <h1 class="p-2 bg-white rounded-tl rounded-tr text-xl hover:text-yellow-500"><a href="/profile/donhang">Đơn hàng</a></h1>
+      <h1 class="p-2 bg-slate-400 rounded-tl rounded-tr text-xl hover:text-yellow-500"><a href="/profile/doithongtin">Đổi thông tin</a></h1>
+      <h1 class="p-2 bg-slate-400 rounded-tl rounded-tr text-xl hover:text-yellow-500"><a href="/profile/donhang">Đơn hàng</a></h1>
       <h1 class="p-2 bg-white rounded-tl rounded-tr text-xl text-yellow-500 font-bold underline"><a href="/profile/giohang">Giỏ hàng</a></h1>
     </div>
     <div class="bg-white shadow-md rounded-lg overflow-hidden p-4 min-h-[800px]">
@@ -73,7 +73,7 @@
           <div>
             <label class="block font-medium mb-1 mt-2" for="diaChi">Địa chỉ giao</label>
             <textarea class="w-full p-2 rounded border border-black" rows="3" id="diaChi"
-              placeholder="Đống Đa, Hà Nội"></textarea>
+              placeholder="Mặc định là địa chỉ của tài khoản"></textarea>
           </div>
           <div>
             <label class="block font-medium mb-1 mt-2" for="ghiChu">Ghi chú</label>

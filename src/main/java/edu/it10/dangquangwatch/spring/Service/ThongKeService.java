@@ -14,4 +14,10 @@ public interface ThongKeService {
   void tangluottruycap();
   
   void tangluotxemsanpham();
+
+  void tangluotthemgiohang();
+
+  void updateVon(Integer newCapital);
+  void incVon(Integer amount);
+  void decVon(Integer amount);
 }

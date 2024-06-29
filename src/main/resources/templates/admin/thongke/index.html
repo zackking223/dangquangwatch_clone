@@ -12,23 +12,40 @@
 
 <body>
   <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+  <div th:if="${editcapital}" class="absolute z-20 w-full h-full bg-[rgba(0,0,0,0.3)]">
+    <div class="absolute p-4 w-max min-w-[280px] bg-slate-50 shadow shadow-black rounded top-[50%] translate-x-[-50%] left-[50%] translate-y-[-50%]">
+      <a href="/admin/thongke/" class="absolute top-4 right-4 p-2 bg-red-500 rounded text-white text-xs font-bold">X</a>
+      <h1 class="font-bold text-center my-2">Thay đổi vốn</h1>
+      <form action="/admin/thongke/updatecapital" method="get" class="flex flex-col gap-2">
+        <input class="border border-black rounded block p-2 w-[80vw] max-w-[280px]" type="number" name="capital" th:value="${thongKe.getVon()}">
+        <input class="p-2 w-max bg-green-500 cursor-pointer hover:bg-green-600 rounded block mt-4 text-white" type="submit" value="Cập nhật vốn">
+      </form>
+    </div>
+  </div>
   <div class="p-6 w-full bg-slate-50 shadow-sm rounded-lg md:mx-auto pl-12">
     <h1 class="font-bold text-center my-2">Tổng quan</h1>
-
     <section class="grid my-3 gap-2 sm:grid-cols-2 grid-cols-1">
       <div class="mx-auto w-full sm:row-span-2">
         <canvas id="financialChart"></canvas>
       </div>
-      <div class="w-full shadow shadow-black rounded-lg p-4 bg-green-500 text-white">
-        <h1 class="font-bold text-2xl flex items-center gap-2">Doanh thu <img class="w-7" src="/svg/doanhthu.svg"
-            alt="doanhthu"></h1>
-        <div class="p-2" th:text="${thongKe.getDoanhThu()}"></div>
-      </div>
-      <div class="w-full shadow shadow-black rounded-lg p-4 bg-red-500 text-white">
-        <h1 class="font-bold text-2xl flex items-center gap-2">Chi phí <img class="w-7" src="/svg/von.svg" alt="von">
-        </h1>
-        <div class="p-2" th:text="${thongKe.getChiPhi()}"></div>
-      </div>
+      <a href="/admin/thongke/?editcapital=true"
+        class="w-full shadow hover:shadow-lg  shadow-black hover:shadow-green-700 transition-all duration-75 rounded-lg p-4 bg-green-500 text-white">
+        <h1 class="font-bold text-2xl flex items-center gap-2">Vốn <img class="w-7" src="/svg/von.svg" alt="von"></h1>
+        <div class="p-2" th:text="${thongKe.getVon()}"></div>
+      </a>
+      <section class="grid grid-cols-2 gap-2">
+        <div class="w-full shadow shadow-black rounded-lg p-4 bg-blue-500 text-white">
+          <h1 class="font-bold text-2xl flex items-center gap-2">Doanh thu <img class="w-7" src="/svg/doanhthu.svg"
+              alt="doanhthu">
+          </h1>
+          <div class="p-2" th:text="${thongKe.getDoanhThu()}"></div>
+        </div>
+        <div class="w-full shadow shadow-black rounded-lg p-4 bg-red-500 text-white">
+          <h1 class="font-bold text-2xl flex items-center gap-2">Chi phí <img class="w-7" src="/svg/lai.svg" alt="lai">
+          </h1>
+          <div class="p-2" th:text="${thongKe.getChiPhi()}"></div>
+        </div>
+      </section>
     </section>
 
     <section class="grid my-3 gap-2 sm:grid-cols-2 grid-cols-1">
@@ -229,10 +246,10 @@
           datasets: [{
             label: 'Số lần',
             data: [
-              /*[[${thongKe.getLuotTruyCap()}]]*/ 0, 
-              /*[[${thongKe.getLuotXemSanPham()}]]*/ 0, 
-              /*[[${thongKe.getLuotThemGioHang()}]]*/ 0, 
-              /*[[${thongKe.getLuotDatHang()}]]*/ 0, 
+              /*[[${thongKe.getLuotTruyCap()}]]*/ 0,
+              /*[[${thongKe.getLuotXemSanPham()}]]*/ 0,
+              /*[[${thongKe.getLuotThemGioHang()}]]*/ 0,
+              /*[[${thongKe.getLuotDatHang()}]]*/ 0,
               /*[[${thongKe.getLuotHoanThanhDon()}]]*/ 0
             ],  // Thay giá trị ở đây bằng dữ liệu của bạn
             backgroundColor: [

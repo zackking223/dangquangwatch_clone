@@ -53,10 +53,14 @@ public class ProfileController {
       @RequestParam("page") Optional<Integer> page, Model model) {
     String fromStr = "2001-01-01";
     String toStr = "3000-01-01";
-    if (from.isPresent())
-      fromStr = from.get();
-    if (to.isPresent())
-      toStr = to.get();
+    if (from.isPresent()) {
+      if (!from.get().isEmpty())
+        fromStr = from.get();
+    }
+    if (to.isPresent()) {
+      if (!to.get().isEmpty())
+        toStr = to.get();
+    }
 
     List<String> tinhtrang_options = new ArrayList<String>();
     tinhtrang_options.add("Đã hủy");

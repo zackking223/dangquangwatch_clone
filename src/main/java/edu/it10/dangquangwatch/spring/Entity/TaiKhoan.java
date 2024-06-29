@@ -25,7 +25,7 @@ public class TaiKhoan {
   @Column(name = "hoten")
   private String hoten;
 
-  @Column(name = "sodienthoai", unique = true)
+  @Column(name = "sodienthoai", unique = true, nullable = true)
   private String sodienthoai;
 
   @Column(name = "diachi")

@@ -22,6 +22,7 @@ import edu.it10.dangquangwatch.spring.service.DonghoService;
 import edu.it10.dangquangwatch.spring.service.ButkyService;
 import edu.it10.dangquangwatch.spring.service.KinhMatService;
 import edu.it10.dangquangwatch.spring.service.PhuKienService;
+import edu.it10.dangquangwatch.spring.service.ThongKeService;
 import edu.it10.dangquangwatch.spring.service.TrangsucService;
 import jakarta.websocket.server.PathParam;
 
@@ -31,7 +32,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class IndexController {
     @Autowired
     private DonghoService donghoService;
-
     @Autowired
     private TrangsucService trangsucService;
     @Autowired
@@ -40,6 +40,8 @@ public class IndexController {
     private KinhMatService kinhMatService;
     @Autowired
     private ButkyService butkyService;
+    @Autowired
+    private ThongKeService thongKeService;
 
     @GetMapping("/dongho/{id}")
     public String trangDongHo(Model model, @PathParam("search") Optional<String> search,
@@ -51,6 +53,7 @@ public class IndexController {
             String searchStr = "";
             if (search.isPresent())
                 searchStr = search.get();
+            thongKeService.tangluotxemsanpham();
             model.addAttribute("dongho", dongho);
             model.addAttribute("title", dongho.getTendongho());
             model.addAttribute("search", searchStr);
@@ -70,6 +73,7 @@ public class IndexController {
             String searchStr = "";
             if (search.isPresent())
                 searchStr = search.get();
+            thongKeService.tangluotxemsanpham();
             model.addAttribute("phukien", phukien);
             model.addAttribute("title", phukien.getTenPhuKien());
             model.addAttribute("search", searchStr);
@@ -89,6 +93,7 @@ public class IndexController {
             String searchStr = "";
             if (search.isPresent())
                 searchStr = search.get();
+            thongKeService.tangluotxemsanpham();
             model.addAttribute("butky", butky);
             model.addAttribute("title", butky.getTenbutky());
             model.addAttribute("search", searchStr);
@@ -108,6 +113,7 @@ public class IndexController {
             String searchStr = "";
             if (search.isPresent())
                 searchStr = search.get();
+            thongKeService.tangluotxemsanpham();
             model.addAttribute("kinhmat", kinhmat);
             model.addAttribute("title", kinhmat.getTenSanPham());
             model.addAttribute("search", searchStr);
@@ -127,6 +133,7 @@ public class IndexController {
             String searchStr = "";
             if (search.isPresent())
                 searchStr = search.get();
+            thongKeService.tangluotxemsanpham();
             model.addAttribute("trangsuc", trangsuc);
             model.addAttribute("title", trangsuc.getTentrangsuc());
             model.addAttribute("search", searchStr);
@@ -301,6 +308,7 @@ public class IndexController {
     }
 
     private String renderIndex(Model model) {
+        thongKeService.tangluottruycap();
         model.addAttribute("sanphambanchay",
                 donghoService.getAllDonghoByTendongho("", "2001-01-01", "3000-01-01", 0).getContent());
         model.addAttribute("donghoeposswiss",

@@ -1,71 +1,106 @@
-Mỗi khi có một sản phẩm bất kỳ được insert thì sẽ tăng số lượng của sản phẩm đó và tăng cột chiphi + (giá sản phẩm vừa thêm / 2 và làm tròn thành số nguyên dương)
+Mỗi khi có một sản phẩm bất kỳ được insert thì sẽ tăng số lượng của sản phẩm đó và tăng cột chiphi = ( chiphi + (giá sản phẩm vừa thêm / 10) * sanpham.soluong ) và làm tròn thành số nguyên dương
 đồng thời tăng cột của sản phẩm tương ứng trong bảng thongke, ví dụ dongho được insert thì tăng thongke.dongho lên 1 đơn vị (với mathongke = 1)
 
 DELIMITER //
 
 CREATE PROCEDURE UpdateThongKeOnInsert(
-    IN p_giatien INT,
-    IN p_column_name VARCHAR(255)
+    IN productType VARCHAR(255),
+    IN productPrice DECIMAL(10,2),
+    IN productQuantity INT
 )
 BEGIN
-    -- Tăng cột chiphi với giá sản phẩm vừa thêm / 2 và làm tròn thành số nguyên dương
-    SET @sql = CONCAT('UPDATE thongke SET chiphi = chiphi + CEIL(? / 2), ', p_column_name, ' = ', p_column_name, ' + 1 WHERE mathongke = 1');
-    
-    -- Chuẩn bị và thực thi câu lệnh SQL động
-    PREPARE stmt FROM @sql;
-    EXECUTE stmt USING p_giatien;
-    DEALLOCATE PREPARE stmt;
+    DECLARE currentCost INT;
+
+    -- Lấy giá trị hiện tại của chiphi
+    SELECT chiphi INTO currentCost FROM thongke WHERE mathongke = 1;
+
+    -- Tính toán chi phí mới
+    SET currentCost = currentCost + CEIL(productPrice / 10) * productQuantity;
+
+    -- Tăng số lượng sản phẩm tương ứng và cập nhật chi phí trong bảng thongke
+    IF productType = 'dongho' THEN
+        UPDATE thongke
+        SET dongho = dongho + 1,
+            chiphi = currentCost
+        WHERE mathongke = 1;
+    ELSEIF productType = 'kinhmat' THEN
+        UPDATE thongke
+        SET kinhmat = kinhmat + 1,
+            chiphi = currentCost
+        WHERE mathongke = 1;
+    ELSEIF productType = 'phukien' THEN
+        UPDATE thongke
+        SET phukien = phukien + 1,
+            chiphi = currentCost
+        WHERE mathongke = 1;
+    ELSEIF productType = 'trangsuc' THEN
+        UPDATE thongke
+        SET trangsuc = trangsuc + 1,
+            chiphi = currentCost
+        WHERE mathongke = 1;
+    ELSEIF productType = 'butky' THEN
+        UPDATE thongke
+        SET butky = butky + 1,
+            chiphi = currentCost
+        WHERE mathongke = 1;
+    END IF;
 END //
 
 DELIMITER ;
 
 DELIMITER //
+
 CREATE TRIGGER dongho_after_insert
 AFTER INSERT ON dongho
 FOR EACH ROW
 BEGIN
-    -- Gọi stored procedure để cập nhật bảng thongke
-    CALL UpdateThongKeOnInsert(NEW.giatien, 'dongho');
-END // DELIMITER ;
+    CALL UpdateThongKeOnInsert('dongho', NEW.giatien, NEW.soluong);
+END //
+
+DELIMITER ;
 
 DELIMITER //
+
 CREATE TRIGGER kinhmat_after_insert
 AFTER INSERT ON kinhmat
 FOR EACH ROW
 BEGIN
-    -- Gọi stored procedure để cập nhật bảng thongke
-    CALL UpdateThongKeOnInsert(NEW.giatien, 'kinhmat');
+    CALL UpdateThongKeOnInsert('kinhmat', NEW.giatien, NEW.soluong);
 END //
+
 DELIMITER ;
 
 DELIMITER //
+
 CREATE TRIGGER phukien_after_insert
 AFTER INSERT ON phukien
 FOR EACH ROW
 BEGIN
-    -- Gọi stored procedure để cập nhật bảng thongke
-    CALL UpdateThongKeOnInsert(NEW.giatien, 'phukien');
+    CALL UpdateThongKeOnInsert('phukien', NEW.giatien, NEW.soluong);
 END //
+
 DELIMITER ;
 
 DELIMITER //
+
 CREATE TRIGGER trangsuc_after_insert
 AFTER INSERT ON trangsuc
 FOR EACH ROW
 BEGIN
-    -- Gọi stored procedure để cập nhật bảng thongke
-    CALL UpdateThongKeOnInsert(NEW.gia, 'trangsuc');
+    CALL UpdateThongKeOnInsert('trangsuc', NEW.gia, NEW.soluong);
 END //
+
 DELIMITER ;
 
 DELIMITER //
+
 CREATE TRIGGER butky_after_insert
 AFTER INSERT ON butky
 FOR EACH ROW
 BEGIN
-    -- Gọi stored procedure để cập nhật bảng thongke
-    CALL UpdateThongKeOnInsert(NEW.giatien, 'butky');
+    CALL UpdateThongKeOnInsert('butky', NEW.giatien, NEW.soluong);
 END //
+
 DELIMITER ;
 
 
