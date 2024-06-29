@@ -1,5 +1,5 @@
-Mỗi khi có một sản phẩm bất kỳ được insert thì sẽ tăng số lượng của sản phẩm đó và tăng cột chiphi = ( chiphi + (giá sản phẩm vừa thêm / 10) * sanpham.soluong ) và làm tròn thành số nguyên dương
-đồng thời tăng cột của sản phẩm tương ứng trong bảng thongke, ví dụ dongho được insert thì tăng thongke.dongho lên 1 đơn vị (với mathongke = 1)
+--Mỗi khi có một sản phẩm bất kỳ được insert thì sẽ tăng số lượng của sản phẩm đó và tăng cột chiphi = ( chiphi + (giá sản phẩm vừa thêm / 10) * sanpham.soluong ) và làm tròn thành số nguyên dương
+--đồng thời tăng cột của sản phẩm tương ứng trong bảng thongke, ví dụ dongho được insert thì tăng thongke.dongho lên 1 đơn vị (với mathongke = 1)
 
 DELIMITER //
 
@@ -104,7 +104,7 @@ END //
 DELIMITER ;
 
 
-Mỗi lần chitietdonhang được insert thì tăng thongke.luotthemgiohang lên 1 đơn vị (mathongke luôn bằng 1)
+--Mỗi lần chitietdonhang được insert thì tăng thongke.luotthemgiohang lên 1 đơn vị (mathongke luôn bằng 1)
 
 DELIMITER //
 
@@ -123,8 +123,8 @@ END //
 DELIMITER ;
 
 
-Mỗi khi có donhang được insert với tinhtrang là 'Chờ xác nhận' thì tăng thongke donhangchoxacnhan luotdathang
-Đồng thời tăng thongke.donhang
+--Mỗi khi có donhang được insert với tinhtrang là 'Chờ xác nhận' thì tăng thongke donhangchoxacnhan luotdathang
+--Đồng thời tăng thongke.donhang
 DELIMITER //
 
 CREATE TRIGGER donhang_after_insert
@@ -148,7 +148,7 @@ END //
 DELIMITER ;
 
 
-Mỗi khi có donhang được cập nhật tình trạng từ 'Chờ xác nhận' thành 'Đã xác nhận' thì giảm donhangchoxacnhan 1 đơn vị
+--Mỗi khi có donhang được cập nhật tình trạng từ 'Chờ xác nhận' thành 'Đã xác nhận' thì giảm donhangchoxacnhan 1 đơn vị
 DELIMITER //
 
 CREATE TRIGGER donhang_after_xacnhan
@@ -167,7 +167,7 @@ END //
 DELIMITER ;
 
 
-Tăng giá trị của donhangdanggiao khi tình trạng đơn hàng được cập nhật từ 'Đã xác nhận' thành 'Đang vận chuyển'.
+--Tăng giá trị của donhangdanggiao khi tình trạng đơn hàng được cập nhật từ 'Đã xác nhận' thành 'Đang vận chuyển'.
 DELIMITER //
 
 CREATE TRIGGER donghang_after_giao
@@ -186,22 +186,56 @@ END //
 DELIMITER ;
 
 
-Tăng giá trị của donhangdagiao, luotthanhtoan, chiphi và doanhthu khi tình trạng đơn hàng được cập nhật từ 'Đang vận chuyển' thành 'Đã nhận hàng', đồng thời giảm donhangdanggiao.
+--Tăng giá trị của donhangdagiao, luotthanhtoan, chiphi và doanhthu khi tình trạng đơn hàng được cập nhật từ 'Đang vận chuyển' thành 'Đã nhận hàng', đồng thời giảm donhangdanggiao.
 DELIMITER //
 
 CREATE TRIGGER donhang_after_nhan
 AFTER UPDATE ON donhang
 FOR EACH ROW
 BEGIN
-    -- Kiểm tra nếu tình trạng thay đổi từ 'Đang vận chuyển' thành 'Đã nhận hàng'
+    DECLARE done INT DEFAULT 0;
+    DECLARE machitiet INT;
+    DECLARE madon INT;
+    DECLARE loaisanpham VARCHAR(255);
+    DECLARE masanpham INT;
+    DECLARE soluong INT;
+    DECLARE giatien DECIMAL(10,2);
+    DECLARE cur CURSOR FOR 
+        SELECT machitietdonhang, madonhang, loaisanpham, masanpham, soluong, giatien
+        FROM chitietdonhang
+        WHERE madonhang = NEW.madonhang;
+
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
     IF OLD.tinhtrang = 'Đang vận chuyển' AND NEW.tinhtrang = 'Đã nhận hàng' THEN
-        -- Tăng giá trị của các cột donhangdagiao, luotthanhtoan, chiphi và doanhthu trong bảng thongke
+        OPEN cur;
+        read_loop: LOOP
+            FETCH cur INTO machitiet, madon, loaisanpham, masanpham, soluong, giatien;
+            IF done THEN
+                LEAVE read_loop;
+            END IF;
+
+            CASE loaisanpham
+                WHEN 'dongho' THEN
+                    UPDATE dongho SET soluong = soluong - soluong WHERE madongho = masanpham;
+                WHEN 'butky' THEN
+                    UPDATE butky SET soluong = soluong - soluong WHERE mabutky = masanpham;
+                WHEN 'kinhmat' THEN
+                    UPDATE kinhmat SET soluong = soluong - soluong WHERE makinhmat = masanpham;
+                WHEN 'phukien' THEN
+                    UPDATE phukien SET soluong = soluong - soluong WHERE maphukien = masanpham;
+                WHEN 'trangsuc' THEN
+                    UPDATE trangsuc SET soluong = soluong - soluong WHERE matrangsuc = masanpham;
+            END CASE;
+        END LOOP read_loop;
+        CLOSE cur;
+
         UPDATE thongke
         SET donhangdagiao = donhangdagiao + 1,
             luotthanhtoan = luotthanhtoan + 1,
             chiphi = chiphi + 50000,
-            doanhthu = doanhthu + NEW.tongtien,
-            donhangdanggiao = donhangdanggiao - 1
+            donhangdanggiao = donhangdanggiao - 1,
+            doanhthu = doanhthu + NEW.tongtien
         WHERE mathongke = 1;
     END IF;
 END //
@@ -209,7 +243,7 @@ END //
 DELIMITER ;
 
 
-Tăng giá trị của donhangdahuy và giảm giá trị của các cột tương ứng (donhangchoxacnhan, donhangdanggiao) dựa vào tình trạng cũ khi tình trạng đơn hàng được cập nhật thành 'Đã hủy'.
+--Tăng giá trị của donhangdahuy và giảm giá trị của các cột tương ứng (donhangchoxacnhan, donhangdanggiao) dựa vào tình trạng cũ khi tình trạng đơn hàng được cập nhật thành 'Đã hủy'.
 DELIMITER //
 
 CREATE TRIGGER donhang_after_huy
@@ -240,7 +274,8 @@ DELIMITER ;
 
 
 
-Để thực hiện yêu cầu này, bạn cần tạo một trigger trên bảng taikhoan để lắng nghe sự kiện INSERT. Khi một tài khoản mới được thêm vào với loai_tai_khoan là 'ROLE_KHACHHANG', trigger này sẽ tăng giá trị của các cột khachhang và luotdangkymoi trong bảng thongke.
+--lắng nghe sự kiện INSERT. 
+--Khi một tài khoản mới được thêm vào với loai_tai_khoan là 'ROLE_KHACHHANG', trigger này sẽ tăng giá trị của các cột khachhang và luotdangkymoi trong bảng thongke.
 DELIMITER //
 
 CREATE TRIGGER taikhoan_after_insert_khachhang
@@ -258,3 +293,40 @@ BEGIN
 END //
 
 DELIMITER ;
+
+
+--Liệt kê các trigger
+SELECT TRIGGER_NAME, EVENT_MANIPULATION, EVENT_OBJECT_TABLE, ACTION_STATEMENT, ACTION_TIMING
+FROM information_schema.TRIGGERS
+WHERE TRIGGER_SCHEMA = 'dongho_dangquang';
+
+
+--Liệt kê các PROCEDURE
+SELECT ROUTINE_NAME, ROUTINE_TYPE, DATA_TYPE
+FROM information_schema.ROUTINES
+WHERE ROUTINE_SCHEMA = 'dongho_dangquang' AND ROUTINE_TYPE = 'PROCEDURE';
+
+ALTER TABLE anh_dongho
+ADD CONSTRAINT fk_anh_dongho_dongho
+FOREIGN KEY (madongho) REFERENCES dongho(madongho)
+ON DELETE CASCADE;
+
+ALTER TABLE anh_butky
+ADD CONSTRAINT fk_anh_butky_butky
+FOREIGN KEY (mabutky) REFERENCES butky(mabutky)
+ON DELETE CASCADE;
+
+ALTER TABLE anh_trangsuc
+ADD CONSTRAINT fk_anh_trangsuc_trangsuc
+FOREIGN KEY (matrangsuc) REFERENCES trangsuc(matrangsuc)
+ON DELETE CASCADE;
+
+ALTER TABLE anh_kinhmat
+ADD CONSTRAINT fk_anh_kinhmat_kinhmat
+FOREIGN KEY (makinhmat) REFERENCES kinhmat(makinhmat)
+ON DELETE CASCADE;
+
+ALTER TABLE anh_phukien
+ADD CONSTRAINT fk_anh_phukien_phukien
+FOREIGN KEY (maphukien) REFERENCES phukien(maphukien)
+ON DELETE CASCADE;
