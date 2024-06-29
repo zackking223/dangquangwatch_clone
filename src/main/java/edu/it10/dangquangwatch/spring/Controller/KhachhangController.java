@@ -42,7 +42,7 @@ public class KhachhangController {
     if (page.isPresent())
       pageNum = page.get() - 1;
     if (search.isPresent())
-      searchStr = search.get();
+      searchStr = search.get().trim();
 
     Page<TaiKhoan> data = taikhoanService.searchTaiKhoanKhachHang(searchStr, fromStr, toStr, pageNum);
 

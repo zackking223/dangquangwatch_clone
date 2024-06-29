@@ -48,7 +48,7 @@ public class ButkyController {
     String searchStr = "";
 
     if (search.isPresent()) {
-      searchStr = search.get();
+      searchStr = search.get().trim();
     }
 
     if (page.isPresent()) {

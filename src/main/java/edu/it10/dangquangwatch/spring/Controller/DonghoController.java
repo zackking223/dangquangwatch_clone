@@ -57,7 +57,7 @@ public class DonghoController {
     Dongho fieldData = new Dongho();
 
     if (search.isPresent())
-      searchStr = search.get();
+      searchStr = search.get().trim();
     if (page.isPresent())
       pageNum = page.get() - 1;
 

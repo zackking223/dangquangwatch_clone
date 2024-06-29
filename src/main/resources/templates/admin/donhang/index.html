@@ -99,10 +99,18 @@
               <input type="number" name="madonhang" class="hidden" th:value="${donhang.getMaDonHang()}">
               <button class="block p-2 rounded bg-blue-500 text-white">Xác nhận</button>
             </form>
+            <form action="/admin/donhang/vanchuyen" th:if="${donhang.getTinhTrang() == 'Đã xác nhận'}">
+              <input type="number" name="madonhang" class="hidden" th:value="${donhang.getMaDonHang()}">
+              <button class="block p-2 rounded bg-green-500 text-white">Vận chuyển</button>
+            </form>
             <form action="/admin/donhang/huy" th:if="${donhang.getTinhTrang() == 'Đã xác nhận'}">
               <input type="number" name="madonhang" class="hidden" th:value="${donhang.getMaDonHang()}">
-              <button class="block p-2 rounded bg-orange-500 text-white">Hủy
+              <button class="block p-2 rounded bg-red-500 text-white">Hủy
                 đơn</button>
+            </form>
+            <form action="/admin/donhang/danhan" th:if="${donhang.getTinhTrang() == 'Đang vận chuyển'}">
+              <input type="number" name="madonhang" class="hidden" th:value="${donhang.getMaDonHang()}">
+              <button class="block p-2 rounded bg-green-500 text-white">Đã nhận hàng</button>
             </form>
             <a th:if="${donhang.getTinhTrang() == 'Chờ xác nhận'}" th:href="@{/admin/donhang/edit?id={id}(id=${donhang.getMaDonHang()})}"
               class="block w-max p-2 rounded bg-green-500 text-white">Sửa</a>

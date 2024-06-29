@@ -184,6 +184,28 @@ public class DonhangController {
     return "redirect:/admin/donhang/";
   }
 
+  @GetMapping(value = "/vanchuyen")
+  public String vanchuyen(@RequestParam("madonhang") Integer madonhang) {
+    Optional<DonHang> data = donHangService.findDonHangById(madonhang);
+    if (data.isPresent()) {
+      DonHang dh = data.get();
+      dh.setTinhTrang("Đang vận chuyển");
+      donHangService.updateDonHang(dh);
+    }
+    return "redirect:/admin/donhang/";
+  }
+
+  @GetMapping(value = "/danhan")
+  public String danhan(@RequestParam("madonhang") Integer madonhang) {
+    Optional<DonHang> data = donHangService.findDonHangById(madonhang);
+    if (data.isPresent()) {
+      DonHang dh = data.get();
+      dh.setTinhTrang("Đã nhận hàng");
+      donHangService.updateDonHang(dh);
+    }
+    return "redirect:/admin/donhang/";
+  }
+
   @GetMapping(value = "/delete")
   public String deleteDonHang(@RequestParam("id") Integer madonHang, Model model) {
     donHangService.deleteDonHang(madonHang);

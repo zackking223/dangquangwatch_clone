@@ -330,3 +330,83 @@ ALTER TABLE anh_phukien
 ADD CONSTRAINT fk_anh_phukien_phukien
 FOREIGN KEY (maphukien) REFERENCES phukien(maphukien)
 ON DELETE CASCADE;
+
+DELIMITER //
+
+CREATE TRIGGER delete_dongho
+AFTER DELETE ON dongho
+FOR EACH ROW
+BEGIN
+    UPDATE thongke
+    SET dongho = dongho - 1
+    WHERE mathongke = 1;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE TRIGGER delete_butky
+AFTER DELETE ON butky
+FOR EACH ROW
+BEGIN
+    UPDATE thongke
+    SET butky = butky - 1
+    WHERE mathongke = 1;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE TRIGGER delete_trangsuc
+AFTER DELETE ON trangsuc
+FOR EACH ROW
+BEGIN
+    UPDATE thongke
+    SET trangsuc = trangsuc - 1
+    WHERE mathongke = 1;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE TRIGGER delete_kinhmat
+AFTER DELETE ON kinhmat
+FOR EACH ROW
+BEGIN
+    UPDATE thongke
+    SET kinhmat = kinhmat - 1
+    WHERE mathongke = 1;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE TRIGGER delete_phukien
+AFTER DELETE ON phukien
+FOR EACH ROW
+BEGIN
+    UPDATE thongke
+    SET phukien = phukien - 1
+    WHERE mathongke = 1;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE TRIGGER delete_taikhoan_role_khachhang
+AFTER DELETE ON taikhoan
+FOR EACH ROW
+BEGIN
+    IF OLD.loai_tai_khoan = 'ROLE_KHACHHANG' THEN
+        UPDATE thongke
+        SET khachhang = khachhang - 1
+        WHERE mathongke = 1; -- Đảm bảo chỉ cập nhật vào dòng mathongke = 1, nếu có nhiều dòng thống kê
+    END IF;
+END //
+
+DELIMITER ;

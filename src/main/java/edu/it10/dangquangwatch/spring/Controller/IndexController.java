@@ -52,7 +52,7 @@ public class IndexController {
         donghoEdit.ifPresent(dongho -> {
             String searchStr = "";
             if (search.isPresent())
-                searchStr = search.get();
+                searchStr = search.get().trim();
             thongKeService.tangluotxemsanpham();
             model.addAttribute("dongho", dongho);
             model.addAttribute("title", dongho.getTendongho());
@@ -72,7 +72,7 @@ public class IndexController {
         phukienEdit.ifPresent(phukien -> {
             String searchStr = "";
             if (search.isPresent())
-                searchStr = search.get();
+                searchStr = search.get().trim();
             thongKeService.tangluotxemsanpham();
             model.addAttribute("phukien", phukien);
             model.addAttribute("title", phukien.getTenPhuKien());
@@ -92,7 +92,7 @@ public class IndexController {
         butkyEdit.ifPresent(butky -> {
             String searchStr = "";
             if (search.isPresent())
-                searchStr = search.get();
+                searchStr = search.get().trim();
             thongKeService.tangluotxemsanpham();
             model.addAttribute("butky", butky);
             model.addAttribute("title", butky.getTenbutky());
@@ -112,7 +112,7 @@ public class IndexController {
         kinhmatEdit.ifPresent(kinhmat -> {
             String searchStr = "";
             if (search.isPresent())
-                searchStr = search.get();
+                searchStr = search.get().trim();
             thongKeService.tangluotxemsanpham();
             model.addAttribute("kinhmat", kinhmat);
             model.addAttribute("title", kinhmat.getTenSanPham());
@@ -132,7 +132,7 @@ public class IndexController {
         trangsucEdit.ifPresent(trangsuc -> {
             String searchStr = "";
             if (search.isPresent())
-                searchStr = search.get();
+                searchStr = search.get().trim();
             thongKeService.tangluotxemsanpham();
             model.addAttribute("trangsuc", trangsuc);
             model.addAttribute("title", trangsuc.getTentrangsuc());
@@ -152,7 +152,7 @@ public class IndexController {
         int pageNum = 0;
 
         if (search.isPresent())
-            searchStr = search.get();
+            searchStr = search.get().trim();
         if (page.isPresent())
             pageNum = page.get() - 1;
         data = butkyService.searchButky(searchStr, "2001-01-01", "3000-01-01", pageNum);
@@ -175,7 +175,7 @@ public class IndexController {
         Dongho fieldData = new Dongho();
 
         if (search.isPresent())
-            searchStr = search.get();
+            searchStr = search.get().trim();
         if (page.isPresent())
             pageNum = page.get() - 1;
         data = donghoService.getAllDonghoByTendongho(searchStr, "2001-01-01", "3000-01-01", pageNum);
@@ -197,7 +197,7 @@ public class IndexController {
         int pageNum = 0;
 
         if (search.isPresent())
-            searchStr = search.get();
+            searchStr = search.get().trim();
         if (page.isPresent())
             pageNum = page.get() - 1;
         data = kinhMatService.searchKinhMat(searchStr, "2001-01-01", "3000-01-01", pageNum);
@@ -219,7 +219,7 @@ public class IndexController {
         int pageNum = 0;
 
         if (search.isPresent())
-            searchStr = search.get();
+            searchStr = search.get().trim();
         if (page.isPresent())
             pageNum = page.get() - 1;
         data = phuKienService.searchPhuKien(searchStr, "2001-01-01", "3000-01-01", pageNum);
@@ -241,7 +241,7 @@ public class IndexController {
         int pageNum = 0;
 
         if (search.isPresent())
-            searchStr = search.get();
+            searchStr = search.get().trim();
         if (page.isPresent())
             pageNum = page.get() - 1;
         data = trangsucService.searchTrangsuc(searchStr, "2001-01-01", "3000-01-01", pageNum);
@@ -263,7 +263,7 @@ public class IndexController {
     public String index(@RequestParam("search") Optional<String> search, @RequestParam("page") Optional<Integer> page,
             Model model) {
         if (search.isPresent()) {
-            String searchStr = search.get();
+            String searchStr = search.get().trim();
 
             if (searchStr.isEmpty()) {
                 return renderIndex(model);

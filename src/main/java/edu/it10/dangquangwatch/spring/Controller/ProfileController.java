@@ -88,7 +88,7 @@ public class ProfileController {
 
     String searchStr = "";
     if (search.isPresent())
-      searchStr = search.get();
+      searchStr = search.get().trim();
 
     String username = (String) session.getAttribute("username");
 
