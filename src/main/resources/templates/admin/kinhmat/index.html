@@ -58,7 +58,9 @@
                 <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${kinhMat.getDaiGong()}"></td>
                 <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${kinhMat.getTinhNang()}"></td>
                 <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${kinhMat.getTraGop()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${kinhMat.getThongTin()}"></td>
+                <td class="max-h-[200px] overflow-hidden p-2 border border-solid border-black max-w-[200px]" >
+                    <p class="max-h-[200px] overflow-hidden" th:text="${kinhMat.getThongTin()}"></p>
+                </td>
                 <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${kinhMat.getNGAYTHEM()}"></td>
                 <td class="p-2 border border-solid border-black max-w-[200px]">
                     <a class="p-2 rounded bg-green-500 text-white"

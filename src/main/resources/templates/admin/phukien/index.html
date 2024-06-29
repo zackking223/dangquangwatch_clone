@@ -62,8 +62,9 @@
                     th:text="${phuKien.getSoLuong()}"></td>
                 <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
                     th:text="${phuKien.getTraGop()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
-                    th:text="${phuKien.getThongTin()}"></td>
+                <td class="max-h-[200px] p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+                    <p class="max-h-[200px] overflow-hidden" th:text="${phuKien.getThongTin()}"></p>
+                </td>
                 <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
                     th:text="${phuKien.getNGAYTHEM()}"></td>
                 <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
