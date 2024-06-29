@@ -61,9 +61,14 @@ public class DangkyController {
       taiKhoanService.dangKyKhachHang(taiKhoan);
     } catch (Exception e) {
       e.printStackTrace();
-      return "redirect:/dangky?error=dupname";
+      String errorMessage = "Username đã tồn tại!";
+      if (e.getMessage().contains("for key \'sodienthoai_unique\'")) {
+        errorMessage = "Số điện thoại đã tồn tại!";
+      }
+
+      model.addAttribute("errorMessage", errorMessage);
+      return "dangky";
     }
     return "redirect:/login";
   }
-
 }

@@ -20,4 +20,5 @@ public interface ThongKeService {
   void updateVon(Integer newCapital);
   void incVon(Integer amount);
   void decVon(Integer amount);
+  void updateTiLeChuyenDoi(Float newTiLe);
 }

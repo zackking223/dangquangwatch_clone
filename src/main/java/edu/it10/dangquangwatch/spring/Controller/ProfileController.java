@@ -66,7 +66,7 @@ public class ProfileController {
     tinhtrang_options.add("Đã hủy");
     tinhtrang_options.add("Chờ xác nhận");
     tinhtrang_options.add("Đã xác nhận");
-    tinhtrang_options.add("Đang giao hàng");
+    tinhtrang_options.add("Đang vận chuyển");
     tinhtrang_options.add("Đã nhận hàng");
 
     List<String> thanhtoan_options = new ArrayList<String>();

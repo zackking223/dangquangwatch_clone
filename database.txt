@@ -159,7 +159,8 @@ BEGIN
     IF OLD.tinhtrang = 'Chờ xác nhận' AND NEW.tinhtrang = 'Đã xác nhận' THEN
         -- Giảm giá trị của cột donhangchoxacnhan trong bảng thongke
         UPDATE thongke
-        SET donhangchoxacnhan = donhangchoxacnhan - 1
+        SET donhangchoxacnhan = donhangchoxacnhan - 1,
+        donhangdaxacnhan = donhangdaxacnhan + 1
         WHERE mathongke = 1;
     END IF;
 END //
@@ -170,7 +171,7 @@ DELIMITER ;
 --Tăng giá trị của donhangdanggiao khi tình trạng đơn hàng được cập nhật từ 'Đã xác nhận' thành 'Đang vận chuyển'.
 DELIMITER //
 
-CREATE TRIGGER donghang_after_giao
+CREATE TRIGGER donhang_after_giao
 AFTER UPDATE ON donhang
 FOR EACH ROW
 BEGIN
@@ -178,7 +179,8 @@ BEGIN
     IF OLD.tinhtrang = 'Đã xác nhận' AND NEW.tinhtrang = 'Đang vận chuyển' THEN
         -- Tăng giá trị của cột donhangdanggiao trong bảng thongke
         UPDATE thongke
-        SET donhangdanggiao = donhangdanggiao + 1
+        SET donhangdanggiao = donhangdanggiao + 1,
+        donhangdaxacnhan = donhangdaxacnhan - 1
         WHERE mathongke = 1;
     END IF;
 END //
@@ -188,7 +190,7 @@ DELIMITER ;
 -- Xóa trigger
 DROP TRIGGER IF EXISTS donhang_after_nhan;
 
---Tăng giá trị của donhangdagiao, luotthanhtoan, chiphi và doanhthu 
+-- Tăng giá trị của donhangdagiao, luotthanhtoan, chiphi và doanhthu 
 -- khi tình trạng đơn hàng được cập nhật từ 'Đang vận chuyển' thành 'Đã nhận hàng', 
 -- đồng thời giảm donhangdanggiao 
 -- tình trạng thanh toán của đơn hàng đã được sửa sẵn trong controller.
@@ -223,6 +225,7 @@ BEGIN
         SET donhangdanggiao = donhangdanggiao - 1,
             donhangdagiao = donhangdagiao + 1,
             luotthanhtoan = luotthanhtoan + 1,
+            luothoanthanhdon = luothoanthanhdon + 1,
             chiphi = chiphi + 50000,
             doanhthu = doanhthu + NEW.tongtien
         WHERE mathongke = 1;
@@ -336,6 +339,7 @@ SELECT ROUTINE_NAME, ROUTINE_TYPE, DATA_TYPE
 FROM information_schema.ROUTINES
 WHERE ROUTINE_SCHEMA = 'dongho_dangquang' AND ROUTINE_TYPE = 'PROCEDURE';
 
+-- Gán delete cascade
 ALTER TABLE anh_dongho
 ADD CONSTRAINT fk_anh_dongho_dongho
 FOREIGN KEY (madongho) REFERENCES dongho(madongho)

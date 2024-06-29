@@ -20,18 +20,19 @@ public class ThongkeController {
   private ThongKeService thongKeService;
 
   @GetMapping("/admin/")
-  public String adminIndex(Model model) {
-    ThongKe thongKe = thongKeService.getAllThongKe().getFirst();
-
-    model.addAttribute("thongKe", thongKe);
-
-    return "admin/thongke/index";
+  public String adminIndex(Model model, @RequestParam("editcapital") Optional<String> editcapital_opt) {
+    return trangThongKe(model, editcapital_opt);
   }
 
   @GetMapping("/admin/thongke/")
   public String trangThongKe(Model model, @RequestParam("editcapital") Optional<String> editcapital_opt) {
     ThongKe thongKe = thongKeService.getAllThongKe().getFirst();
     boolean editcapital = editcapital_opt.isPresent();
+
+    Float newTiLe = thongKe.getTiLeChuyenDoi();
+
+    thongKeService.updateTiLeChuyenDoi(newTiLe);
+    thongKe.setTiLeChuyenDoi(newTiLe);
 
     model.addAttribute("thongKe", thongKe);
     model.addAttribute("editcapital", editcapital);

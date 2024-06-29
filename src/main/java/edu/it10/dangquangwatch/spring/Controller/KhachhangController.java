@@ -2,6 +2,7 @@ package edu.it10.dangquangwatch.spring.controller;
 
 import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
 import edu.it10.dangquangwatch.spring.service.TaiKhoanService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -53,18 +54,18 @@ public class KhachhangController {
     model.addAttribute("to", to.isPresent() ? to.get() : "");
     model.addAttribute("taikhoans", data.getContent());
 
-    return "/admin/khachhang/index";
+    return "admin/khachhang/index";
   }
 
   @GetMapping(value = "/add")
   public String addTaikhoan(Model model, @RequestParam("error") Optional<String> error) {
     String errorMessage = null;
     if (error.isPresent()) {
-      errorMessage = "Username đã tồn tại!";
+      errorMessage = error.get();
     }
     model.addAttribute("errorMessage", errorMessage);
     model.addAttribute("taikhoan", new TaiKhoan());
-    return "/admin/khachhang/addKhachHang";
+    return "admin/khachhang/addKhachHang";
   }
 
   @GetMapping(value = "/edit")
@@ -72,19 +73,26 @@ public class KhachhangController {
     TaiKhoan taikhoanEdit = taikhoanService.getTaiKhoan(username);
     if (taikhoanEdit != null) {
       model.addAttribute("taikhoan", taikhoanEdit);
-      return "/admin/khachhang/editKhachHang";
+      return "admin/khachhang/editKhachHang";
     } else {
       return "redirect:/admin/khachhang/";
     }
   }
 
   @PostMapping(value = "/add")
-  public String addTaiKhoan(TaiKhoan taikhoan) {
+  public String addTaiKhoan(TaiKhoan taikhoan, Model model) {
     try {
       taikhoanService.dangKyKhachHang(taikhoan);
     } catch (Exception e) {
       e.printStackTrace();
-      return "redirect:/admin/khachhang/add?error=dupname";
+
+      String errorMessage = "Username đã tồn tại!";
+      if (e.getMessage().contains("for key \'sodienthoai_unique\'")) {
+        errorMessage = "Số điện thoại đã tồn tại!";
+      }
+      model.addAttribute("errorMessage", errorMessage);
+      model.addAttribute("taikhoan", taikhoan);
+      return "admin/khachhang/addKhachHang";
     }
     return "redirect:/admin/khachhang/";
   }

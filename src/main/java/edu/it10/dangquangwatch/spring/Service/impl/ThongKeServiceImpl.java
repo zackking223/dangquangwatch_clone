@@ -105,12 +105,24 @@ public class ThongKeServiceImpl implements ThongKeService {
 
         // Tăng giá trị
         Integer oldVon = thongKe.getVon();
-        
+
         if (oldVon <= amount || oldVon < 1) {
             thongKe.setVon(0);
         } else {
             thongKe.setVon(thongKe.getVon() - amount);
         }
+        // Lưu lại vào cơ sở dữ liệu
+        thongKeRepository.save(thongKe);
+    }
+
+    @Override
+    public void updateTiLeChuyenDoi(Float newTiLe) {
+        // Lấy bản ghi ThongKe (ví dụ: bản ghi có id = 1)
+        ThongKe thongKe = thongKeRepository.findById(1)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy bản ghi thống kê"));
+
+        thongKe.setTiLeChuyenDoi(newTiLe);
+        
         // Lưu lại vào cơ sở dữ liệu
         thongKeRepository.save(thongKe);
     }

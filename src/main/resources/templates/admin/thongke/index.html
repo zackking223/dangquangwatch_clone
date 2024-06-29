@@ -13,12 +13,15 @@
 <body>
   <div th:replace="~{fragments/sidebar :: sidebar}"></div>
   <div th:if="${editcapital}" class="absolute z-20 w-full h-full bg-[rgba(0,0,0,0.3)]">
-    <div class="absolute p-4 w-max min-w-[280px] bg-slate-50 shadow shadow-black rounded top-[50%] translate-x-[-50%] left-[50%] translate-y-[-50%]">
+    <div
+      class="absolute p-4 w-max min-w-[280px] bg-slate-50 shadow shadow-black rounded top-[50%] translate-x-[-50%] left-[50%] translate-y-[-50%]">
       <a href="/admin/thongke/" class="absolute top-4 right-4 p-2 bg-red-500 rounded text-white text-xs font-bold">X</a>
       <h1 class="font-bold text-center my-2">Thay đổi vốn</h1>
       <form action="/admin/thongke/updatecapital" method="get" class="flex flex-col gap-2">
-        <input class="border border-black rounded block p-2 w-[80vw] max-w-[280px]" type="number" name="capital" th:value="${thongKe.getVon()}">
-        <input class="p-2 w-max bg-green-500 cursor-pointer hover:bg-green-600 rounded block mt-4 text-white" type="submit" value="Cập nhật vốn">
+        <input class="border border-black rounded block p-2 w-[80vw] max-w-[280px]" type="number" name="capital"
+          th:value="${thongKe.getVon()}">
+        <input class="p-2 w-max bg-green-500 cursor-pointer hover:bg-green-600 rounded block mt-4 text-white"
+          type="submit" value="Cập nhật vốn">
       </form>
     </div>
   </div>
@@ -31,19 +34,19 @@
       <a href="/admin/thongke/?editcapital=true"
         class="w-full shadow hover:shadow-lg  shadow-black hover:shadow-green-700 transition-all duration-75 rounded-lg p-4 bg-green-500 text-white">
         <h1 class="font-bold text-2xl flex items-center gap-2">Vốn <img class="w-7" src="/svg/von.svg" alt="von"></h1>
-        <div class="p-2" th:text="${thongKe.getVon()}"></div>
+        <div class="p-2" th:text="${thongKe.getFormattedVND(thongKe.getVon())}"></div>
       </a>
       <section class="grid grid-cols-2 gap-2">
         <div class="w-full shadow shadow-black rounded-lg p-4 bg-blue-500 text-white">
           <h1 class="font-bold text-2xl flex items-center gap-2">Doanh thu <img class="w-7" src="/svg/doanhthu.svg"
               alt="doanhthu">
           </h1>
-          <div class="p-2" th:text="${thongKe.getDoanhThu()}"></div>
+          <div class="p-2" th:text="${thongKe.getFormattedVND(thongKe.getDoanhThu())}"></div>
         </div>
         <div class="w-full shadow shadow-black rounded-lg p-4 bg-red-500 text-white">
           <h1 class="font-bold text-2xl flex items-center gap-2">Chi phí <img class="w-7" src="/svg/lai.svg" alt="lai">
           </h1>
-          <div class="p-2" th:text="${thongKe.getChiPhi()}"></div>
+          <div class="p-2" th:text="${thongKe.getFormattedVND(thongKe.getChiPhi())}"></div>
         </div>
       </section>
     </section>
@@ -53,9 +56,9 @@
         <canvas id="conversionFunnelChart"></canvas>
       </div>
       <div class="w-full shadow shadow-black rounded-lg p-4 bg-orange-500 text-white">
-        <h1 class="font-bold text-2xl flex items-center gap-2">Lượt chuyển đổi <img class="w-7"
+        <h1 class="font-bold text-2xl flex items-center gap-2">Tỷ lệ chuyển đổi <img class="w-7"
             src="/svg/tilechuyendoi.svg" alt="tilechuyendoi"></h1>
-        <div class="p-2" th:text="${thongKe.getTiLeChuyenDoi()}"></div>
+        <div class="p-2" th:text="${thongKe.getTiLeChuyenDoiFormatted()}"></div>
       </div>
       <div class="w-full shadow shadow-black rounded-lg p-4 bg-teal-500 text-white">
         <h1 class="font-bold text-2xl flex items-center gap-2">Lượt xem sản phẩm <img class="w-7" src="/svg/xemhang.svg"
@@ -125,14 +128,22 @@
       <div class="w-full sm:row-span-2">
         <canvas id="orderStatusChart"></canvas>
       </div>
-      <a href="/admin/donhang/?tinhtrang=Chờ+xác+nhận"
-        class="w-full shadow shadow-black rounded-lg p-4 bg-orange-500 text-white">
-        <h1 class="font-bold text-2xl flex items-center gap-2">Chờ xác nhận <img class="w-6 h-6" src="/svg/pending.svg"
-            alt="pending"></h1>
-        <div class="p-2" th:text="${thongKe.getDonHangChoXacNhan()}"></div>
-      </a>
-      <a href="/admin/donhang/?tinhtrang=Đang+giao+hàng"
-        class="w-full shadow shadow-black rounded-lg p-4 bg-cyan-500 text-white">
+      <div class="grid md:grid-cols-2 gap-2">
+        <a href="/admin/donhang/?tinhtrang=Chờ+xác+nhận"
+          class="w-full shadow shadow-black rounded-lg p-4 bg-orange-500 text-white">
+          <h1 class="font-bold text-2xl flex items-center gap-2">Chờ xác nhận <img class="w-6 h-6"
+              src="/svg/pending.svg" alt="pending"></h1>
+          <div class="p-2" th:text="${thongKe.getDonHangChoXacNhan()}"></div>
+        </a>
+        <a href="/admin/donhang/?tinhtrang=Đã+xác+nhận"
+          class="w-full shadow shadow-black rounded-lg p-4 bg-cyan-500 text-white">
+          <h1 class="font-bold text-2xl flex items-center gap-2">Đã xác nhận <img class="w-6 h-6"
+              src="/svg/confirmed.svg" alt="confirmed"></h1>
+          <div class="p-2" th:text="${thongKe.getDonHangDaXacNhan()}"></div>
+        </a>
+      </div>
+      <a href="/admin/donhang/?tinhtrang=Đang+vận+chuyển"
+        class="w-full shadow shadow-black rounded-lg p-4 bg-blue-500 text-white">
         <h1 class="font-bold text-2xl flex items-center gap-2">Đang giao <img class="w-6 h-6" src="/svg/danggiao.svg"
             alt="danggiao"></h1>
         <div class="p-2" th:text="${thongKe.getDonHangDangGiao()}"></div>
@@ -190,11 +201,12 @@
       const orderStatusChart = new Chart(donHangChartContainer, {
         type: 'pie',
         data: {
-          labels: ['Đơn chưa xác nhận', 'Đơn đang giao', 'Đơn đã nhận', 'Đơn bị hủy'],
+          labels: ['Đơn chưa xác nhận', 'Đơn đã xác nhận', 'Đơn đang giao', 'Đơn đã nhận', 'Đơn bị hủy'],
           datasets: [{
             label: 'Order Status',
             data: [
               /*[[${thongKe.getDonHangChoXacNhan()}]]*/ 0,
+              /*[[${thongKe.getDonHangDaXacNhan()}]]*/ 0,
               /*[[${thongKe.getDonHangDangGiao()}]]*/ 0,
               /*[[${thongKe.getDonHangDaGiao()}]]*/ 0,
               /*[[${thongKe.getDonHangDaHuy()}]]*/ 0
@@ -202,12 +214,14 @@
             backgroundColor: [
               '#f97316',
               '#06b6d4',
+              '#3b82f6',
               '#22c55e',
               '#ef4444'
             ],
             borderColor: [
               '#ea580c',
               '#0891b2',
+              '#0284c7',
               '#16a34a',
               '#dc2626'
             ],
