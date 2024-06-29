@@ -185,62 +185,92 @@ END //
 
 DELIMITER ;
 
+-- Xóa trigger
+DROP TRIGGER IF EXISTS donhang_after_nhan;
 
---Tăng giá trị của donhangdagiao, luotthanhtoan, chiphi và doanhthu khi tình trạng đơn hàng được cập nhật từ 'Đang vận chuyển' thành 'Đã nhận hàng', đồng thời giảm donhangdanggiao.
+--Tăng giá trị của donhangdagiao, luotthanhtoan, chiphi và doanhthu 
+-- khi tình trạng đơn hàng được cập nhật từ 'Đang vận chuyển' thành 'Đã nhận hàng', 
+-- đồng thời giảm donhangdanggiao 
+-- tình trạng thanh toán của đơn hàng đã được sửa sẵn trong controller.
 DELIMITER //
 
 CREATE TRIGGER donhang_after_nhan
 AFTER UPDATE ON donhang
 FOR EACH ROW
 BEGIN
-    DECLARE done INT DEFAULT 0;
-    DECLARE machitiet INT;
-    DECLARE madon INT;
-    DECLARE loaisanpham VARCHAR(255);
-    DECLARE masanpham INT;
-    DECLARE soluong INT;
-    DECLARE giatien DECIMAL(10,2);
+    DECLARE v_done INT DEFAULT FALSE;
+    DECLARE v_machitiet INT;
+    DECLARE v_madon INT;
+    DECLARE v_loaisanpham VARCHAR(20);
+    DECLARE v_masanpham INT;
+    DECLARE v_soluong INT;
+    DECLARE v_giatien INT;
+    DECLARE v_tinhtrang_cu VARCHAR(255);
+    
+    -- Declare cursor
     DECLARE cur CURSOR FOR 
-        SELECT machitietdonhang, madonhang, loaisanpham, masanpham, soluong, giatien
-        FROM chitietdonhang
-        WHERE madonhang = NEW.madonhang;
+    SELECT machitietdonhang, madonhang, loaisanpham, masanpham, soluong, giatien 
+    FROM ChiTietDonHang
+    WHERE madonhang = OLD.madonhang;
+    
+    -- Declare handler
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET v_done = TRUE;
 
-    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
-
+    -- Check if status changed from 'Đang vận chuyển' to 'Đã nhận hàng'
     IF OLD.tinhtrang = 'Đang vận chuyển' AND NEW.tinhtrang = 'Đã nhận hàng' THEN
+        -- Update thongke table
+        UPDATE thongke
+        SET donhangdanggiao = donhangdanggiao - 1,
+            donhangdagiao = donhangdagiao + 1,
+            luotthanhtoan = luotthanhtoan + 1,
+            chiphi = chiphi + 50000,
+            doanhthu = doanhthu + NEW.tongtien
+        WHERE mathongke = 1;
+
+        -- Open cursor
         OPEN cur;
+
+        -- Loop through chitietdonhang records
         read_loop: LOOP
-            FETCH cur INTO machitiet, madon, loaisanpham, masanpham, soluong, giatien;
-            IF done THEN
+            FETCH cur INTO v_machitiet, v_madon, v_loaisanpham, v_masanpham, v_soluong, v_giatien;
+            IF v_done THEN
                 LEAVE read_loop;
             END IF;
 
-            CASE loaisanpham
+            -- Decrease the corresponding product quantity based on loaisanpham
+            CASE v_loaisanpham
                 WHEN 'dongho' THEN
-                    UPDATE dongho SET soluong = soluong - soluong WHERE madongho = masanpham;
+                    UPDATE dongho
+                    SET dongho.soluong = dongho.soluong - v_soluong
+                    WHERE dongho.madongho = v_masanpham;
                 WHEN 'butky' THEN
-                    UPDATE butky SET soluong = soluong - soluong WHERE mabutky = masanpham;
+                    UPDATE butky
+                    SET butky.soluong = butky.soluong - v_soluong
+                    WHERE butky.mabutky = v_masanpham;
                 WHEN 'kinhmat' THEN
-                    UPDATE kinhmat SET soluong = soluong - soluong WHERE makinhmat = masanpham;
+                    UPDATE kinhmat
+                    SET kinhmat.soluong = kinhmat.soluong - v_soluong
+                    WHERE kinhmat.makinhmat = v_masanpham;
                 WHEN 'phukien' THEN
-                    UPDATE phukien SET soluong = soluong - soluong WHERE maphukien = masanpham;
+                    UPDATE phukien
+                    SET phukien.soluong = phukien.soluong - v_soluong
+                    WHERE phukien.maphukien = v_masanpham;
                 WHEN 'trangsuc' THEN
-                    UPDATE trangsuc SET soluong = soluong - soluong WHERE matrangsuc = masanpham;
+                    UPDATE trangsuc
+                    SET trangsuc.soluong = trangsuc.soluong - v_soluong
+                    WHERE trangsuc.matrangsuc = v_masanpham;
+                ELSE
+                    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = v_loaisanpham;
             END CASE;
-        END LOOP read_loop;
+        END LOOP;
+        
+        -- Close cursor
         CLOSE cur;
-
-        UPDATE thongke
-        SET donhangdagiao = donhangdagiao + 1,
-            luotthanhtoan = luotthanhtoan + 1,
-            chiphi = chiphi + 50000,
-            donhangdanggiao = donhangdanggiao - 1,
-            doanhthu = doanhthu + NEW.tongtien
-        WHERE mathongke = 1;
     END IF;
 END //
 
 DELIMITER ;
+
 
 
 --Tăng giá trị của donhangdahuy và giảm giá trị của các cột tương ứng (donhangchoxacnhan, donhangdanggiao) dựa vào tình trạng cũ khi tình trạng đơn hàng được cập nhật thành 'Đã hủy'.

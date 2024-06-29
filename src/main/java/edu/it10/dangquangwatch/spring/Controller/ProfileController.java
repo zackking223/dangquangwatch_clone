@@ -165,6 +165,8 @@ public class ProfileController {
 
       if (donHang.getTaikhoan().getUsername() == currentUser.getUsername() || currentUser.isAdmin()) {
         donHang.setTinhTrang("Đã hủy");
+        donHang.setThanhToan("Đã hủy");
+
         donHangService.addDonHang(donHang);
       }
     }

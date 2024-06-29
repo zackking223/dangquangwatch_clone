@@ -168,6 +168,7 @@ public class DonhangController {
     if (data.isPresent()) {
       DonHang dh = data.get();
       dh.setTinhTrang("Đã hủy");
+      dh.setThanhToan("Đã hủy");
       donHangService.updateDonHang(dh);
     }
     return "redirect:/admin/donhang/";
@@ -200,6 +201,7 @@ public class DonhangController {
     Optional<DonHang> data = donHangService.findDonHangById(madonhang);
     if (data.isPresent()) {
       DonHang dh = data.get();
+      dh.setThanhToan("Đã thanh toán");
       dh.setTinhTrang("Đã nhận hàng");
       donHangService.updateDonHang(dh);
     }
