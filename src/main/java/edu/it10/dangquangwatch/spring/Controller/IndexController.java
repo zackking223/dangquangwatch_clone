@@ -297,7 +297,7 @@ public class IndexController {
             model.addAttribute("trangsucs", trangsuc_page.getContent());
             model.addAttribute("kinhmats", kinhmat_page.getContent());
             model.addAttribute("phukiens", phukien_page.getContent());
-            model.addAttribute("trangsucs", trangsuc_page.getContent());
+            model.addAttribute("butkys", butky_page.getContent());
             model.addAttribute("page", pageNum);
             model.addAttribute("sotrang", Collections.max(soTrang_list));
 
