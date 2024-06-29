@@ -22,29 +22,29 @@
     </div>
     <div class="bg-white shadow-md rounded-lg overflow-hidden p-4 min-h-[800px]">
 
-      <form class="mx-auto w-max" th:object="${taikhoan}" action="/profile/doithongtin" method="post">
+      <form class="mx-auto w-full" th:object="${taikhoan}" action="/profile/doithongtin" method="post">
         <div>
           <label class="block font-medium" th:for="username">Username</label>
-          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
+          <input class="border border-black rounded block p-2 w-full" type="text"
             th:field="*{username}" />
         </div>
         <div style="clear: both; display: block; height: 10px"></div>
         <div>
           <label class="block font-medium" th:for="hoten">Họ tên</label>
-          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{hoten}" />
+          <input class="border border-black rounded block p-2 w-full" type="text" th:field="*{hoten}" />
         </div>
 
         <div style="clear: both; display: block; height: 10px"></div>
         <div>
           <label class="block font-medium" th:for="sodienthoai">Số điện thoại</label>
-          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
+          <input class="border border-black rounded block p-2 w-full" type="text"
             th:field="*{sodienthoai}" placeholder="Địa chỉ" onkeypress='validate(event)' />
         </div>
 
         <div style="clear: both; display: block; height: 10px"></div>
         <div>
           <label class="block font-medium" th:for="diachi">Địa chỉ</label>
-          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
+          <input class="border border-black rounded block p-2 w-full" type="text"
             th:field="*{diachi}" />
         </div>
 
@@ -55,11 +55,11 @@
         <input class="p-2 w-max bg-green-500 rounded block mt-4 text-white" type="submit" value="Lưu" />
       </form>
 
-      <form class="mx-auto w-max mt-8" action="/profile/doimatkhau" method="post">
+      <form class="mx-auto w-full mt-8" action="/profile/doimatkhau" method="post">
         <input type="text" class="hidden" th:value="${taikhoan.getUsername()}" name="username">
         <div>
           <label class="block font-medium" th:for="sodienthoai">Mật khẩu mới</label>
-          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="password" name="newpassword"
+          <input class="border border-black rounded block p-2 w-full" type="password" name="newpassword"
             placeholder="Mật khẩu mới" onkeypress='validate(event)' />
           <input class="p-2 w-max bg-red-500 rounded block mt-4 text-white" type="submit" value="Đổi mật khẩu" />
         </div>
