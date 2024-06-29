@@ -16,17 +16,19 @@
   <div th:replace="~{fragments/productsbar :: productsbar}"></div>
   <div class="w-full xl:max-w-[1215px] max-w-[1021px] mx-auto my-9 min-h-[85vh]">
     <div class="flex gap-2 w-max mx-auto items-end">
-      <h1 class="p-2 bg-white rounded-tl rounded-tr text-xl text-yellow-500 font-bold underline"><a href="/profile/doithongtin">Đổi thông tin</a></h1>
-      <h1 class="p-2 bg-slate-400 rounded-tl rounded-tr text-xl hover:text-yellow-500"><a href="/profile/donhang">Đơn hàng</a></h1>
-      <h1 class="p-2 bg-slate-400 rounded-tl rounded-tr text-xl hover:text-yellow-500"><a href="/profile/giohang">Giỏ hàng</a></h1>
+      <h1 class="p-2 bg-white rounded-tl rounded-tr text-xl text-yellow-500 font-bold underline"><a
+          href="/profile/doithongtin">Đổi thông tin</a></h1>
+      <h1 class="p-2 bg-slate-400 rounded-tl rounded-tr text-xl hover:text-yellow-500"><a href="/profile/donhang">Đơn
+          hàng</a></h1>
+      <h1 class="p-2 bg-slate-400 rounded-tl rounded-tr text-xl hover:text-yellow-500"><a href="/profile/giohang">Giỏ
+          hàng</a></h1>
     </div>
     <div class="bg-white shadow-md rounded-lg overflow-hidden p-4 min-h-[800px]">
 
       <form class="mx-auto w-full" th:object="${taikhoan}" action="/profile/doithongtin" method="post">
         <div>
           <label class="block font-medium" th:for="username">Username</label>
-          <input class="border border-black rounded block p-2 w-full" type="text"
-            th:field="*{username}" />
+          <input class="border border-black rounded block p-2 w-full" type="text" th:field="*{username}" />
         </div>
         <div style="clear: both; display: block; height: 10px"></div>
         <div>
@@ -37,15 +39,14 @@
         <div style="clear: both; display: block; height: 10px"></div>
         <div>
           <label class="block font-medium" th:for="sodienthoai">Số điện thoại</label>
-          <input class="border border-black rounded block p-2 w-full" type="text"
-            th:field="*{sodienthoai}" placeholder="Địa chỉ" onkeypress='validate(event)' />
+          <input class="border border-black rounded block p-2 w-full" type="text" th:field="*{sodienthoai}"
+            placeholder="Địa chỉ" onkeypress='validate(event)' />
         </div>
 
         <div style="clear: both; display: block; height: 10px"></div>
         <div>
           <label class="block font-medium" th:for="diachi">Địa chỉ</label>
-          <input class="border border-black rounded block p-2 w-full" type="text"
-            th:field="*{diachi}" />
+          <input class="border border-black rounded block p-2 w-full" type="text" th:field="*{diachi}" />
         </div>
 
         <input class="hidden" value="ROLE_KHACHHANG" type="text" th:field="*{loai_tai_khoan}" />
@@ -60,7 +61,7 @@
         <div>
           <label class="block font-medium" th:for="sodienthoai">Mật khẩu mới</label>
           <input class="border border-black rounded block p-2 w-full" type="password" name="newpassword"
-            placeholder="Mật khẩu mới" onkeypress='validate(event)' />
+            placeholder="Mật khẩu mới" />
           <input class="p-2 w-max bg-red-500 rounded block mt-4 text-white" type="submit" value="Đổi mật khẩu" />
         </div>
       </form>
@@ -68,6 +69,27 @@
   </div>
 
   <div th:replace="~{fragments/footer :: footer}"></div>
+  <script>
+    function validate(evt) {
+      if (evt.key == "Backspace" || evt.key == "Del") return true;
+
+      var theEvent = evt || window.event;
+
+      // Handle paste
+      if (theEvent.type === 'paste') {
+        key = event.clipboardData.getData('text/plain');
+      } else {
+        // Handle key press
+        var key = theEvent.keyCode || theEvent.which;
+        key = String.fromCharCode(key);
+      }
+      var regex = /[0-9]|\./;
+      if (!regex.test(key)) {
+        theEvent.returnValue = false;
+        if (theEvent.preventDefault) theEvent.preventDefault();
+      }
+    }
+  </script>
 </body>
 
 </html>
