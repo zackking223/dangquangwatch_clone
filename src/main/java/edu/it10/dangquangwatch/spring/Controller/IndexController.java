@@ -271,7 +271,7 @@ public class IndexController {
 
             int pageNum = 0;
             if (page.isPresent()) {
-                pageNum = page.get();
+                pageNum = page.get() - 1;
             }
 
             List<Integer> soTrang_list = new ArrayList<Integer>();
