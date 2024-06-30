@@ -28,7 +28,7 @@ import jakarta.websocket.server.PathParam;
 
 import org.springframework.web.bind.annotation.PostMapping;
 
-@Controller
+@Controller // danh dau bo dieu khien
 public class IndexController {
     @Autowired
     private DonghoService donghoService;
@@ -43,18 +43,18 @@ public class IndexController {
     @Autowired
     private ThongKeService thongKeService;
 
-    @GetMapping("/dongho/{id}")
+    @GetMapping("/dongho/{id}") //
     public String trangDongHo(Model model, @PathParam("search") Optional<String> search,
             @PathVariable("id") String slug) {
         int id = convertToNum(slug);
 
-        Optional<Dongho> donghoEdit = donghoService.findDonghoById(id);
+        Optional<Dongho> donghoEdit = donghoService.findDonghoById(id);// dich vu dong ho -> repository -> csdl
         donghoEdit.ifPresent(dongho -> {
             String searchStr = "";
             if (search.isPresent())
                 searchStr = search.get().trim();
             thongKeService.tangluotxemsanpham();
-            model.addAttribute("dongho", dongho);
+            model.addAttribute("dongho", dongho); // them thuoc tinh cho trang .html (thymeleaf) su dung
             model.addAttribute("title", dongho.getTendongho());
             model.addAttribute("search", searchStr);
             model.addAttribute("searchPath", "/dongho");
