@@ -29,7 +29,7 @@ public class ThongkeController {
     ThongKe thongKe = thongKeService.getAllThongKe().getFirst();
     boolean editcapital = editcapital_opt.isPresent();
 
-    Float newTiLe = thongKe.getTiLeChuyenDoi();
+    Float newTiLe = thongKe.tinhTile();
 
     thongKeService.updateTiLeChuyenDoi(newTiLe);
     thongKe.setTiLeChuyenDoi(newTiLe);

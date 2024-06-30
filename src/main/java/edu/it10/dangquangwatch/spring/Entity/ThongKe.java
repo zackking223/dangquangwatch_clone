@@ -100,7 +100,7 @@ public class ThongKe {
 
     public String getTiLeChuyenDoiFormatted() {
         Float tile = tinhTile();
-        return Float.toString(tile * 100) + "%";
+        return Float.toString(tile) + "%";
     }
 
     public ThongKe() {
