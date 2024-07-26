@@ -24,29 +24,38 @@
           hàng</a></h1>
     </div>
     <div class="bg-white shadow-md rounded-lg overflow-hidden p-4 min-h-[800px]">
+      <div id="error"
+        class="p-2 bg-red-500 w-full shadow shadow-black rounded-md mb-8 text-white hover:cursor-pointer text-center"
+        th:if="${errorMessage}" th:text="${errorMessage}"></div>
 
+      <div id="notification"
+        class="p-2 bg-blue-500 w-full shadow shadow-black rounded-md mb-8 text-white hover:cursor-pointer text-center"
+        th:if="${notification}" th:text="${notification}"></div>
       <form class="mx-auto w-full" th:object="${taikhoan}" action="/profile/doithongtin" method="post">
         <div>
-          <label class="block font-medium" th:for="username">Username</label>
-          <input class="border border-black rounded block p-2 w-full" type="text" th:field="*{username}" />
+          <label class="block font-medium" th:for="username">Email</label>
+          <input class="border border-black rounded block p-2 w-full" type="email" th:value="${taikhoan.username}" readonly/>
         </div>
         <div style="clear: both; display: block; height: 10px"></div>
         <div>
-          <label class="block font-medium" th:for="hoten">Họ tên</label>
+          <label class="block font-medium" th:for="hoten">Họ tên <span class="text-sm text-red-500">(Bắt
+              buộc)</span></label>
           <input class="border border-black rounded block p-2 w-full" type="text" th:field="*{hoten}" />
         </div>
 
         <div style="clear: both; display: block; height: 10px"></div>
         <div>
-          <label class="block font-medium" th:for="sodienthoai">Số điện thoại</label>
+          <label class="block font-medium" th:for="sodienthoai">Số điện thoại <span class="text-sm text-red-500">(Bắt
+              buộc)</span></label>
           <input class="border border-black rounded block p-2 w-full" type="text" th:field="*{sodienthoai}"
-            placeholder="Địa chỉ" onkeypress='validate(event)' />
+            placeholder="Số điện thoại" onkeypress='validate(event)' required />
         </div>
 
         <div style="clear: both; display: block; height: 10px"></div>
         <div>
-          <label class="block font-medium" th:for="diachi">Địa chỉ</label>
-          <input class="border border-black rounded block p-2 w-full" type="text" th:field="*{diachi}" />
+          <label class="block font-medium" th:for="diachi">Địa chỉ <span class="text-sm text-red-500">(Bắt
+              buộc)</span></label>
+          <input class="border border-black rounded block p-2 w-full" type="text" th:field="*{diachi}" required />
         </div>
 
         <input class="hidden" value="ROLE_KHACHHANG" type="text" th:field="*{loai_tai_khoan}" />
@@ -70,6 +79,19 @@
 
   <div th:replace="~{fragments/footer :: footer}"></div>
   <script>
+    const err = document.getElementById("error");
+    if (err != null) {
+      err.addEventListener("click", () => {
+        err.classList.add("hidden");
+      });
+    }
+    const notif = document.getElementById("notification");
+    if (notif != null) {
+      notif.addEventListener("click", () => {
+        notif.classList.add("hidden");
+      });
+    }
+
     function validate(evt) {
       if (evt.key == "Backspace" || evt.key == "Del") return true;
 

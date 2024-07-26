@@ -1,7 +1,11 @@
 package edu.it10.dangquangwatch.spring.controller;
 
+import edu.it10.dangquangwatch.spring.AppCustomException.DuplicateEntryException;
+import edu.it10.dangquangwatch.spring.AppCustomException.ErrorEnum;
 import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
 import edu.it10.dangquangwatch.spring.service.TaiKhoanService;
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -68,12 +72,12 @@ public class TaikhoanController {
   }
 
   @GetMapping(value = "/add")
-  public String addTaikhoan(Model model, @RequestParam("error") Optional<String> error) {
-    String errorMessage = null;
-    if (error.isPresent()) {
-      errorMessage = "Username đã tồn tại!";
+  public String addTaikhoan(Model model, HttpSession session) {
+    var errorMessage = session.getAttribute(ErrorEnum.ADMIN_ACCOUNTS_ERROR.name());
+    if (errorMessage != null) {
+      model.addAttribute("errorMessage", (String)errorMessage);
+      session.removeAttribute(ErrorEnum.ADMIN_ACCOUNTS_ERROR.name());
     }
-    model.addAttribute("errorMessage", errorMessage);
     model.addAttribute("taikhoan", new TaiKhoan());
     return "/admin/quantrivien/addQuanTriVien";
   }
@@ -90,12 +94,13 @@ public class TaikhoanController {
   }
 
   @PostMapping(value = "/add")
-  public String addTaiKhoan(TaiKhoan taikhoan) {
+  public String addTaiKhoan(TaiKhoan taikhoan, HttpSession session) {
     try {
       taikhoanService.dangKyQuanTri(taikhoan);
-    } catch (Exception e) {
+    } catch (DuplicateEntryException e) {
       e.printStackTrace();
-      return "redirect:/admin/accounts/add?error=dupname";
+      session.setAttribute(ErrorEnum.ADMIN_ACCOUNTS_ERROR.name(), e.getMessage());
+      return "redirect:/admin/accounts/add";
     }
     return "redirect:/admin/accounts/";
   }

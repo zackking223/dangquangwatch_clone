@@ -1,5 +1,7 @@
 package edu.it10.dangquangwatch.spring.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.WebAttributes;
@@ -11,14 +13,20 @@ import edu.it10.dangquangwatch.spring.service.TaiKhoanService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class LoginController {
   @Autowired
   TaiKhoanService taiKhoanService;
 
+  @GetMapping("/dangnhap")
+  public String redirectToLogin() {
+    return "redirect:/login";
+  }
+
   @GetMapping("/login")
-  public String login(HttpServletRequest request, Model model) {
+  public String login(HttpServletRequest request, @RequestParam("regsuccess") Optional<String> regSuccess,Model model) {
     HttpSession session = request.getSession(false);
     String errorMessage = null;
     if (session != null) {
@@ -26,7 +34,11 @@ public class LoginController {
           .getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
       if (ex != null) {
         errorMessage = ex.getMessage();
+        session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
       }
+    }
+    if (regSuccess.isPresent()) {
+      model.addAttribute("notification", "Tài khoản đăng ký thành công. Vui lòng xác thực qua email trước khi đăng nhập!");
     }
     model.addAttribute("errorMessage", errorMessage);
     return "login";

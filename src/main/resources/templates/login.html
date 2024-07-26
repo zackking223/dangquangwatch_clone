@@ -21,33 +21,68 @@
     </section>
   </header>
 
-  <form method="post" action="/login"
-    class="absolute flex flex-col gap-2 left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] rounded-lg shadow shadow-black bg-white p-4">
-    <h1 class="text-2xl font-bold text-center my-2">Đăng nhập</h1>
-    <div id="error" class="p-2 bg-red-500 rounded-md text-white hover:cursor-pointer" th:if="${errorMessage}"
-      th:text="${errorMessage}"></div>
-    <div id="notification" class="p-2 bg-red-500 rounded-md text-white hover:cursor-pointer" th:if="${notification}"
-      th:text="${notification}"></div>
-    <div>
-      <label class="block font-medium" for="username">Username:</label>
-      <input class="block p-2 max-w-[300px] w-screen rounded border border-black overflow-hidden" type="text"
-        name="username" placeholder="Tên đăng nhập" required>
-    </div>
-    <div>
-      <label class="block font-medium" for="password">Password:</label>
-      <input class="block p-2 max-w-[300px] w-screen rounded border border-black overflow-hidden" type="password"
-        name="password" placeholder="Mật khẩu" required>
-    </div>
-    <div class="flex gap-2 my-4">
-      <button class="block p-2 w-max bg-blue-500 font-bold text-white rounded" type="submit">Đăng nhập</button>
-      <a href="/dangky" class="block p-2 w-max bg-orange-500 font-bold text-white rounded" type="submit">Đăng Ký</a>
-    </div>
-  </form>
+  <div
+    class="flex flex-col gap-4 items-center absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-screen max-w-[332px]">
+    <div id="error"
+      class="p-2 bg-red-500 max-w-[332px] shadow shadow-black rounded-md text-white hover:cursor-pointer text-center"
+      th:if="${errorMessage}" th:text="${errorMessage}"></div>
+
+    <div id="notification"
+      class="p-2 bg-blue-500 max-w-[332px] shadow shadow-black rounded-md text-white hover:cursor-pointer text-center"
+      th:if="${notification}" th:text="${notification}"></div>
+
+    <form method="post" action="/login" class="flex flex-col gap-2 rounded-lg shadow shadow-black bg-white w-full p-4">
+      <h1 class="text-2xl font-bold text-center my-2">Đăng nhập</h1>
+      <div>
+        <label class="block font-medium" for="username">Email:</label>
+        <input class="block p-2 w-full rounded border border-black overflow-hidden" type="email" name="username"
+          placeholder="user@email.com" required>
+      </div>
+      <div>
+        <label class="block font-medium" for="password">Password:</label>
+        <input class="block p-2 w-full rounded border border-black overflow-hidden" type="password" name="password"
+          placeholder="Mật khẩu" required>
+      </div>
+      <div class="flex items-center w-max mx-auto gap-2 my-4">
+        <button class="block p-2 w-max bg-green-500 font-bold text-white rounded" type="submit">Đăng nhập</button>
+        <p>hoặc</p>
+        <a href="/dangky" class="block py-2 w-max font-bold underline text-blue-500 rounded" type="submit">Đăng ký</a>
+      </div>
+    </form>
+
+    <a href="/oauth2/authorization/google"
+      class="flex flex-col items-center w-[332px] mt-4 gap-2 rounded-lg shadow shadow-black bg-white text-black font-bold p-3">
+      <div class="flex w-max items-center">
+        <img src="/images/google.png" class="w-6 h-6 block mr-4" alt="Google logo">
+        <p>
+          Đăng nhập bằng Google
+        </p>
+      </div>
+    </a>
+    
+    <a href="/oauth2/authorization/github"
+      class="flex flex-col items-center w-[332px] gap-2 rounded-lg shadow shadow-black bg-white text-black font-bold p-3">
+      <div class="flex w-max items-center">
+        <img src="/images/github-mark.png" class="w-6 h-6 block mr-4" alt="Github logo">
+        <p>
+          Đăng nhập bằng Github
+        </p>
+      </div>
+    </a>
+  </div>
   <script>
     const err = document.getElementById("error");
-    err.addEventListener("click", () => {
-      err.classList.add("hidden");
-    })
+    if (err != null) {
+      err.addEventListener("click", () => {
+        err.classList.add("hidden");
+      });
+    }
+    const notif = document.getElementById("notification");
+    if (notif != null) {
+      notif.addEventListener("click", () => {
+        notif.classList.add("hidden");
+      });
+    }
   </script>
 </body>
 

@@ -211,7 +211,6 @@ public class TaiKhoan {
         ", loai_tai_khoan='" + getLoai_tai_khoan() + "'" +
         ", enabled='" + getEnabled() + "'" +
         ", NGAYTHEM='" + getNGAYTHEM() + "'" +
-        ", donHangList='" + getDonHangList() + "'" +
         "}";
   }
 }

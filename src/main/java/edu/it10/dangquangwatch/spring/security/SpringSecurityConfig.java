@@ -10,6 +10,11 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -19,6 +24,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 
 import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
 import edu.it10.dangquangwatch.spring.service.TaiKhoanService;
+import edu.it10.dangquangwatch.spring.service.impl.CustomOAuth2UserServiceImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -27,6 +33,9 @@ import java.io.IOException;
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfig {
+  @Autowired
+  private CustomOAuth2UserServiceImpl customOAuth2UserServiceImpl;
+
   // add support for JDBC (store accounts in database)
   @Bean
   UserDetailsManager userDetailsManager(DataSource dataSource) {
@@ -51,8 +60,12 @@ public class SpringSecurityConfig {
             .requestMatchers("/profile/**").authenticated()
             .anyRequest().permitAll() // Các đường dẫn còn lại không yêu cầu đăng nhập
         )
-        // .loginPage("/login")
-        // .failureUrl("/login?failed")
+        .oauth2Login(page -> page
+            .loginPage("/login")
+            .userInfoEndpoint(endpoint -> endpoint
+                .userService(customOAuth2UserServiceImpl))
+            .successHandler(successHandler())
+            .permitAll())
         .formLogin((formLogin) -> formLogin
             .usernameParameter("username")
             .passwordParameter("password")
@@ -66,9 +79,7 @@ public class SpringSecurityConfig {
             .invalidateHttpSession(true) // Invalidate the session
             .deleteCookies("JSESSIONID") // Delete cookies
             .permitAll())
-        .exceptionHandling(exHandl -> 
-          exHandl.accessDeniedHandler(deniedHandler())
-        );
+        .exceptionHandling(exHandl -> exHandl.accessDeniedHandler(deniedHandler()));
 
     // Use HTTP Basic authentication
     http.httpBasic(Customizer.withDefaults());
@@ -77,6 +88,11 @@ public class SpringSecurityConfig {
     http.csrf(csrf -> csrf.disable());
 
     return http.build();
+  }
+
+  @Bean
+  public OAuth2UserService<OAuth2UserRequest, OAuth2User> oauth2UserService() {
+    return new DefaultOAuth2UserService();
   }
 
   @Bean
@@ -106,16 +122,47 @@ public class SpringSecurityConfig {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
         org.springframework.security.core.Authentication authentication)
         throws IOException, ServletException {
+
+      // Get the principal object:
+      Object principal = authentication.getPrincipal();
+      String email; // user email
+
+      // Check the object type using instance:
+      if (principal instanceof UserDetails) {
+
+        UserDetails userDetails = (UserDetails) principal;
+
+        // Xử lý UserDetails
+        email = userDetails.getUsername();
+
+      } else if (principal instanceof DefaultOAuth2User) {
+
+        DefaultOAuth2User oAuth2User = (DefaultOAuth2User) principal;
+
+        // Xử lý DefaultOAuth2User
+        String login = oAuth2User.getAttribute("login");
+        String tempEmail = oAuth2User.getAttribute("email");
+        if (tempEmail != null) {
+          email =  tempEmail;
+        } else if (login != null) {
+          email = login.trim();
+        } else {
+          throw new IllegalArgumentException("No email or login inside oAuth2User object");
+        }
+      } else {
+        // Xử lý trường hợp không phải UserDetails hoặc DefaultOAuth2User
+        throw new IllegalArgumentException("Unsupported principal type: " + principal.getClass().getName());
+      }
+
       // Get user details from authentication object
-
-      UserDetails userDetail = (UserDetails) authentication.getPrincipal();
-      TaiKhoan userData = taiKhoanService.getTaiKhoan(userDetail.getUsername());
-
-      // Add fullname to session
-      request.getSession().setAttribute("username", userDetail.getUsername());
-      request.getSession().setAttribute("roles", userDetail.getAuthorities());
-      request.getSession().setAttribute("role", userData.getLoai_tai_khoan());
-      request.getSession().setAttribute("hoten", userData.getHoten());
+      TaiKhoan userData = taiKhoanService.getTaiKhoan(email);
+      
+      if (userData != null) {
+        // Add fullname to session
+        request.getSession().setAttribute("username", userData.getUsername());
+        request.getSession().setAttribute("role", userData.getLoai_tai_khoan());
+        request.getSession().setAttribute("hoten", userData.getHoten());
+      }
 
       // Redirect to default success URL
       super.onAuthenticationSuccess(request, response, authentication);

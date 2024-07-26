@@ -2,7 +2,7 @@ package edu.it10.dangquangwatch.spring.service.impl;
 
 import java.util.List;
 
-import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -11,8 +11,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import edu.it10.dangquangwatch.spring.AppCustomException.DuplicateEntryException;
+import edu.it10.dangquangwatch.spring.AppCustomException.ErrorEnum;
 import edu.it10.dangquangwatch.spring.controller.Helper;
 import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
+import edu.it10.dangquangwatch.spring.repository.TaiKhoanRepository;
 import edu.it10.dangquangwatch.spring.service.TaiKhoanService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -20,6 +23,9 @@ import jakarta.transaction.Transactional;
 
 @Service
 public class TaiKhoanServiceImpl implements TaiKhoanService {
+  @Autowired
+  private TaiKhoanRepository taiKhoanRepository;
+
   private EntityManager entityManager;
   private PasswordEncoder passwordEncoder;
 
@@ -79,25 +85,41 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
     return new PageImpl<>(result, PageRequest.of(page, 10), result.size());
   }
 
+  boolean accountExisted(String username) {
+    return taiKhoanRepository.findById(username).isPresent();
+  }
+
+  boolean numberExisted(String sodienthoai) {
+    return taiKhoanRepository.findBySodienthoai(sodienthoai).size() > 0;
+  }
+
   @Override
   @Transactional
-  public void dangKyKhachHang(TaiKhoan taiKhoan) throws Exception {
+  public void dangKyKhachHang(TaiKhoan taiKhoan) throws DuplicateEntryException {
     String plainText = taiKhoan.getPassword();
     taiKhoan.setUsername(removeWhitespace(taiKhoan.getUsername()));
     taiKhoan.setNGAYTHEM(Helper.getCurrentDateFormatted());
     taiKhoan.setLoai_tai_khoan("ROLE_KHACHHANG");
     taiKhoan.setPassword("{bcrypt}" + passwordEncoder.encode(plainText));
 
-    try {
-      entityManager.persist(taiKhoan);
-    } catch (DataIntegrityViolationException ex) {
-      throw new Exception("Username đã tồn tại!");
+    if (accountExisted(taiKhoan.getUsername())) {
+      String message = "Email đã tồn tại!";
+      throw new DuplicateEntryException(message, ErrorEnum.REGISTER_ERROR);
     }
+
+    if (taiKhoan.getSodienthoai() != null) {
+      if (numberExisted(taiKhoan.getSodienthoai())) {
+        String message = "Số điện thoại đã tồn tại!";
+        throw new DuplicateEntryException(message, ErrorEnum.REGISTER_ERROR);
+      }
+    }
+
+    entityManager.persist(taiKhoan);
   }
 
   @Override
   @Transactional
-  public void dangKyQuanTri(TaiKhoan taiKhoan) throws Exception {
+  public void dangKyQuanTri(TaiKhoan taiKhoan) throws DuplicateEntryException {
     String plainText = taiKhoan.getPassword();
     taiKhoan.setUsername(removeWhitespace(taiKhoan.getUsername()));
     taiKhoan.setNGAYTHEM(Helper.getCurrentDateFormatted());
@@ -105,19 +127,33 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
     taiKhoan.setDiachi("QUANTRI ko can dia chi");
     taiKhoan.setPassword("{bcrypt}" + passwordEncoder.encode(plainText));
 
-    try {
-      entityManager.persist(taiKhoan);
-    } catch (DataIntegrityViolationException ex) {
-      throw new Exception("Username đã tồn tại!");
+    if (accountExisted(taiKhoan.getUsername())) {
+      String message = "Email đã tồn tại!";
+      throw new DuplicateEntryException(message, ErrorEnum.REGISTER_ERROR);
     }
+
+    if (taiKhoan.getSodienthoai() != null) {
+      if (numberExisted(taiKhoan.getSodienthoai())) {
+        String message = "Số điện thoại đã tồn tại!";
+        throw new DuplicateEntryException(message, ErrorEnum.REGISTER_ERROR);
+      }
+    }
+    entityManager.persist(taiKhoan);
   }
 
   @Override
   @Transactional
-  public void updateTaiKhoan(TaiKhoan taiKhoan) {
+  public void updateTaiKhoan(TaiKhoan taiKhoan) throws DuplicateEntryException {
     String plainText = taiKhoan.getPassword();
     taiKhoan.setUsername(removeWhitespace(taiKhoan.getUsername()));
     taiKhoan.setPassword("{bcrypt}" + passwordEncoder.encode(plainText));
+
+    if (taiKhoan.getSodienthoai() != null) {
+      if (numberExisted(taiKhoan.getSodienthoai())) {
+        String message = "Số điện thoại đã tồn tại!";
+        throw new DuplicateEntryException(message, ErrorEnum.REGISTER_ERROR);
+      }
+    }
     entityManager.merge(taiKhoan);
   }
 

@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
+import edu.it10.dangquangwatch.spring.AppCustomException.DuplicateEntryException;
+import edu.it10.dangquangwatch.spring.AppCustomException.ErrorEnum;
 import edu.it10.dangquangwatch.spring.entity.ApiResponse;
 import edu.it10.dangquangwatch.spring.entity.DonHang;
 import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
@@ -177,6 +179,12 @@ public class ProfileController {
   @GetMapping("/doithongtin")
   public String doithongtin(HttpSession session, Model model) {
     String username = (String) session.getAttribute("username");
+    var sessionErr = session.getAttribute(ErrorEnum.UPDATE_PROFILE_ERROR.name());
+    if (sessionErr != null) {
+      model.addAttribute("errorMessage", (String) sessionErr);
+      session.removeAttribute(ErrorEnum.UPDATE_PROFILE_ERROR.name());
+    }
+
     TaiKhoan taikhoan = taiKhoanService.getTaiKhoan(username);
 
     model.addAttribute("taikhoan", taikhoan);
@@ -184,14 +192,21 @@ public class ProfileController {
   }
 
   @PostMapping("/doithongtin")
-  public String updateThongTin(TaiKhoan taiKhoan) {
-    TaiKhoan existingTaiKhoan = taiKhoanService.getTaiKhoan(taiKhoan.getUsername());
+  public String updateThongTin(TaiKhoan taiKhoan, HttpSession session) {
+    String taikhoanUsername = (String) session.getAttribute("username");
+    TaiKhoan existingTaiKhoan = taiKhoanService.getTaiKhoan(taikhoanUsername);
 
     if (taiKhoan.getPassword() == null) {
       taiKhoan.setPassword(existingTaiKhoan.getPassword());
     }
 
-    taiKhoanService.updateTaiKhoan(taiKhoan);
+    try {
+      taiKhoanService.updateTaiKhoan(taiKhoan);
+    } catch (DuplicateEntryException e) {
+      e.printStackTrace();
+      session.setAttribute(ErrorEnum.UPDATE_PROFILE_ERROR.name(), e.getMessage());
+      return "redirect:/profile/doithongtin";
+    }
     return "redirect:/profile/doithongtin";
   }
 
