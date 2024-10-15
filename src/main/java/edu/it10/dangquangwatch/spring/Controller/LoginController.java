@@ -33,7 +33,17 @@ public class LoginController {
       AuthenticationException ex = (AuthenticationException) session
           .getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
       if (ex != null) {
-        errorMessage = ex.getMessage();
+        switch (ex.getMessage()) {
+          case "User is disabled":
+            errorMessage = "Vui lòng xác thực email!";
+            break;
+          case "Bad credentials":
+            errorMessage = "Sai email hoặc mật khẩu!";
+            break;
+          default:
+            errorMessage = ex.getMessage();
+            break;
+        } ex.getMessage();
         session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
       }
     }

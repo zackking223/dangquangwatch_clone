@@ -82,7 +82,7 @@ public class KhachhangController {
   @PostMapping(value = "/add")
   public String addTaiKhoan(TaiKhoan taikhoan, Model model) {
     try {
-      taikhoanService.dangKyKhachHang(taikhoan);
+      taikhoanService.dangKyKhachHang(taikhoan, "/admin/khachhang/add");
     } catch (Exception e) {
       e.printStackTrace();
 
@@ -99,7 +99,7 @@ public class KhachhangController {
 
   @PostMapping(value = "/save")
   public String save(TaiKhoan taikhoan) {
-    taikhoanService.updateTaiKhoan(taikhoan);
+    taikhoanService.updateTaiKhoan(taikhoan, "/admin/khachhang/edit?id=" + taikhoan.getUsername());
     return "redirect:/admin/khachhang/";
   }
 

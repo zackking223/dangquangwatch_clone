@@ -1,6 +1,5 @@
 package edu.it10.dangquangwatch.spring.service;
 
-import edu.it10.dangquangwatch.spring.AppCustomException.DuplicateEntryException;
 import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
 
 import org.springframework.data.domain.Page;
@@ -16,11 +15,11 @@ public interface TaiKhoanService {
   public Page<TaiKhoan> getAllTaiKhoanKhachHang(String from, String to, Integer page);
   public Page<TaiKhoan> searchTaiKhoanKhachHang(String searchStr, String from, String to, Integer page);
 
-  public void dangKyKhachHang(TaiKhoan taiKhoan) throws DuplicateEntryException;
+  public void dangKyKhachHang(TaiKhoan taiKhoan, String path);
 
-  public void dangKyQuanTri(TaiKhoan taiKhoan) throws DuplicateEntryException;
+  public void dangKyQuanTri(TaiKhoan taiKhoan);
 
-  public void updateTaiKhoan(TaiKhoan taiKhoan) throws DuplicateEntryException;
+  public void updateTaiKhoan(TaiKhoan taiKhoan, String path);
 
   public void doiMatKhau(String newpassword, String username);
 
@@ -29,4 +28,6 @@ public interface TaiKhoanService {
   public Page<TaiKhoan> findTaiKhoanByUsername(String username, Integer page);
 
   public void deleteTaiKhoanByUsername(String username);
+
+  public boolean verifyOtp(String password, String email);
 } 

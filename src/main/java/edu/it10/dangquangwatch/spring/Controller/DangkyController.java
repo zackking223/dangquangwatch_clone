@@ -43,9 +43,35 @@ public class DangkyController {
           session.removeAttribute(ErrorEnum.REGISTER_ERROR.name());
         }
       }
-    } 
+    }
     model.addAttribute("errorMessage", errorMessage);
     return "dangky";
+  }
+
+  @GetMapping("/xacthuc")
+  public String verifyAccount(
+      HttpSession session,
+      Model model,
+      @RequestParam("email") Optional<String> email,
+      @RequestParam("otp") Optional<String> otp) {
+
+    if (!email.isPresent()) {
+      session.setAttribute(ErrorEnum.REGISTER_ERROR.name(), "Link xác thực không hợp lệ!");
+      return "redirect:/dangky";
+    }
+
+    if (!otp.isPresent()) {
+      session.setAttribute(ErrorEnum.REGISTER_ERROR.name(), "Link xác thực không hợp lệ!");
+      return "redirect:/dangky";
+    }
+
+    if (taiKhoanService.verifyOtp(otp.get(), email.get())) {
+      model.addAttribute("notification", "Xác thực tài khoản thành công!");
+      return "login";
+    } else {
+      model.addAttribute("errorMessage", "Link xác thực đã hết hạn hoặc không hợp lệ!");
+      return "login";
+    }
   }
 
   @PostMapping("/dangky")
@@ -56,7 +82,7 @@ public class DangkyController {
 
     if (!agree.isPresent()) {
       session.setAttribute(ErrorEnum.REGISTER_ERROR.name(), "Bạn phải đồng ý điều khoản!");
-      return "dangky";
+      return "redirect:/dangky";
     }
 
     TaiKhoan taiKhoan = new TaiKhoan();
@@ -71,7 +97,7 @@ public class DangkyController {
     taiKhoan.setEnabled(0);
 
     try {
-      taiKhoanService.dangKyKhachHang(taiKhoan);
+      taiKhoanService.dangKyKhachHang(taiKhoan, "/dangky");
     } catch (DuplicateEntryException e) {
       e.printStackTrace();
       session.setAttribute(ErrorEnum.REGISTER_ERROR.name(), e.getMessage());

@@ -1,4 +1,4 @@
-package edu.it10.dangquangwatch.spring.service.impl;
+package edu.it10.dangquangwatch.spring.AppCustomException;
 
 public class EmptyOrNullListException extends RuntimeException {
   public EmptyOrNullListException(String message) {

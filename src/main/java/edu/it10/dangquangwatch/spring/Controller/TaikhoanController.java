@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import java.util.Optional;
 
 @Controller
@@ -61,16 +59,6 @@ public class TaikhoanController {
     return "/admin/quantrivien/index";
   }
 
-  @GetMapping("/test")
-  public String test() {
-    return "test";
-  }
-
-  @PostMapping("/test")
-  public @ResponseBody String handleTest(@RequestParam("from") String from) {
-    return from;
-  }
-
   @GetMapping(value = "/add")
   public String addTaikhoan(Model model, HttpSession session) {
     var errorMessage = session.getAttribute(ErrorEnum.ADMIN_ACCOUNTS_ERROR.name());
@@ -107,7 +95,7 @@ public class TaikhoanController {
 
   @PostMapping(value = "/save")
   public String save(TaiKhoan taikhoan) {
-    taikhoanService.updateTaiKhoan(taikhoan);
+    taikhoanService.updateTaiKhoan(taikhoan, "/admin/accounts/edit?id=" + taikhoan.getUsername());
     return "redirect:/admin/accounts/";
   }
 

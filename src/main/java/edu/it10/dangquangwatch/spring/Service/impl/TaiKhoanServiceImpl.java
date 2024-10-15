@@ -1,6 +1,11 @@
 package edu.it10.dangquangwatch.spring.service.impl;
 
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,17 +19,27 @@ import org.springframework.stereotype.Service;
 import edu.it10.dangquangwatch.spring.AppCustomException.DuplicateEntryException;
 import edu.it10.dangquangwatch.spring.AppCustomException.ErrorEnum;
 import edu.it10.dangquangwatch.spring.controller.Helper;
+import edu.it10.dangquangwatch.spring.entity.Otp;
 import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
+import edu.it10.dangquangwatch.spring.repository.OtpRepository;
 import edu.it10.dangquangwatch.spring.repository.TaiKhoanRepository;
+import edu.it10.dangquangwatch.spring.service.EmailService;
 import edu.it10.dangquangwatch.spring.service.TaiKhoanService;
+import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 public class TaiKhoanServiceImpl implements TaiKhoanService {
   @Autowired
   private TaiKhoanRepository taiKhoanRepository;
+  @Autowired
+  private OtpRepository otpRepository;
+  @Autowired
+  private EmailService emailService;
 
   private EntityManager entityManager;
   private PasswordEncoder passwordEncoder;
@@ -95,7 +110,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 
   @Override
   @Transactional
-  public void dangKyKhachHang(TaiKhoan taiKhoan) throws DuplicateEntryException {
+  public void dangKyKhachHang(TaiKhoan taiKhoan, String path) {
     String plainText = taiKhoan.getPassword();
     taiKhoan.setUsername(removeWhitespace(taiKhoan.getUsername()));
     taiKhoan.setNGAYTHEM(Helper.getCurrentDateFormatted());
@@ -104,17 +119,51 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 
     if (accountExisted(taiKhoan.getUsername())) {
       String message = "Email đã tồn tại!";
-      throw new DuplicateEntryException(message, ErrorEnum.REGISTER_ERROR);
+      DuplicateEntryException exception = new DuplicateEntryException(message, ErrorEnum.REGISTER_ERROR);
+      exception.setPath(path);
+      throw exception;
     }
 
     if (taiKhoan.getSodienthoai() != null) {
       if (numberExisted(taiKhoan.getSodienthoai())) {
         String message = "Số điện thoại đã tồn tại!";
-        throw new DuplicateEntryException(message, ErrorEnum.REGISTER_ERROR);
+        DuplicateEntryException exception = new DuplicateEntryException(message, ErrorEnum.REGISTER_ERROR);
+        exception.setPath(path);
+        throw exception;
       }
     }
 
     entityManager.persist(taiKhoan);
+    try {
+      emailService.sendConfirmationEmail(
+          taiKhoan.getHoten(),
+          createAuthUrl(taiKhoan.getUsername()),
+          taiKhoan.getUsername(),
+          getExpiryDate());
+    } catch (MessagingException e) {
+      log.warn("WARNING - Cannot send email to {}", taiKhoan.getUsername());
+    }
+  }
+
+  String createAuthUrl(String email) {
+    Otp otp = new Otp();
+    String password = Base64.getUrlEncoder().encodeToString(email.getBytes(StandardCharsets.UTF_8));
+    otp.setEmail(email);
+    otp.setPassword(password);
+    
+
+    // Gán expiryDate vào đối tượng Otp
+    otp.setExpiryDate(getExpiryDate());
+    otpRepository.save(otp);
+
+    return "http://localhost:8080/xacthuc?otp=" + password + "&email=" + email;
+  }
+
+  String getExpiryDate() {
+    // Tính ngày hết hạn (7 ngày từ hôm nay)
+    LocalDate expiryDate = LocalDate.now().plusDays(7);
+    String formattedExpiryDate = expiryDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    return formattedExpiryDate;
   }
 
   @Override
@@ -143,7 +192,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 
   @Override
   @Transactional
-  public void updateTaiKhoan(TaiKhoan taiKhoan) throws DuplicateEntryException {
+  public void updateTaiKhoan(TaiKhoan taiKhoan, String path) {
     String plainText = taiKhoan.getPassword();
     taiKhoan.setUsername(removeWhitespace(taiKhoan.getUsername()));
     taiKhoan.setPassword("{bcrypt}" + passwordEncoder.encode(plainText));
@@ -151,7 +200,9 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
     if (taiKhoan.getSodienthoai() != null) {
       if (numberExisted(taiKhoan.getSodienthoai())) {
         String message = "Số điện thoại đã tồn tại!";
-        throw new DuplicateEntryException(message, ErrorEnum.REGISTER_ERROR);
+        DuplicateEntryException exception = new DuplicateEntryException(message, ErrorEnum.REGISTER_ERROR);
+        exception.setPath(path);
+        throw exception;
       }
     }
     entityManager.merge(taiKhoan);
@@ -222,6 +273,39 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 
     taiKhoan.setPassword("{bcrypt}" + passwordEncoder.encode(newpassword));
 
-    updateTaiKhoan(taiKhoan);
+    updateTaiKhoan(taiKhoan, "/profile/doithongtin");
+  }
+
+  @Override
+  @Transactional
+  public boolean verifyOtp(String password, String email) {
+    Optional<Otp> result = otpRepository.findByEmailAndPassword(email, password);
+
+    if (result.isPresent()) {
+      log.info("Tim thay otp");
+      if (result.get().isExpired()) {
+        log.info("OTP da het han");
+        // Xoa OTP het han
+        otpRepository.delete(result.get());
+        // Xoa tai khoan neu OTP da het han
+        taiKhoanRepository.deleteById(email);
+        return false;
+      } else {
+        log.info("Chua het han");
+        Optional<TaiKhoan> taiKhoanOpt = taiKhoanRepository.findById(email);
+
+        if (taiKhoanOpt.isPresent()) {
+          log.info("Tim thay tai khoan");
+          TaiKhoan taiKhoan = taiKhoanOpt.get();
+          taiKhoan.setEnabled(1);
+          entityManager.merge(taiKhoan);
+          log.info("Kich hoat tai khoan");
+        }
+        otpRepository.delete(result.get());
+        log.info("Xoa OTP");
+        return true;
+      }
+    }
+    return false;
   }
 }

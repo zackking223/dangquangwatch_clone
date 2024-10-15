@@ -29,7 +29,8 @@
   </div>
 
   <div th:replace="~{fragments/footer :: footer}"></div>
-  <script>
+  <script th:inline="javascript">
+    const defaultAddress = /*[[${taikhoan.diachi}]]*/ '';
     function renderCart() {
       const cartContainer = document.getElementById('cart-container');
       const cart = getCart();
@@ -73,12 +74,12 @@
           <div>
             <label class="block font-medium mb-1 mt-2" for="diaChi">Địa chỉ giao</label>
             <textarea class="w-full p-2 rounded border border-black" rows="3" id="diaChi"
-              placeholder="Mặc định là địa chỉ của tài khoản"></textarea>
+              placeholder="Địa chỉ nhận hàng" required>${defaultAddress}</textarea>
           </div>
           <div>
             <label class="block font-medium mb-1 mt-2" for="ghiChu">Ghi chú</label>
             <textarea class="w-full p-2 rounded border border-black" rows="3" id="ghiChu"
-              placeholder="Ghi chú cho người giao">Không có</textarea>
+              placeholder="Ghi chú cho người giao" required>Không có</textarea>
           </div>
         </form>
         <div class="w-full flex gap-2 p-4">

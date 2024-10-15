@@ -1,8 +1,28 @@
+# SET to false when in development
 spring.thymeleaf.cache=false
 spring.web.resources.chain.cache=false
 
-spring.security.user.name=test
-spring.security.user.password=test
+# GOOGLE LOGIN / AUTHENTICATION (will add new account to db if email not exists)
+spring.security.oauth2.client.registration.google.client-id=
+spring.security.oauth2.client.registration.google.client-secret=
+spring.security.oauth2.client.registration.google.scope=profile, email
+spring.security.oauth2.client.registration.google.redirect-uri={baseUrl}/login/oauth2/code/google
+
+spring.security.oauth2.client.provider.google.authorization-uri=https://accounts.google.com/o/oauth2/auth
+spring.security.oauth2.client.provider.google.token-uri=https://oauth2.googleapis.com/token
+spring.security.oauth2.client.provider.google.user-info-uri=https://www.googleapis.com/oauth2/v3/userinfo
+
+# GITHUB LOGIN / AUTHENTICATION (will add new account to db if email not exists)
+spring.security.oauth2.client.registration.github.client-id=
+spring.security.oauth2.client.registration.github.client-secret=
+spring.security.oauth2.client.registration.github.scope=read:user,user:email
+spring.security.oauth2.client.registration.github.redirect-uri={baseUrl}/login/oauth2/code/github
+
+spring.security.oauth2.client.provider.github.authorization-uri=https://github.com/login/oauth/authorize
+spring.security.oauth2.client.provider.github.token-uri=https://github.com/login/oauth/access_token
+spring.security.oauth2.client.provider.github.user-info-uri=https://api.github.com/user
+spring.security.oauth2.client.provider.github.user-name-attribute=login
+
 # logging.level.org.springframework.security=DEBUG
 
 spring.application.name=dangquangwatch
@@ -22,7 +42,13 @@ spring.datasource.password=
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 server.port=8080
 
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=your_email@gmail.com
+spring.mail.password=your_password
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+
 cloudinary.cloud_name=
 cloudinary.api_key=
 cloudinary.api_secret=
-

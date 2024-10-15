@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background-color: black;
+            color: #FDBD11;
+            text-align: center;
+            padding: 15px;
+            font-size: 24px;
+        }
+        .content {
+            padding: 20px;
+        }
+        .content h2 {
+            color: #333;
+        }
+        .order-info, .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .order-info th, .order-info td, 
+        .items-table th, .items-table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        .items-table th {
+            background-color: #f2f2f2;
+        }
+        .total {
+            text-align: right;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .footer {
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 10px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            Đơn hàng của <span th:text="${hoTen}"></span>
+        </div>
+        <div class="content">
+            <h2>Chi tiết đơn hàng của bạn</h2>
+            <table class="order-info">
+                <tr>
+                    <th>Mã đơn hàng:</th>
+                    <td th:text="${donHang.maDonHang}"></td>
+                </tr>
+                <tr>
+                    <th>Tình trạng:</th>
+                    <td th:text="${donHang.tinhTrang}"></td>
+                </tr>
+                <tr>
+                    <th>Thanh toán:</th>
+                    <td th:text="${donHang.thanhToan}"></td>
+                </tr>
+                <tr>
+                    <th>Ngày đặt hàng:</th>
+                    <td th:text="${donHang.NGAYTHEM}"></td>
+                </tr>
+                <tr>
+                    <th>Địa chỉ giao hàng:</th>
+                    <td th:text="${donHang.diaChi}"></td>
+                </tr>
+                <tr>
+                    <th>Ghi chú:</th>
+                    <td th:text="${donHang.ghiChu ?: 'Không có'}"></td>
+                </tr>
+            </table>
+
+            <h3>Sản phẩm đã đặt</h3>
+            <table class="items-table">
+                <thead>
+                    <tr>
+                        <th>Sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th>Giá tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="item : ${donHang.getItems()}">
+                        <td>
+                            <div style="display: flex; align-items: center;">
+                                <img th:src="${item.anhsanpham}" alt="Ảnh sản phẩm" width="50" height="50" style="display: block; flex-shrink: 0;">
+                                <a th:href="'http://localhost:8080/' + ${item.getLoaiSanPham()} + '/' + ${item.getMaSanPham()}" th:text="${item.tensanpham}" target="_blank"></a>
+                            </div>
+                        </td>
+                        <td th:text="${item.getSoLuong()}"></td>
+                        <td th:text="${item.getGiaTienFormatted()} + ' VND'"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="total">
+                Tổng tiền: <span th:text="${donHang.getTongTienFormatted()} + ' VND'"></span>
+            </div>
+        </div>
+        <div class="footer">
+          <p>This is an automated message. Please do not reply to this email.</p>
+          <p>&copy; 2024 DangQuangWatch</span>. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

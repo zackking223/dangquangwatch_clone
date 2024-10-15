@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import edu.it10.dangquangwatch.spring.AppCustomException.DuplicateEntryException;
+import edu.it10.dangquangwatch.spring.AppCustomException.EmptyOrNullListException;
 import edu.it10.dangquangwatch.spring.AppCustomException.ErrorEnum;
 import edu.it10.dangquangwatch.spring.entity.ApiResponse;
 import edu.it10.dangquangwatch.spring.entity.DonHang;
@@ -19,7 +20,6 @@ import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
 import edu.it10.dangquangwatch.spring.service.ChiTietDonHangService;
 import edu.it10.dangquangwatch.spring.service.DonHangService;
 import edu.it10.dangquangwatch.spring.service.TaiKhoanService;
-import edu.it10.dangquangwatch.spring.service.impl.EmptyOrNullListException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -41,7 +41,12 @@ public class ProfileController {
   TaiKhoanService taiKhoanService;
 
   @GetMapping("/giohang")
-  public String cart() {
+  public String cart(HttpSession session, Model model) {
+    String username = (String) session.getAttribute("username");
+
+    TaiKhoan taikhoan = taiKhoanService.getTaiKhoan(username);
+
+    model.addAttribute("taikhoan", taikhoan);
     return "giohang";
   }
 
@@ -132,6 +137,11 @@ public class ProfileController {
 
     TaiKhoan taiKhoan = taiKhoanService.getTaiKhoan(username);
 
+    if (taiKhoan.getSodienthoai() == null) {
+      ApiResponse response = new ApiResponse(false, "Vui lòng thêm số điện thoại cho tài khoản!");
+      return ResponseEntity.ok(response);
+    }
+
     donHang.setTinhTrang("Chờ xác nhận");
 
     if (donHang.getDiaChi() == null || donHang.getDiaChi().isEmpty()) {
@@ -201,7 +211,7 @@ public class ProfileController {
     }
 
     try {
-      taiKhoanService.updateTaiKhoan(taiKhoan);
+      taiKhoanService.updateTaiKhoan(taiKhoan, "/profile/doithongtin");
     } catch (DuplicateEntryException e) {
       e.printStackTrace();
       session.setAttribute(ErrorEnum.UPDATE_PROFILE_ERROR.name(), e.getMessage());

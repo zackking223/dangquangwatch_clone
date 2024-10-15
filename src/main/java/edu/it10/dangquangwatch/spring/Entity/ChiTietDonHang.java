@@ -87,6 +87,9 @@ public class ChiTietDonHang {
     this.maChiTietDonHang = maChiTietDonHang;
   }
 
+  /**
+   * @return 'dongho', 'phukien', 'kinhmat', 'butky', 'trangsuc'
+   */
   public String getLoaiSanPham() {
     return this.loaiSanPham;
   }

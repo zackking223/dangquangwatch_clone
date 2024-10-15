@@ -85,7 +85,7 @@ public class CustomOAuth2UserServiceImpl extends DefaultOAuth2UserService implem
 
       // Set other attributes as needed
       try {
-        taiKhoanService.dangKyKhachHang(user);
+        taiKhoanService.dangKyKhachHang(user, "oauth2");
       } catch (Exception e) {
         e.printStackTrace();
       }

@@ -165,7 +165,7 @@ const dathang = async () => {
   const data = await response.json();
   if (data.status) {
     resetCart();
-    redirectToCart();
+    redirectToOrders();
   } else {
     document.getElementById("error").classList.remove("hidden");
     document.getElementById("error").value = data.message;
@@ -173,8 +173,8 @@ const dathang = async () => {
 }
 
 // Hàm chuyển hướng
-const redirectToCart = () => {
-  window.location.href = "/profile/giohang";
+const redirectToOrders = () => {
+  window.location.href = "/profile/donhang";
 }
 
 function formatCurrencyVND(number) {
