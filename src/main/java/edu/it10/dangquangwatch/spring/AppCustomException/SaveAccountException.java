@@ -1,8 +1,11 @@
 package edu.it10.dangquangwatch.spring.AppCustomException;
 
-public class DuplicateEntryException extends RuntimeException {
+import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
+
+public class SaveAccountException extends RuntimeException {
   private String path;
-  
+  private TaiKhoan taiKhoan;
+
   /**
    * sodienthoai, email
    */
@@ -18,25 +21,25 @@ public class DuplicateEntryException extends RuntimeException {
     this.sessionErrorAttribute = sessionErrorAttribute;
   }
 
-  public DuplicateEntryException(String message, ErrorEnum sessionErrorAttribute) {
+  public SaveAccountException(String message, ErrorEnum sessionErrorAttribute) {
     super(message);
     this.sessionErrorAttribute = sessionErrorAttribute;
   }
 
-  public DuplicateEntryException(String message, String entry, ErrorEnum sessionErrorAttribute) {
+  public SaveAccountException(String message, String entry, ErrorEnum sessionErrorAttribute) {
     super(message);
     this.entry = entry;
     this.sessionErrorAttribute = sessionErrorAttribute;
   }
 
-  public DuplicateEntryException(String message, String entry, ErrorEnum sessionErrorAttribute, String type) {
+  public SaveAccountException(String message, String entry, ErrorEnum sessionErrorAttribute, String type) {
     super(message);
     this.type = type;
     this.entry = entry;
     this.sessionErrorAttribute = sessionErrorAttribute;
   }
 
-  public DuplicateEntryException(String message, String entry, ErrorEnum sessionErrorAttribute, String path, String type) {
+  public SaveAccountException(String message, String entry, ErrorEnum sessionErrorAttribute, String path, String type) {
     super(message);
     this.path = path;
     this.type = type;
@@ -70,5 +73,13 @@ public class DuplicateEntryException extends RuntimeException {
 
   public void setEntry(String entry) {
     this.entry = entry;
+  }
+  
+  public TaiKhoan getTaiKhoan() {
+    return taiKhoan;
+  }
+
+  public void setTaiKhoan(TaiKhoan taiKhoan) {
+    this.taiKhoan = taiKhoan;
   }
 }

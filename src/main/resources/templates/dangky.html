@@ -21,7 +21,7 @@
     </section>
   </header>
 
-  <div class="flex flex-col gap-4 items-center absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
+  <div class="flex flex-col gap-4 items-center mx-auto mt-4">
     <div id="error"
       class="p-2 bg-red-500 max-w-[332px] shadow shadow-black rounded-md text-white hover:cursor-pointer text-center"
       th:if="${errorMessage}" th:text="${errorMessage}"></div>
@@ -37,27 +37,43 @@
       <div>
         <label class="block font-medium" for="username">Email:</label>
         <input class="block p-2 max-w-[300px] w-screen rounded border border-black overflow-hidden" type="email"
-          name="username" placeholder="user@emai.com" required>
+          name="username" placeholder="user@emai.com" th:value="${email ?: ''}" required>
       </div>
       <div>
         <label class="block font-medium" for="password">Password:</label>
         <input class="block p-2 max-w-[300px] w-screen rounded border border-black overflow-hidden" type="password"
-          name="password" placeholder="Mật khẩu" required>
+          name="password" placeholder="Mật khẩu" th:value="${password ?: ''}" required>
       </div>
       <div>
         <label class="block font-medium" for="hoten">Họ tên:</label>
         <input class="block p-2 max-w-[300px] w-screen rounded border border-black overflow-hidden" type="text"
-          name="hoten" placeholder="Họ tên" required>
+          name="hoten" placeholder="Họ tên" th:value="${hoten ?: ''}" required>
       </div>
       <div>
         <label class="block font-medium" for="sodienthoai">Số điện thoại:</label>
         <input class="block p-2 max-w-[300px] w-screen rounded border border-black overflow-hidden" type="text"
-          name="sodienthoai" placeholder="Số diện thoại" onkeypress='validate(event)' required>
+          name="sodienthoai" placeholder="Số diện thoại" onkeypress='validate(event)' th:value="${sodienthoai ?: ''}"
+          required>
       </div>
       <div>
-        <label class="block font-medium" for="diachi">Địa chi:</label>
-        <input class="block p-2 max-w-[300px] w-screen rounded border border-black overflow-hidden" type="text"
-          name="diachi" placeholder="Địa chỉ" required>
+        <label class="block font-medium" for="diachi">Địa chỉ:</label>
+        <input th:value="${diachi ?: ''}" type="hidden" id="diachi" name="diachi" placeholder="Địa chỉ" required>
+        <div class="flex flex-col items-center gap-2">
+          <select id="provinceSelect" class="border border-black rounded block p-2 w-full"
+            onchange="populateDistricts()" required>
+            <option value="">Chọn tỉnh/thành phố</option>
+          </select>
+          <select id="districtSelect" class="border border-black rounded block p-2 w-full" onchange="populateWards()"
+            required>
+            <option value="">Chọn quận/huyện</option>
+          </select>
+          <select id="wardSelect" class="border border-black rounded block p-2 w-full" onchange="updateAddress()"
+            required>
+            <option value="">Chọn phường/xã</option>
+          </select>
+          <input id="extraAddress" placeholder="Địa chỉ nhà" class="border border-black rounded block p-2 w-full"
+            type="text" oninput="updateAddress()" required />
+        </div>
       </div>
       <div class="flex items-center gap-2 my-4 mx-auto">
         <button class="block p-2 w-max bg-blue-500 font-bold text-white rounded" type="submit">Đăng ký</button>
@@ -70,6 +86,7 @@
       </p>
     </form>
   </div>
+  <script src="/js/address.js"></script>
   <script>
     const err = document.getElementById("error");
     if (err != null) {
@@ -103,6 +120,30 @@
         if (theEvent.preventDefault) theEvent.preventDefault();
       }
     }
+  </script>
+  <script th:inline="javascript">
+    const provinceValue = /*[[${province}]]*/ '';
+    const districtValue = /*[[${district}]]*/ '';
+    const wardValue = /*[[${ward}]]*/ '';
+    const extraAddressValue = /*[[${extra}]]*/ '';
+
+    function fillAddress() {
+      if (provinceValue && districtValue && wardValue) {
+        const province = document.getElementById("provinceSelect");
+        const district = document.getElementById("districtSelect");
+        const ward = document.getElementById("wardSelect");
+        const extraAddress = document.getElementById("extraAddress");
+  
+        province.value = provinceValue;
+        populateDistricts();
+        district.value = districtValue;
+        populateWards();
+        ward.value = wardValue;
+        extraAddress.value = extraAddressValue;
+        updateAddress();
+      }
+    }
+    fillAddress();
   </script>
 </body>
 

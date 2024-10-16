@@ -34,7 +34,8 @@
       <form class="mx-auto w-full" th:object="${taikhoan}" action="/profile/doithongtin" method="post">
         <div>
           <label class="block font-medium" th:for="username">Email</label>
-          <input class="border border-black rounded block p-2 w-full" type="email" th:value="${taikhoan.username}" readonly/>
+          <input class="border border-black rounded block p-2 w-full" type="email" th:value="${taikhoan.username}"
+            readonly />
         </div>
         <div style="clear: both; display: block; height: 10px"></div>
         <div>
@@ -52,11 +53,27 @@
         </div>
 
         <div style="clear: both; display: block; height: 10px"></div>
+
         <div>
           <label class="block font-medium" th:for="diachi">Địa chỉ <span class="text-sm text-red-500">(Bắt
               buộc)</span></label>
-          <input class="border border-black rounded block p-2 w-full" type="text" th:field="*{diachi}" required />
+          <input id="diachi" type="hidden" th:field="*{diachi}" required />
+          <div class="flex gap-2">
+            <select id="provinceSelect" class="border border-black rounded block p-2 w-full"
+              onchange="populateDistricts()">
+              <option value="">Chọn tỉnh/thành phố</option>
+            </select>
+            <select id="districtSelect" class="border border-black rounded block p-2 w-full" onchange="populateWards()">
+              <option value="">Chọn quận/huyện</option>
+            </select>
+            <select id="wardSelect" class="border border-black rounded block p-2 w-full" onchange="updateAddress()">
+              <option value="">Chọn phường/xã</option>
+            </select>
+            <input id="extraAddress" placeholder="Địa chỉ nhà" class="border border-black rounded block p-2 w-full"
+              type="text" oninput="updateAddress()" />
+          </div>
         </div>
+
 
         <input class="hidden" value="ROLE_KHACHHANG" type="text" th:field="*{loai_tai_khoan}" />
         <input class="hidden" value="1" type="number" th:field="*{enabled}" />
@@ -64,8 +81,8 @@
 
         <input class="p-2 w-max bg-green-500 rounded block mt-4 text-white" type="submit" value="Lưu" />
       </form>
-
-      <form class="mx-auto w-full mt-8" action="/profile/doimatkhau" method="post">
+      <div class="w-full h-[1px] bg-black my-4"></div>
+      <form class="mx-auto w-full" action="/profile/doimatkhau" method="post">
         <input type="text" class="hidden" th:value="${taikhoan.getUsername()}" name="username">
         <div>
           <label class="block font-medium" th:for="sodienthoai">Mật khẩu mới</label>
@@ -78,7 +95,28 @@
   </div>
 
   <div th:replace="~{fragments/footer :: footer}"></div>
-  <script>
+  <script src="/js/address.js"></script>
+  <script th:inline="javascript">
+    const provinceValue = /*[[${province}]]*/ '';
+    const districtValue = /*[[${district}]]*/ '';
+    const wardValue = /*[[${ward}]]*/ '';
+    const extraAddressValue = /*[[${extra}]]*/ '';
+
+    function fillAddress() {
+      const province = document.getElementById("provinceSelect");
+      const district = document.getElementById("districtSelect");
+      const ward = document.getElementById("wardSelect");
+      const extraAddress = document.getElementById("extraAddress");
+
+      province.value = provinceValue;
+      populateDistricts()
+      district.value = districtValue;
+      populateWards()
+      ward.value = wardValue;
+      extraAddress.value = extraAddressValue;
+    }
+    fillAddress();
+
     const err = document.getElementById("error");
     if (err != null) {
       err.addEventListener("click", () => {

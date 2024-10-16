@@ -1,6 +1,6 @@
 package edu.it10.dangquangwatch.spring.controller;
 
-import edu.it10.dangquangwatch.spring.AppCustomException.DuplicateEntryException;
+import edu.it10.dangquangwatch.spring.AppCustomException.SaveAccountException;
 import edu.it10.dangquangwatch.spring.AppCustomException.ErrorEnum;
 import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
 import edu.it10.dangquangwatch.spring.service.TaiKhoanService;
@@ -85,7 +85,7 @@ public class TaikhoanController {
   public String addTaiKhoan(TaiKhoan taikhoan, HttpSession session) {
     try {
       taikhoanService.dangKyQuanTri(taikhoan);
-    } catch (DuplicateEntryException e) {
+    } catch (SaveAccountException e) {
       e.printStackTrace();
       session.setAttribute(ErrorEnum.ADMIN_ACCOUNTS_ERROR.name(), e.getMessage());
       return "redirect:/admin/accounts/add";

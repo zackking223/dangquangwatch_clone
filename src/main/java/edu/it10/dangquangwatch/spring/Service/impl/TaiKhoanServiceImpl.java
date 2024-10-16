@@ -16,7 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import edu.it10.dangquangwatch.spring.AppCustomException.DuplicateEntryException;
+import edu.it10.dangquangwatch.spring.AppCustomException.SaveAccountException;
 import edu.it10.dangquangwatch.spring.AppCustomException.ErrorEnum;
 import edu.it10.dangquangwatch.spring.controller.Helper;
 import edu.it10.dangquangwatch.spring.entity.Otp;
@@ -119,15 +119,16 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 
     if (accountExisted(taiKhoan.getUsername())) {
       String message = "Email đã tồn tại!";
-      DuplicateEntryException exception = new DuplicateEntryException(message, ErrorEnum.REGISTER_ERROR);
+      SaveAccountException exception = new SaveAccountException(message, ErrorEnum.REGISTER_ERROR);
       exception.setPath(path);
+      exception.setTaiKhoan(taiKhoan);
       throw exception;
     }
 
     if (taiKhoan.getSodienthoai() != null) {
       if (numberExisted(taiKhoan.getSodienthoai())) {
         String message = "Số điện thoại đã tồn tại!";
-        DuplicateEntryException exception = new DuplicateEntryException(message, ErrorEnum.REGISTER_ERROR);
+        SaveAccountException exception = new SaveAccountException(message, ErrorEnum.REGISTER_ERROR);
         exception.setPath(path);
         throw exception;
       }
@@ -150,7 +151,6 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
     String password = Base64.getUrlEncoder().encodeToString(email.getBytes(StandardCharsets.UTF_8));
     otp.setEmail(email);
     otp.setPassword(password);
-    
 
     // Gán expiryDate vào đối tượng Otp
     otp.setExpiryDate(getExpiryDate());
@@ -168,7 +168,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 
   @Override
   @Transactional
-  public void dangKyQuanTri(TaiKhoan taiKhoan) throws DuplicateEntryException {
+  public void dangKyQuanTri(TaiKhoan taiKhoan) throws SaveAccountException {
     String plainText = taiKhoan.getPassword();
     taiKhoan.setUsername(removeWhitespace(taiKhoan.getUsername()));
     taiKhoan.setNGAYTHEM(Helper.getCurrentDateFormatted());
@@ -178,13 +178,19 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 
     if (accountExisted(taiKhoan.getUsername())) {
       String message = "Email đã tồn tại!";
-      throw new DuplicateEntryException(message, ErrorEnum.REGISTER_ERROR);
+      SaveAccountException exception = new SaveAccountException(message, ErrorEnum.REGISTER_ERROR);
+      exception.setPath("/admin/accounts/add");
+      exception.setTaiKhoan(taiKhoan);
+      throw exception;
     }
 
     if (taiKhoan.getSodienthoai() != null) {
       if (numberExisted(taiKhoan.getSodienthoai())) {
         String message = "Số điện thoại đã tồn tại!";
-        throw new DuplicateEntryException(message, ErrorEnum.REGISTER_ERROR);
+        SaveAccountException exception = new SaveAccountException(message, ErrorEnum.REGISTER_ERROR);
+        exception.setPath("/admin/accounts/add");
+        exception.setTaiKhoan(taiKhoan);
+        throw exception;
       }
     }
     entityManager.persist(taiKhoan);
@@ -200,8 +206,9 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
     if (taiKhoan.getSodienthoai() != null) {
       if (numberExisted(taiKhoan.getSodienthoai())) {
         String message = "Số điện thoại đã tồn tại!";
-        DuplicateEntryException exception = new DuplicateEntryException(message, ErrorEnum.REGISTER_ERROR);
+        SaveAccountException exception = new SaveAccountException(message, ErrorEnum.REGISTER_ERROR);
         exception.setPath(path);
+        exception.setTaiKhoan(taiKhoan);
         throw exception;
       }
     }

@@ -39,9 +39,9 @@
         <table class="table table-active">
             <tr>
                 <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">
-                    Username</th>
+                    Email</th>
                 <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">
-                    Password</th>
+                    Đã xác nhận</th>
                 <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">Họ
                     tên</th>
                 <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">Số
@@ -57,11 +57,11 @@
                 <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden"
                     th:text="${taikhoan.getUsername()}"></td>
                 <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden"
-                    th:text="${taikhoan.getPassword()}"></td>
+                    th:text="${taikhoan.getEnabled() == 1 ? 'Đã xác nhận' : 'Chưa xác nhận'}"></td>
                 <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden"
                     th:text="${taikhoan.getHoten()}"></td>
                 <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden"
-                    th:text="${taikhoan.getSodienthoai()}"></td>
+                    th:text="${taikhoan.getSodienthoai() != null ? taikhoan.getSodienthoai() : 'Chưa có'}"></td>
                 <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden"
                     th:text="${taikhoan.getDiachi()}"></td>
                 <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden"

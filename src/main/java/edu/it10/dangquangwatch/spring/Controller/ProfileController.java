@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
-import edu.it10.dangquangwatch.spring.AppCustomException.DuplicateEntryException;
+import edu.it10.dangquangwatch.spring.AppCustomException.SaveAccountException;
 import edu.it10.dangquangwatch.spring.AppCustomException.EmptyOrNullListException;
 import edu.it10.dangquangwatch.spring.AppCustomException.ErrorEnum;
 import edu.it10.dangquangwatch.spring.entity.ApiResponse;
@@ -142,6 +142,11 @@ public class ProfileController {
       return ResponseEntity.ok(response);
     }
 
+    if (taiKhoan.getDiachi().equals("Chưa có") || taiKhoan.getDiachi() == null) {
+      ApiResponse response = new ApiResponse(false, "Vui lòng địa chỉ cho tài khoản!");
+      return ResponseEntity.ok(response);
+    }
+
     donHang.setTinhTrang("Chờ xác nhận");
 
     if (donHang.getDiaChi() == null || donHang.getDiaChi().isEmpty()) {
@@ -198,6 +203,27 @@ public class ProfileController {
     TaiKhoan taikhoan = taiKhoanService.getTaiKhoan(username);
 
     model.addAttribute("taikhoan", taikhoan);
+
+    String address = taikhoan.getDiachi();
+    String province = "";
+    String district = "";
+    String ward = "";
+    String extra = "";
+    
+    if (taikhoan.getDiachi() != null && !taikhoan.getDiachi().equals("Chưa có")) {
+      String[] addressSplit = address.split(", ", 4);
+      if (addressSplit.length == 4) {
+        province = addressSplit[0];
+        district = addressSplit[1];
+        ward = addressSplit[2];
+        extra = addressSplit[3];
+      }
+    }
+    
+    model.addAttribute("province", province);
+    model.addAttribute("district", district);
+    model.addAttribute("ward", ward);
+    model.addAttribute("extra", extra);
     return "doithongtin";
   }
 
@@ -212,7 +238,7 @@ public class ProfileController {
 
     try {
       taiKhoanService.updateTaiKhoan(taiKhoan, "/profile/doithongtin");
-    } catch (DuplicateEntryException e) {
+    } catch (SaveAccountException e) {
       e.printStackTrace();
       session.setAttribute(ErrorEnum.UPDATE_PROFILE_ERROR.name(), e.getMessage());
       return "redirect:/profile/doithongtin";

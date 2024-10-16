@@ -18,9 +18,9 @@
                 th:text="${errorMessage}"></div>
             <form th:object="${taikhoan}" th:action="@{/admin/khachhang/add}" action="#" method="post">
                 <div>
-                    <label class="block font-medium" th:for="username">Username</label>
+                    <label class="block font-medium" th:for="username">Email</label>
                     <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
-                        th:field="*{username}" placeholder="Username" />
+                        th:field="*{username}" placeholder="user@email.com" />
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>

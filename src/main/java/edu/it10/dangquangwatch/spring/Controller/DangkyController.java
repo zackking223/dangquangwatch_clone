@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import edu.it10.dangquangwatch.spring.AppCustomException.DuplicateEntryException;
 import edu.it10.dangquangwatch.spring.AppCustomException.ErrorEnum;
 import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
 import edu.it10.dangquangwatch.spring.service.TaiKhoanService;
@@ -30,6 +29,11 @@ public class DangkyController {
   @GetMapping("/dangky")
   public String register(HttpSession session, Model model) {
     String errorMessage = null;
+    String province = "";
+    String district = "";
+    String ward = "";
+    String extra = "";
+
     if (session != null) {
       AuthenticationException ex = (AuthenticationException) session
           .getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
@@ -37,13 +41,40 @@ public class DangkyController {
         errorMessage = ex.getMessage();
         session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
       } else {
-        var temp = session.getAttribute(ErrorEnum.REGISTER_ERROR.name());
-        if (temp != null) {
-          errorMessage = (String) temp;
+        var tempErrorMessage = session.getAttribute(ErrorEnum.REGISTER_ERROR.name());
+        var tempTaiKhoan = session.getAttribute("taikhoan");
+        if (tempErrorMessage != null) {
+          errorMessage = (String) tempErrorMessage;
           session.removeAttribute(ErrorEnum.REGISTER_ERROR.name());
+
+          if (tempTaiKhoan != null) {
+            TaiKhoan taikhoan = (TaiKhoan) tempTaiKhoan;
+            session.removeAttribute("taikhoan");
+            String address = taikhoan.getDiachi();
+
+            if (taikhoan.getDiachi() != null && !taikhoan.getDiachi().equals("Chưa có")) {
+              String[] addressSplit = address.split(", ", 4);
+              if (addressSplit.length == 4) {
+                province = addressSplit[0];
+                district = addressSplit[1];
+                ward = addressSplit[2];
+                extra = addressSplit[3];
+              }
+
+              model.addAttribute("email", taikhoan.getUsername());
+              model.addAttribute("hoten", taikhoan.getHoten());
+              model.addAttribute("sodienthoai", taikhoan.getSodienthoai());
+              model.addAttribute("diachi", taikhoan.getDiachi());
+            }
+          }
         }
       }
     }
+
+    model.addAttribute("province", province);
+    model.addAttribute("district", district);
+    model.addAttribute("ward", ward);
+    model.addAttribute("extra", extra);
     model.addAttribute("errorMessage", errorMessage);
     return "dangky";
   }
@@ -80,29 +111,30 @@ public class DangkyController {
       @RequestParam("hoten") String hoten, @RequestParam("sodienthoai") String sodienthoai,
       @RequestParam("agree") Optional<String> agree) {
 
-    if (!agree.isPresent()) {
-      session.setAttribute(ErrorEnum.REGISTER_ERROR.name(), "Bạn phải đồng ý điều khoản!");
-      return "redirect:/dangky";
-    }
+    TaiKhoan taikhoan = new TaiKhoan();
 
-    TaiKhoan taiKhoan = new TaiKhoan();
-
-    taiKhoan.setUsername(username);
-    taiKhoan.setPassword(password);
-    taiKhoan.setSodienthoai(sodienthoai);
-    taiKhoan.setDiachi(diachi);
-    taiKhoan.setHoten(hoten);
+    taikhoan.setUsername(username);
+    taikhoan.setPassword(password);
+    taikhoan.setSodienthoai(sodienthoai);
+    taikhoan.setDiachi(diachi);
+    taikhoan.setHoten(hoten);
 
     // Can xac thuc tai khoan qua email de duoc enable
-    taiKhoan.setEnabled(0);
-
-    try {
-      taiKhoanService.dangKyKhachHang(taiKhoan, "/dangky");
-    } catch (DuplicateEntryException e) {
-      e.printStackTrace();
-      session.setAttribute(ErrorEnum.REGISTER_ERROR.name(), e.getMessage());
+    taikhoan.setEnabled(0);
+    if (!agree.isPresent()) {
+      session.setAttribute(ErrorEnum.REGISTER_ERROR.name(), "Bạn phải đồng ý điều khoản!");
+      session.setAttribute("taikhoan", taikhoan);
       return "redirect:/dangky";
     }
+
+    if (diachi.split(", ", 4).length < 4) {
+      session.setAttribute(ErrorEnum.REGISTER_ERROR.name(), "Địa chỉ không hợp lệ!");
+      session.setAttribute("taikhoan", taikhoan);
+      return "redirect:/dangky";
+    }
+
+    taiKhoanService.dangKyKhachHang(taikhoan, "/dangky");
+
     return "redirect:/login?regsuccess";
   }
 }

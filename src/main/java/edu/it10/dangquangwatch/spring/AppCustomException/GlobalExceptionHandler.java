@@ -29,9 +29,10 @@ public class GlobalExceptionHandler {
       .body(new ApiResponse(false, ex.getMessage()));
   }
 
-  @ExceptionHandler(DuplicateEntryException.class)
-  public String handleDuplicateEntryException(DuplicateEntryException ex) {
-    session.setAttribute(ErrorEnum.UPDATE_PROFILE_ERROR.name(), ex.getMessage());
+  @ExceptionHandler(SaveAccountException.class)
+  public String handleSaveAccountException(SaveAccountException ex) {
+    session.setAttribute(ex.getSessionErrorAttribute().name(), ex.getMessage());
+    session.setAttribute("taikhoan", ex.getTaiKhoan());
     return ex.getRedirect();
   }
 

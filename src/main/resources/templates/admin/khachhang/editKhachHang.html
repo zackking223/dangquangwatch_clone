@@ -15,15 +15,9 @@
     <h1 class="font-bold text-center my-2">Sửa thông tin</h1>
     <form th:object="${taikhoan}" th:action="@{/admin/khachhang/save}" action="#" method="post">
       <div>
-        <label class="block font-medium" th:for="username">Username</label>
+        <label class="block font-medium" th:for="username">Email</label>
         <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
-          th:field="*{username}" />
-      </div>
-      <div style="clear: both; display: block; height: 10px"></div>
-      <div>
-        <label class="block font-medium" th:for="password">Password</label>
-        <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="password"
-          th:field="*{password}" />
+          th:field="*{username}" placeholder="user@email.com" />
       </div>
       <div style="clear: both; display: block; height: 10px"></div>
       <div>
@@ -35,7 +29,7 @@
       <div>
         <label class="block font-medium" th:for="sodienthoai">Số điện thoại</label>
         <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
-          th:field="*{sodienthoai}" placeholder="Địa chỉ" onkeypress='validate(event)' />
+          th:field="*{sodienthoai}" placeholder="Số điện thoại" onkeypress='validate(event)' />
       </div>
 
       <div style="clear: both; display: block; height: 10px"></div>
