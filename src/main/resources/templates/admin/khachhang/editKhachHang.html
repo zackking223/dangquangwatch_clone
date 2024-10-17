@@ -13,41 +13,82 @@
   <div th:replace="~{fragments/sidebar :: sidebar}"></div>
   <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
     <h1 class="font-bold text-center my-2">Sửa thông tin</h1>
-    <form th:object="${taikhoan}" th:action="@{/admin/khachhang/save}" action="#" method="post">
-      <div>
-        <label class="block font-medium" th:for="username">Email</label>
-        <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
-          th:field="*{username}" placeholder="user@email.com" />
-      </div>
-      <div style="clear: both; display: block; height: 10px"></div>
-      <div>
-        <label class="block font-medium" th:for="hoten">Họ tên</label>
-        <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{hoten}" />
-      </div>
+    <div>
+      <div id="error" class="p-2 bg-red-500 rounded-md text-white hover:cursor-pointer" th:if="${errorMessage}"
+        th:text="${errorMessage}"></div>
+      <form th:object="${taikhoan}" th:action="@{/admin/khachhang/save}" action="#" method="post">
+        <div>
+          <label class="block font-medium" th:for="username">Email</label>
+          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{username}"
+            placeholder="user@email.com" />
+        </div>
+        <div style="clear: both; display: block; height: 10px"></div>
+        <div>
+          <label class="block font-medium" th:for="password">Mật khẩu mới</label>
+          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="password" id="Mật khẩu"
+            name="password" placeholder="Nhập mật khẩu mới (Bỏ trống nếu không muốn đổi)" />
+        </div>
+        <div style="clear: both; display: block; height: 10px"></div>
+        <div>
+          <label class="block font-medium" th:for="hoten">Họ tên</label>
+          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{hoten}" />
+        </div>
 
-      <div style="clear: both; display: block; height: 10px"></div>
-      <div>
-        <label class="block font-medium" th:for="sodienthoai">Số điện thoại</label>
-        <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
-          th:field="*{sodienthoai}" placeholder="Số điện thoại" onkeypress='validate(event)' />
-      </div>
+        <div style="clear: both; display: block; height: 10px"></div>
+        <div>
+          <label class="block font-medium" th:for="sodienthoai">Số điện thoại</label>
+          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
+            th:field="*{sodienthoai}" placeholder="Số điện thoại" onkeypress='validate(event)' />
+        </div>
 
-      <div style="clear: both; display: block; height: 10px"></div>
-      <div>
-        <label class="block font-medium" th:for="diachi">Địa chỉ</label>
-        <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{diachi}" />
-      </div>
-      <div style="clear: both; display: block; height: 10px"></div>
+        <div style="clear: both; display: block; height: 10px"></div>
+        <div>
+          <label class="block font-medium" th:for="diachi">Địa chỉ</label>
+          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{diachi}"
+            id="diachi" />
+          <div class="flex lg:flex-row flex-col items-center gap-2">
+            <select id="provinceSelect" class="border border-black rounded block p-2 w-full"
+              onchange="populateDistricts()" required>
+              <option value="">Chọn tỉnh/thành phố</option>
+            </select>
+            <select id="districtSelect" class="border border-black rounded block p-2 w-full" onchange="populateWards()"
+              required>
+              <option value="">Chọn quận/huyện</option>
+            </select>
+            <select id="wardSelect" class="border border-black rounded block p-2 w-full" onchange="updateAddress()"
+              required>
+              <option value="">Chọn phường/xã</option>
+            </select>
+            <input id="extraAddress" placeholder="Địa chỉ nhà" class="border border-black rounded block p-2 w-full"
+              type="text" oninput="updateAddress()" required />
+          </div>
+        </div>
+        <div style="clear: both; display: block; height: 10px"></div>
 
-      <input class="hidden" value="ROLE_KHACHHANG" type="text" th:field="*{loai_tai_khoan}" />
-      <input class="hidden" value="1" type="number" th:field="*{enabled}" />
-      <input class="hidden" type="date" th:field="*{NGAYTHEM}" />
+        <input class="hidden" value="ROLE_KHACHHANG" type="text" th:field="*{loai_tai_khoan}" />
+        <div style="clear: both; display: block; height: 10px"></div>
+        <div>
+          <label class="block font-medium" th:for="enabled">Xác thực email</label>
+          <select class="border border-black rounded block p-2 w-full" name="enabled" id="enabled"
+            th:field="*{enabled}">
+            <option value="0">Chưa xác thực</option>
+            <option value="1">Đã xác thực</option>
+          </select>
+        </div>
+        <input class="hidden" type="date" th:field="*{NGAYTHEM}" />
 
-      <div style="clear: both; display: block; height: 10px"></div>
-      <input class="p-2 w-max bg-green-500 rounded block mt-4 text-white" type="submit" value="Lưu" />
-    </form>
+        <div style="clear: both; display: block; height: 10px"></div>
+        <input class="p-2 w-max bg-green-500 rounded block mt-4 text-white" type="submit" value="Lưu" />
+      </form>
+    </div>
   </div>
+  <script src="/js/address.js"></script>
   <script>
+    const err = document.getElementById("error");
+    err.addEventListener("click", () => {
+      err.classList.add("hidden");
+    })
+
     function validate(evt) {
       if (evt.key == "Backspace" || evt.key == "Del") return true;
 
@@ -67,6 +108,30 @@
         if (theEvent.preventDefault) theEvent.preventDefault();
       }
     }
+  </script>
+  <script th:inline="javascript">
+    const provinceValue = /*[[${province}]]*/ '';
+    const districtValue = /*[[${district}]]*/ '';
+    const wardValue = /*[[${ward}]]*/ '';
+    const extraAddressValue = /*[[${extra}]]*/ '';
+
+    function fillAddress() {
+      if (provinceValue && districtValue && wardValue) {
+        const province = document.getElementById("provinceSelect");
+        const district = document.getElementById("districtSelect");
+        const ward = document.getElementById("wardSelect");
+        const extraAddress = document.getElementById("extraAddress");
+
+        province.value = provinceValue;
+        populateDistricts();
+        district.value = districtValue;
+        populateWards();
+        ward.value = wardValue;
+        extraAddress.value = extraAddressValue;
+        updateAddress();
+      }
+    }
+    fillAddress();
   </script>
 </body>
 

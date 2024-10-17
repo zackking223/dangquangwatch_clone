@@ -15,6 +15,13 @@ public class GlobalExceptionHandler {
   @Autowired
   HttpSession session;
 
+  @ExceptionHandler(RuntimeException.class)
+  public ResponseEntity<ApiResponse> handleRuntimeException(RuntimeException ex) {
+    return ResponseEntity
+      .status(HttpStatus.BAD_REQUEST)
+      .body(new ApiResponse(false, ex.getMessage()));
+  }
+
   @ExceptionHandler(OrderItemException.class)
   public ResponseEntity<ApiResponse> handleOrderItemException(OrderItemException ex) {
     return ResponseEntity

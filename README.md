@@ -1,5 +1,5 @@
 # Springboot - Đăng Quang Watch clone
-### Tech:
+### Technologies:
 - HTML/CSS/JS.
 - Springboot v3.3.1.
   - Spring JPA.
@@ -13,7 +13,7 @@
 - Server type: MariaDB.
 - Server version: 10.4.22-MariaDB - mariadb.org.
 - Server charset: UTF-8 Unicode (utf8mb4).
-- > .\database.sql
+- SQL file: `database.sql`
 
 ### Features:
 - Fully responsive with Tailwindcss.
@@ -52,7 +52,7 @@
 1. Start the Spring Boot application with the local profile. `mvn spring-boot:run`.
 2. Run `npm run build && npm run watch` from the command line.
 3. As a final change to the pom.xml, we can add a profile that calls our production NPM scripts. At release time, be sure to enable this Maven profile. `mvn spring-boot:run -P release`.
-4. **(optional)** run mail-dev: docker compose up -d (If you don't have a SMPT service).
+4. **(optional)** run mail-dev: `docker compose up -d` (If you don't have a SMPT service).
 
 ### Notes:
 - Product page is not very polished.

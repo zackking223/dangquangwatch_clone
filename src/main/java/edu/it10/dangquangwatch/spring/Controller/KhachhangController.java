@@ -1,10 +1,14 @@
 package edu.it10.dangquangwatch.spring.controller;
 
+import edu.it10.dangquangwatch.spring.AppCustomException.ErrorEnum;
 import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
 import edu.it10.dangquangwatch.spring.service.TaiKhoanService;
+import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,47 +62,123 @@ public class KhachhangController {
   }
 
   @GetMapping(value = "/add")
-  public String addTaikhoan(Model model, @RequestParam("error") Optional<String> error) {
+  public String addTaikhoan(HttpSession session, Model model, @RequestParam("error") Optional<String> error) {
     String errorMessage = null;
+    String province = "";
+    String district = "";
+    String ward = "";
+    String extra = "";
+    TaiKhoan taikhoan = null;
+
     if (error.isPresent()) {
       errorMessage = error.get();
+    } else if (session != null) {
+      AuthenticationException ex = (AuthenticationException) session
+          .getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+      if (ex != null) {
+        errorMessage = ex.getMessage();
+        session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+      } else {
+        var tempErrorMessage = session.getAttribute(ErrorEnum.REGISTER_ERROR.name());
+        var tempTaiKhoan = session.getAttribute("taikhoan");
+        if (tempErrorMessage != null) {
+          errorMessage = (String) tempErrorMessage;
+          session.removeAttribute(ErrorEnum.REGISTER_ERROR.name());
+
+          if (tempTaiKhoan != null) {
+            taikhoan = (TaiKhoan) tempTaiKhoan;
+            session.removeAttribute("taikhoan");
+            String address = taikhoan.getDiachi();
+
+            if (taikhoan.getDiachi() != null && !taikhoan.getDiachi().equals("Chưa có")) {
+              String[] addressSplit = address.split(", ", 4);
+              if (addressSplit.length == 4) {
+                province = addressSplit[0];
+                district = addressSplit[1];
+                ward = addressSplit[2];
+                extra = addressSplit[3];
+              }
+            }
+          }
+        }
+      }
     }
+
+    model.addAttribute("province", province);
+    model.addAttribute("district", district);
+    model.addAttribute("ward", ward);
+    model.addAttribute("extra", extra);
     model.addAttribute("errorMessage", errorMessage);
-    model.addAttribute("taikhoan", new TaiKhoan());
+
+    if (taikhoan != null) {
+      model.addAttribute("taikhoan", taikhoan);
+    } else {
+      model.addAttribute("taikhoan", new TaiKhoan());
+    }
     return "admin/khachhang/addKhachHang";
   }
 
   @GetMapping(value = "/edit")
-  public String editTaiKhoan(@RequestParam("id") String username, Model model) {
+  public String editTaiKhoan(HttpSession session, @RequestParam("id") String username, Model model) {
     TaiKhoan taikhoanEdit = taikhoanService.getTaiKhoan(username);
-    if (taikhoanEdit != null) {
-      model.addAttribute("taikhoan", taikhoanEdit);
-      return "admin/khachhang/editKhachHang";
-    } else {
+
+    if (taikhoanEdit == null) {
       return "redirect:/admin/khachhang/";
     }
+
+    String province = "";
+    String district = "";
+    String ward = "";
+    String extra = "";
+    String errorMessage = null;
+
+    String[] addressSplit = taikhoanEdit.getDiachi().split(", ", 4);
+
+    if (session != null) {
+      var tempErrorMessage = session.getAttribute(ErrorEnum.UPDATE_PROFILE_ERROR.name());
+      if (tempErrorMessage != null) {
+        errorMessage = (String) tempErrorMessage;
+        session.removeAttribute(ErrorEnum.UPDATE_PROFILE_ERROR.name());
+      }
+    }
+
+    if (addressSplit.length == 4) {
+      province = addressSplit[0];
+      district = addressSplit[1];
+      ward = addressSplit[2];
+      extra = addressSplit[3];
+    }
+    model.addAttribute("province", province);
+    model.addAttribute("district", district);
+    model.addAttribute("ward", ward);
+    model.addAttribute("extra", extra);
+    model.addAttribute("errorMessage", errorMessage);
+    model.addAttribute("taikhoan", taikhoanEdit);
+    return "admin/khachhang/editKhachHang";
   }
 
   @PostMapping(value = "/add")
-  public String addTaiKhoan(TaiKhoan taikhoan, Model model) {
-    try {
-      taikhoanService.dangKyKhachHang(taikhoan, "/admin/khachhang/add");
-    } catch (Exception e) {
-      e.printStackTrace();
+  public String addTaiKhoan(HttpSession session, TaiKhoan taikhoan, Model model) {
+    String diachi = taikhoan.getDiachi();
 
-      String errorMessage = "Username đã tồn tại!";
-      if (e.getMessage().contains("for key \'sodienthoai_unique\'")) {
-        errorMessage = "Số điện thoại đã tồn tại!";
-      }
-      model.addAttribute("errorMessage", errorMessage);
-      model.addAttribute("taikhoan", taikhoan);
-      return "admin/khachhang/addKhachHang";
+    if (diachi == null || diachi.isEmpty() || diachi.split(", ", 4).length < 4) {
+      session.setAttribute(ErrorEnum.REGISTER_ERROR.name(), "Địa chỉ không hợp lệ!");
+      session.setAttribute("taikhoan", taikhoan);
+      return "redirect:/admin/khachhang/add";
     }
+
+    taikhoanService.dangKyKhachHang(taikhoan, "/admin/khachhang/add");
     return "redirect:/admin/khachhang/";
   }
 
   @PostMapping(value = "/save")
-  public String save(TaiKhoan taikhoan) {
+  public String save(HttpSession session, TaiKhoan taikhoan) {
+    String diachi = taikhoan.getDiachi();
+    if (diachi == null || diachi.isEmpty() || diachi.split(", ", 4).length < 4) {
+      session.setAttribute(ErrorEnum.REGISTER_ERROR.name(), "Địa chỉ không hợp lệ!");
+      session.setAttribute("taikhoan", taikhoan);
+      return "redirect:/admin/khachhang/edit?id=" + taikhoan.getUsername();
+    }
     taikhoanService.updateTaiKhoan(taikhoan, "/admin/khachhang/edit?id=" + taikhoan.getUsername());
     return "redirect:/admin/khachhang/";
   }

@@ -130,19 +130,22 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
         String message = "Số điện thoại đã tồn tại!";
         SaveAccountException exception = new SaveAccountException(message, ErrorEnum.REGISTER_ERROR);
         exception.setPath(path);
+        exception.setTaiKhoan(taiKhoan);
         throw exception;
       }
     }
 
     entityManager.persist(taiKhoan);
-    try {
-      emailService.sendConfirmationEmail(
-          taiKhoan.getHoten(),
-          createAuthUrl(taiKhoan.getUsername()),
-          taiKhoan.getUsername(),
-          getExpiryDate());
-    } catch (MessagingException e) {
-      log.warn("WARNING - Cannot send email to {}", taiKhoan.getUsername());
+    if (taiKhoan.getEnabled() == 0) {
+      try {
+        emailService.sendConfirmationEmail(
+            taiKhoan.getHoten(),
+            createAuthUrl(taiKhoan.getUsername()),
+            taiKhoan.getUsername(),
+            getExpiryDate());
+      } catch (MessagingException e) {
+        log.warn("WARNING - Cannot send email to {}", taiKhoan.getUsername());
+      }
     }
   }
 
@@ -200,13 +203,18 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
   @Transactional
   public void updateTaiKhoan(TaiKhoan taiKhoan, String path) {
     String plainText = taiKhoan.getPassword();
+    TaiKhoan original = taiKhoanRepository.findById(taiKhoan.getUsername())
+      .orElseThrow(() -> new RuntimeException("Không thể tìm thấy người dùng với email: " + taiKhoan.getHoten()));
     taiKhoan.setUsername(removeWhitespace(taiKhoan.getUsername()));
-    taiKhoan.setPassword("{bcrypt}" + passwordEncoder.encode(plainText));
+    
+    if (plainText != null) {
+      taiKhoan.setPassword("{bcrypt}" + passwordEncoder.encode(plainText));
+    }
 
-    if (taiKhoan.getSodienthoai() != null) {
+    if (taiKhoan.getSodienthoai() != original.getSodienthoai()) {
       if (numberExisted(taiKhoan.getSodienthoai())) {
         String message = "Số điện thoại đã tồn tại!";
-        SaveAccountException exception = new SaveAccountException(message, ErrorEnum.REGISTER_ERROR);
+        SaveAccountException exception = new SaveAccountException(message, ErrorEnum.UPDATE_PROFILE_ERROR);
         exception.setPath(path);
         exception.setTaiKhoan(taiKhoan);
         throw exception;

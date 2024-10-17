@@ -127,7 +127,7 @@ public class DangkyController {
       return "redirect:/dangky";
     }
 
-    if (diachi.split(", ", 4).length < 4) {
+    if (diachi == null || diachi.isEmpty() || diachi.split(", ", 4).length < 4) {
       session.setAttribute(ErrorEnum.REGISTER_ERROR.name(), "Địa chỉ không hợp lệ!");
       session.setAttribute("taikhoan", taikhoan);
       return "redirect:/dangky";

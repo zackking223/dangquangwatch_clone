@@ -41,7 +41,7 @@
                 <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">
                     Email</th>
                 <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">
-                    Đã xác nhận</th>
+                    Xác thực</th>
                 <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">Họ
                     tên</th>
                 <th class="bg-black text-white p-2 border border-solid border-black max-w-[250px] overflow-hidden">Số
@@ -57,7 +57,7 @@
                 <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden"
                     th:text="${taikhoan.getUsername()}"></td>
                 <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden"
-                    th:text="${taikhoan.getEnabled() == 1 ? 'Đã xác nhận' : 'Chưa xác nhận'}"></td>
+                    th:text="${taikhoan.getEnabled() == 1 ? 'Đã xác thực' : 'Chưa xác thực'}"></td>
                 <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden"
                     th:text="${taikhoan.getHoten()}"></td>
                 <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden"
