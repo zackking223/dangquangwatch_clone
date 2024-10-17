@@ -20,32 +20,31 @@
         <div>
           <label class="block font-medium" th:for="username">Email</label>
           <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{username}"
-            placeholder="user@email.com" />
+            placeholder="user@email.com" required />
         </div>
         <div style="clear: both; display: block; height: 10px"></div>
         <div>
           <label class="block font-medium" th:for="password">Mật khẩu mới</label>
           <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="password" id="Mật khẩu"
-            name="password" placeholder="Nhập mật khẩu mới (Bỏ trống nếu không muốn đổi)" />
+            name="password" placeholder="Nhập mật khẩu mới (Bỏ trống nếu không muốn đổi)" required />
         </div>
         <div style="clear: both; display: block; height: 10px"></div>
         <div>
           <label class="block font-medium" th:for="hoten">Họ tên</label>
-          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{hoten}" />
+          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{hoten}" required />
         </div>
 
         <div style="clear: both; display: block; height: 10px"></div>
         <div>
           <label class="block font-medium" th:for="sodienthoai">Số điện thoại</label>
           <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
-            th:field="*{sodienthoai}" placeholder="Số điện thoại" onkeypress='validate(event)' />
+            th:field="*{sodienthoai}" placeholder="Số điện thoại" required onkeypress='validate(event)' />
         </div>
 
         <div style="clear: both; display: block; height: 10px"></div>
         <div>
           <label class="block font-medium" th:for="diachi">Địa chỉ</label>
-          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{diachi}"
-            id="diachi" />
+          <input type="hidden" th:field="*{diachi}" id="diachi" />
           <div class="flex lg:flex-row flex-col items-center gap-2">
             <select id="provinceSelect" class="border border-black rounded block p-2 w-full"
               onchange="populateDistricts()" required>

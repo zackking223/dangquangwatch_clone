@@ -174,9 +174,14 @@ public class KhachhangController {
   @PostMapping(value = "/save")
   public String save(HttpSession session, TaiKhoan taikhoan) {
     String diachi = taikhoan.getDiachi();
+    String sodienthoai = taikhoan.getSodienthoai();
+    if (sodienthoai == null) {
+      session.setAttribute(ErrorEnum.REGISTER_ERROR.name(), "Số điện thoại không hợp lệ!");
+      return "redirect:/admin/khachhang/edit?id=" + taikhoan.getUsername();
+    }
+
     if (diachi == null || diachi.isEmpty() || diachi.split(", ", 4).length < 4) {
       session.setAttribute(ErrorEnum.REGISTER_ERROR.name(), "Địa chỉ không hợp lệ!");
-      session.setAttribute("taikhoan", taikhoan);
       return "redirect:/admin/khachhang/edit?id=" + taikhoan.getUsername();
     }
     taikhoanService.updateTaiKhoan(taikhoan, "/admin/khachhang/edit?id=" + taikhoan.getUsername());
