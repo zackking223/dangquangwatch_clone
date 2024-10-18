@@ -106,7 +106,7 @@
                     <tr th:each="item : ${donHang.getItems()}">
                         <td>
                             <div style="display: flex; align-items: center;">
-                                <img th:src="${item.anhsanpham}" alt="Ảnh sản phẩm" width="50" height="50" style="display: block; flex-shrink: 0;">
+                                <img th:src="${item.anhsanpham}" alt="Ảnh sản phẩm" width="50" height="50" style="display: block; flex-shrink: 0; margin-right: 12px;">
                                 <a th:href="'http://localhost:8080/' + ${item.getLoaiSanPham()} + '/' + ${item.getMaSanPham()}" th:text="${item.tensanpham}" target="_blank"></a>
                             </div>
                         </td>

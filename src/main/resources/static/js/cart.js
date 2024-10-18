@@ -108,7 +108,7 @@ const reduceItem = (loaiSanPham, maSanPham) => {
         }
       });
 
-      cart.tongTien -= parseFloat(product.giaTien) * parseFloat(product.soLuong);
+      cart.tongTien -= parseFloat(product.giaTien);
       saveCart(cart);
     } else {
       removeItem(product.loaiSanPham, product.maSanPham);
@@ -175,6 +175,11 @@ const dathang = async () => {
 // Hàm chuyển hướng
 const redirectToOrders = () => {
   window.location.href = "/profile/donhang";
+}
+
+// Hàm chuyển hướng
+const redirectToCart = () => {
+  window.location.href = "/profile/giohang";
 }
 
 function formatCurrencyVND(number) {
