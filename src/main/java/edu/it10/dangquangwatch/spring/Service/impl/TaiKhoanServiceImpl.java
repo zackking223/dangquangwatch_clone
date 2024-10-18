@@ -211,7 +211,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
       taiKhoan.setPassword("{bcrypt}" + passwordEncoder.encode(plainText));
     }
 
-    if (taiKhoan.getSodienthoai() != original.getSodienthoai()) {
+    if (!taiKhoan.getSodienthoai().equals(original.getSodienthoai())) {
       if (numberExisted(taiKhoan.getSodienthoai())) {
         String message = "Số điện thoại đã tồn tại!";
         SaveAccountException exception = new SaveAccountException(message, ErrorEnum.UPDATE_PROFILE_ERROR);
