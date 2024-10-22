@@ -2,10 +2,10 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jul 19, 2024 at 06:11 AM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 7.4.27
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th10 22, 2024 lúc 04:08 PM
+-- Phiên bản máy phục vụ: 10.4.22-MariaDB
+-- Phiên bản PHP: 7.4.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,12 +18,12 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `dongho_dangquang`
+-- Cơ sở dữ liệu: `dongho_dangquang`
 --
 
 DELIMITER $$
 --
--- Procedures
+-- Thủ tục
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateThongKeOnInsert` (IN `productType` VARCHAR(255), IN `productPrice` DECIMAL(10,2), IN `productQuantity` INT)  BEGIN
     DECLARE currentCost INT;
@@ -68,7 +68,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `anh_butky`
+-- Cấu trúc bảng cho bảng `anh_butky`
 --
 
 CREATE TABLE `anh_butky` (
@@ -79,7 +79,7 @@ CREATE TABLE `anh_butky` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `anh_butky`
+-- Đang đổ dữ liệu cho bảng `anh_butky`
 --
 
 INSERT INTO `anh_butky` (`maanh`, `mabutky`, `url`, `tenanh`) VALUES
@@ -92,7 +92,7 @@ INSERT INTO `anh_butky` (`maanh`, `mabutky`, `url`, `tenanh`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `anh_dongho`
+-- Cấu trúc bảng cho bảng `anh_dongho`
 --
 
 CREATE TABLE `anh_dongho` (
@@ -103,7 +103,7 @@ CREATE TABLE `anh_dongho` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `anh_dongho`
+-- Đang đổ dữ liệu cho bảng `anh_dongho`
 --
 
 INSERT INTO `anh_dongho` (`maanh`, `madongho`, `url`, `tenanh`) VALUES
@@ -161,7 +161,7 @@ INSERT INTO `anh_dongho` (`maanh`, `madongho`, `url`, `tenanh`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `anh_kinhmat`
+-- Cấu trúc bảng cho bảng `anh_kinhmat`
 --
 
 CREATE TABLE `anh_kinhmat` (
@@ -172,7 +172,7 @@ CREATE TABLE `anh_kinhmat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `anh_kinhmat`
+-- Đang đổ dữ liệu cho bảng `anh_kinhmat`
 --
 
 INSERT INTO `anh_kinhmat` (`maanh`, `makinhmat`, `url`, `tenanh`) VALUES
@@ -185,7 +185,7 @@ INSERT INTO `anh_kinhmat` (`maanh`, `makinhmat`, `url`, `tenanh`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `anh_phukien`
+-- Cấu trúc bảng cho bảng `anh_phukien`
 --
 
 CREATE TABLE `anh_phukien` (
@@ -196,7 +196,7 @@ CREATE TABLE `anh_phukien` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `anh_phukien`
+-- Đang đổ dữ liệu cho bảng `anh_phukien`
 --
 
 INSERT INTO `anh_phukien` (`maanh`, `maphukien`, `url`, `tenanh`) VALUES
@@ -209,7 +209,7 @@ INSERT INTO `anh_phukien` (`maanh`, `maphukien`, `url`, `tenanh`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `anh_trangsuc`
+-- Cấu trúc bảng cho bảng `anh_trangsuc`
 --
 
 CREATE TABLE `anh_trangsuc` (
@@ -220,7 +220,7 @@ CREATE TABLE `anh_trangsuc` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `anh_trangsuc`
+-- Đang đổ dữ liệu cho bảng `anh_trangsuc`
 --
 
 INSERT INTO `anh_trangsuc` (`maanh`, `matrangsuc`, `url`, `tenanh`) VALUES
@@ -231,7 +231,7 @@ INSERT INTO `anh_trangsuc` (`maanh`, `matrangsuc`, `url`, `tenanh`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `butky`
+-- Cấu trúc bảng cho bảng `butky`
 --
 
 CREATE TABLE `butky` (
@@ -245,7 +245,7 @@ CREATE TABLE `butky` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `butky`
+-- Đang đổ dữ liệu cho bảng `butky`
 --
 
 INSERT INTO `butky` (`mabutky`, `tenbutky`, `giatien`, `tragop`, `thongtin`, `soluong`, `NGAYTHEM`) VALUES
@@ -256,7 +256,7 @@ INSERT INTO `butky` (`mabutky`, `tenbutky`, `giatien`, `tragop`, `thongtin`, `so
 (5, 'BÚT KÝ PHILIPPE AUGUSTE BUTPA-923/R', 550000, 0, 'Chất liệu vỏ: Vỏ bút làm bằng Uranium.\nPhần mạ: Mạ màu công nghệ cao.\nChất liệu ruột bút: Nhôm\nMực: Mực nước màu xanh và đen, chảy mực đều, nét bút rất êm. Chiếc bút ký sang trọng này là hiện thân của sự tinh tế và đẳng cấp, xứng đáng trở thành biểu tượng của phong cách và sự chuyên nghiệp. Được chế tác từ kim loại cao cấp với lớp phủ mạ vàng hoặc bạc, bút không chỉ bền bỉ mà còn tỏa sáng với vẻ đẹp lấp lánh và sang trọng. Thiết kế thanh lịch với các đường nét mềm mại và cân đối, cầm nắm thoải mái, mang lại cảm giác viết trơn tru và mượt mà.\n\nNgòi bút được làm từ hợp kim đặc biệt, cho phép mực chảy đều và ổn định, giúp chữ viết của bạn trở nên sắc nét và đẹp mắt. Nắp bút được thiết kế chắc chắn, dễ dàng đóng mở, bảo vệ ngòi bút khỏi bụi bẩn và khô mực. Mỗi chi tiết nhỏ, từ logo thương hiệu khắc tinh tế đến các đường viền trang trí, đều thể hiện sự tỉ mỉ và đẳng cấp.\n\nChiếc bút ký này không chỉ là công cụ viết mà còn là phụ kiện thời trang, biểu tượng của sự thành đạt và phong cách. Đây là món quà hoàn hảo dành cho doanh nhân, luật sư, nhà văn, hoặc bất kỳ ai trân trọng giá trị của chữ viết và sự tinh tế. Hãy để bút ký sang trọng này đồng hành cùng bạn trong mọi cuộc họp, ký kết quan trọng, khẳng định vị thế và gu thẩm mỹ đẳng cấp của bạn.', 55, '2024-06-21');
 
 --
--- Triggers `butky`
+-- Bẫy `butky`
 --
 DELIMITER $$
 CREATE TRIGGER `butky_after_insert` AFTER INSERT ON `butky` FOR EACH ROW BEGIN
@@ -276,7 +276,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `chitietdonhang`
+-- Cấu trúc bảng cho bảng `chitietdonhang`
 --
 
 CREATE TABLE `chitietdonhang` (
@@ -292,7 +292,7 @@ CREATE TABLE `chitietdonhang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `chitietdonhang`
+-- Đang đổ dữ liệu cho bảng `chitietdonhang`
 --
 
 INSERT INTO `chitietdonhang` (`machitietdonhang`, `madonhang`, `loaisanpham`, `soluong`, `giatien`, `masanpham`, `tensanpham`, `anhsanpham`, `NGAYTHEM`) VALUES
@@ -307,10 +307,15 @@ INSERT INTO `chitietdonhang` (`machitietdonhang`, `madonhang`, `loaisanpham`, `s
 (9, 7, 'dongho', 3, 3620000, 5, 'Đồng hồ Diamond D DM61165W', 'https://www.dangquangwatch.vn/upload/product/dong-ho-nu-thoi-trang200-1700677024.jpg', '2024-06-28'),
 (10, 7, 'kinhmat', 1, 3090000, 3, 'Kính mát PHILIPPE AUGUSTE PA555-007-B', 'https://www.dangquangwatch.vn/upload/img_big/1755103197_k%C3%ADnh-m%C3%A1t-ch%C3%ADnh-h%C3%A3ng13.jpg', '2024-06-28'),
 (11, 7, 'kinhmat', 1, 3090000, 4, 'Kính mắt PHILIPPE AUGUSTE PA555-007-D', 'https://www.dangquangwatch.vn/upload/product/1567326006_kinh-mat-chinh-hang26-688474142.jpg', '2024-06-28'),
-(12, 7, 'kinhmat', 1, 3090000, 5, 'Kính mát PHILIPPE AUGUSTE PA555-002-E', 'https://www.dangquangwatch.vn/upload/img_big/1958772232_k%C3%ADnh-m%C3%A1t-ch%C3%ADnh-h%C3%A3ng14.jpg', '2024-06-28');
+(12, 7, 'kinhmat', 1, 3090000, 5, 'Kính mát PHILIPPE AUGUSTE PA555-002-E', 'https://www.dangquangwatch.vn/upload/img_big/1958772232_k%C3%ADnh-m%C3%A1t-ch%C3%ADnh-h%C3%A3ng14.jpg', '2024-06-28'),
+(13, 8, 'dongho', 2, 35600000, 40, 'Đồng hồ Epos Swiss E-4314.133.20.89.10 Diamond', 'https://www.dangquangwatch.vn/upload/img_big/573057248_dong-ho-nu-thuy-sy73-227803529.jpg', '2024-10-15'),
+(14, 8, 'kinhmat', 1, 3090000, 4, 'Kính mắt PHILIPPE AUGUSTE PA555-007-D', 'https://www.dangquangwatch.vn/upload/product/1567326006_kinh-mat-chinh-hang26-688474142.jpg', '2024-10-15'),
+(15, 9, 'dongho', 1, 5625000, 6, 'Đồng hồ Diamond D DM1004S', 'https://www.dangquangwatch.vn/upload/img_big/1117849065_dong-ho-thoi-trang74.jpg', '2024-10-17'),
+(16, 10, 'dongho', 1, 3620000, 5, 'Đồng hồ Diamond D DM61165W', 'https://www.dangquangwatch.vn/upload/product/dong-ho-nu-thoi-trang200-1700677024.jpg', '2024-10-17'),
+(17, 10, 'dongho', 1, 5625000, 6, 'Đồng hồ Diamond D DM1004S', 'https://www.dangquangwatch.vn/upload/img_big/1117849065_dong-ho-thoi-trang74.jpg', '2024-10-17');
 
 --
--- Triggers `chitietdonhang`
+-- Bẫy `chitietdonhang`
 --
 DELIMITER $$
 CREATE TRIGGER `chitietdonhang_after_insert` AFTER INSERT ON `chitietdonhang` FOR EACH ROW BEGIN
@@ -327,7 +332,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `dongho`
+-- Cấu trúc bảng cho bảng `dongho`
 --
 
 CREATE TABLE `dongho` (
@@ -346,16 +351,16 @@ CREATE TABLE `dongho` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `dongho`
+-- Đang đổ dữ liệu cho bảng `dongho`
 --
 
 INSERT INTO `dongho` (`madongho`, `tendongho`, `giatien`, `soluong`, `tragop`, `duongkinh`, `chongnuoc`, `bomay`, `NGAYTHEM`, `thongtin`, `gioitinh`, `chatlieu`) VALUES
-(1, 'Đồng hồ Jacques Lemans JL-11-1654.2ZD Limited', 6600000, 10, 0, 40, 10, 'Quartz/Pin', '2024-06-26', 'Với thiết kế đồng hồ thể thao điển hình dành cho phái mạnh luôn thuộc top những mẫu đồng hồ bán chạy nhất tại Đăng Quang Watch. Chiếc đồng hồ này không chỉ là một công cụ đo thời gian, mà còn là một biểu tượng của sự sang trọng và đẳng cấp. Được chế tác từ những vật liệu cao cấp nhất, vỏ đồng hồ được làm từ thép không gỉ sáng bóng, chống trầy xước và bền bỉ với thời gian. Mặt kính sapphire chống lóa mang đến sự rõ nét hoàn hảo, bảo vệ chiếc đồng hồ khỏi những va chạm hàng ngày.\r\n\r\nMặt số của đồng hồ được thiết kế tinh tế với những chi tiết tinh xảo, từ các vạch số đến kim chỉ giờ, phút và giây. Các vạch số được phủ lớp dạ quang, giúp bạn dễ dàng xem giờ trong điều kiện thiếu ánh sáng. Kim giây chuyển động mượt mà, tạo cảm giác như thời gian đang trôi chậm lại, cho bạn những giây phút yên bình giữa cuộc sống hối hả.\r\n\r\nDây đeo đồng hồ làm từ da thật cao cấp, mang lại cảm giác êm ái và thoải mái khi đeo. Màu sắc của dây đeo được lựa chọn cẩn thận để hoàn thiện vẻ đẹp tổng thể của chiếc đồng hồ, tạo nên một phong cách thời trang thanh lịch và trang nhã. Khóa cài chắc chắn, dễ dàng điều chỉnh độ rộng, phù hợp với mọi kích cỡ cổ tay.\r\n\r\nChiếc đồng hồ này không chỉ là phụ kiện thời trang mà còn là người bạn đồng hành đáng tin cậy trong mọi hoạt động hàng ngày. Với khả năng chống nước lên đến 50 mét, bạn có thể yên tâm sử dụng khi rửa tay, đi mưa hay thậm chí khi bơi lội. Bộ máy đồng hồ chính xác, bền bỉ, được sản xuất bởi những nghệ nhân tài ba, đảm bảo độ chính xác cao và tuổi thọ lâu dài.\r\n\r\nMỗi chi tiết của chiếc đồng hồ này đều được chế tác tỉ mỉ, từ logo thương hiệu được khắc nổi trên núm vặn đến nắp lưng trong suốt, cho phép bạn chiêm ngưỡng bộ máy bên trong hoạt động. Đây chính là sự kết hợp hoàn hảo giữa nghệ thuật và công nghệ, giữa truyền thống và hiện đại.\r\n\r\nChiếc đồng hồ này không chỉ giúp bạn quản lý thời gian một cách hiệu quả mà còn thể hiện phong cách sống tinh tế và đẳng cấp của bạn. Đây là món quà hoàn hảo dành cho những người đàn ông và phụ nữ thành đạt, những người luôn trân trọng giá trị của thời gian và biết cách tận hưởng cuộc sống. Hãy để chiếc đồng hồ này cùng bạn viết nên câu chuyện thành công của riêng mình, với mỗi giây phút đều tràn đầy ý nghĩa và giá trị. ', 'Nam', 'Krysterna crystal kính cứng'),
+(1, 'Đồng hồ Jacques Lemans JL-11-1654.2ZD Limited', 6600000, 10, 0, 40, 10, 'Quartz/Pin', '2024-06-26', 'Với thiết kế đồng hồ thể thao điển hình dành cho phái mạnh luôn thuộc top những mẫu đồng hồ bán chạy nhất tại Đăng Quang Watch. Chiếc đồng hồ này không chỉ là một công cụ đo thời gian, mà còn là một biểu tượng của sự sang trọng và đẳng cấp. Được chế tác từ những vật liệu cao cấp nhất, vỏ đồng hồ được làm từ thép không gỉ sáng bóng, chống trầy xước và bền bỉ với thời gian. Mặt kính sapphire chống lóa mang đến sự rõ nét hoàn hảo, bảo vệ chiếc đồng hồ khỏi những va chạm hàng ngày.\n\nMặt số của đồng hồ được thiết kế tinh tế với những chi tiết tinh xảo, từ các vạch số đến kim chỉ giờ, phút và giây. Các vạch số được phủ lớp dạ quang, giúp bạn dễ dàng xem giờ trong điều kiện thiếu ánh sáng. Kim giây chuyển động mượt mà, tạo cảm giác như thời gian đang trôi chậm lại, cho bạn những giây phút yên bình giữa cuộc sống hối hả.\n\nDây đeo đồng hồ làm từ da thật cao cấp, mang lại cảm giác êm ái và thoải mái khi đeo. Màu sắc của dây đeo được lựa chọn cẩn thận để hoàn thiện vẻ đẹp tổng thể của chiếc đồng hồ, tạo nên một phong cách thời trang thanh lịch và trang nhã. Khóa cài chắc chắn, dễ dàng điều chỉnh độ rộng, phù hợp với mọi kích cỡ cổ tay.\n\nChiếc đồng hồ này không chỉ là phụ kiện thời trang mà còn là người bạn đồng hành đáng tin cậy trong mọi hoạt động hàng ngày. Với khả năng chống nước lên đến 50 mét, bạn có thể yên tâm sử dụng khi rửa tay, đi mưa hay thậm chí khi bơi lội. Bộ máy đồng hồ chính xác, bền bỉ, được sản xuất bởi những nghệ nhân tài ba, đảm bảo độ chính xác cao và tuổi thọ lâu dài.\n\nMỗi chi tiết của chiếc đồng hồ này đều được chế tác tỉ mỉ, từ logo thương hiệu được khắc nổi trên núm vặn đến nắp lưng trong suốt, cho phép bạn chiêm ngưỡng bộ máy bên trong hoạt động. Đây chính là sự kết hợp hoàn hảo giữa nghệ thuật và công nghệ, giữa truyền thống và hiện đại.\n\nChiếc đồng hồ này không chỉ giúp bạn quản lý thời gian một cách hiệu quả mà còn thể hiện phong cách sống tinh tế và đẳng cấp của bạn. Đây là món quà hoàn hảo dành cho những người đàn ông và phụ nữ thành đạt, những người luôn trân trọng giá trị của thời gian và biết cách tận hưởng cuộc sống. Hãy để chiếc đồng hồ này cùng bạn viết nên câu chuyện thành công của riêng mình, với mỗi giây phút đều tràn đầy ý nghĩa và giá trị. ', 'Nam', 'Krysterna crystal kính cứng'),
 (2, 'Đồng hồ Tsar Bomba TB8208A-01', 10500000, 10, 0, 42, 5, 'Automatic', '2024-06-26', 'Với thiết kế đồng hồ thể thao điển hình dành cho phái mạnh luôn thuộc top những mẫu đồng hồ bán chạy nhất tại Đăng Quang Watch. Chiếc đồng hồ này không chỉ là một công cụ đo thời gian, mà còn là một biểu tượng của sự sang trọng và đẳng cấp. Được chế tác từ những vật liệu cao cấp nhất, vỏ đồng hồ được làm từ thép không gỉ sáng bóng, chống trầy xước và bền bỉ với thời gian. Mặt kính sapphire chống lóa mang đến sự rõ nét hoàn hảo, bảo vệ chiếc đồng hồ khỏi những va chạm hàng ngày.\r\n\r\nMặt số của đồng hồ được thiết kế tinh tế với những chi tiết tinh xảo, từ các vạch số đến kim chỉ giờ, phút và giây. Các vạch số được phủ lớp dạ quang, giúp bạn dễ dàng xem giờ trong điều kiện thiếu ánh sáng. Kim giây chuyển động mượt mà, tạo cảm giác như thời gian đang trôi chậm lại, cho bạn những giây phút yên bình giữa cuộc sống hối hả.\r\n\r\nDây đeo đồng hồ làm từ da thật cao cấp, mang lại cảm giác êm ái và thoải mái khi đeo. Màu sắc của dây đeo được lựa chọn cẩn thận để hoàn thiện vẻ đẹp tổng thể của chiếc đồng hồ, tạo nên một phong cách thời trang thanh lịch và trang nhã. Khóa cài chắc chắn, dễ dàng điều chỉnh độ rộng, phù hợp với mọi kích cỡ cổ tay.\r\n\r\nChiếc đồng hồ này không chỉ là phụ kiện thời trang mà còn là người bạn đồng hành đáng tin cậy trong mọi hoạt động hàng ngày. Với khả năng chống nước lên đến 50 mét, bạn có thể yên tâm sử dụng khi rửa tay, đi mưa hay thậm chí khi bơi lội. Bộ máy đồng hồ chính xác, bền bỉ, được sản xuất bởi những nghệ nhân tài ba, đảm bảo độ chính xác cao và tuổi thọ lâu dài.\r\n\r\nMỗi chi tiết của chiếc đồng hồ này đều được chế tác tỉ mỉ, từ logo thương hiệu được khắc nổi trên núm vặn đến nắp lưng trong suốt, cho phép bạn chiêm ngưỡng bộ máy bên trong hoạt động. Đây chính là sự kết hợp hoàn hảo giữa nghệ thuật và công nghệ, giữa truyền thống và hiện đại.\r\n\r\nChiếc đồng hồ này không chỉ giúp bạn quản lý thời gian một cách hiệu quả mà còn thể hiện phong cách sống tinh tế và đẳng cấp của bạn. Đây là món quà hoàn hảo dành cho những người đàn ông và phụ nữ thành đạt, những người luôn trân trọng giá trị của thời gian và biết cách tận hưởng cuộc sống. Hãy để chiếc đồng hồ này cùng bạn viết nên câu chuyện thành công của riêng mình, với mỗi giây phút đều tràn đầy ý nghĩa và giá trị. ', 'Nữ', 'Kính sapphire'),
 (3, 'Đồng hồ Diamond D DM64205IG-R', 5890000, 29, 0, 30, 10, 'Quartz/Pin', '2024-06-21', 'Với thiết kế đồng hồ thể thao điển hình dành cho phái mạnh luôn thuộc top những mẫu đồng hồ bán chạy nhất tại Đăng Quang Watch. Chiếc đồng hồ này không chỉ là một công cụ đo thời gian, mà còn là một biểu tượng của sự sang trọng và đẳng cấp. Được chế tác từ những vật liệu cao cấp nhất, vỏ đồng hồ được làm từ thép không gỉ sáng bóng, chống trầy xước và bền bỉ với thời gian. Mặt kính sapphire chống lóa mang đến sự rõ nét hoàn hảo, bảo vệ chiếc đồng hồ khỏi những va chạm hàng ngày.\r\n\r\nMặt số của đồng hồ được thiết kế tinh tế với những chi tiết tinh xảo, từ các vạch số đến kim chỉ giờ, phút và giây. Các vạch số được phủ lớp dạ quang, giúp bạn dễ dàng xem giờ trong điều kiện thiếu ánh sáng. Kim giây chuyển động mượt mà, tạo cảm giác như thời gian đang trôi chậm lại, cho bạn những giây phút yên bình giữa cuộc sống hối hả.\r\n\r\nDây đeo đồng hồ làm từ da thật cao cấp, mang lại cảm giác êm ái và thoải mái khi đeo. Màu sắc của dây đeo được lựa chọn cẩn thận để hoàn thiện vẻ đẹp tổng thể của chiếc đồng hồ, tạo nên một phong cách thời trang thanh lịch và trang nhã. Khóa cài chắc chắn, dễ dàng điều chỉnh độ rộng, phù hợp với mọi kích cỡ cổ tay.\r\n\r\nChiếc đồng hồ này không chỉ là phụ kiện thời trang mà còn là người bạn đồng hành đáng tin cậy trong mọi hoạt động hàng ngày. Với khả năng chống nước lên đến 50 mét, bạn có thể yên tâm sử dụng khi rửa tay, đi mưa hay thậm chí khi bơi lội. Bộ máy đồng hồ chính xác, bền bỉ, được sản xuất bởi những nghệ nhân tài ba, đảm bảo độ chính xác cao và tuổi thọ lâu dài.\r\n\r\nMỗi chi tiết của chiếc đồng hồ này đều được chế tác tỉ mỉ, từ logo thương hiệu được khắc nổi trên núm vặn đến nắp lưng trong suốt, cho phép bạn chiêm ngưỡng bộ máy bên trong hoạt động. Đây chính là sự kết hợp hoàn hảo giữa nghệ thuật và công nghệ, giữa truyền thống và hiện đại.\r\n\r\nChiếc đồng hồ này không chỉ giúp bạn quản lý thời gian một cách hiệu quả mà còn thể hiện phong cách sống tinh tế và đẳng cấp của bạn. Đây là món quà hoàn hảo dành cho những người đàn ông và phụ nữ thành đạt, những người luôn trân trọng giá trị của thời gian và biết cách tận hưởng cuộc sống. Hãy để chiếc đồng hồ này cùng bạn viết nên câu chuyện thành công của riêng mình, với mỗi giây phút đều tràn đầy ý nghĩa và giá trị. ', 'Nam', 'Kính sapphire'),
 (4, 'Đồng hồ Diamond D DM36285IG-W', 4550000, 38, 0, 32, 3, 'Quartz', '2024-06-21', 'Với thiết kế đồng hồ thể thao điển hình dành cho phái mạnh luôn thuộc top những mẫu đồng hồ bán chạy nhất tại Đăng Quang Watch. Chiếc đồng hồ này không chỉ là một công cụ đo thời gian, mà còn là một biểu tượng của sự sang trọng và đẳng cấp. Được chế tác từ những vật liệu cao cấp nhất, vỏ đồng hồ được làm từ thép không gỉ sáng bóng, chống trầy xước và bền bỉ với thời gian. Mặt kính sapphire chống lóa mang đến sự rõ nét hoàn hảo, bảo vệ chiếc đồng hồ khỏi những va chạm hàng ngày.\r\n\r\nMặt số của đồng hồ được thiết kế tinh tế với những chi tiết tinh xảo, từ các vạch số đến kim chỉ giờ, phút và giây. Các vạch số được phủ lớp dạ quang, giúp bạn dễ dàng xem giờ trong điều kiện thiếu ánh sáng. Kim giây chuyển động mượt mà, tạo cảm giác như thời gian đang trôi chậm lại, cho bạn những giây phút yên bình giữa cuộc sống hối hả.\r\n\r\nDây đeo đồng hồ làm từ da thật cao cấp, mang lại cảm giác êm ái và thoải mái khi đeo. Màu sắc của dây đeo được lựa chọn cẩn thận để hoàn thiện vẻ đẹp tổng thể của chiếc đồng hồ, tạo nên một phong cách thời trang thanh lịch và trang nhã. Khóa cài chắc chắn, dễ dàng điều chỉnh độ rộng, phù hợp với mọi kích cỡ cổ tay.\r\n\r\nChiếc đồng hồ này không chỉ là phụ kiện thời trang mà còn là người bạn đồng hành đáng tin cậy trong mọi hoạt động hàng ngày. Với khả năng chống nước lên đến 50 mét, bạn có thể yên tâm sử dụng khi rửa tay, đi mưa hay thậm chí khi bơi lội. Bộ máy đồng hồ chính xác, bền bỉ, được sản xuất bởi những nghệ nhân tài ba, đảm bảo độ chính xác cao và tuổi thọ lâu dài.\r\n\r\nMỗi chi tiết của chiếc đồng hồ này đều được chế tác tỉ mỉ, từ logo thương hiệu được khắc nổi trên núm vặn đến nắp lưng trong suốt, cho phép bạn chiêm ngưỡng bộ máy bên trong hoạt động. Đây chính là sự kết hợp hoàn hảo giữa nghệ thuật và công nghệ, giữa truyền thống và hiện đại.\r\n\r\nChiếc đồng hồ này không chỉ giúp bạn quản lý thời gian một cách hiệu quả mà còn thể hiện phong cách sống tinh tế và đẳng cấp của bạn. Đây là món quà hoàn hảo dành cho những người đàn ông và phụ nữ thành đạt, những người luôn trân trọng giá trị của thời gian và biết cách tận hưởng cuộc sống. Hãy để chiếc đồng hồ này cùng bạn viết nên câu chuyện thành công của riêng mình, với mỗi giây phút đều tràn đầy ý nghĩa và giá trị. ', 'Nữ', 'Kính sapphire'),
-(5, 'Đồng hồ Diamond D DM61165W', 3620000, 54, 0, 36, 3, 'Quartz/Pin', '2024-06-21', 'Với thiết kế đồng hồ thể thao điển hình dành cho phái mạnh luôn thuộc top những mẫu đồng hồ bán chạy nhất tại Đăng Quang Watch. Chiếc đồng hồ này không chỉ là một công cụ đo thời gian, mà còn là một biểu tượng của sự sang trọng và đẳng cấp. Được chế tác từ những vật liệu cao cấp nhất, vỏ đồng hồ được làm từ thép không gỉ sáng bóng, chống trầy xước và bền bỉ với thời gian. Mặt kính sapphire chống lóa mang đến sự rõ nét hoàn hảo, bảo vệ chiếc đồng hồ khỏi những va chạm hàng ngày.\r\n\r\nMặt số của đồng hồ được thiết kế tinh tế với những chi tiết tinh xảo, từ các vạch số đến kim chỉ giờ, phút và giây. Các vạch số được phủ lớp dạ quang, giúp bạn dễ dàng xem giờ trong điều kiện thiếu ánh sáng. Kim giây chuyển động mượt mà, tạo cảm giác như thời gian đang trôi chậm lại, cho bạn những giây phút yên bình giữa cuộc sống hối hả.\r\n\r\nDây đeo đồng hồ làm từ da thật cao cấp, mang lại cảm giác êm ái và thoải mái khi đeo. Màu sắc của dây đeo được lựa chọn cẩn thận để hoàn thiện vẻ đẹp tổng thể của chiếc đồng hồ, tạo nên một phong cách thời trang thanh lịch và trang nhã. Khóa cài chắc chắn, dễ dàng điều chỉnh độ rộng, phù hợp với mọi kích cỡ cổ tay.\r\n\r\nChiếc đồng hồ này không chỉ là phụ kiện thời trang mà còn là người bạn đồng hành đáng tin cậy trong mọi hoạt động hàng ngày. Với khả năng chống nước lên đến 50 mét, bạn có thể yên tâm sử dụng khi rửa tay, đi mưa hay thậm chí khi bơi lội. Bộ máy đồng hồ chính xác, bền bỉ, được sản xuất bởi những nghệ nhân tài ba, đảm bảo độ chính xác cao và tuổi thọ lâu dài.\r\n\r\nMỗi chi tiết của chiếc đồng hồ này đều được chế tác tỉ mỉ, từ logo thương hiệu được khắc nổi trên núm vặn đến nắp lưng trong suốt, cho phép bạn chiêm ngưỡng bộ máy bên trong hoạt động. Đây chính là sự kết hợp hoàn hảo giữa nghệ thuật và công nghệ, giữa truyền thống và hiện đại.\r\n\r\nChiếc đồng hồ này không chỉ giúp bạn quản lý thời gian một cách hiệu quả mà còn thể hiện phong cách sống tinh tế và đẳng cấp của bạn. Đây là món quà hoàn hảo dành cho những người đàn ông và phụ nữ thành đạt, những người luôn trân trọng giá trị của thời gian và biết cách tận hưởng cuộc sống. Hãy để chiếc đồng hồ này cùng bạn viết nên câu chuyện thành công của riêng mình, với mỗi giây phút đều tràn đầy ý nghĩa và giá trị. ', 'Nam', 'Kính sapphire'),
-(6, 'Đồng hồ Diamond D DM1004S', 5625000, 33, 0, 37, 5, 'Quartz/Pin', '2024-06-22', 'Với thiết kế đồng hồ thể thao điển hình dành cho phái mạnh luôn thuộc top những mẫu đồng hồ bán chạy nhất tại Đăng Quang Watch. Chiếc đồng hồ này không chỉ là một công cụ đo thời gian, mà còn là một biểu tượng của sự sang trọng và đẳng cấp. Được chế tác từ những vật liệu cao cấp nhất, vỏ đồng hồ được làm từ thép không gỉ sáng bóng, chống trầy xước và bền bỉ với thời gian. Mặt kính sapphire chống lóa mang đến sự rõ nét hoàn hảo, bảo vệ chiếc đồng hồ khỏi những va chạm hàng ngày.\r\n\r\nMặt số của đồng hồ được thiết kế tinh tế với những chi tiết tinh xảo, từ các vạch số đến kim chỉ giờ, phút và giây. Các vạch số được phủ lớp dạ quang, giúp bạn dễ dàng xem giờ trong điều kiện thiếu ánh sáng. Kim giây chuyển động mượt mà, tạo cảm giác như thời gian đang trôi chậm lại, cho bạn những giây phút yên bình giữa cuộc sống hối hả.\r\n\r\nDây đeo đồng hồ làm từ da thật cao cấp, mang lại cảm giác êm ái và thoải mái khi đeo. Màu sắc của dây đeo được lựa chọn cẩn thận để hoàn thiện vẻ đẹp tổng thể của chiếc đồng hồ, tạo nên một phong cách thời trang thanh lịch và trang nhã. Khóa cài chắc chắn, dễ dàng điều chỉnh độ rộng, phù hợp với mọi kích cỡ cổ tay.\r\n\r\nChiếc đồng hồ này không chỉ là phụ kiện thời trang mà còn là người bạn đồng hành đáng tin cậy trong mọi hoạt động hàng ngày. Với khả năng chống nước lên đến 50 mét, bạn có thể yên tâm sử dụng khi rửa tay, đi mưa hay thậm chí khi bơi lội. Bộ máy đồng hồ chính xác, bền bỉ, được sản xuất bởi những nghệ nhân tài ba, đảm bảo độ chính xác cao và tuổi thọ lâu dài.\r\n\r\nMỗi chi tiết của chiếc đồng hồ này đều được chế tác tỉ mỉ, từ logo thương hiệu được khắc nổi trên núm vặn đến nắp lưng trong suốt, cho phép bạn chiêm ngưỡng bộ máy bên trong hoạt động. Đây chính là sự kết hợp hoàn hảo giữa nghệ thuật và công nghệ, giữa truyền thống và hiện đại.\r\n\r\nChiếc đồng hồ này không chỉ giúp bạn quản lý thời gian một cách hiệu quả mà còn thể hiện phong cách sống tinh tế và đẳng cấp của bạn. Đây là món quà hoàn hảo dành cho những người đàn ông và phụ nữ thành đạt, những người luôn trân trọng giá trị của thời gian và biết cách tận hưởng cuộc sống. Hãy để chiếc đồng hồ này cùng bạn viết nên câu chuyện thành công của riêng mình, với mỗi giây phút đều tràn đầy ý nghĩa và giá trị. ', 'Nữ', 'Kính cứng chịu lực'),
+(5, 'Đồng hồ Diamond D DM61165W', 3620000, 53, 0, 36, 3, 'Quartz/Pin', '2024-06-21', 'Với thiết kế đồng hồ thể thao điển hình dành cho phái mạnh luôn thuộc top những mẫu đồng hồ bán chạy nhất tại Đăng Quang Watch. Chiếc đồng hồ này không chỉ là một công cụ đo thời gian, mà còn là một biểu tượng của sự sang trọng và đẳng cấp. Được chế tác từ những vật liệu cao cấp nhất, vỏ đồng hồ được làm từ thép không gỉ sáng bóng, chống trầy xước và bền bỉ với thời gian. Mặt kính sapphire chống lóa mang đến sự rõ nét hoàn hảo, bảo vệ chiếc đồng hồ khỏi những va chạm hàng ngày.\r\n\r\nMặt số của đồng hồ được thiết kế tinh tế với những chi tiết tinh xảo, từ các vạch số đến kim chỉ giờ, phút và giây. Các vạch số được phủ lớp dạ quang, giúp bạn dễ dàng xem giờ trong điều kiện thiếu ánh sáng. Kim giây chuyển động mượt mà, tạo cảm giác như thời gian đang trôi chậm lại, cho bạn những giây phút yên bình giữa cuộc sống hối hả.\r\n\r\nDây đeo đồng hồ làm từ da thật cao cấp, mang lại cảm giác êm ái và thoải mái khi đeo. Màu sắc của dây đeo được lựa chọn cẩn thận để hoàn thiện vẻ đẹp tổng thể của chiếc đồng hồ, tạo nên một phong cách thời trang thanh lịch và trang nhã. Khóa cài chắc chắn, dễ dàng điều chỉnh độ rộng, phù hợp với mọi kích cỡ cổ tay.\r\n\r\nChiếc đồng hồ này không chỉ là phụ kiện thời trang mà còn là người bạn đồng hành đáng tin cậy trong mọi hoạt động hàng ngày. Với khả năng chống nước lên đến 50 mét, bạn có thể yên tâm sử dụng khi rửa tay, đi mưa hay thậm chí khi bơi lội. Bộ máy đồng hồ chính xác, bền bỉ, được sản xuất bởi những nghệ nhân tài ba, đảm bảo độ chính xác cao và tuổi thọ lâu dài.\r\n\r\nMỗi chi tiết của chiếc đồng hồ này đều được chế tác tỉ mỉ, từ logo thương hiệu được khắc nổi trên núm vặn đến nắp lưng trong suốt, cho phép bạn chiêm ngưỡng bộ máy bên trong hoạt động. Đây chính là sự kết hợp hoàn hảo giữa nghệ thuật và công nghệ, giữa truyền thống và hiện đại.\r\n\r\nChiếc đồng hồ này không chỉ giúp bạn quản lý thời gian một cách hiệu quả mà còn thể hiện phong cách sống tinh tế và đẳng cấp của bạn. Đây là món quà hoàn hảo dành cho những người đàn ông và phụ nữ thành đạt, những người luôn trân trọng giá trị của thời gian và biết cách tận hưởng cuộc sống. Hãy để chiếc đồng hồ này cùng bạn viết nên câu chuyện thành công của riêng mình, với mỗi giây phút đều tràn đầy ý nghĩa và giá trị. ', 'Nam', 'Kính sapphire'),
+(6, 'Đồng hồ Diamond D DM1004S', 5625000, 31, 0, 37, 5, 'Quartz/Pin', '2024-06-22', 'Với thiết kế đồng hồ thể thao điển hình dành cho phái mạnh luôn thuộc top những mẫu đồng hồ bán chạy nhất tại Đăng Quang Watch. Chiếc đồng hồ này không chỉ là một công cụ đo thời gian, mà còn là một biểu tượng của sự sang trọng và đẳng cấp. Được chế tác từ những vật liệu cao cấp nhất, vỏ đồng hồ được làm từ thép không gỉ sáng bóng, chống trầy xước và bền bỉ với thời gian. Mặt kính sapphire chống lóa mang đến sự rõ nét hoàn hảo, bảo vệ chiếc đồng hồ khỏi những va chạm hàng ngày.\r\n\r\nMặt số của đồng hồ được thiết kế tinh tế với những chi tiết tinh xảo, từ các vạch số đến kim chỉ giờ, phút và giây. Các vạch số được phủ lớp dạ quang, giúp bạn dễ dàng xem giờ trong điều kiện thiếu ánh sáng. Kim giây chuyển động mượt mà, tạo cảm giác như thời gian đang trôi chậm lại, cho bạn những giây phút yên bình giữa cuộc sống hối hả.\r\n\r\nDây đeo đồng hồ làm từ da thật cao cấp, mang lại cảm giác êm ái và thoải mái khi đeo. Màu sắc của dây đeo được lựa chọn cẩn thận để hoàn thiện vẻ đẹp tổng thể của chiếc đồng hồ, tạo nên một phong cách thời trang thanh lịch và trang nhã. Khóa cài chắc chắn, dễ dàng điều chỉnh độ rộng, phù hợp với mọi kích cỡ cổ tay.\r\n\r\nChiếc đồng hồ này không chỉ là phụ kiện thời trang mà còn là người bạn đồng hành đáng tin cậy trong mọi hoạt động hàng ngày. Với khả năng chống nước lên đến 50 mét, bạn có thể yên tâm sử dụng khi rửa tay, đi mưa hay thậm chí khi bơi lội. Bộ máy đồng hồ chính xác, bền bỉ, được sản xuất bởi những nghệ nhân tài ba, đảm bảo độ chính xác cao và tuổi thọ lâu dài.\r\n\r\nMỗi chi tiết của chiếc đồng hồ này đều được chế tác tỉ mỉ, từ logo thương hiệu được khắc nổi trên núm vặn đến nắp lưng trong suốt, cho phép bạn chiêm ngưỡng bộ máy bên trong hoạt động. Đây chính là sự kết hợp hoàn hảo giữa nghệ thuật và công nghệ, giữa truyền thống và hiện đại.\r\n\r\nChiếc đồng hồ này không chỉ giúp bạn quản lý thời gian một cách hiệu quả mà còn thể hiện phong cách sống tinh tế và đẳng cấp của bạn. Đây là món quà hoàn hảo dành cho những người đàn ông và phụ nữ thành đạt, những người luôn trân trọng giá trị của thời gian và biết cách tận hưởng cuộc sống. Hãy để chiếc đồng hồ này cùng bạn viết nên câu chuyện thành công của riêng mình, với mỗi giây phút đều tràn đầy ý nghĩa và giá trị. ', 'Nữ', 'Kính cứng chịu lực'),
 (7, 'Đồng hồ Diamond D DM38445IG', 4940000, 55, 0, 27, 3, 'Quartz/Pin', '2024-06-22', 'Với thiết kế đồng hồ thể thao điển hình dành cho phái mạnh luôn thuộc top những mẫu đồng hồ bán chạy nhất tại Đăng Quang Watch. Chiếc đồng hồ này không chỉ là một công cụ đo thời gian, mà còn là một biểu tượng của sự sang trọng và đẳng cấp. Được chế tác từ những vật liệu cao cấp nhất, vỏ đồng hồ được làm từ thép không gỉ sáng bóng, chống trầy xước và bền bỉ với thời gian. Mặt kính sapphire chống lóa mang đến sự rõ nét hoàn hảo, bảo vệ chiếc đồng hồ khỏi những va chạm hàng ngày.\r\n\r\nMặt số của đồng hồ được thiết kế tinh tế với những chi tiết tinh xảo, từ các vạch số đến kim chỉ giờ, phút và giây. Các vạch số được phủ lớp dạ quang, giúp bạn dễ dàng xem giờ trong điều kiện thiếu ánh sáng. Kim giây chuyển động mượt mà, tạo cảm giác như thời gian đang trôi chậm lại, cho bạn những giây phút yên bình giữa cuộc sống hối hả.\r\n\r\nDây đeo đồng hồ làm từ da thật cao cấp, mang lại cảm giác êm ái và thoải mái khi đeo. Màu sắc của dây đeo được lựa chọn cẩn thận để hoàn thiện vẻ đẹp tổng thể của chiếc đồng hồ, tạo nên một phong cách thời trang thanh lịch và trang nhã. Khóa cài chắc chắn, dễ dàng điều chỉnh độ rộng, phù hợp với mọi kích cỡ cổ tay.\r\n\r\nChiếc đồng hồ này không chỉ là phụ kiện thời trang mà còn là người bạn đồng hành đáng tin cậy trong mọi hoạt động hàng ngày. Với khả năng chống nước lên đến 50 mét, bạn có thể yên tâm sử dụng khi rửa tay, đi mưa hay thậm chí khi bơi lội. Bộ máy đồng hồ chính xác, bền bỉ, được sản xuất bởi những nghệ nhân tài ba, đảm bảo độ chính xác cao và tuổi thọ lâu dài.\r\n\r\nMỗi chi tiết của chiếc đồng hồ này đều được chế tác tỉ mỉ, từ logo thương hiệu được khắc nổi trên núm vặn đến nắp lưng trong suốt, cho phép bạn chiêm ngưỡng bộ máy bên trong hoạt động. Đây chính là sự kết hợp hoàn hảo giữa nghệ thuật và công nghệ, giữa truyền thống và hiện đại.\r\n\r\nChiếc đồng hồ này không chỉ giúp bạn quản lý thời gian một cách hiệu quả mà còn thể hiện phong cách sống tinh tế và đẳng cấp của bạn. Đây là món quà hoàn hảo dành cho những người đàn ông và phụ nữ thành đạt, những người luôn trân trọng giá trị của thời gian và biết cách tận hưởng cuộc sống. Hãy để chiếc đồng hồ này cùng bạn viết nên câu chuyện thành công của riêng mình, với mỗi giây phút đều tràn đầy ý nghĩa và giá trị. ', 'Nữ', 'Kính sapphire'),
 (8, 'Đồng hồ Tsar Bomba TB8208CF-09 Carbon', 14000000, 12, 0, 42, 5, 'Automatic', '2024-06-22', 'Với thiết kế đồng hồ thể thao điển hình dành cho phái mạnh luôn thuộc top những mẫu đồng hồ bán chạy nhất tại Đăng Quang Watch. Chiếc đồng hồ này không chỉ là một công cụ đo thời gian, mà còn là một biểu tượng của sự sang trọng và đẳng cấp. Được chế tác từ những vật liệu cao cấp nhất, vỏ đồng hồ được làm từ thép không gỉ sáng bóng, chống trầy xước và bền bỉ với thời gian. Mặt kính sapphire chống lóa mang đến sự rõ nét hoàn hảo, bảo vệ chiếc đồng hồ khỏi những va chạm hàng ngày.\r\n\r\nMặt số của đồng hồ được thiết kế tinh tế với những chi tiết tinh xảo, từ các vạch số đến kim chỉ giờ, phút và giây. Các vạch số được phủ lớp dạ quang, giúp bạn dễ dàng xem giờ trong điều kiện thiếu ánh sáng. Kim giây chuyển động mượt mà, tạo cảm giác như thời gian đang trôi chậm lại, cho bạn những giây phút yên bình giữa cuộc sống hối hả.\r\n\r\nDây đeo đồng hồ làm từ da thật cao cấp, mang lại cảm giác êm ái và thoải mái khi đeo. Màu sắc của dây đeo được lựa chọn cẩn thận để hoàn thiện vẻ đẹp tổng thể của chiếc đồng hồ, tạo nên một phong cách thời trang thanh lịch và trang nhã. Khóa cài chắc chắn, dễ dàng điều chỉnh độ rộng, phù hợp với mọi kích cỡ cổ tay.\r\n\r\nChiếc đồng hồ này không chỉ là phụ kiện thời trang mà còn là người bạn đồng hành đáng tin cậy trong mọi hoạt động hàng ngày. Với khả năng chống nước lên đến 50 mét, bạn có thể yên tâm sử dụng khi rửa tay, đi mưa hay thậm chí khi bơi lội. Bộ máy đồng hồ chính xác, bền bỉ, được sản xuất bởi những nghệ nhân tài ba, đảm bảo độ chính xác cao và tuổi thọ lâu dài.\r\n\r\nMỗi chi tiết của chiếc đồng hồ này đều được chế tác tỉ mỉ, từ logo thương hiệu được khắc nổi trên núm vặn đến nắp lưng trong suốt, cho phép bạn chiêm ngưỡng bộ máy bên trong hoạt động. Đây chính là sự kết hợp hoàn hảo giữa nghệ thuật và công nghệ, giữa truyền thống và hiện đại.\r\n\r\nChiếc đồng hồ này không chỉ giúp bạn quản lý thời gian một cách hiệu quả mà còn thể hiện phong cách sống tinh tế và đẳng cấp của bạn. Đây là món quà hoàn hảo dành cho những người đàn ông và phụ nữ thành đạt, những người luôn trân trọng giá trị của thời gian và biết cách tận hưởng cuộc sống. Hãy để chiếc đồng hồ này cùng bạn viết nên câu chuyện thành công của riêng mình, với mỗi giây phút đều tràn đầy ý nghĩa và giá trị. ', 'Nam', 'Kính sapphire'),
 (9, 'Đồng hồ Tsar Bomba TB8208D-06', 15750000, 16, 0, 42, 5, 'Automatic', '2024-06-22', 'Với thiết kế đồng hồ thể thao điển hình dành cho phái mạnh luôn thuộc top những mẫu đồng hồ bán chạy nhất tại Đăng Quang Watch. Chiếc đồng hồ này không chỉ là một công cụ đo thời gian, mà còn là một biểu tượng của sự sang trọng và đẳng cấp. Được chế tác từ những vật liệu cao cấp nhất, vỏ đồng hồ được làm từ thép không gỉ sáng bóng, chống trầy xước và bền bỉ với thời gian. Mặt kính sapphire chống lóa mang đến sự rõ nét hoàn hảo, bảo vệ chiếc đồng hồ khỏi những va chạm hàng ngày.\r\n\r\nMặt số của đồng hồ được thiết kế tinh tế với những chi tiết tinh xảo, từ các vạch số đến kim chỉ giờ, phút và giây. Các vạch số được phủ lớp dạ quang, giúp bạn dễ dàng xem giờ trong điều kiện thiếu ánh sáng. Kim giây chuyển động mượt mà, tạo cảm giác như thời gian đang trôi chậm lại, cho bạn những giây phút yên bình giữa cuộc sống hối hả.\r\n\r\nDây đeo đồng hồ làm từ da thật cao cấp, mang lại cảm giác êm ái và thoải mái khi đeo. Màu sắc của dây đeo được lựa chọn cẩn thận để hoàn thiện vẻ đẹp tổng thể của chiếc đồng hồ, tạo nên một phong cách thời trang thanh lịch và trang nhã. Khóa cài chắc chắn, dễ dàng điều chỉnh độ rộng, phù hợp với mọi kích cỡ cổ tay.\r\n\r\nChiếc đồng hồ này không chỉ là phụ kiện thời trang mà còn là người bạn đồng hành đáng tin cậy trong mọi hoạt động hàng ngày. Với khả năng chống nước lên đến 50 mét, bạn có thể yên tâm sử dụng khi rửa tay, đi mưa hay thậm chí khi bơi lội. Bộ máy đồng hồ chính xác, bền bỉ, được sản xuất bởi những nghệ nhân tài ba, đảm bảo độ chính xác cao và tuổi thọ lâu dài.\r\n\r\nMỗi chi tiết của chiếc đồng hồ này đều được chế tác tỉ mỉ, từ logo thương hiệu được khắc nổi trên núm vặn đến nắp lưng trong suốt, cho phép bạn chiêm ngưỡng bộ máy bên trong hoạt động. Đây chính là sự kết hợp hoàn hảo giữa nghệ thuật và công nghệ, giữa truyền thống và hiện đại.\r\n\r\nChiếc đồng hồ này không chỉ giúp bạn quản lý thời gian một cách hiệu quả mà còn thể hiện phong cách sống tinh tế và đẳng cấp của bạn. Đây là món quà hoàn hảo dành cho những người đàn ông và phụ nữ thành đạt, những người luôn trân trọng giá trị của thời gian và biết cách tận hưởng cuộc sống. Hãy để chiếc đồng hồ này cùng bạn viết nên câu chuyện thành công của riêng mình, với mỗi giây phút đều tràn đầy ý nghĩa và giá trị. ', 'Nam', 'Kính sapphire'),
@@ -390,7 +395,7 @@ INSERT INTO `dongho` (`madongho`, `tendongho`, `giatien`, `soluong`, `tragop`, `
 (37, 'Đồng hồ Citizen CT-NH8366-83A\r\n', 6300000, 20, 0, 40, 10, 'Cơ tự động', '2024-06-22', 'Với thiết kế đồng hồ thể thao điển hình dành cho phái mạnh luôn thuộc top những mẫu đồng hồ bán chạy nhất tại Đăng Quang Watch. Chiếc đồng hồ này không chỉ là một công cụ đo thời gian, mà còn là một biểu tượng của sự sang trọng và đẳng cấp. Được chế tác từ những vật liệu cao cấp nhất, vỏ đồng hồ được làm từ thép không gỉ sáng bóng, chống trầy xước và bền bỉ với thời gian. Mặt kính sapphire chống lóa mang đến sự rõ nét hoàn hảo, bảo vệ chiếc đồng hồ khỏi những va chạm hàng ngày.\r\n\r\nMặt số của đồng hồ được thiết kế tinh tế với những chi tiết tinh xảo, từ các vạch số đến kim chỉ giờ, phút và giây. Các vạch số được phủ lớp dạ quang, giúp bạn dễ dàng xem giờ trong điều kiện thiếu ánh sáng. Kim giây chuyển động mượt mà, tạo cảm giác như thời gian đang trôi chậm lại, cho bạn những giây phút yên bình giữa cuộc sống hối hả.\r\n\r\nDây đeo đồng hồ làm từ da thật cao cấp, mang lại cảm giác êm ái và thoải mái khi đeo. Màu sắc của dây đeo được lựa chọn cẩn thận để hoàn thiện vẻ đẹp tổng thể của chiếc đồng hồ, tạo nên một phong cách thời trang thanh lịch và trang nhã. Khóa cài chắc chắn, dễ dàng điều chỉnh độ rộng, phù hợp với mọi kích cỡ cổ tay.\r\n\r\nChiếc đồng hồ này không chỉ là phụ kiện thời trang mà còn là người bạn đồng hành đáng tin cậy trong mọi hoạt động hàng ngày. Với khả năng chống nước lên đến 50 mét, bạn có thể yên tâm sử dụng khi rửa tay, đi mưa hay thậm chí khi bơi lội. Bộ máy đồng hồ chính xác, bền bỉ, được sản xuất bởi những nghệ nhân tài ba, đảm bảo độ chính xác cao và tuổi thọ lâu dài.\r\n\r\nMỗi chi tiết của chiếc đồng hồ này đều được chế tác tỉ mỉ, từ logo thương hiệu được khắc nổi trên núm vặn đến nắp lưng trong suốt, cho phép bạn chiêm ngưỡng bộ máy bên trong hoạt động. Đây chính là sự kết hợp hoàn hảo giữa nghệ thuật và công nghệ, giữa truyền thống và hiện đại.\r\n\r\nChiếc đồng hồ này không chỉ giúp bạn quản lý thời gian một cách hiệu quả mà còn thể hiện phong cách sống tinh tế và đẳng cấp của bạn. Đây là món quà hoàn hảo dành cho những người đàn ông và phụ nữ thành đạt, những người luôn trân trọng giá trị của thời gian và biết cách tận hưởng cuộc sống. Hãy để chiếc đồng hồ này cùng bạn viết nên câu chuyện thành công của riêng mình, với mỗi giây phút đều tràn đầy ý nghĩa và giá trị. ', 'Nam', 'Kính Mineral chịu lực'),
 (38, 'Đồng hồ Epos Swiss E-3435.313.22.18.25 Limited', 62800000, 20, 0, 44, 5, 'Máy cơ lên cót bằng tay', '2024-06-23', 'Với thiết kế đồng hồ thể thao điển hình dành cho phái mạnh luôn thuộc top những mẫu đồng hồ bán chạy nhất tại Đăng Quang Watch. Chiếc đồng hồ này không chỉ là một công cụ đo thời gian, mà còn là một biểu tượng của sự sang trọng và đẳng cấp. Được chế tác từ những vật liệu cao cấp nhất, vỏ đồng hồ được làm từ thép không gỉ sáng bóng, chống trầy xước và bền bỉ với thời gian. Mặt kính sapphire chống lóa mang đến sự rõ nét hoàn hảo, bảo vệ chiếc đồng hồ khỏi những va chạm hàng ngày.\r\n\r\nMặt số của đồng hồ được thiết kế tinh tế với những chi tiết tinh xảo, từ các vạch số đến kim chỉ giờ, phút và giây. Các vạch số được phủ lớp dạ quang, giúp bạn dễ dàng xem giờ trong điều kiện thiếu ánh sáng. Kim giây chuyển động mượt mà, tạo cảm giác như thời gian đang trôi chậm lại, cho bạn những giây phút yên bình giữa cuộc sống hối hả.\r\n\r\nDây đeo đồng hồ làm từ da thật cao cấp, mang lại cảm giác êm ái và thoải mái khi đeo. Màu sắc của dây đeo được lựa chọn cẩn thận để hoàn thiện vẻ đẹp tổng thể của chiếc đồng hồ, tạo nên một phong cách thời trang thanh lịch và trang nhã. Khóa cài chắc chắn, dễ dàng điều chỉnh độ rộng, phù hợp với mọi kích cỡ cổ tay.\r\n\r\nChiếc đồng hồ này không chỉ là phụ kiện thời trang mà còn là người bạn đồng hành đáng tin cậy trong mọi hoạt động hàng ngày. Với khả năng chống nước lên đến 50 mét, bạn có thể yên tâm sử dụng khi rửa tay, đi mưa hay thậm chí khi bơi lội. Bộ máy đồng hồ chính xác, bền bỉ, được sản xuất bởi những nghệ nhân tài ba, đảm bảo độ chính xác cao và tuổi thọ lâu dài.\r\n\r\nMỗi chi tiết của chiếc đồng hồ này đều được chế tác tỉ mỉ, từ logo thương hiệu được khắc nổi trên núm vặn đến nắp lưng trong suốt, cho phép bạn chiêm ngưỡng bộ máy bên trong hoạt động. Đây chính là sự kết hợp hoàn hảo giữa nghệ thuật và công nghệ, giữa truyền thống và hiện đại.\r\n\r\nChiếc đồng hồ này không chỉ giúp bạn quản lý thời gian một cách hiệu quả mà còn thể hiện phong cách sống tinh tế và đẳng cấp của bạn. Đây là món quà hoàn hảo dành cho những người đàn ông và phụ nữ thành đạt, những người luôn trân trọng giá trị của thời gian và biết cách tận hưởng cuộc sống. Hãy để chiếc đồng hồ này cùng bạn viết nên câu chuyện thành công của riêng mình, với mỗi giây phút đều tràn đầy ý nghĩa và giá trị. ', 'Nam', 'Kính sapphire'),
 (39, 'Đồng hồ Epos Swiss E-8000.700.22.88.32 Diamond', 23900000, 20, 0, 40, 10, 'Quartz (Điện tử)', '2024-06-23', 'Với thiết kế đồng hồ thể thao điển hình dành cho phái mạnh luôn thuộc top những mẫu đồng hồ bán chạy nhất tại Đăng Quang Watch. Chiếc đồng hồ này không chỉ là một công cụ đo thời gian, mà còn là một biểu tượng của sự sang trọng và đẳng cấp. Được chế tác từ những vật liệu cao cấp nhất, vỏ đồng hồ được làm từ thép không gỉ sáng bóng, chống trầy xước và bền bỉ với thời gian. Mặt kính sapphire chống lóa mang đến sự rõ nét hoàn hảo, bảo vệ chiếc đồng hồ khỏi những va chạm hàng ngày.\r\n\r\nMặt số của đồng hồ được thiết kế tinh tế với những chi tiết tinh xảo, từ các vạch số đến kim chỉ giờ, phút và giây. Các vạch số được phủ lớp dạ quang, giúp bạn dễ dàng xem giờ trong điều kiện thiếu ánh sáng. Kim giây chuyển động mượt mà, tạo cảm giác như thời gian đang trôi chậm lại, cho bạn những giây phút yên bình giữa cuộc sống hối hả.\r\n\r\nDây đeo đồng hồ làm từ da thật cao cấp, mang lại cảm giác êm ái và thoải mái khi đeo. Màu sắc của dây đeo được lựa chọn cẩn thận để hoàn thiện vẻ đẹp tổng thể của chiếc đồng hồ, tạo nên một phong cách thời trang thanh lịch và trang nhã. Khóa cài chắc chắn, dễ dàng điều chỉnh độ rộng, phù hợp với mọi kích cỡ cổ tay.\r\n\r\nChiếc đồng hồ này không chỉ là phụ kiện thời trang mà còn là người bạn đồng hành đáng tin cậy trong mọi hoạt động hàng ngày. Với khả năng chống nước lên đến 50 mét, bạn có thể yên tâm sử dụng khi rửa tay, đi mưa hay thậm chí khi bơi lội. Bộ máy đồng hồ chính xác, bền bỉ, được sản xuất bởi những nghệ nhân tài ba, đảm bảo độ chính xác cao và tuổi thọ lâu dài.\r\n\r\nMỗi chi tiết của chiếc đồng hồ này đều được chế tác tỉ mỉ, từ logo thương hiệu được khắc nổi trên núm vặn đến nắp lưng trong suốt, cho phép bạn chiêm ngưỡng bộ máy bên trong hoạt động. Đây chính là sự kết hợp hoàn hảo giữa nghệ thuật và công nghệ, giữa truyền thống và hiện đại.\r\n\r\nChiếc đồng hồ này không chỉ giúp bạn quản lý thời gian một cách hiệu quả mà còn thể hiện phong cách sống tinh tế và đẳng cấp của bạn. Đây là món quà hoàn hảo dành cho những người đàn ông và phụ nữ thành đạt, những người luôn trân trọng giá trị của thời gian và biết cách tận hưởng cuộc sống. Hãy để chiếc đồng hồ này cùng bạn viết nên câu chuyện thành công của riêng mình, với mỗi giây phút đều tràn đầy ý nghĩa và giá trị. ', 'Nữ', 'Kính sapphire'),
-(40, 'Đồng hồ Epos Swiss E-4314.133.20.89.10 Diamond', 35600000, 20, 0, 42, 5, 'Cơ tự động', '2024-06-23', 'Với thiết kế đồng hồ thể thao điển hình dành cho phái mạnh luôn thuộc top những mẫu đồng hồ bán chạy nhất tại Đăng Quang Watch. Chiếc đồng hồ này không chỉ là một công cụ đo thời gian, mà còn là một biểu tượng của sự sang trọng và đẳng cấp. Được chế tác từ những vật liệu cao cấp nhất, vỏ đồng hồ được làm từ thép không gỉ sáng bóng, chống trầy xước và bền bỉ với thời gian. Mặt kính sapphire chống lóa mang đến sự rõ nét hoàn hảo, bảo vệ chiếc đồng hồ khỏi những va chạm hàng ngày.\r\n\r\nMặt số của đồng hồ được thiết kế tinh tế với những chi tiết tinh xảo, từ các vạch số đến kim chỉ giờ, phút và giây. Các vạch số được phủ lớp dạ quang, giúp bạn dễ dàng xem giờ trong điều kiện thiếu ánh sáng. Kim giây chuyển động mượt mà, tạo cảm giác như thời gian đang trôi chậm lại, cho bạn những giây phút yên bình giữa cuộc sống hối hả.\r\n\r\nDây đeo đồng hồ làm từ da thật cao cấp, mang lại cảm giác êm ái và thoải mái khi đeo. Màu sắc của dây đeo được lựa chọn cẩn thận để hoàn thiện vẻ đẹp tổng thể của chiếc đồng hồ, tạo nên một phong cách thời trang thanh lịch và trang nhã. Khóa cài chắc chắn, dễ dàng điều chỉnh độ rộng, phù hợp với mọi kích cỡ cổ tay.\r\n\r\nChiếc đồng hồ này không chỉ là phụ kiện thời trang mà còn là người bạn đồng hành đáng tin cậy trong mọi hoạt động hàng ngày. Với khả năng chống nước lên đến 50 mét, bạn có thể yên tâm sử dụng khi rửa tay, đi mưa hay thậm chí khi bơi lội. Bộ máy đồng hồ chính xác, bền bỉ, được sản xuất bởi những nghệ nhân tài ba, đảm bảo độ chính xác cao và tuổi thọ lâu dài.\r\n\r\nMỗi chi tiết của chiếc đồng hồ này đều được chế tác tỉ mỉ, từ logo thương hiệu được khắc nổi trên núm vặn đến nắp lưng trong suốt, cho phép bạn chiêm ngưỡng bộ máy bên trong hoạt động. Đây chính là sự kết hợp hoàn hảo giữa nghệ thuật và công nghệ, giữa truyền thống và hiện đại.\r\n\r\nChiếc đồng hồ này không chỉ giúp bạn quản lý thời gian một cách hiệu quả mà còn thể hiện phong cách sống tinh tế và đẳng cấp của bạn. Đây là món quà hoàn hảo dành cho những người đàn ông và phụ nữ thành đạt, những người luôn trân trọng giá trị của thời gian và biết cách tận hưởng cuộc sống. Hãy để chiếc đồng hồ này cùng bạn viết nên câu chuyện thành công của riêng mình, với mỗi giây phút đều tràn đầy ý nghĩa và giá trị. ', 'Nữ', 'Kính sapphire'),
+(40, 'Đồng hồ Epos Swiss E-4314.133.20.89.10 Diamond', 35600000, 18, 0, 42, 5, 'Cơ tự động', '2024-06-23', 'Với thiết kế đồng hồ thể thao điển hình dành cho phái mạnh luôn thuộc top những mẫu đồng hồ bán chạy nhất tại Đăng Quang Watch. Chiếc đồng hồ này không chỉ là một công cụ đo thời gian, mà còn là một biểu tượng của sự sang trọng và đẳng cấp. Được chế tác từ những vật liệu cao cấp nhất, vỏ đồng hồ được làm từ thép không gỉ sáng bóng, chống trầy xước và bền bỉ với thời gian. Mặt kính sapphire chống lóa mang đến sự rõ nét hoàn hảo, bảo vệ chiếc đồng hồ khỏi những va chạm hàng ngày.\r\n\r\nMặt số của đồng hồ được thiết kế tinh tế với những chi tiết tinh xảo, từ các vạch số đến kim chỉ giờ, phút và giây. Các vạch số được phủ lớp dạ quang, giúp bạn dễ dàng xem giờ trong điều kiện thiếu ánh sáng. Kim giây chuyển động mượt mà, tạo cảm giác như thời gian đang trôi chậm lại, cho bạn những giây phút yên bình giữa cuộc sống hối hả.\r\n\r\nDây đeo đồng hồ làm từ da thật cao cấp, mang lại cảm giác êm ái và thoải mái khi đeo. Màu sắc của dây đeo được lựa chọn cẩn thận để hoàn thiện vẻ đẹp tổng thể của chiếc đồng hồ, tạo nên một phong cách thời trang thanh lịch và trang nhã. Khóa cài chắc chắn, dễ dàng điều chỉnh độ rộng, phù hợp với mọi kích cỡ cổ tay.\r\n\r\nChiếc đồng hồ này không chỉ là phụ kiện thời trang mà còn là người bạn đồng hành đáng tin cậy trong mọi hoạt động hàng ngày. Với khả năng chống nước lên đến 50 mét, bạn có thể yên tâm sử dụng khi rửa tay, đi mưa hay thậm chí khi bơi lội. Bộ máy đồng hồ chính xác, bền bỉ, được sản xuất bởi những nghệ nhân tài ba, đảm bảo độ chính xác cao và tuổi thọ lâu dài.\r\n\r\nMỗi chi tiết của chiếc đồng hồ này đều được chế tác tỉ mỉ, từ logo thương hiệu được khắc nổi trên núm vặn đến nắp lưng trong suốt, cho phép bạn chiêm ngưỡng bộ máy bên trong hoạt động. Đây chính là sự kết hợp hoàn hảo giữa nghệ thuật và công nghệ, giữa truyền thống và hiện đại.\r\n\r\nChiếc đồng hồ này không chỉ giúp bạn quản lý thời gian một cách hiệu quả mà còn thể hiện phong cách sống tinh tế và đẳng cấp của bạn. Đây là món quà hoàn hảo dành cho những người đàn ông và phụ nữ thành đạt, những người luôn trân trọng giá trị của thời gian và biết cách tận hưởng cuộc sống. Hãy để chiếc đồng hồ này cùng bạn viết nên câu chuyện thành công của riêng mình, với mỗi giây phút đều tràn đầy ý nghĩa và giá trị. ', 'Nữ', 'Kính sapphire'),
 (41, 'Đồng hồ Epos Swiss E-3439.322.24.26.25', 70300000, 20, 0, 40, 5, 'Cơ tự động', '2024-06-23', 'Với thiết kế đồng hồ thể thao điển hình dành cho phái mạnh luôn thuộc top những mẫu đồng hồ bán chạy nhất tại Đăng Quang Watch. Chiếc đồng hồ này không chỉ là một công cụ đo thời gian, mà còn là một biểu tượng của sự sang trọng và đẳng cấp. Được chế tác từ những vật liệu cao cấp nhất, vỏ đồng hồ được làm từ thép không gỉ sáng bóng, chống trầy xước và bền bỉ với thời gian. Mặt kính sapphire chống lóa mang đến sự rõ nét hoàn hảo, bảo vệ chiếc đồng hồ khỏi những va chạm hàng ngày.\r\n\r\nMặt số của đồng hồ được thiết kế tinh tế với những chi tiết tinh xảo, từ các vạch số đến kim chỉ giờ, phút và giây. Các vạch số được phủ lớp dạ quang, giúp bạn dễ dàng xem giờ trong điều kiện thiếu ánh sáng. Kim giây chuyển động mượt mà, tạo cảm giác như thời gian đang trôi chậm lại, cho bạn những giây phút yên bình giữa cuộc sống hối hả.\r\n\r\nDây đeo đồng hồ làm từ da thật cao cấp, mang lại cảm giác êm ái và thoải mái khi đeo. Màu sắc của dây đeo được lựa chọn cẩn thận để hoàn thiện vẻ đẹp tổng thể của chiếc đồng hồ, tạo nên một phong cách thời trang thanh lịch và trang nhã. Khóa cài chắc chắn, dễ dàng điều chỉnh độ rộng, phù hợp với mọi kích cỡ cổ tay.\r\n\r\nChiếc đồng hồ này không chỉ là phụ kiện thời trang mà còn là người bạn đồng hành đáng tin cậy trong mọi hoạt động hàng ngày. Với khả năng chống nước lên đến 50 mét, bạn có thể yên tâm sử dụng khi rửa tay, đi mưa hay thậm chí khi bơi lội. Bộ máy đồng hồ chính xác, bền bỉ, được sản xuất bởi những nghệ nhân tài ba, đảm bảo độ chính xác cao và tuổi thọ lâu dài.\r\n\r\nMỗi chi tiết của chiếc đồng hồ này đều được chế tác tỉ mỉ, từ logo thương hiệu được khắc nổi trên núm vặn đến nắp lưng trong suốt, cho phép bạn chiêm ngưỡng bộ máy bên trong hoạt động. Đây chính là sự kết hợp hoàn hảo giữa nghệ thuật và công nghệ, giữa truyền thống và hiện đại.\r\n\r\nChiếc đồng hồ này không chỉ giúp bạn quản lý thời gian một cách hiệu quả mà còn thể hiện phong cách sống tinh tế và đẳng cấp của bạn. Đây là món quà hoàn hảo dành cho những người đàn ông và phụ nữ thành đạt, những người luôn trân trọng giá trị của thời gian và biết cách tận hưởng cuộc sống. Hãy để chiếc đồng hồ này cùng bạn viết nên câu chuyện thành công của riêng mình, với mỗi giây phút đều tràn đầy ý nghĩa và giá trị. ', 'Nam', 'Kính sapphire'),
 (42, 'Đồng hồ Epos Swiss E-3439.322.24.26.34', 76300000, 20, 0, 42, 10, 'Cơ tự động', '2024-06-23', 'Với thiết kế đồng hồ thể thao điển hình dành cho phái mạnh luôn thuộc top những mẫu đồng hồ bán chạy nhất tại Đăng Quang Watch. Chiếc đồng hồ này không chỉ là một công cụ đo thời gian, mà còn là một biểu tượng của sự sang trọng và đẳng cấp. Được chế tác từ những vật liệu cao cấp nhất, vỏ đồng hồ được làm từ thép không gỉ sáng bóng, chống trầy xước và bền bỉ với thời gian. Mặt kính sapphire chống lóa mang đến sự rõ nét hoàn hảo, bảo vệ chiếc đồng hồ khỏi những va chạm hàng ngày.\r\n\r\nMặt số của đồng hồ được thiết kế tinh tế với những chi tiết tinh xảo, từ các vạch số đến kim chỉ giờ, phút và giây. Các vạch số được phủ lớp dạ quang, giúp bạn dễ dàng xem giờ trong điều kiện thiếu ánh sáng. Kim giây chuyển động mượt mà, tạo cảm giác như thời gian đang trôi chậm lại, cho bạn những giây phút yên bình giữa cuộc sống hối hả.\r\n\r\nDây đeo đồng hồ làm từ da thật cao cấp, mang lại cảm giác êm ái và thoải mái khi đeo. Màu sắc của dây đeo được lựa chọn cẩn thận để hoàn thiện vẻ đẹp tổng thể của chiếc đồng hồ, tạo nên một phong cách thời trang thanh lịch và trang nhã. Khóa cài chắc chắn, dễ dàng điều chỉnh độ rộng, phù hợp với mọi kích cỡ cổ tay.\r\n\r\nChiếc đồng hồ này không chỉ là phụ kiện thời trang mà còn là người bạn đồng hành đáng tin cậy trong mọi hoạt động hàng ngày. Với khả năng chống nước lên đến 50 mét, bạn có thể yên tâm sử dụng khi rửa tay, đi mưa hay thậm chí khi bơi lội. Bộ máy đồng hồ chính xác, bền bỉ, được sản xuất bởi những nghệ nhân tài ba, đảm bảo độ chính xác cao và tuổi thọ lâu dài.\r\n\r\nMỗi chi tiết của chiếc đồng hồ này đều được chế tác tỉ mỉ, từ logo thương hiệu được khắc nổi trên núm vặn đến nắp lưng trong suốt, cho phép bạn chiêm ngưỡng bộ máy bên trong hoạt động. Đây chính là sự kết hợp hoàn hảo giữa nghệ thuật và công nghệ, giữa truyền thống và hiện đại.\r\n\r\nChiếc đồng hồ này không chỉ giúp bạn quản lý thời gian một cách hiệu quả mà còn thể hiện phong cách sống tinh tế và đẳng cấp của bạn. Đây là món quà hoàn hảo dành cho những người đàn ông và phụ nữ thành đạt, những người luôn trân trọng giá trị của thời gian và biết cách tận hưởng cuộc sống. Hãy để chiếc đồng hồ này cùng bạn viết nên câu chuyện thành công của riêng mình, với mỗi giây phút đều tràn đầy ý nghĩa và giá trị. ', 'Nam', 'Kính sapphire');
 INSERT INTO `dongho` (`madongho`, `tendongho`, `giatien`, `soluong`, `tragop`, `duongkinh`, `chongnuoc`, `bomay`, `NGAYTHEM`, `thongtin`, `gioitinh`, `chatlieu`) VALUES
@@ -399,10 +404,10 @@ INSERT INTO `dongho` (`madongho`, `tendongho`, `giatien`, `soluong`, `tragop`, `
 (45, 'Đồng Hồ Epos Swiss E-3500.169.24.25.25 Limited', 57100000, 20, 0, 41, 5, 'Cơ tự động', '2024-06-23', 'Với thiết kế đồng hồ thể thao điển hình dành cho phái mạnh luôn thuộc top những mẫu đồng hồ bán chạy nhất tại Đăng Quang Watch. Chiếc đồng hồ này không chỉ là một công cụ đo thời gian, mà còn là một biểu tượng của sự sang trọng và đẳng cấp. Được chế tác từ những vật liệu cao cấp nhất, vỏ đồng hồ được làm từ thép không gỉ sáng bóng, chống trầy xước và bền bỉ với thời gian. Mặt kính sapphire chống lóa mang đến sự rõ nét hoàn hảo, bảo vệ chiếc đồng hồ khỏi những va chạm hàng ngày.\r\n\r\nMặt số của đồng hồ được thiết kế tinh tế với những chi tiết tinh xảo, từ các vạch số đến kim chỉ giờ, phút và giây. Các vạch số được phủ lớp dạ quang, giúp bạn dễ dàng xem giờ trong điều kiện thiếu ánh sáng. Kim giây chuyển động mượt mà, tạo cảm giác như thời gian đang trôi chậm lại, cho bạn những giây phút yên bình giữa cuộc sống hối hả.\r\n\r\nDây đeo đồng hồ làm từ da thật cao cấp, mang lại cảm giác êm ái và thoải mái khi đeo. Màu sắc của dây đeo được lựa chọn cẩn thận để hoàn thiện vẻ đẹp tổng thể của chiếc đồng hồ, tạo nên một phong cách thời trang thanh lịch và trang nhã. Khóa cài chắc chắn, dễ dàng điều chỉnh độ rộng, phù hợp với mọi kích cỡ cổ tay.\r\n\r\nChiếc đồng hồ này không chỉ là phụ kiện thời trang mà còn là người bạn đồng hành đáng tin cậy trong mọi hoạt động hàng ngày. Với khả năng chống nước lên đến 50 mét, bạn có thể yên tâm sử dụng khi rửa tay, đi mưa hay thậm chí khi bơi lội. Bộ máy đồng hồ chính xác, bền bỉ, được sản xuất bởi những nghệ nhân tài ba, đảm bảo độ chính xác cao và tuổi thọ lâu dài.\r\n\r\nMỗi chi tiết của chiếc đồng hồ này đều được chế tác tỉ mỉ, từ logo thương hiệu được khắc nổi trên núm vặn đến nắp lưng trong suốt, cho phép bạn chiêm ngưỡng bộ máy bên trong hoạt động. Đây chính là sự kết hợp hoàn hảo giữa nghệ thuật và công nghệ, giữa truyền thống và hiện đại.\r\n\r\nChiếc đồng hồ này không chỉ giúp bạn quản lý thời gian một cách hiệu quả mà còn thể hiện phong cách sống tinh tế và đẳng cấp của bạn. Đây là món quà hoàn hảo dành cho những người đàn ông và phụ nữ thành đạt, những người luôn trân trọng giá trị của thời gian và biết cách tận hưởng cuộc sống. Hãy để chiếc đồng hồ này cùng bạn viết nên câu chuyện thành công của riêng mình, với mỗi giây phút đều tràn đầy ý nghĩa và giá trị. ', 'Nam', 'Kính sapphire'),
 (46, 'Đồng hồ Epos Swiss E-3390.152.22.11.25', 100000000, 20, 0, 40, 5, 'Cơ tự động', '2024-06-23', 'Với thiết kế đồng hồ thể thao điển hình dành cho phái mạnh luôn thuộc top những mẫu đồng hồ bán chạy nhất tại Đăng Quang Watch. Chiếc đồng hồ này không chỉ là một công cụ đo thời gian, mà còn là một biểu tượng của sự sang trọng và đẳng cấp. Được chế tác từ những vật liệu cao cấp nhất, vỏ đồng hồ được làm từ thép không gỉ sáng bóng, chống trầy xước và bền bỉ với thời gian. Mặt kính sapphire chống lóa mang đến sự rõ nét hoàn hảo, bảo vệ chiếc đồng hồ khỏi những va chạm hàng ngày.\r\n\r\nMặt số của đồng hồ được thiết kế tinh tế với những chi tiết tinh xảo, từ các vạch số đến kim chỉ giờ, phút và giây. Các vạch số được phủ lớp dạ quang, giúp bạn dễ dàng xem giờ trong điều kiện thiếu ánh sáng. Kim giây chuyển động mượt mà, tạo cảm giác như thời gian đang trôi chậm lại, cho bạn những giây phút yên bình giữa cuộc sống hối hả.\r\n\r\nDây đeo đồng hồ làm từ da thật cao cấp, mang lại cảm giác êm ái và thoải mái khi đeo. Màu sắc của dây đeo được lựa chọn cẩn thận để hoàn thiện vẻ đẹp tổng thể của chiếc đồng hồ, tạo nên một phong cách thời trang thanh lịch và trang nhã. Khóa cài chắc chắn, dễ dàng điều chỉnh độ rộng, phù hợp với mọi kích cỡ cổ tay.\r\n\r\nChiếc đồng hồ này không chỉ là phụ kiện thời trang mà còn là người bạn đồng hành đáng tin cậy trong mọi hoạt động hàng ngày. Với khả năng chống nước lên đến 50 mét, bạn có thể yên tâm sử dụng khi rửa tay, đi mưa hay thậm chí khi bơi lội. Bộ máy đồng hồ chính xác, bền bỉ, được sản xuất bởi những nghệ nhân tài ba, đảm bảo độ chính xác cao và tuổi thọ lâu dài.\r\n\r\nMỗi chi tiết của chiếc đồng hồ này đều được chế tác tỉ mỉ, từ logo thương hiệu được khắc nổi trên núm vặn đến nắp lưng trong suốt, cho phép bạn chiêm ngưỡng bộ máy bên trong hoạt động. Đây chính là sự kết hợp hoàn hảo giữa nghệ thuật và công nghệ, giữa truyền thống và hiện đại.\r\n\r\nChiếc đồng hồ này không chỉ giúp bạn quản lý thời gian một cách hiệu quả mà còn thể hiện phong cách sống tinh tế và đẳng cấp của bạn. Đây là món quà hoàn hảo dành cho những người đàn ông và phụ nữ thành đạt, những người luôn trân trọng giá trị của thời gian và biết cách tận hưởng cuộc sống. Hãy để chiếc đồng hồ này cùng bạn viết nên câu chuyện thành công của riêng mình, với mỗi giây phút đều tràn đầy ý nghĩa và giá trị. ', 'Nam', 'Kính sapphire'),
 (47, 'Đồng Hồ Epos Swiss E-3439.322.20.16.25', 61000000, 20, 0, 40, 10, 'Cơ tự động', '2024-06-23', 'Với thiết kế đồng hồ thể thao điển hình dành cho phái mạnh luôn thuộc top những mẫu đồng hồ bán chạy nhất tại Đăng Quang Watch. Chiếc đồng hồ này không chỉ là một công cụ đo thời gian, mà còn là một biểu tượng của sự sang trọng và đẳng cấp. Được chế tác từ những vật liệu cao cấp nhất, vỏ đồng hồ được làm từ thép không gỉ sáng bóng, chống trầy xước và bền bỉ với thời gian. Mặt kính sapphire chống lóa mang đến sự rõ nét hoàn hảo, bảo vệ chiếc đồng hồ khỏi những va chạm hàng ngày.\r\n\r\nMặt số của đồng hồ được thiết kế tinh tế với những chi tiết tinh xảo, từ các vạch số đến kim chỉ giờ, phút và giây. Các vạch số được phủ lớp dạ quang, giúp bạn dễ dàng xem giờ trong điều kiện thiếu ánh sáng. Kim giây chuyển động mượt mà, tạo cảm giác như thời gian đang trôi chậm lại, cho bạn những giây phút yên bình giữa cuộc sống hối hả.\r\n\r\nDây đeo đồng hồ làm từ da thật cao cấp, mang lại cảm giác êm ái và thoải mái khi đeo. Màu sắc của dây đeo được lựa chọn cẩn thận để hoàn thiện vẻ đẹp tổng thể của chiếc đồng hồ, tạo nên một phong cách thời trang thanh lịch và trang nhã. Khóa cài chắc chắn, dễ dàng điều chỉnh độ rộng, phù hợp với mọi kích cỡ cổ tay.\r\n\r\nChiếc đồng hồ này không chỉ là phụ kiện thời trang mà còn là người bạn đồng hành đáng tin cậy trong mọi hoạt động hàng ngày. Với khả năng chống nước lên đến 50 mét, bạn có thể yên tâm sử dụng khi rửa tay, đi mưa hay thậm chí khi bơi lội. Bộ máy đồng hồ chính xác, bền bỉ, được sản xuất bởi những nghệ nhân tài ba, đảm bảo độ chính xác cao và tuổi thọ lâu dài.\r\n\r\nMỗi chi tiết của chiếc đồng hồ này đều được chế tác tỉ mỉ, từ logo thương hiệu được khắc nổi trên núm vặn đến nắp lưng trong suốt, cho phép bạn chiêm ngưỡng bộ máy bên trong hoạt động. Đây chính là sự kết hợp hoàn hảo giữa nghệ thuật và công nghệ, giữa truyền thống và hiện đại.\r\n\r\nChiếc đồng hồ này không chỉ giúp bạn quản lý thời gian một cách hiệu quả mà còn thể hiện phong cách sống tinh tế và đẳng cấp của bạn. Đây là món quà hoàn hảo dành cho những người đàn ông và phụ nữ thành đạt, những người luôn trân trọng giá trị của thời gian và biết cách tận hưởng cuộc sống. Hãy để chiếc đồng hồ này cùng bạn viết nên câu chuyện thành công của riêng mình, với mỗi giây phút đều tràn đầy ý nghĩa và giá trị. ', 'Nam', 'Kính sapphire'),
-(48, 'Đồng hồ Diamond D DM64205IG-R', 100, 1, 0, 40, 10, 'Automatic', '2024-06-30', 'DOng ho xin', 'Nam', 'Sapphire');
+(48, 'Đồng hồ Diamond D DM64205IG-R', 5890000, 10, 0, 40, 10, 'Automatic', '2024-06-30', 'Với thiết kế đồng hồ thể thao điển hình dành cho phái mạnh luôn thuộc top những mẫu đồng hồ bán chạy nhất tại Đăng Quang Watch. Chiếc đồng hồ này không chỉ là một công cụ đo thời gian, mà còn là một biểu tượng của sự sang trọng và đẳng cấp. Được chế tác từ những vật liệu cao cấp nhất, vỏ đồng hồ được làm từ thép không gỉ sáng bóng, chống trầy xước và bền bỉ với thời gian. Mặt kính sapphire chống lóa mang đến sự rõ nét hoàn hảo, bảo vệ chiếc đồng hồ khỏi những va chạm hàng ngày.\n\nMặt số của đồng hồ được thiết kế tinh tế với những chi tiết tinh xảo, từ các vạch số đến kim chỉ giờ, phút và giây. Các vạch số được phủ lớp dạ quang, giúp bạn dễ dàng xem giờ trong điều kiện thiếu ánh sáng. Kim giây chuyển động mượt mà, tạo cảm giác như thời gian đang trôi chậm lại, cho bạn những giây phút yên bình giữa cuộc sống hối hả.\n\nDây đeo đồng hồ làm từ da thật cao cấp, mang lại cảm giác êm ái và thoải mái khi đeo. Màu sắc của dây đeo được lựa chọn cẩn thận để hoàn thiện vẻ đẹp tổng thể của chiếc đồng hồ, tạo nên một phong cách thời trang thanh lịch và trang nhã. Khóa cài chắc chắn, dễ dàng điều chỉnh độ rộng, phù hợp với mọi kích cỡ cổ tay.\n\nChiếc đồng hồ này không chỉ là phụ kiện thời trang mà còn là người bạn đồng hành đáng tin cậy trong mọi hoạt động hàng ngày. Với khả năng chống nước lên đến 50 mét, bạn có thể yên tâm sử dụng khi rửa tay, đi mưa hay thậm chí khi bơi lội. Bộ máy đồng hồ chính xác, bền bỉ, được sản xuất bởi những nghệ nhân tài ba, đảm bảo độ chính xác cao và tuổi thọ lâu dài.\n\nMỗi chi tiết của chiếc đồng hồ này đều được chế tác tỉ mỉ, từ logo thương hiệu được khắc nổi trên núm vặn đến nắp lưng trong suốt, cho phép bạn chiêm ngưỡng bộ máy bên trong hoạt động. Đây chính là sự kết hợp hoàn hảo giữa nghệ thuật và công nghệ, giữa truyền thống và hiện đại.\n\nChiếc đồng hồ này không chỉ giúp bạn quản lý thời gian một cách hiệu quả mà còn thể hiện phong cách sống tinh tế và đẳng cấp của bạn. Đây là món quà hoàn hảo dành cho những người đàn ông và phụ nữ thành đạt, những người luôn trân trọng giá trị của thời gian và biết cách tận hưởng cuộc sống. Hãy để chiếc đồng hồ này cùng bạn viết nên câu chuyện thành công của riêng mình, với mỗi giây phút đều tràn đầy ý nghĩa và giá trị. ', 'Nam', 'Sapphire');
 
 --
--- Triggers `dongho`
+-- Bẫy `dongho`
 --
 DELIMITER $$
 CREATE TRIGGER `delete_dongho` AFTER DELETE ON `dongho` FOR EACH ROW BEGIN
@@ -422,12 +427,12 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `donhang`
+-- Cấu trúc bảng cho bảng `donhang`
 --
 
 CREATE TABLE `donhang` (
   `madonhang` int(11) NOT NULL,
-  `username` varchar(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
   `tongtien` bigint(20) NOT NULL,
   `diachi` varchar(255) DEFAULT NULL,
   `ghichu` varchar(255) DEFAULT 'Không có ghi chú',
@@ -437,18 +442,21 @@ CREATE TABLE `donhang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `donhang`
+-- Đang đổ dữ liệu cho bảng `donhang`
 --
 
 INSERT INTO `donhang` (`madonhang`, `username`, `tongtien`, `diachi`, `ghichu`, `tinhtrang`, `thanhtoan`, `NGAYTHEM`) VALUES
-(1, 'tuanminh', 6600000, 'Phú Thọ', 'Không có ghi chú', 'Đã hủy', 'Khi nhận hàng', '2024-06-26'),
-(2, 'vanthi', 10440000, 'Nam Định', 'Không có ghi chú', 'Đã nhận hàng', 'Khi nhận hàng', '2024-06-26'),
-(4, 'minhquan', 6020000, 'Dong Da', 'Không có', 'Đã nhận hàng', 'Đã thanh toán', '2024-06-28'),
-(6, 'minhquan', 10860000, 'Dong Da', 'Không có', 'Chờ xác nhận', 'Khi nhận hàng', '2024-06-28'),
-(7, 'minhquan', 20130000, 'Vĩnh Phúc', 'Lái xe về Vĩnh Phúc hỏi có ai tên Bộ không', 'Chờ xác nhận', 'Khi nhận hàng', '2024-06-28');
+(1, 'minhquan@email.com', 6600000, 'Phú Thọ', 'Không có ghi chú', 'Đã hủy', 'Khi nhận hàng', '2024-06-26'),
+(2, 'vanbo@email.com', 10440000, 'Nam Định', 'Không có ghi chú', 'Đã nhận hàng', 'Khi nhận hàng', '2024-06-26'),
+(4, 'tuanminh@email.com', 6020000, 'Dong Da', 'Không có', 'Đã nhận hàng', 'Đã thanh toán', '2024-06-28'),
+(6, 'vanthi@email.com', 10860000, 'Dong Da', 'Không có', 'Chờ xác nhận', 'Khi nhận hàng', '2024-06-28'),
+(7, 'vanbo@email.com', 20130000, 'Vĩnh Phúc', 'Lái xe về Vĩnh Phúc hỏi có ai tên Bộ không', 'Chờ xác nhận', 'Khi nhận hàng', '2024-06-28'),
+(8, 'test1@email.com', 74290000, 'Test Dia Chi', 'Không có', 'Đang vận chuyển', 'Khi nhận hàng', '2024-10-15'),
+(9, 'test2@email.com', 5625000, 'Thành phố Hà Nội, Quận Hoàng Mai, Phường Tân Mai, Số 9', 'Không có', 'Chờ xác nhận', 'Khi nhận hàng', '2024-10-17'),
+(10, 'test2@email.com', 9245000, 'Thành phố Hà Nội, Quận Hoàng Mai, Phường Tân Mai, Số 9', 'Không có', 'Chờ xác nhận', 'Khi nhận hàng', '2024-10-17');
 
 --
--- Triggers `donhang`
+-- Bẫy `donhang`
 --
 DELIMITER $$
 CREATE TRIGGER `donhang_after_giao` AFTER UPDATE ON `donhang` FOR EACH ROW BEGIN
@@ -595,7 +603,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kinhmat`
+-- Cấu trúc bảng cho bảng `kinhmat`
 --
 
 CREATE TABLE `kinhmat` (
@@ -613,18 +621,18 @@ CREATE TABLE `kinhmat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `kinhmat`
+-- Đang đổ dữ liệu cho bảng `kinhmat`
 --
 
 INSERT INTO `kinhmat` (`makinhmat`, `tensanpham`, `giatien`, `rongmat`, `songmui`, `daigong`, `tinhnang`, `tragop`, `soluong`, `NGAYTHEM`, `thongtin`) VALUES
 (1, 'Kính mát PHILIPPE AUGUSTE PA555-008-G', 3280000, 53, 20, 135, 'Chống chói lóa, tia UV', 0, 15, '2024-06-21', 'Kính mắt sang trọng này không chỉ là một phụ kiện thời trang, mà còn là biểu tượng của sự thanh lịch và phong cách đỉnh cao. Được chế tác tỉ mỉ từ những vật liệu cao cấp nhất, gọng kính được làm từ hợp kim titanium nhẹ nhưng vô cùng bền bỉ, mang đến sự thoải mái tối đa khi đeo suốt cả ngày dài. Màu sắc của gọng kính được hoàn thiện với lớp phủ chống ăn mòn, giữ cho vẻ ngoài luôn mới mẻ và rạng rỡ.\r\n\r\nMắt kính được làm từ chất liệu polycarbonate chống trầy xước, không chỉ bền bỉ mà còn mang đến khả năng chống tia UV hoàn hảo, bảo vệ đôi mắt của bạn khỏi tác hại của ánh nắng mặt trời. Lớp phủ chống lóa trên bề mặt mắt kính giúp giảm thiểu hiện tượng chói mắt, mang lại tầm nhìn rõ ràng và sắc nét ngay cả trong điều kiện ánh sáng mạnh.\r\n\r\nThiết kế của kính mắt này mang phong cách hiện đại với các đường nét tinh tế và cân đối, phù hợp với nhiều kiểu dáng khuôn mặt khác nhau. Phần đệm mũi được làm từ silicon mềm mại, có thể điều chỉnh dễ dàng để ôm sát vừa vặn, không gây cảm giác khó chịu hay để lại vết hằn trên da. Bản lề kính được thiết kế chắc chắn, đảm bảo sự linh hoạt và độ bền cao, cho phép bạn mở và gập kính một cách mượt mà và dễ dàng.\r\n\r\nMỗi chi tiết nhỏ trên chiếc kính mắt này đều được chăm chút tỉ mỉ, từ logo thương hiệu được khắc nổi tinh tế trên gọng kính, đến các đường nét hoàn thiện tinh xảo trên mắt kính. Đây chính là sự kết hợp hoàn hảo giữa nghệ thuật chế tác và công nghệ hiện đại, mang đến cho bạn một sản phẩm không chỉ đẹp mà còn vô cùng tiện ích.\r\n\r\nKính mắt sang trọng này không chỉ giúp bảo vệ đôi mắt của bạn mà còn tôn lên vẻ đẹp, phong cách và đẳng cấp của bạn. Dù bạn đang đi làm, đi dự tiệc hay dạo phố, chiếc kính này sẽ là người bạn đồng hành lý tưởng, giúp bạn tự tin và nổi bật trong mọi tình huống. Đây là món quà hoàn hảo dành cho những người yêu thích thời trang và luôn tìm kiếm những sản phẩm chất lượng cao.\r\n\r\nHãy để kính mắt sang trọng này trở thành điểm nhấn trong phong cách của bạn, mang đến cho bạn không chỉ sự bảo vệ tuyệt vời mà còn là cảm giác tự tin và phong cách trong từng khoảnh khắc. Với mỗi chi tiết được chế tác công phu, kính mắt này thực sự là một kiệt tác, là sự lựa chọn hoàn hảo cho những ai yêu thích sự hoàn hảo và đẳng cấp.'),
 (2, 'Kính mát PHILIPPE AUGUSTE PA555-007-F', 3090000, 51, 20, 145, 'Chống chói lóa, tia UV', 0, 50, '2024-06-21', 'Kính mắt sang trọng này không chỉ là một phụ kiện thời trang, mà còn là biểu tượng của sự thanh lịch và phong cách đỉnh cao. Được chế tác tỉ mỉ từ những vật liệu cao cấp nhất, gọng kính được làm từ hợp kim titanium nhẹ nhưng vô cùng bền bỉ, mang đến sự thoải mái tối đa khi đeo suốt cả ngày dài. Màu sắc của gọng kính được hoàn thiện với lớp phủ chống ăn mòn, giữ cho vẻ ngoài luôn mới mẻ và rạng rỡ.\r\n\r\nMắt kính được làm từ chất liệu polycarbonate chống trầy xước, không chỉ bền bỉ mà còn mang đến khả năng chống tia UV hoàn hảo, bảo vệ đôi mắt của bạn khỏi tác hại của ánh nắng mặt trời. Lớp phủ chống lóa trên bề mặt mắt kính giúp giảm thiểu hiện tượng chói mắt, mang lại tầm nhìn rõ ràng và sắc nét ngay cả trong điều kiện ánh sáng mạnh.\r\n\r\nThiết kế của kính mắt này mang phong cách hiện đại với các đường nét tinh tế và cân đối, phù hợp với nhiều kiểu dáng khuôn mặt khác nhau. Phần đệm mũi được làm từ silicon mềm mại, có thể điều chỉnh dễ dàng để ôm sát vừa vặn, không gây cảm giác khó chịu hay để lại vết hằn trên da. Bản lề kính được thiết kế chắc chắn, đảm bảo sự linh hoạt và độ bền cao, cho phép bạn mở và gập kính một cách mượt mà và dễ dàng.\r\n\r\nMỗi chi tiết nhỏ trên chiếc kính mắt này đều được chăm chút tỉ mỉ, từ logo thương hiệu được khắc nổi tinh tế trên gọng kính, đến các đường nét hoàn thiện tinh xảo trên mắt kính. Đây chính là sự kết hợp hoàn hảo giữa nghệ thuật chế tác và công nghệ hiện đại, mang đến cho bạn một sản phẩm không chỉ đẹp mà còn vô cùng tiện ích.\r\n\r\nKính mắt sang trọng này không chỉ giúp bảo vệ đôi mắt của bạn mà còn tôn lên vẻ đẹp, phong cách và đẳng cấp của bạn. Dù bạn đang đi làm, đi dự tiệc hay dạo phố, chiếc kính này sẽ là người bạn đồng hành lý tưởng, giúp bạn tự tin và nổi bật trong mọi tình huống. Đây là món quà hoàn hảo dành cho những người yêu thích thời trang và luôn tìm kiếm những sản phẩm chất lượng cao.\r\n\r\nHãy để kính mắt sang trọng này trở thành điểm nhấn trong phong cách của bạn, mang đến cho bạn không chỉ sự bảo vệ tuyệt vời mà còn là cảm giác tự tin và phong cách trong từng khoảnh khắc. Với mỗi chi tiết được chế tác công phu, kính mắt này thực sự là một kiệt tác, là sự lựa chọn hoàn hảo cho những ai yêu thích sự hoàn hảo và đẳng cấp.'),
 (3, 'Kính mát PHILIPPE AUGUSTE PA555-007-B', 3090000, 51, 20, 145, 'Chống chói lóa, tia UV', 0, 44, '2024-06-21', 'Kính mắt sang trọng này không chỉ là một phụ kiện thời trang, mà còn là biểu tượng của sự thanh lịch và phong cách đỉnh cao. Được chế tác tỉ mỉ từ những vật liệu cao cấp nhất, gọng kính được làm từ hợp kim titanium nhẹ nhưng vô cùng bền bỉ, mang đến sự thoải mái tối đa khi đeo suốt cả ngày dài. Màu sắc của gọng kính được hoàn thiện với lớp phủ chống ăn mòn, giữ cho vẻ ngoài luôn mới mẻ và rạng rỡ.\r\n\r\nMắt kính được làm từ chất liệu polycarbonate chống trầy xước, không chỉ bền bỉ mà còn mang đến khả năng chống tia UV hoàn hảo, bảo vệ đôi mắt của bạn khỏi tác hại của ánh nắng mặt trời. Lớp phủ chống lóa trên bề mặt mắt kính giúp giảm thiểu hiện tượng chói mắt, mang lại tầm nhìn rõ ràng và sắc nét ngay cả trong điều kiện ánh sáng mạnh.\r\n\r\nThiết kế của kính mắt này mang phong cách hiện đại với các đường nét tinh tế và cân đối, phù hợp với nhiều kiểu dáng khuôn mặt khác nhau. Phần đệm mũi được làm từ silicon mềm mại, có thể điều chỉnh dễ dàng để ôm sát vừa vặn, không gây cảm giác khó chịu hay để lại vết hằn trên da. Bản lề kính được thiết kế chắc chắn, đảm bảo sự linh hoạt và độ bền cao, cho phép bạn mở và gập kính một cách mượt mà và dễ dàng.\r\n\r\nMỗi chi tiết nhỏ trên chiếc kính mắt này đều được chăm chút tỉ mỉ, từ logo thương hiệu được khắc nổi tinh tế trên gọng kính, đến các đường nét hoàn thiện tinh xảo trên mắt kính. Đây chính là sự kết hợp hoàn hảo giữa nghệ thuật chế tác và công nghệ hiện đại, mang đến cho bạn một sản phẩm không chỉ đẹp mà còn vô cùng tiện ích.\r\n\r\nKính mắt sang trọng này không chỉ giúp bảo vệ đôi mắt của bạn mà còn tôn lên vẻ đẹp, phong cách và đẳng cấp của bạn. Dù bạn đang đi làm, đi dự tiệc hay dạo phố, chiếc kính này sẽ là người bạn đồng hành lý tưởng, giúp bạn tự tin và nổi bật trong mọi tình huống. Đây là món quà hoàn hảo dành cho những người yêu thích thời trang và luôn tìm kiếm những sản phẩm chất lượng cao.\r\n\r\nHãy để kính mắt sang trọng này trở thành điểm nhấn trong phong cách của bạn, mang đến cho bạn không chỉ sự bảo vệ tuyệt vời mà còn là cảm giác tự tin và phong cách trong từng khoảnh khắc. Với mỗi chi tiết được chế tác công phu, kính mắt này thực sự là một kiệt tác, là sự lựa chọn hoàn hảo cho những ai yêu thích sự hoàn hảo và đẳng cấp.'),
-(4, 'Kính mắt PHILIPPE AUGUSTE PA555-007-D', 3090000, 51, 20, 145, 'Chống chói lóa, tia UV', 0, 55, '2024-06-21', 'Kính mắt sang trọng này không chỉ là một phụ kiện thời trang, mà còn là biểu tượng của sự thanh lịch và phong cách đỉnh cao. Được chế tác tỉ mỉ từ những vật liệu cao cấp nhất, gọng kính được làm từ hợp kim titanium nhẹ nhưng vô cùng bền bỉ, mang đến sự thoải mái tối đa khi đeo suốt cả ngày dài. Màu sắc của gọng kính được hoàn thiện với lớp phủ chống ăn mòn, giữ cho vẻ ngoài luôn mới mẻ và rạng rỡ.\r\n\r\nMắt kính được làm từ chất liệu polycarbonate chống trầy xước, không chỉ bền bỉ mà còn mang đến khả năng chống tia UV hoàn hảo, bảo vệ đôi mắt của bạn khỏi tác hại của ánh nắng mặt trời. Lớp phủ chống lóa trên bề mặt mắt kính giúp giảm thiểu hiện tượng chói mắt, mang lại tầm nhìn rõ ràng và sắc nét ngay cả trong điều kiện ánh sáng mạnh.\r\n\r\nThiết kế của kính mắt này mang phong cách hiện đại với các đường nét tinh tế và cân đối, phù hợp với nhiều kiểu dáng khuôn mặt khác nhau. Phần đệm mũi được làm từ silicon mềm mại, có thể điều chỉnh dễ dàng để ôm sát vừa vặn, không gây cảm giác khó chịu hay để lại vết hằn trên da. Bản lề kính được thiết kế chắc chắn, đảm bảo sự linh hoạt và độ bền cao, cho phép bạn mở và gập kính một cách mượt mà và dễ dàng.\r\n\r\nMỗi chi tiết nhỏ trên chiếc kính mắt này đều được chăm chút tỉ mỉ, từ logo thương hiệu được khắc nổi tinh tế trên gọng kính, đến các đường nét hoàn thiện tinh xảo trên mắt kính. Đây chính là sự kết hợp hoàn hảo giữa nghệ thuật chế tác và công nghệ hiện đại, mang đến cho bạn một sản phẩm không chỉ đẹp mà còn vô cùng tiện ích.\r\n\r\nKính mắt sang trọng này không chỉ giúp bảo vệ đôi mắt của bạn mà còn tôn lên vẻ đẹp, phong cách và đẳng cấp của bạn. Dù bạn đang đi làm, đi dự tiệc hay dạo phố, chiếc kính này sẽ là người bạn đồng hành lý tưởng, giúp bạn tự tin và nổi bật trong mọi tình huống. Đây là món quà hoàn hảo dành cho những người yêu thích thời trang và luôn tìm kiếm những sản phẩm chất lượng cao.\r\n\r\nHãy để kính mắt sang trọng này trở thành điểm nhấn trong phong cách của bạn, mang đến cho bạn không chỉ sự bảo vệ tuyệt vời mà còn là cảm giác tự tin và phong cách trong từng khoảnh khắc. Với mỗi chi tiết được chế tác công phu, kính mắt này thực sự là một kiệt tác, là sự lựa chọn hoàn hảo cho những ai yêu thích sự hoàn hảo và đẳng cấp.'),
+(4, 'Kính mắt PHILIPPE AUGUSTE PA555-007-D', 3090000, 51, 20, 145, 'Chống chói lóa, tia UV', 0, 54, '2024-06-21', 'Kính mắt sang trọng này không chỉ là một phụ kiện thời trang, mà còn là biểu tượng của sự thanh lịch và phong cách đỉnh cao. Được chế tác tỉ mỉ từ những vật liệu cao cấp nhất, gọng kính được làm từ hợp kim titanium nhẹ nhưng vô cùng bền bỉ, mang đến sự thoải mái tối đa khi đeo suốt cả ngày dài. Màu sắc của gọng kính được hoàn thiện với lớp phủ chống ăn mòn, giữ cho vẻ ngoài luôn mới mẻ và rạng rỡ.\r\n\r\nMắt kính được làm từ chất liệu polycarbonate chống trầy xước, không chỉ bền bỉ mà còn mang đến khả năng chống tia UV hoàn hảo, bảo vệ đôi mắt của bạn khỏi tác hại của ánh nắng mặt trời. Lớp phủ chống lóa trên bề mặt mắt kính giúp giảm thiểu hiện tượng chói mắt, mang lại tầm nhìn rõ ràng và sắc nét ngay cả trong điều kiện ánh sáng mạnh.\r\n\r\nThiết kế của kính mắt này mang phong cách hiện đại với các đường nét tinh tế và cân đối, phù hợp với nhiều kiểu dáng khuôn mặt khác nhau. Phần đệm mũi được làm từ silicon mềm mại, có thể điều chỉnh dễ dàng để ôm sát vừa vặn, không gây cảm giác khó chịu hay để lại vết hằn trên da. Bản lề kính được thiết kế chắc chắn, đảm bảo sự linh hoạt và độ bền cao, cho phép bạn mở và gập kính một cách mượt mà và dễ dàng.\r\n\r\nMỗi chi tiết nhỏ trên chiếc kính mắt này đều được chăm chút tỉ mỉ, từ logo thương hiệu được khắc nổi tinh tế trên gọng kính, đến các đường nét hoàn thiện tinh xảo trên mắt kính. Đây chính là sự kết hợp hoàn hảo giữa nghệ thuật chế tác và công nghệ hiện đại, mang đến cho bạn một sản phẩm không chỉ đẹp mà còn vô cùng tiện ích.\r\n\r\nKính mắt sang trọng này không chỉ giúp bảo vệ đôi mắt của bạn mà còn tôn lên vẻ đẹp, phong cách và đẳng cấp của bạn. Dù bạn đang đi làm, đi dự tiệc hay dạo phố, chiếc kính này sẽ là người bạn đồng hành lý tưởng, giúp bạn tự tin và nổi bật trong mọi tình huống. Đây là món quà hoàn hảo dành cho những người yêu thích thời trang và luôn tìm kiếm những sản phẩm chất lượng cao.\r\n\r\nHãy để kính mắt sang trọng này trở thành điểm nhấn trong phong cách của bạn, mang đến cho bạn không chỉ sự bảo vệ tuyệt vời mà còn là cảm giác tự tin và phong cách trong từng khoảnh khắc. Với mỗi chi tiết được chế tác công phu, kính mắt này thực sự là một kiệt tác, là sự lựa chọn hoàn hảo cho những ai yêu thích sự hoàn hảo và đẳng cấp.'),
 (5, 'Kính mát PHILIPPE AUGUSTE PA555-002-E', 3090000, 57, 16, 135, 'Chống chói lóa, tia UV', 0, 11, '2024-06-21', 'Kính mắt sang trọng này không chỉ là một phụ kiện thời trang, mà còn là biểu tượng của sự thanh lịch và phong cách đỉnh cao. Được chế tác tỉ mỉ từ những vật liệu cao cấp nhất, gọng kính được làm từ hợp kim titanium nhẹ nhưng vô cùng bền bỉ, mang đến sự thoải mái tối đa khi đeo suốt cả ngày dài. Màu sắc của gọng kính được hoàn thiện với lớp phủ chống ăn mòn, giữ cho vẻ ngoài luôn mới mẻ và rạng rỡ.\r\n\r\nMắt kính được làm từ chất liệu polycarbonate chống trầy xước, không chỉ bền bỉ mà còn mang đến khả năng chống tia UV hoàn hảo, bảo vệ đôi mắt của bạn khỏi tác hại của ánh nắng mặt trời. Lớp phủ chống lóa trên bề mặt mắt kính giúp giảm thiểu hiện tượng chói mắt, mang lại tầm nhìn rõ ràng và sắc nét ngay cả trong điều kiện ánh sáng mạnh.\r\n\r\nThiết kế của kính mắt này mang phong cách hiện đại với các đường nét tinh tế và cân đối, phù hợp với nhiều kiểu dáng khuôn mặt khác nhau. Phần đệm mũi được làm từ silicon mềm mại, có thể điều chỉnh dễ dàng để ôm sát vừa vặn, không gây cảm giác khó chịu hay để lại vết hằn trên da. Bản lề kính được thiết kế chắc chắn, đảm bảo sự linh hoạt và độ bền cao, cho phép bạn mở và gập kính một cách mượt mà và dễ dàng.\r\n\r\nMỗi chi tiết nhỏ trên chiếc kính mắt này đều được chăm chút tỉ mỉ, từ logo thương hiệu được khắc nổi tinh tế trên gọng kính, đến các đường nét hoàn thiện tinh xảo trên mắt kính. Đây chính là sự kết hợp hoàn hảo giữa nghệ thuật chế tác và công nghệ hiện đại, mang đến cho bạn một sản phẩm không chỉ đẹp mà còn vô cùng tiện ích.\r\n\r\nKính mắt sang trọng này không chỉ giúp bảo vệ đôi mắt của bạn mà còn tôn lên vẻ đẹp, phong cách và đẳng cấp của bạn. Dù bạn đang đi làm, đi dự tiệc hay dạo phố, chiếc kính này sẽ là người bạn đồng hành lý tưởng, giúp bạn tự tin và nổi bật trong mọi tình huống. Đây là món quà hoàn hảo dành cho những người yêu thích thời trang và luôn tìm kiếm những sản phẩm chất lượng cao.\r\n\r\nHãy để kính mắt sang trọng này trở thành điểm nhấn trong phong cách của bạn, mang đến cho bạn không chỉ sự bảo vệ tuyệt vời mà còn là cảm giác tự tin và phong cách trong từng khoảnh khắc. Với mỗi chi tiết được chế tác công phu, kính mắt này thực sự là một kiệt tác, là sự lựa chọn hoàn hảo cho những ai yêu thích sự hoàn hảo và đẳng cấp.');
 
 --
--- Triggers `kinhmat`
+-- Bẫy `kinhmat`
 --
 DELIMITER $$
 CREATE TRIGGER `delete_kinhmat` AFTER DELETE ON `kinhmat` FOR EACH ROW BEGIN
@@ -644,7 +652,20 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `phukien`
+-- Cấu trúc bảng cho bảng `otp`
+--
+
+CREATE TABLE `otp` (
+  `id` int(11) NOT NULL,
+  `password` text NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `expiry_date` date DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `phukien`
 --
 
 CREATE TABLE `phukien` (
@@ -658,7 +679,7 @@ CREATE TABLE `phukien` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `phukien`
+-- Đang đổ dữ liệu cho bảng `phukien`
 --
 
 INSERT INTO `phukien` (`maphukien`, `tenphukien`, `giatien`, `soluong`, `thongtin`, `tragop`, `NGAYTHEM`) VALUES
@@ -669,7 +690,7 @@ INSERT INTO `phukien` (`maphukien`, `tenphukien`, `giatien`, `soluong`, `thongti
 (5, 'Dây da Đăng Quang D-A-273NKS.H19.NERO-19', 450000, 10, 'Hàng ngàn mẫu Dây Đeo Đồng hồ chính hãng: Dây da, Dây Cao Su, Dây Kim Loại, Dây Đeo Đồng Hồ Vải,... Phụ kiện dây da đồng hồ sang trọng này là sự kết hợp hoàn hảo giữa chất liệu cao cấp và thiết kế tinh tế. Được chế tác từ da thuộc tự nhiên, dây đeo không chỉ mềm mại và êm ái khi đeo mà còn mang lại độ bền vượt trội, đảm bảo sử dụng lâu dài mà không bị nứt hay bong tróc. Màu sắc của dây da được nhuộm đều và tinh tế, mang lại vẻ đẹp tự nhiên và sang trọng, phù hợp với nhiều loại đồng hồ khác nhau.\n\nCác đường chỉ khâu trên dây đeo được thực hiện tỉ mỉ và chắc chắn, tạo điểm nhấn tinh tế và thêm phần bền bỉ cho sản phẩm. Khóa cài làm từ thép không gỉ, được đánh bóng kỹ lưỡng, giúp dễ dàng điều chỉnh độ rộng và giữ cho dây đeo luôn cố định, không bị lỏng lẻo trong suốt quá trình sử dụng.\n\nVới phụ kiện dây da này, chiếc đồng hồ của bạn sẽ được nâng tầm đẳng cấp, mang lại phong cách thanh lịch và quý phái cho người đeo. Đây chính là lựa chọn hoàn hảo cho những ai yêu thích sự hoàn mỹ và tinh tế trong từng chi tiết.', 0, '2024-06-21');
 
 --
--- Triggers `phukien`
+-- Bẫy `phukien`
 --
 DELIMITER $$
 CREATE TRIGGER `delete_phukien` AFTER DELETE ON `phukien` FOR EACH ROW BEGIN
@@ -689,33 +710,37 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `taikhoan`
+-- Cấu trúc bảng cho bảng `taikhoan`
 --
 
 CREATE TABLE `taikhoan` (
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `sodienthoai` varchar(15) DEFAULT NULL,
-  `diachi` varchar(255) NOT NULL,
-  `hoten` varchar(255) DEFAULT NULL,
+  `diachi` varchar(255) DEFAULT 'Chưa có',
+  `hoten` varchar(255) DEFAULT 'Chưa có',
   `loai_tai_khoan` varchar(255) NOT NULL DEFAULT 'ROLE_KHACHHANG',
   `enabled` tinyint(10) NOT NULL DEFAULT 1,
   `NGAYTHEM` date DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `taikhoan`
+-- Đang đổ dữ liệu cho bảng `taikhoan`
 --
 
 INSERT INTO `taikhoan` (`username`, `password`, `sodienthoai`, `diachi`, `hoten`, `loai_tai_khoan`, `enabled`, `NGAYTHEM`) VALUES
-('minhquan', '{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q', '0813385858', 'Dong Da', 'Vương Minh Quân', 'ROLE_QUANTRI', 1, '2024-06-28'),
-('quangdung', '{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q', '0813385959', 'Hai Duong', 'Vũ Quang Dũng', 'ROLE_KHACHHANG', 1, '2024-06-28'),
-('tuanminh', '{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q', '0813385899', 'Phú Thọ', 'Nguyễn Tuấn Minh', 'ROLE_KHACHHANG', 1, '2024-06-28'),
-('vanbo', '{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q', '0813381234', 'Vinh Phuc', 'Nguyễn Văn Bộ', 'ROLE_KHACHHANG', 1, '2024-06-28'),
-('vanthi', '{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q', '0813389999', 'Nam Định', 'Đinh Văn Thi', 'ROLE_KHACHHANG', 1, '2024-06-28');
+('minhquan@email.com', '{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q', '0813385858', 'Thành phố Hà Nội, Quận Đống Đa, Phường Kim Liên, Số 9', 'Vương Minh Quân', 'ROLE_QUANTRI', 1, '2024-06-28'),
+('quangdung@email.com', '{bcrypt}$2a$10$f9qTmzYqO0v.2UopPOHcSOIQFX7vvik6TBenz/rDcUJzajt8.6nY6', '08133859510', 'Thành phố Hà Nội, Quận Đống Đa, Phường Kim Liên, Số 9', 'Vũ Quang Dũng', 'ROLE_KHACHHANG', 1, '2024-06-28'),
+('test1@email.com', '{bcrypt}$2a$10$lf52t/fkdNkYLUszGluA5eYa8Kl/VNAQy78qV95N6Sy4EJ4h98e.i', '0813385856', 'Thành phố Hà Nội, Quận Đống Đa, Phường Kim Liên, Số 9', 'Nguyen Van Test', 'ROLE_KHACHHANG', 1, '2024-10-15'),
+('test2@email.com', '{bcrypt}$2a$10$GTCKzVpgn4yLw8MZp5bZrORlO.89QoITAh5COpqq7CPZ3Owq7GJx2', '0813385951', 'Thành phố Hà Nội, Quận Hoàng Mai, Phường Tân Mai, Số 9', 'Nguyen Thi Test', 'ROLE_KHACHHANG', 1, '2024-10-16'),
+('tuanminh@email.com', '{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q', '0813385899', 'Thành phố Hà Nội, Quận Đống Đa, Phường Kim Liên, Số 9', 'Nguyễn Tuấn Minh', 'ROLE_KHACHHANG', 1, '2024-06-28'),
+('vanbo@email.com', '{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q', '0813381234', 'Thành phố Hà Nội, Quận Đống Đa, Phường Kim Liên, Số 9', 'Nguyễn Văn Bộ', 'ROLE_KHACHHANG', 1, '2024-06-28'),
+('vanthi@email.com', '{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q', '0813389999', 'Thành phố Hà Nội, Quận Đống Đa, Phường Kim Liên, Số 9', 'Đinh Văn Thi', 'ROLE_KHACHHANG', 1, '2024-06-28'),
+('vuongdepzai1262003@gmail.com', '{bcrypt}$2a$10$iU/OZvHLNYexkaE7N9fx6eY27a5S0dY/dsUzXkjGYxxAB6tABe7Ry', '', 'Thành phố Hà Nội, Quận Tây Hồ, Phường Tứ Liên, Số 9', 'CodeNoob223', 'ROLE_KHACHHANG', 1, '2024-07-26'),
+('vuongminhquan1262003@gmail.com', '{bcrypt}$2a$10$DKBrSGWbdMX.G9qWa2GZ5OioqA9.WPXHhq/mdT9hbkYpDaT4BrQ8G', '0813385857', 'Chưa có', 'Quan Minh', 'ROLE_KHACHHANG', 1, '2024-07-25');
 
 --
--- Triggers `taikhoan`
+-- Bẫy `taikhoan`
 --
 DELIMITER $$
 CREATE TRIGGER `delete_taikhoan_role_khachhang` AFTER DELETE ON `taikhoan` FOR EACH ROW BEGIN
@@ -744,7 +769,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `thongke`
+-- Cấu trúc bảng cho bảng `thongke`
 --
 
 CREATE TABLE `thongke` (
@@ -776,16 +801,16 @@ CREATE TABLE `thongke` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `thongke`
+-- Đang đổ dữ liệu cho bảng `thongke`
 --
 
 INSERT INTO `thongke` (`mathongke`, `dongho`, `butky`, `phukien`, `trangsuc`, `kinhmat`, `donhang`, `donhangdahuy`, `donhangdagiao`, `khachhang`, `luottruycap`, `tilechuyendoi`, `doanhthu`, `von`, `donhangchoxacnhan`, `donhangdaxacnhan`, `donhangdanggiao`, `luotdangkymoi`, `chiphi`, `luotxemsanpham`, `luotthemgiohang`, `luotdathang`, `luotthanhtoan`, `luothoanthanhdon`, `NGAYTHEM`) VALUES
-(1, 48, 5, 5, 5, 5, 5, 1, 2, 4, 250, 0.809717, 16470000, 1000000, 2, 0, 0, 4, 2024439510, 135, 12, 5, 2, 2, '2024-06-28');
+(1, 48, 5, 5, 5, 5, 4, 5, 2, 8, 479, 0.461894, 16470000, 1000000, 4, 0, 1, 11, 2024439510, 160, 17, 8, 2, 2, '2024-06-28');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `trangsuc`
+-- Cấu trúc bảng cho bảng `trangsuc`
 --
 
 CREATE TABLE `trangsuc` (
@@ -799,7 +824,7 @@ CREATE TABLE `trangsuc` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `trangsuc`
+-- Đang đổ dữ liệu cho bảng `trangsuc`
 --
 
 INSERT INTO `trangsuc` (`matrangsuc`, `soluong`, `gia`, `tragop`, `thongtin`, `NGAYTHEM`, `tentrangsuc`) VALUES
@@ -808,7 +833,7 @@ INSERT INTO `trangsuc` (`matrangsuc`, `soluong`, `gia`, `tragop`, `thongtin`, `N
 (3, 10, 1200000, 0, 'Thép 316L là một chất liệu có độ cứng cao, siêu bền và khả năng chống ăn mòn tốt. Vòng tay kim cương cao cấp này là đỉnh cao của sự xa hoa và tinh tế, mang đến vẻ đẹp rực rỡ và đẳng cấp cho người đeo. Được chế tác tỉ mỉ từ vàng trắng 18k hoặc bạch kim, vòng tay lấp lánh với những viên kim cương được cắt gọt hoàn hảo, đính kết tinh xảo dọc theo thân vòng. Mỗi viên kim cương toát lên sự lấp lánh tuyệt đẹp, bắt sáng từ mọi góc độ, tạo nên một dải ánh sáng rực rỡ và mê hoặc.\n\nThiết kế của vòng tay kết hợp hoàn hảo giữa sự thanh lịch và hiện đại, với các chi tiết chạm khắc tinh tế và cân đối. Các móc khóa chắc chắn nhưng dễ dàng thao tác, đảm bảo vòng tay luôn ôm sát cổ tay một cách hoàn hảo và an toàn. Vòng tay này không chỉ là một món trang sức mà còn là một tác phẩm nghệ thuật, thể hiện đẳng cấp và gu thẩm mỹ của người đeo.\n\nVới vòng tay kim cương cao cấp này, bạn sẽ luôn tỏa sáng và nổi bật trong mọi dịp, từ những bữa tiệc xa hoa đến các sự kiện quan trọng. Đây là món quà tuyệt vời dành cho những người phụ nữ yêu thích sự hoàn hảo và muốn khẳng định phong cách riêng biệt của mình. Hãy để vòng tay kim cương cao cấp này tô điểm cho vẻ đẹp của bạn, mang đến sự tự tin và cuốn hút không thể cưỡng lại.', '2024-06-21', 'Vòng tay cao cấp Diamond D DM-BR001W');
 
 --
--- Triggers `trangsuc`
+-- Bẫy `trangsuc`
 --
 DELIMITER $$
 CREATE TRIGGER `delete_trangsuc` AFTER DELETE ON `trangsuc` FOR EACH ROW BEGIN
@@ -826,209 +851,216 @@ $$
 DELIMITER ;
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `anh_butky`
+-- Chỉ mục cho bảng `anh_butky`
 --
 ALTER TABLE `anh_butky`
   ADD PRIMARY KEY (`maanh`),
   ADD KEY `mabutky` (`mabutky`);
 
 --
--- Indexes for table `anh_dongho`
+-- Chỉ mục cho bảng `anh_dongho`
 --
 ALTER TABLE `anh_dongho`
   ADD PRIMARY KEY (`maanh`),
   ADD KEY `Fk_madongho` (`madongho`);
 
 --
--- Indexes for table `anh_kinhmat`
+-- Chỉ mục cho bảng `anh_kinhmat`
 --
 ALTER TABLE `anh_kinhmat`
   ADD PRIMARY KEY (`maanh`),
   ADD KEY `makinhmat` (`makinhmat`);
 
 --
--- Indexes for table `anh_phukien`
+-- Chỉ mục cho bảng `anh_phukien`
 --
 ALTER TABLE `anh_phukien`
   ADD PRIMARY KEY (`maanh`),
   ADD KEY `maphukien` (`maphukien`);
 
 --
--- Indexes for table `anh_trangsuc`
+-- Chỉ mục cho bảng `anh_trangsuc`
 --
 ALTER TABLE `anh_trangsuc`
   ADD PRIMARY KEY (`maanh`),
   ADD KEY `matrangsuc` (`matrangsuc`);
 
 --
--- Indexes for table `butky`
+-- Chỉ mục cho bảng `butky`
 --
 ALTER TABLE `butky`
   ADD PRIMARY KEY (`mabutky`);
 
 --
--- Indexes for table `chitietdonhang`
+-- Chỉ mục cho bảng `chitietdonhang`
 --
 ALTER TABLE `chitietdonhang`
   ADD PRIMARY KEY (`machitietdonhang`),
   ADD KEY `madonhang` (`madonhang`);
 
 --
--- Indexes for table `dongho`
+-- Chỉ mục cho bảng `dongho`
 --
 ALTER TABLE `dongho`
   ADD PRIMARY KEY (`madongho`);
 
 --
--- Indexes for table `donhang`
+-- Chỉ mục cho bảng `donhang`
 --
 ALTER TABLE `donhang`
   ADD PRIMARY KEY (`madonhang`),
   ADD KEY `username` (`username`);
 
 --
--- Indexes for table `kinhmat`
+-- Chỉ mục cho bảng `kinhmat`
 --
 ALTER TABLE `kinhmat`
   ADD PRIMARY KEY (`makinhmat`);
 
 --
--- Indexes for table `phukien`
+-- Chỉ mục cho bảng `otp`
+--
+ALTER TABLE `otp`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `phukien`
 --
 ALTER TABLE `phukien`
   ADD PRIMARY KEY (`maphukien`);
 
 --
--- Indexes for table `taikhoan`
+-- Chỉ mục cho bảng `taikhoan`
 --
 ALTER TABLE `taikhoan`
   ADD PRIMARY KEY (`username`),
   ADD UNIQUE KEY `sodienthoai_unique` (`sodienthoai`);
 
 --
--- Indexes for table `thongke`
+-- Chỉ mục cho bảng `thongke`
 --
 ALTER TABLE `thongke`
   ADD PRIMARY KEY (`mathongke`);
 
 --
--- Indexes for table `trangsuc`
+-- Chỉ mục cho bảng `trangsuc`
 --
 ALTER TABLE `trangsuc`
   ADD PRIMARY KEY (`matrangsuc`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `anh_dongho`
+-- AUTO_INCREMENT cho bảng `anh_dongho`
 --
 ALTER TABLE `anh_dongho`
   MODIFY `maanh` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
--- AUTO_INCREMENT for table `butky`
+-- AUTO_INCREMENT cho bảng `butky`
 --
 ALTER TABLE `butky`
   MODIFY `mabutky` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `chitietdonhang`
+-- AUTO_INCREMENT cho bảng `chitietdonhang`
 --
 ALTER TABLE `chitietdonhang`
-  MODIFY `machitietdonhang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `machitietdonhang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- AUTO_INCREMENT for table `dongho`
+-- AUTO_INCREMENT cho bảng `dongho`
 --
 ALTER TABLE `dongho`
   MODIFY `madongho` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
--- AUTO_INCREMENT for table `donhang`
+-- AUTO_INCREMENT cho bảng `donhang`
 --
 ALTER TABLE `donhang`
-  MODIFY `madonhang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `madonhang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `kinhmat`
+-- AUTO_INCREMENT cho bảng `kinhmat`
 --
 ALTER TABLE `kinhmat`
   MODIFY `makinhmat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `phukien`
+-- AUTO_INCREMENT cho bảng `otp`
+--
+ALTER TABLE `otp`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT cho bảng `phukien`
 --
 ALTER TABLE `phukien`
   MODIFY `maphukien` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `thongke`
+-- AUTO_INCREMENT cho bảng `thongke`
 --
 ALTER TABLE `thongke`
   MODIFY `mathongke` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `trangsuc`
+-- AUTO_INCREMENT cho bảng `trangsuc`
 --
 ALTER TABLE `trangsuc`
   MODIFY `matrangsuc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- Constraints for dumped tables
+-- Các ràng buộc cho các bảng đã đổ
 --
 
 --
--- Constraints for table `anh_butky`
+-- Các ràng buộc cho bảng `anh_butky`
 --
 ALTER TABLE `anh_butky`
-  ADD CONSTRAINT `anh_butky_ibfk_1` FOREIGN KEY (`mabutky`) REFERENCES `butky` (`mabutky`),
   ADD CONSTRAINT `fk_anh_butky_butky` FOREIGN KEY (`mabutky`) REFERENCES `butky` (`mabutky`) ON DELETE CASCADE;
 
 --
--- Constraints for table `anh_dongho`
+-- Các ràng buộc cho bảng `anh_dongho`
 --
 ALTER TABLE `anh_dongho`
-  ADD CONSTRAINT `Fk_madongho` FOREIGN KEY (`madongho`) REFERENCES `dongho` (`madongho`),
   ADD CONSTRAINT `fk_anh_dongho_dongho` FOREIGN KEY (`madongho`) REFERENCES `dongho` (`madongho`) ON DELETE CASCADE;
 
 --
--- Constraints for table `anh_kinhmat`
+-- Các ràng buộc cho bảng `anh_kinhmat`
 --
 ALTER TABLE `anh_kinhmat`
-  ADD CONSTRAINT `anh_kinhmat_ibfk_1` FOREIGN KEY (`makinhmat`) REFERENCES `kinhmat` (`makinhmat`),
   ADD CONSTRAINT `fk_anh_kinhmat_kinhmat` FOREIGN KEY (`makinhmat`) REFERENCES `kinhmat` (`makinhmat`) ON DELETE CASCADE;
 
 --
--- Constraints for table `anh_phukien`
+-- Các ràng buộc cho bảng `anh_phukien`
 --
 ALTER TABLE `anh_phukien`
-  ADD CONSTRAINT `anh_phukien_ibfk_1` FOREIGN KEY (`maphukien`) REFERENCES `phukien` (`maphukien`),
   ADD CONSTRAINT `fk_anh_phukien_phukien` FOREIGN KEY (`maphukien`) REFERENCES `phukien` (`maphukien`) ON DELETE CASCADE;
 
 --
--- Constraints for table `anh_trangsuc`
+-- Các ràng buộc cho bảng `anh_trangsuc`
 --
 ALTER TABLE `anh_trangsuc`
-  ADD CONSTRAINT `anh_trangsuc_ibfk_1` FOREIGN KEY (`matrangsuc`) REFERENCES `trangsuc` (`matrangsuc`),
   ADD CONSTRAINT `fk_anh_trangsuc_trangsuc` FOREIGN KEY (`matrangsuc`) REFERENCES `trangsuc` (`matrangsuc`) ON DELETE CASCADE;
 
 --
--- Constraints for table `chitietdonhang`
+-- Các ràng buộc cho bảng `chitietdonhang`
 --
 ALTER TABLE `chitietdonhang`
-  ADD CONSTRAINT `chitietdonhang_ibfk_1` FOREIGN KEY (`madonhang`) REFERENCES `donhang` (`madonhang`);
+  ADD CONSTRAINT `chitietdonhang_ibfk_1` FOREIGN KEY (`madonhang`) REFERENCES `donhang` (`madonhang`) ON DELETE CASCADE;
 
 --
--- Constraints for table `donhang`
+-- Các ràng buộc cho bảng `donhang`
 --
 ALTER TABLE `donhang`
-  ADD CONSTRAINT `donhang_ibfk_1` FOREIGN KEY (`username`) REFERENCES `taikhoan` (`username`);
+  ADD CONSTRAINT `donhang_ibfk_1` FOREIGN KEY (`username`) REFERENCES `taikhoan` (`username`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
