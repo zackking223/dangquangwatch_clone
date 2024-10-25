@@ -31,7 +31,10 @@
                         th:value="${to}">
                 </div>
             </section>
-            <button class="p-2 w-max bg-blue-500 rounded block text-white flex-shrink-0">Tìm kiếm</button>
+            <section class="flex gap-1 items-center">
+                <button class="p-2 w-max bg-blue-500 rounded block text-white flex-shrink-0">Tìm kiếm</button>
+                <a href="/admin/butky/add" class="p-2 w-max bg-green-500 rounded block text-white">Thêm bút ký</a>
+            </section>
         </form>
         <table class="table table-active">
             <tr>
@@ -84,7 +87,6 @@
                     th:text="${i}"></a>
             </li>
         </ul>
-        <a href="/admin/butky/add" class="p-2 w-max bg-green-500 rounded block mt-4 text-white">Thêm bút ký</a>
     </div>
 </body>
 

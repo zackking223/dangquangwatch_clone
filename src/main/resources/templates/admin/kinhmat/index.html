@@ -16,7 +16,7 @@
             <section>
                 <label class="block font-medium" for="search">Tìm kiếm</label>
                 <input class="p-2 rounded block w-full outline-none border border-black" type="text" name="search"
-                th:value="${search}" placeholder="Tìm kiếm">
+                    th:value="${search}" placeholder="Tìm kiếm">
             </section>
             <section class="grid grid-cols-2 gap-2">
                 <div>
@@ -30,7 +30,10 @@
                         th:value="${to}">
                 </div>
             </section>
-            <button class="p-2 w-max bg-blue-500 rounded block text-white flex-shrink-0">Tìm kiếm</button>
+            <section class="flex items-center gap-1">
+                <button class="p-2 w-max my-2 bg-blue-500 rounded block text-white flex-shrink-0">Tìm kiếm</button>
+                <a href="/admin/kinhmat/add" class="p-2 w-max bg-green-500 rounded block text-white">Thêm kính mắt</a>
+            </section>
         </form>
         <table>
             <tr>
@@ -58,7 +61,7 @@
                 <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${kinhMat.getDaiGong()}"></td>
                 <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${kinhMat.getTinhNang()}"></td>
                 <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${kinhMat.getTraGop()}"></td>
-                <td class="max-h-[200px] overflow-hidden p-2 border border-solid border-black max-w-[200px]" >
+                <td class="max-h-[200px] overflow-hidden p-2 border border-solid border-black max-w-[200px]">
                     <p class="max-h-[200px] overflow-hidden" th:text="${kinhMat.getThongTin()}"></p>
                 </td>
                 <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${kinhMat.getNGAYTHEM()}"></td>
@@ -79,7 +82,6 @@
                     th:text="${i}"></a>
             </li>
         </ul>
-        <a href="/admin/kinhmat/add" class="p-2 w-max bg-green-500 rounded block mt-4 text-white">Thêm mới</a>
     </div>
 </body>
 

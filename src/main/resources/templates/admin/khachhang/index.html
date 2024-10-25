@@ -33,8 +33,10 @@
                         th:value="${to}">
                 </div>
             </section>
-
-            <button class="p-2 w-max my-2 bg-blue-500 rounded block text-white flex-shrink-0">Tìm kiếm</button>
+            <section class="flex items-center gap-1">
+                <button class="p-2 w-max my-2 bg-blue-500 rounded block text-white flex-shrink-0">Tìm kiếm</button>
+                <a href="/admin/khachhang/add" class="p-2 w-max bg-green-500 rounded block text-white">Thêm tài khoản</a>
+            </section>
         </form>
         <table class="table table-active">
             <tr>
@@ -83,7 +85,6 @@
                     th:text="${i}"></a>
             </li>
         </ul>
-        <a href="/admin/khachhang/add" class="p-2 w-max bg-green-500 rounded block mt-4 text-white">Thêm tài khoản</a>
     </div>
 </body>
 
