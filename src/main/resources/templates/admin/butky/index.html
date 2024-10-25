@@ -67,14 +67,15 @@
                 <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
                     th:text="${butky.getTragop()}"></td>
                 <td class=" max-h-[200px] p-2 border border-solid border-black max-w-[200px] overflow-hidden">
-                <p class=" max-h-[200px] overflow-hidden" th:text="${butky.getThongtin()}"></p></td>
+                    <p class=" max-h-[200px] overflow-hidden" th:text="${butky.getThongtin()}"></p>
+                </td>
                 <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
                     th:text="${butky.getNGAYTHEM()}"></td>
                 <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
                     <a class="p-2 rounded bg-green-500 text-white"
                         th:href="@{/admin/butky/edit?id={id}(id=${butky.getMabutky()})}">Sửa</a>
-                    <a class="p-2 rounded bg-red-500 text-white"
-                        th:href="@{/admin/butky/delete?id={id}(id=${butky.getMabutky()})}">Xóa</a>
+                    <button class="p-2 rounded bg-red-500 text-white" th:data-id="${butky.getMabutky()}"
+                        onclick="confirmDelete(this);">Xóa</button>
                 </td>
             </tr>
         </table>
@@ -88,6 +89,28 @@
             </li>
         </ul>
     </div>
+
+    <script src="/js/sweetalert.min.js"></script>
+    <script>
+        function confirmDelete(element) {
+            const id = element.getAttribute('data-id'); // Lấy giá trị từ data-attribute
+
+            Swal.fire({
+                title: 'Bạn có chắc chắn muốn xóa?',
+                text: "Hành động này không thể hoàn tác!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Vâng, xóa nó!',
+                cancelButtonText: 'Hủy'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = `/admin/butky/delete?id=${id}`;
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>

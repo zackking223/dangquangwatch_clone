@@ -2,6 +2,7 @@ package edu.it10.dangquangwatch.spring.service;
 
 import edu.it10.dangquangwatch.spring.entity.ThongKe;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;  
 
@@ -17,8 +18,8 @@ public interface ThongKeService {
 
   void tangluotthemgiohang();
 
-  void updateVon(Integer newCapital);
-  void incVon(Integer amount);
-  void decVon(Integer amount);
+  void updateVon(BigDecimal newCapital);
+  void incVon(BigDecimal amount);
+  void decVon(BigDecimal amount);
   void updateTiLeChuyenDoi(Float newTiLe);
 }

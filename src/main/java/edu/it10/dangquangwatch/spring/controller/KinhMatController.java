@@ -94,18 +94,33 @@ public class KinhMatController {
 
   @PostMapping("/save")
   public String save(KinhMat kinhMat, @RequestParam("file") List<MultipartFile> files) throws IOException {
-    for (MultipartFile file : files) {
-      Anhkinhmat anhkinhmat = new Anhkinhmat();
-      anhkinhmat.setFile(file);
-      anhkinhmat.setKinhmat(kinhMat);
+    if (kinhMat.getMaKinhMat() != null) {
+      for (MultipartFile file : files) {
+        Anhkinhmat anhkinhmat = new Anhkinhmat();
+        anhkinhmat.setFile(file);
+        anhkinhmat.setKinhmat(kinhMat);
 
-      try {
-        anhkinhmatService.saveAnhkinhmat(anhkinhmat);
-      } catch (IOException e) {
-        e.printStackTrace();
+        try {
+          anhkinhmatService.saveAnhkinhmat(anhkinhmat);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+      kinhMatService.saveKinhMat(kinhMat);
+    } else {
+      KinhMat data = kinhMatService.saveKinhMat(kinhMat);
+      for (MultipartFile file : files) {
+        Anhkinhmat anhkinhmat = new Anhkinhmat();
+        anhkinhmat.setFile(file);
+        anhkinhmat.setKinhmat(data);
+
+        try {
+          anhkinhmatService.saveAnhkinhmat(anhkinhmat);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
       }
     }
-    kinhMatService.saveKinhMat(kinhMat);
     return "redirect:/admin/kinhmat/";
   }
 

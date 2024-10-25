@@ -12,6 +12,7 @@ import edu.it10.dangquangwatch.spring.entity.ThongKe;
 import edu.it10.dangquangwatch.spring.service.ThongKeService;
 import jakarta.servlet.http.HttpSession;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 @Controller
@@ -40,21 +41,21 @@ public class ThongkeController {
   }
 
   @GetMapping("/admin/thongke/updatecapital")
-  public String updateCapital(@RequestParam("capital") Integer capital) {
+  public String updateCapital(@RequestParam("capital") BigDecimal capital) {
     thongKeService.updateVon(capital);
 
     return "redirect:/admin/thongke/?editcapital=true";
   }
 
   @GetMapping("/admin/thongke/deccapital")
-  public String decCapital(@RequestParam("amount") Integer amount) {
+  public String decCapital(@RequestParam("amount") BigDecimal amount) {
     thongKeService.decVon(amount);
 
     return "redirect:/admin/thongke/?editcapital=true";
   }
 
   @GetMapping("/admin/thongke/inccapital")
-  public String incCapital(@RequestParam("amount") Integer amount) {
+  public String incCapital(@RequestParam("amount") BigDecimal amount) {
     thongKeService.incVon(amount);
 
     return "redirect:/admin/thongke/?editcapital=true";

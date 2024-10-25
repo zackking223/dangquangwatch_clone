@@ -92,18 +92,33 @@ public class TrangsucController {
 
   @PostMapping(value = "/save")
   public String save(Trangsuc trangsuc, @RequestParam("file") List<MultipartFile> files) throws IOException {
-    for (MultipartFile file : files) {
-      Anhtrangsuc anhtrangsuc = new Anhtrangsuc();
-      anhtrangsuc.setFile(file);
-      anhtrangsuc.setTrangsuc(trangsuc);
-
-      try {
-        anhtrangsucService.saveAnhtrangsuc(anhtrangsuc);
-      } catch (IOException e) {
-        e.printStackTrace();
+    if (trangsuc.getMatrangsuc() != null) {
+      for (MultipartFile file : files) {
+        Anhtrangsuc anhtrangsuc = new Anhtrangsuc();
+        anhtrangsuc.setFile(file);
+        anhtrangsuc.setTrangsuc(trangsuc);
+  
+        try {
+          anhtrangsucService.saveAnhtrangsuc(anhtrangsuc);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+      trangsucService.saveTrangsuc(trangsuc);
+    } else {
+      Trangsuc data = trangsucService.saveTrangsuc(trangsuc);
+      for (MultipartFile file : files) {
+        Anhtrangsuc anhtrangsuc = new Anhtrangsuc();
+        anhtrangsuc.setFile(file);
+        anhtrangsuc.setTrangsuc(data);
+  
+        try {
+          anhtrangsucService.saveAnhtrangsuc(anhtrangsuc);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
       }
     }
-    trangsucService.saveTrangsuc(trangsuc);
     return "redirect:/admin/trangsuc/";
   }
 

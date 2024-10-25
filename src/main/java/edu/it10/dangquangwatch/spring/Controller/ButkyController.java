@@ -92,18 +92,33 @@ public class ButkyController {
 
   @PostMapping(value = "/save")
   public String save(Butky butky, @RequestParam("file") List<MultipartFile> files) throws IOException {
-    for (MultipartFile file : files) {
-      Anhbutky anhbutky = new Anhbutky();
-      anhbutky.setFile(file);
-      anhbutky.setButky(butky);
-
-      try {
-        anhbutkyService.saveAnhbutky(anhbutky);
-      } catch (IOException e) {
-        e.printStackTrace();
+    if (butky.getMabutky() != null) {
+      for (MultipartFile file : files) {
+        Anhbutky anhbutky = new Anhbutky();
+        anhbutky.setFile(file);
+        anhbutky.setButky(butky);
+  
+        try {
+          anhbutkyService.saveAnhbutky(anhbutky);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+      butkyService.saveButky(butky);
+    } else {
+      Butky data = butkyService.saveButky(butky);
+      for (MultipartFile file : files) {
+        Anhbutky anhbutky = new Anhbutky();
+        anhbutky.setFile(file);
+        anhbutky.setButky(data);
+  
+        try {
+          anhbutkyService.saveAnhbutky(anhbutky);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
       }
     }
-    butkyService.saveButky(butky);
     return "redirect:/admin/butky/";
   }
 

@@ -19,7 +19,7 @@ public class PhuKien {
   @Id
   @Column(name = "maphukien")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int maPhuKien;
+  private Integer maPhuKien;
 
   @Column(name = "tenphukien")
   private String tenPhuKien;
@@ -73,7 +73,7 @@ public class PhuKien {
     this.images = images;
   }
 
-  public int getMaPhuKien() {
+  public Integer getMaPhuKien() {
     return this.maPhuKien;
   }
 

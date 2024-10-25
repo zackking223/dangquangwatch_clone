@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.Objects;
 
@@ -51,10 +52,10 @@ public class ThongKe {
     private Float tiLeChuyenDoi;
 
     @Column(name = "doanhthu")
-    private Integer doanhThu;
+    private BigDecimal doanhThu;
 
     @Column(name = "von")
-    private Integer von;
+    private BigDecimal von;
 
     @Column(name = "donhangchoxacnhan")
     private Integer donHangChoXacNhan;
@@ -69,7 +70,7 @@ public class ThongKe {
     private Integer luotDangKyMoi;
 
     @Column(name = "chiphi")
-    private Integer chiPhi;
+    private BigDecimal chiPhi;
 
     @Column(name = "luotxemsanpham")
     private Integer luotXemSanPham;
@@ -108,8 +109,8 @@ public class ThongKe {
 
     public ThongKe(Integer mathongke, Integer dongHo, Integer butKy, Integer phuKien, Integer trangSuc, Integer kinhMat,
             Integer donHang, Integer donHangDaHuy, Integer donHangDaGiao, Integer khachHang, Integer luotTruyCap,
-            Float tiLeChuyenDoi, Integer doanhThu, Integer von, Integer donHangChoXacNhan, Integer donHangDaXacNhan,
-            Integer donHangDangGiao, Integer luotDangKyMoi, Integer chiPhi, Integer luotXemSanPham,
+            Float tiLeChuyenDoi, BigDecimal doanhThu, BigDecimal von, Integer donHangChoXacNhan, Integer donHangDaXacNhan,
+            Integer donHangDangGiao, Integer luotDangKyMoi, BigDecimal chiPhi, Integer luotXemSanPham,
             Integer luotThemGioHang, Integer luotDatHang, Integer luotThanhToan, Integer luotHoanThanhDon,
             String NGAYTHEM) {
         this.mathongke = mathongke;
@@ -235,19 +236,19 @@ public class ThongKe {
         this.tiLeChuyenDoi = tiLeChuyenDoi;
     }
 
-    public Integer getDoanhThu() {
+    public BigDecimal getDoanhThu() {
         return this.doanhThu;
     }
 
-    public void setDoanhThu(Integer doanhThu) {
+    public void setDoanhThu(BigDecimal doanhThu) {
         this.doanhThu = doanhThu;
     }
 
-    public Integer getVon() {
+    public BigDecimal getVon() {
         return this.von;
     }
 
-    public void setVon(Integer von) {
+    public void setVon(BigDecimal von) {
         this.von = von;
     }
 
@@ -283,11 +284,11 @@ public class ThongKe {
         this.luotDangKyMoi = luotDangKyMoi;
     }
 
-    public Integer getChiPhi() {
+    public BigDecimal getChiPhi() {
         return this.chiPhi;
     }
 
-    public void setChiPhi(Integer chiPhi) {
+    public void setChiPhi(BigDecimal chiPhi) {
         this.chiPhi = chiPhi;
     }
 
@@ -399,12 +400,12 @@ public class ThongKe {
         return this;
     }
 
-    public ThongKe doanhThu(Integer doanhThu) {
+    public ThongKe doanhThu(BigDecimal doanhThu) {
         setDoanhThu(doanhThu);
         return this;
     }
 
-    public ThongKe von(Integer von) {
+    public ThongKe von(BigDecimal von) {
         setVon(von);
         return this;
     }
@@ -429,7 +430,7 @@ public class ThongKe {
         return this;
     }
 
-    public ThongKe chiPhi(Integer chiPhi) {
+    public ThongKe chiPhi(BigDecimal chiPhi) {
         setChiPhi(chiPhi);
         return this;
     }

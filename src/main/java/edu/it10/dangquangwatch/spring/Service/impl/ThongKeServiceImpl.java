@@ -1,5 +1,6 @@
 package edu.it10.dangquangwatch.spring.service.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,7 +71,7 @@ public class ThongKeServiceImpl implements ThongKeService {
 
     @Override
     @Transactional
-    public void updateVon(Integer newCapital) {
+    public void updateVon(BigDecimal newCapital) {
         // Lấy bản ghi ThongKe (ví dụ: bản ghi có id = 1)
         ThongKe thongKe = thongKeRepository.findById(1)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy bản ghi thống kê"));
@@ -84,13 +85,13 @@ public class ThongKeServiceImpl implements ThongKeService {
 
     @Override
     @Transactional
-    public void incVon(Integer amount) {
+    public void incVon(BigDecimal amount) {
         // Lấy bản ghi ThongKe (ví dụ: bản ghi có id = 1)
         ThongKe thongKe = thongKeRepository.findById(1)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy bản ghi thống kê"));
 
         // Tăng giá trị
-        thongKe.setVon(thongKe.getVon() + amount);
+        thongKe.setVon(thongKe.getVon().add(amount));
 
         // Lưu lại vào cơ sở dữ liệu
         thongKeRepository.save(thongKe);
@@ -98,18 +99,18 @@ public class ThongKeServiceImpl implements ThongKeService {
 
     @Override
     @Transactional
-    public void decVon(Integer amount) {
+    public void decVon(BigDecimal amount) {
         // Lấy bản ghi ThongKe (ví dụ: bản ghi có id = 1)
         ThongKe thongKe = thongKeRepository.findById(1)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy bản ghi thống kê"));
 
         // Tăng giá trị
-        Integer oldVon = thongKe.getVon();
+        BigDecimal oldVon = thongKe.getVon();
 
-        if (oldVon <= amount || oldVon < 1) {
-            thongKe.setVon(0);
+        if (oldVon.compareTo(amount) <= 0 || oldVon.compareTo(BigDecimal.valueOf(1)) < 0) {
+            thongKe.setVon(BigDecimal.ZERO);
         } else {
-            thongKe.setVon(thongKe.getVon() - amount);
+            thongKe.setVon(thongKe.getVon().subtract(amount));
         }
         // Lưu lại vào cơ sở dữ liệu
         thongKeRepository.save(thongKe);

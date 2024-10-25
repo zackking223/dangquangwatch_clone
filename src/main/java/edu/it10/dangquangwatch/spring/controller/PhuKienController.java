@@ -92,18 +92,33 @@ public class PhuKienController {
 
   @PostMapping("/save")
   public String save(PhuKien phuKien, @RequestParam("file") List<MultipartFile> files) throws IOException {
-    for (MultipartFile file : files) {
-      Anhphukien anhphukien = new Anhphukien();
-      anhphukien.setFile(file);
-      anhphukien.setPhukien(phuKien);
+    if (phuKien.getMaPhuKien() != null) {
+      for (MultipartFile file : files) {
+        Anhphukien anhphukien = new Anhphukien();
+        anhphukien.setFile(file);
+        anhphukien.setPhukien(phuKien);
 
-      try {
-        anhphukienService.saveAnhphukien(anhphukien);
-      } catch (IOException e) {
-        e.printStackTrace();
+        try {
+          anhphukienService.saveAnhphukien(anhphukien);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+      phuKienService.savePhuKien(phuKien);
+    } else {
+      PhuKien data = phuKienService.savePhuKien(phuKien);
+      for (MultipartFile file : files) {
+        Anhphukien anhphukien = new Anhphukien();
+        anhphukien.setFile(file);
+        anhphukien.setPhukien(data);
+
+        try {
+          anhphukienService.saveAnhphukien(anhphukien);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
       }
     }
-    phuKienService.savePhuKien(phuKien);
     return "redirect:/admin/phukien/";
   }
 

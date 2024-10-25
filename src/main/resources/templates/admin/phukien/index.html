@@ -73,8 +73,8 @@
                 <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
                     <a class="p-2 rounded bg-green-500 text-white"
                         th:href="@{/admin/phukien/edit?id={id}(id=${phuKien.getMaPhuKien()})}">Sửa</a>
-                    <a class="p-2 rounded bg-red-500 text-white"
-                        th:href="@{/admin/phukien/delete?id={id}(id=${phuKien.getMaPhuKien()})}">Xóa</a>
+                    <button class="p-2 rounded bg-red-500 text-white" th:data-id="${phuKien.getMaPhuKien()}"
+                        onclick="confirmDelete(this);">Xóa</button>
                 </td>
             </tr>
         </table>
@@ -88,6 +88,27 @@
             </li>
         </ul>
     </div>
+    <script src="/js/sweetalert.min.js"></script>
+    <script>
+        function confirmDelete(element) {
+            const id = element.getAttribute('data-id'); // Lấy giá trị từ data-attribute
+
+            Swal.fire({
+                title: 'Bạn có chắc chắn muốn xóa?',
+                text: "Hành động này không thể hoàn tác!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Vâng, xóa nó!',
+                cancelButtonText: 'Hủy'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = `/admin/phukien/delete?id=${id}`;
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>

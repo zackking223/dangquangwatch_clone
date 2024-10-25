@@ -18,7 +18,8 @@
                 enctype="multipart/form-data">
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="file">Chọn ảnh:</label>
-                    <input type="file" id="file" name="file" class="border border-black rounded form-input mt-1 block w-full" multiple="multiple"
+                    <input type="file" id="file" name="file"
+                        class="border border-black rounded form-input mt-1 block w-full" multiple="multiple"
                         accept="image/*" onchange="previewImages(event)" required>
                 </div>
                 <div id="preview-container" class="mb-4 flex flex-wrap">
@@ -26,31 +27,32 @@
                 </div>
                 <div>
                     <label class="block font-medium" th:for="tenbutky">Tên bút ký</label>
-                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{tenbutky}"
-                        placeholder="Tên bút ký" />
+                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
+                        th:field="*{tenbutky}" placeholder="Tên bút ký" />
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="giatien">Giá tiền</label>
-                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{giatien}"
-                        placeholder="Giá tiền" />
+                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number"
+                        th:field="*{giatien}" placeholder="Giá tiền" />
                 </div>
+                <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="soluong">Số lượng</label>
-                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{soluong}"
-                        placeholder="Số lượng" />
+                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number"
+                        th:field="*{soluong}" placeholder="Số lượng" />
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="tragop">Trả góp</label>
-                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{tragop}"
-                        placeholder="Trả góp" />
+                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number"
+                        th:field="*{tragop}" placeholder="Trả góp" />
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="thongtin">Thông tin</label>
-                    <textarea class="border border-black rounded w-[80vw] min-w-[280px] p-2" rows="5" th:field="*{thongtin}"
-                        placeholder="Thông tin sản phẩm"></textarea>
+                    <textarea class="border border-black rounded w-[80vw] min-w-[280px] p-2" rows="5"
+                        th:field="*{thongtin}" placeholder="Thông tin sản phẩm"></textarea>
                 </div>
 
                 <input class="hidden" type="date" id="datePicker" name="NGAYTHEM" />

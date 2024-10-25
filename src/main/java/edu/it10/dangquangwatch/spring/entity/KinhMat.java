@@ -19,7 +19,7 @@ public class KinhMat {
   @Id
   @Column(name = "makinhmat")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int maKinhMat;
+  private Integer maKinhMat;
 
   @Column(name = "tensanpham")
   private String tenSanPham;
@@ -89,7 +89,7 @@ public class KinhMat {
     this.images = images;
   }
 
-  public int getMaKinhMat() {
+  public Integer getMaKinhMat() {
     return this.maKinhMat;
   }
 
