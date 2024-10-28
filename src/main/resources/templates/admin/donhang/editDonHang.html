@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" href="/images/LogoMobile.png">
     <title>Sửa đơn hàng</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}" />
 </head>
 
@@ -24,12 +25,14 @@
                         <p class="text-gray-600">Giá: <span th:text="${item.getGiaTienFormatted()} "></span> đ</p>
                     </div>
                     <div class="flex items-center">
-                        <a th:href="@{'/admin/donhang/decsanpham?id=' + ${item.getMaChiTietDonHang()} + '&madonhang=' + ${item.getMaDonHang()}}" class="bg-red-500 text-white px-2 py-1 mr-2">-</a>
+                        <a th:href="@{'/admin/donhang/decsanpham?id=' + ${item.getMaChiTietDonHang()} + '&madonhang=' + ${item.getMaDonHang()}}"
+                            class="bg-red-500 text-white px-2 py-1 mr-2">-</a>
                         <span th:text="${item.soLuong}"></span>
-                        <a th:href="@{'/admin/donhang/incsanpham?id=' + ${item.getMaChiTietDonHang()} + '&madonhang=' + ${item.getMaDonHang()}}" class="bg-green-500 text-white px-2 py-1 ml-2">+</a>
+                        <a th:href="@{'/admin/donhang/incsanpham?id=' + ${item.getMaChiTietDonHang()} + '&madonhang=' + ${item.getMaDonHang()}}"
+                            class="bg-green-500 text-white px-2 py-1 ml-2">+</a>
                     </div>
-                    <a th:href="@{'/admin/donhang/deletesanpham?id=' + ${item.getMaChiTietDonHang()} + '&madonhang=' + ${item.getMaDonHang()}}" class="remove-item bg-gray-500 text-white px-2 py-1 ml-4"
-                        data-ma="${item.maSanPham}">Xóa</a>
+                    <a th:href="@{'/admin/donhang/deletesanpham?id=' + ${item.getMaChiTietDonHang()} + '&madonhang=' + ${item.getMaDonHang()}}"
+                        class="remove-item bg-gray-500 text-white px-2 py-1 ml-4" data-ma="${item.maSanPham}">Xóa</a>
                 </li>
             </ul>
             </section>

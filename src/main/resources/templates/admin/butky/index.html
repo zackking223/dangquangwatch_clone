@@ -11,7 +11,7 @@
 
 <body>
     <div th:replace="~{fragments/sidebar :: sidebar}"></div>
-    <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg md:mx-auto pl-11">
+    <div class="p-4 w-full bg-slate-50 shadow-sm rounded-lg md:mx-auto pl-11">
         <h1 class="font-bold text-center my-2">Quản lý bút ký</h1>
         <form action="" class="w-full flex flex-col gap-2 my-2">
             <section>
@@ -19,7 +19,7 @@
                 <input class="p-2 rounded block w-full outline-none border border-black" type="text" name="search"
                     th:value="${search}" placeholder="Tìm kiếm">
             </section>
-            <section class="grid grid-cols-2 gap-2">
+            <section class="grid sm:grid-cols-2 grid-cols-1 gap-2">
                 <div>
                     <label class="block font-medium" for="from">Từ ngày</label>
                     <input class="block p-2 w-full border border-black rounded" type="date" name="from" id="from"
@@ -36,50 +36,7 @@
                 <a href="/admin/butky/add" class="p-2 w-max bg-green-500 rounded block text-white">Thêm bút ký</a>
             </section>
         </form>
-        <table class="table table-active">
-            <tr>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Mã
-                    bút ký</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Tên
-                    bút ký</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Giá
-                    tiền</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Số
-                    lượng</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Trả
-                    góp</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Thông
-                    tin</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Ngày
-                    thêm</th>
-                <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Tùy
-                    chọn</th>
-            </tr>
-            <tr th:each="butky : ${butkys}">
-                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
-                    th:text="${butky.getMabutky()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
-                    th:text="${butky.getTenbutky()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
-                    th:text="${butky.getGiatien()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
-                    th:text="${butky.getSoluong()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
-                    th:text="${butky.getTragop()}"></td>
-                <td class=" max-h-[200px] p-2 border border-solid border-black max-w-[200px] overflow-hidden">
-                    <p class=" max-h-[200px] overflow-hidden" th:text="${butky.getThongtin()}"></p>
-                </td>
-                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
-                    th:text="${butky.getNGAYTHEM()}"></td>
-                <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
-                    <a class="p-2 rounded bg-green-500 text-white"
-                        th:href="@{/admin/butky/edit?id={id}(id=${butky.getMabutky()})}">Sửa</a>
-                    <button class="p-2 rounded bg-red-500 text-white" th:data-id="${butky.getMabutky()}"
-                        onclick="confirmDelete(this);">Xóa</button>
-                </td>
-            </tr>
-        </table>
-        <ul th:if="${sotrang > 1}" class="flex items-center flex-wrap w-full gap-2 mt-4">
+        <ul th:if="${sotrang > 1}" class="flex items-center flex-wrap w-full sm:gap-2 gap-1 my-4">
             <li>Trang:</li>
             <li th:each="i:${#numbers.sequence(1,sotrang,1)}">
                 <a th:classappend="${page + 1 == i} ? 'bg-black text-white' : 'bg-white text-black'"
@@ -88,6 +45,59 @@
                     th:text="${i}"></a>
             </li>
         </ul>
+        <section class="w-full overflow-x-auto">
+            <table class="w-max">
+                <tr>
+                    <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+                        Mã
+                        bút ký</th>
+                    <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+                        Tên
+                        bút ký</th>
+                    <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+                        Giá
+                        tiền</th>
+                    <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+                        Số
+                        lượng</th>
+                    <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+                        Trả
+                        góp</th>
+                    <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+                        Thông
+                        tin</th>
+                    <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+                        Ngày
+                        thêm</th>
+                    <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+                        Tùy
+                        chọn</th>
+                </tr>
+                <tr th:each="butky : ${butkys}">
+                    <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+                        th:text="${butky.getMabutky()}"></td>
+                    <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+                        th:text="${butky.getTenbutky()}"></td>
+                    <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+                        th:text="${butky.getGiatien()}"></td>
+                    <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+                        th:text="${butky.getSoluong()}"></td>
+                    <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+                        th:text="${butky.getTragop()}"></td>
+                    <td class=" max-h-[200px] p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+                        <p class=" max-h-[200px] overflow-hidden" th:text="${butky.getThongtin()}"></p>
+                    </td>
+                    <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+                        th:text="${butky.getNGAYTHEM()}"></td>
+                    <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+                        <a class="p-2 rounded bg-green-500 text-white"
+                            th:href="@{/admin/butky/edit?id={id}(id=${butky.getMabutky()})}">Sửa</a>
+                        <button class="p-2 rounded bg-red-500 text-white" th:data-id="${butky.getMabutky()}"
+                            onclick="confirmDelete(this);">Xóa</button>
+                    </td>
+                </tr>
+            </table>
+        </section>
     </div>
 
     <script src="/js/sweetalert.min.js"></script>

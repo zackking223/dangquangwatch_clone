@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
@@ -17,6 +18,8 @@ import edu.it10.dangquangwatch.spring.AppCustomException.ErrorEnum;
 import edu.it10.dangquangwatch.spring.entity.ApiResponse;
 import edu.it10.dangquangwatch.spring.entity.DonHang;
 import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
+import edu.it10.dangquangwatch.spring.notification.NotificationBody;
+import edu.it10.dangquangwatch.spring.notification.NotificationType;
 import edu.it10.dangquangwatch.spring.service.ChiTietDonHangService;
 import edu.it10.dangquangwatch.spring.service.DonHangService;
 import edu.it10.dangquangwatch.spring.service.TaiKhoanService;
@@ -39,6 +42,8 @@ public class ProfileController {
   ChiTietDonHangService ctdhService;
   @Autowired
   TaiKhoanService taiKhoanService;
+  @Autowired
+  private SimpMessagingTemplate messagingTemplate;
 
   @GetMapping("/giohang")
   public String cart(HttpSession session, Model model) {
@@ -165,6 +170,15 @@ public class ProfileController {
 
     donHangService.addDonHang(donHang);
 
+    // Gửi thông báo cho quản trị viên
+    NotificationBody notification = new NotificationBody();
+    notification.setMessage(username + " đã đặt một đơn hàng mới!");
+    notification.setTitle("Đơn hàng mới");
+    notification.setType(NotificationType.SUCCESS);
+    notification.setUrl("/admin/donhang/?email=" + username);
+
+    messagingTemplate.convertAndSend("/topic/notifications", notification);
+
     ApiResponse response = new ApiResponse(true, "Đặt hàng thành công!");
     return ResponseEntity.ok(response);
   }
@@ -209,7 +223,7 @@ public class ProfileController {
     String district = "";
     String ward = "";
     String extra = "";
-    
+
     if (taikhoan.getDiachi() != null && !taikhoan.getDiachi().equals("Chưa có")) {
       String[] addressSplit = address.split(", ", 4);
       if (addressSplit.length == 4) {
@@ -219,7 +233,7 @@ public class ProfileController {
         extra = addressSplit[3];
       }
     }
-    
+
     model.addAttribute("province", province);
     model.addAttribute("district", district);
     model.addAttribute("ward", ward);

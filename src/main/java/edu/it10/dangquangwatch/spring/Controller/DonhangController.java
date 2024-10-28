@@ -30,7 +30,9 @@ public class DonhangController {
   ChiTietDonHangService ctdhService;
 
   @GetMapping("/")
-  public String index(@RequestParam("hoten") Optional<String> hoten,
+  public String index(
+      @RequestParam("email") Optional<String> email,
+      @RequestParam("hoten") Optional<String> hoten,
       @RequestParam("diachi") Optional<String> diachi,
       @RequestParam("tongtien") Optional<Integer> tongtien,
       @RequestParam("tinhtrang") Optional<String> tinhtrang,
@@ -68,6 +70,7 @@ public class DonhangController {
     thanhtoan_options.add("Đã hoàn tiền");
     thanhtoan_options.add("Đã nhận hàng");
 
+    String emailStr = "";
     String tinhtrangStr = "";
     String thanhtoanStr = "";
     String hotenStr = "";
@@ -76,6 +79,8 @@ public class DonhangController {
     int tongTienNum = 0;
     int pageNum = 0;
 
+    if (email.isPresent())
+      emailStr = email.get();
     if (tongtien.isPresent())
       tongTienNum = tongtien.get();
     if (tinhtrang.isPresent())
@@ -92,6 +97,7 @@ public class DonhangController {
       pageNum = page.get() - 1;
 
     Page<DonHang> data = donHangService.searchDonHang(
+        emailStr,
         hotenStr,
         diachiStr,
         tensanphamStr,
@@ -102,6 +108,7 @@ public class DonhangController {
         toStr,
         pageNum);
 
+    model.addAttribute("email", emailStr);
     model.addAttribute("hoten", hotenStr);
     model.addAttribute("diachi", diachiStr);
     model.addAttribute("tensanpham", tensanphamStr);
@@ -142,7 +149,8 @@ public class DonhangController {
     thanhtoan_options.add("Đã nhận hàng");
     Optional<DonHang> donHangEdit = donHangService.findDonHangById(madonHang);
     if (donHangEdit.isPresent()) {
-      if (!donHangEdit.get().getTinhTrang().equals("Chờ xác nhận") && !donHangEdit.get().getTinhTrang().equals("Đã xác nhận")) {
+      if (!donHangEdit.get().getTinhTrang().equals("Chờ xác nhận")
+          && !donHangEdit.get().getTinhTrang().equals("Đã xác nhận")) {
         return "redirect:/admin/donhang/";
       }
       model.addAttribute("donHang", donHangEdit.get());
@@ -215,13 +223,15 @@ public class DonhangController {
   }
 
   @GetMapping(value = "/incsanpham")
-  public String incSanPham(@RequestParam("id") Integer maCTDH, @RequestParam("madonhang") Integer madonhang, Model model) {
+  public String incSanPham(@RequestParam("id") Integer maCTDH, @RequestParam("madonhang") Integer madonhang,
+      Model model) {
     donHangService.incSP(maCTDH);
     return "redirect:/admin/donhang/edit?id=" + madonhang;
   }
 
   @GetMapping(value = "/decsanpham")
-  public String decSanPham(@RequestParam("id") Integer maCTDH, @RequestParam("madonhang") Integer madonhang, Model model) {
+  public String decSanPham(@RequestParam("id") Integer maCTDH, @RequestParam("madonhang") Integer madonhang,
+      Model model) {
     donHangService.decSP(maCTDH);
     return "redirect:/admin/donhang/edit?id=" + madonhang;
   }

@@ -55,9 +55,9 @@ public class DonHangServiceImpl implements DonHangService {
   }
 
   @Override
-  public Page<DonHang> searchDonHang(String username, String diachi, String tensanpham, String tinhtrang,
+  public Page<DonHang> searchDonHang(String username, String hoten, String diachi, String tensanpham, String tinhtrang,
       String thanhtoan, Integer tongtien, String from, String to, int page) {
-    return donHangRepository.searchDonHang(username, diachi, tensanpham, tinhtrang, thanhtoan, tongtien, from, to,
+    return donHangRepository.searchDonHang(username, hoten, diachi, tensanpham, tinhtrang, thanhtoan, tongtien, from, to,
         PageRequest.of(page, 10));
   }
 

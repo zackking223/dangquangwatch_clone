@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" href="/images/LogoMobile.png">
     <title>Thêm đơn hàng</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}" />
 </head>
 
@@ -16,26 +17,26 @@
             <form th:object="${donHang}" th:action="@{/admin/donhang/save}" action="#" method="post">
                 <div>
                     <label class="block font-medium" th:for="username">Mã khách hàng</label>
-                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" name="username"
-                        placeholder="Mã khách hàng" />
+                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
+                        name="username" placeholder="Mã khách hàng" />
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="tongTien">Tổng tiền</label>
-                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{tongTien}"
-                        placeholder="Tổng tiền" />
+                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number"
+                        th:field="*{tongTien}" placeholder="Tổng tiền" />
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="diaChi">Địa chỉ</label>
-                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{diaChi}"
-                        placeholder="Địa chỉ" />
+                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
+                        th:field="*{diaChi}" placeholder="Địa chỉ" />
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="ghiChu">Ghi chú</label>
-                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{ghiChu}"
-                        placeholder="Ghi chú" />
+                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
+                        th:field="*{ghiChu}" placeholder="Ghi chú" />
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>

@@ -19,6 +19,7 @@ public class DonHangRepositoryCustomImpl implements DonHangRepositoryCustom {
 
   @Override
   public Page<DonHang> searchDonHang(
+      String username,
       String hoten,
       String diachi,
       String tensanpham,
@@ -34,6 +35,9 @@ public class DonHangRepositoryCustomImpl implements DonHangRepositoryCustom {
         "WHERE 1=1");
 
     List<String> conditions = new ArrayList<>();
+    if (username != null && !username.isEmpty()) {
+      conditions.add("UPPER(tk.username) LIKE UPPER(:username)");
+    }
     if (hoten != null && !hoten.isEmpty()) {
       conditions.add("UPPER(tk.hoten) LIKE UPPER(:hoten)");
     }
@@ -70,6 +74,9 @@ public class DonHangRepositoryCustomImpl implements DonHangRepositoryCustom {
 
     TypedQuery<DonHang> query = entityManager.createQuery(jpql.toString(), DonHang.class);
 
+    if (username != null && !username.isEmpty()) {
+      query.setParameter("username", "%" + username + "%");
+    }
     if (hoten != null && !hoten.isEmpty()) {
       query.setParameter("hoten", "%" + hoten + "%");
     }

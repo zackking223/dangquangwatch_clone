@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 22, 2024 lúc 04:08 PM
+-- Thời gian đã tạo: Th10 28, 2024 lúc 06:55 PM
 -- Phiên bản máy phục vụ: 10.4.22-MariaDB
 -- Phiên bản PHP: 7.4.27
 
@@ -87,7 +87,8 @@ INSERT INTO `anh_butky` (`maanh`, `mabutky`, `url`, `tenanh`) VALUES
 (2, 2, 'https://dangquangwatch.vn/upload/product_small/247238172_but-ky-cao-cap12.jpg', 'BÚT KÝ PHILIPPE AUGUSTE BUTPA-911/R'),
 (3, 3, 'https://www.dangquangwatch.vn/upload/product/1312194159_but-ky-cao-cap13.jpg', 'BÚT KÝ PHILIPPE AUGUSTE BUTPA-911/BL'),
 (4, 4, 'https://www.dangquangwatch.vn/upload/product/463369489_but-ky-cao-cap10.jpg', 'BÚT KÝ PHILIPPE AUGUSTE BUTPA-910/BL'),
-(5, 5, 'https://dangquangwatch.vn/upload/product_small/1737762568_but-ky-cao-cap14.jpg', 'BÚT KÝ PHILIPPE AUGUSTE BUTPA-923/R');
+(5, 5, 'https://dangquangwatch.vn/upload/product_small/1737762568_but-ky-cao-cap14.jpg', 'BÚT KÝ PHILIPPE AUGUSTE BUTPA-923/R'),
+(6, 6, 'http://res.cloudinary.com/dtgopjlto/image/upload/v1729866447/p8fk8gjcuibum3azgbcy.jpg', 'p8fk8gjcuibum3azgbcy');
 
 -- --------------------------------------------------------
 
@@ -253,7 +254,8 @@ INSERT INTO `butky` (`mabutky`, `tenbutky`, `giatien`, `tragop`, `thongtin`, `so
 (2, 'BÚT KÝ PHILIPPE AUGUSTE BUTPA-911/R', 550000, 0, 'Chất liệu vỏ: Vỏ bút làm bằng VÀNG.\nPhần mạ: Mạ vàng 24k.\nChất liệu ruột bút: Nhôm\nMực: Mực nước màu xanh và đen, chảy mực đều, nét bút rất êm. Chiếc bút ký sang trọng này là hiện thân của sự tinh tế và đẳng cấp, xứng đáng trở thành biểu tượng của phong cách và sự chuyên nghiệp. Được chế tác từ kim loại cao cấp với lớp phủ mạ vàng hoặc bạc, bút không chỉ bền bỉ mà còn tỏa sáng với vẻ đẹp lấp lánh và sang trọng. Thiết kế thanh lịch với các đường nét mềm mại và cân đối, cầm nắm thoải mái, mang lại cảm giác viết trơn tru và mượt mà.\n\nNgòi bút được làm từ hợp kim đặc biệt, cho phép mực chảy đều và ổn định, giúp chữ viết của bạn trở nên sắc nét và đẹp mắt. Nắp bút được thiết kế chắc chắn, dễ dàng đóng mở, bảo vệ ngòi bút khỏi bụi bẩn và khô mực. Mỗi chi tiết nhỏ, từ logo thương hiệu khắc tinh tế đến các đường viền trang trí, đều thể hiện sự tỉ mỉ và đẳng cấp.\n\nChiếc bút ký này không chỉ là công cụ viết mà còn là phụ kiện thời trang, biểu tượng của sự thành đạt và phong cách. Đây là món quà hoàn hảo dành cho doanh nhân, luật sư, nhà văn, hoặc bất kỳ ai trân trọng giá trị của chữ viết và sự tinh tế. Hãy để bút ký sang trọng này đồng hành cùng bạn trong mọi cuộc họp, ký kết quan trọng, khẳng định vị thế và gu thẩm mỹ đẳng cấp của bạn.', 11, '2024-06-21'),
 (3, 'BÚT KÝ PHILIPPE AUGUSTE BUTPA-911/BL', 550000, 0, 'Chất liệu vỏ: Vỏ bút làm bằng BẠC.\nPhần mạ: Mạ màu công nghệ cao.\nChất liệu ruột bút: Nhôm\nMực: Mực nước màu xanh và đen, chảy mực đều, nét bút rất êm. Chiếc bút ký sang trọng này là hiện thân của sự tinh tế và đẳng cấp, xứng đáng trở thành biểu tượng của phong cách và sự chuyên nghiệp. Được chế tác từ kim loại cao cấp với lớp phủ mạ vàng hoặc bạc, bút không chỉ bền bỉ mà còn tỏa sáng với vẻ đẹp lấp lánh và sang trọng. Thiết kế thanh lịch với các đường nét mềm mại và cân đối, cầm nắm thoải mái, mang lại cảm giác viết trơn tru và mượt mà.\n\nNgòi bút được làm từ hợp kim đặc biệt, cho phép mực chảy đều và ổn định, giúp chữ viết của bạn trở nên sắc nét và đẹp mắt. Nắp bút được thiết kế chắc chắn, dễ dàng đóng mở, bảo vệ ngòi bút khỏi bụi bẩn và khô mực. Mỗi chi tiết nhỏ, từ logo thương hiệu khắc tinh tế đến các đường viền trang trí, đều thể hiện sự tỉ mỉ và đẳng cấp.\n\nChiếc bút ký này không chỉ là công cụ viết mà còn là phụ kiện thời trang, biểu tượng của sự thành đạt và phong cách. Đây là món quà hoàn hảo dành cho doanh nhân, luật sư, nhà văn, hoặc bất kỳ ai trân trọng giá trị của chữ viết và sự tinh tế. Hãy để bút ký sang trọng này đồng hành cùng bạn trong mọi cuộc họp, ký kết quan trọng, khẳng định vị thế và gu thẩm mỹ đẳng cấp của bạn.', 10, '2024-06-21'),
 (4, 'BÚT KÝ PHILIPPE AUGUSTE BUTPA-910/BL', 550000, 0, 'Chất liệu vỏ: Vỏ bút làm bằng Titan.\nPhần mạ: Mạ màu công nghệ cao.\nChất liệu ruột bút: Nhôm\nMực: Mực nước màu xanh và đen, chảy mực đều, nét bút rất êm. Chiếc bút ký sang trọng này là hiện thân của sự tinh tế và đẳng cấp, xứng đáng trở thành biểu tượng của phong cách và sự chuyên nghiệp. Được chế tác từ kim loại cao cấp với lớp phủ mạ vàng hoặc bạc, bút không chỉ bền bỉ mà còn tỏa sáng với vẻ đẹp lấp lánh và sang trọng. Thiết kế thanh lịch với các đường nét mềm mại và cân đối, cầm nắm thoải mái, mang lại cảm giác viết trơn tru và mượt mà.\n\nNgòi bút được làm từ hợp kim đặc biệt, cho phép mực chảy đều và ổn định, giúp chữ viết của bạn trở nên sắc nét và đẹp mắt. Nắp bút được thiết kế chắc chắn, dễ dàng đóng mở, bảo vệ ngòi bút khỏi bụi bẩn và khô mực. Mỗi chi tiết nhỏ, từ logo thương hiệu khắc tinh tế đến các đường viền trang trí, đều thể hiện sự tỉ mỉ và đẳng cấp.\n\nChiếc bút ký này không chỉ là công cụ viết mà còn là phụ kiện thời trang, biểu tượng của sự thành đạt và phong cách. Đây là món quà hoàn hảo dành cho doanh nhân, luật sư, nhà văn, hoặc bất kỳ ai trân trọng giá trị của chữ viết và sự tinh tế. Hãy để bút ký sang trọng này đồng hành cùng bạn trong mọi cuộc họp, ký kết quan trọng, khẳng định vị thế và gu thẩm mỹ đẳng cấp của bạn.', 22, '2024-06-21'),
-(5, 'BÚT KÝ PHILIPPE AUGUSTE BUTPA-923/R', 550000, 0, 'Chất liệu vỏ: Vỏ bút làm bằng Uranium.\nPhần mạ: Mạ màu công nghệ cao.\nChất liệu ruột bút: Nhôm\nMực: Mực nước màu xanh và đen, chảy mực đều, nét bút rất êm. Chiếc bút ký sang trọng này là hiện thân của sự tinh tế và đẳng cấp, xứng đáng trở thành biểu tượng của phong cách và sự chuyên nghiệp. Được chế tác từ kim loại cao cấp với lớp phủ mạ vàng hoặc bạc, bút không chỉ bền bỉ mà còn tỏa sáng với vẻ đẹp lấp lánh và sang trọng. Thiết kế thanh lịch với các đường nét mềm mại và cân đối, cầm nắm thoải mái, mang lại cảm giác viết trơn tru và mượt mà.\n\nNgòi bút được làm từ hợp kim đặc biệt, cho phép mực chảy đều và ổn định, giúp chữ viết của bạn trở nên sắc nét và đẹp mắt. Nắp bút được thiết kế chắc chắn, dễ dàng đóng mở, bảo vệ ngòi bút khỏi bụi bẩn và khô mực. Mỗi chi tiết nhỏ, từ logo thương hiệu khắc tinh tế đến các đường viền trang trí, đều thể hiện sự tỉ mỉ và đẳng cấp.\n\nChiếc bút ký này không chỉ là công cụ viết mà còn là phụ kiện thời trang, biểu tượng của sự thành đạt và phong cách. Đây là món quà hoàn hảo dành cho doanh nhân, luật sư, nhà văn, hoặc bất kỳ ai trân trọng giá trị của chữ viết và sự tinh tế. Hãy để bút ký sang trọng này đồng hành cùng bạn trong mọi cuộc họp, ký kết quan trọng, khẳng định vị thế và gu thẩm mỹ đẳng cấp của bạn.', 55, '2024-06-21');
+(5, 'BÚT KÝ PHILIPPE AUGUSTE BUTPA-923/R', 550000, 0, 'Chất liệu vỏ: Vỏ bút làm bằng Uranium.\nPhần mạ: Mạ màu công nghệ cao.\nChất liệu ruột bút: Nhôm\nMực: Mực nước màu xanh và đen, chảy mực đều, nét bút rất êm. Chiếc bút ký sang trọng này là hiện thân của sự tinh tế và đẳng cấp, xứng đáng trở thành biểu tượng của phong cách và sự chuyên nghiệp. Được chế tác từ kim loại cao cấp với lớp phủ mạ vàng hoặc bạc, bút không chỉ bền bỉ mà còn tỏa sáng với vẻ đẹp lấp lánh và sang trọng. Thiết kế thanh lịch với các đường nét mềm mại và cân đối, cầm nắm thoải mái, mang lại cảm giác viết trơn tru và mượt mà.\n\nNgòi bút được làm từ hợp kim đặc biệt, cho phép mực chảy đều và ổn định, giúp chữ viết của bạn trở nên sắc nét và đẹp mắt. Nắp bút được thiết kế chắc chắn, dễ dàng đóng mở, bảo vệ ngòi bút khỏi bụi bẩn và khô mực. Mỗi chi tiết nhỏ, từ logo thương hiệu khắc tinh tế đến các đường viền trang trí, đều thể hiện sự tỉ mỉ và đẳng cấp.\n\nChiếc bút ký này không chỉ là công cụ viết mà còn là phụ kiện thời trang, biểu tượng của sự thành đạt và phong cách. Đây là món quà hoàn hảo dành cho doanh nhân, luật sư, nhà văn, hoặc bất kỳ ai trân trọng giá trị của chữ viết và sự tinh tế. Hãy để bút ký sang trọng này đồng hành cùng bạn trong mọi cuộc họp, ký kết quan trọng, khẳng định vị thế và gu thẩm mỹ đẳng cấp của bạn.', 55, '2024-06-21'),
+(6, 'Disposable', 10, 0, 'TEST', 10, '2024-10-25');
 
 --
 -- Bẫy `butky`
@@ -608,7 +610,7 @@ DELIMITER ;
 
 CREATE TABLE `kinhmat` (
   `makinhmat` int(11) NOT NULL,
-  `tensanpham` varchar(255) NOT NULL,
+  `tenkinhmat` varchar(255) NOT NULL,
   `giatien` int(11) NOT NULL,
   `rongmat` int(100) NOT NULL,
   `songmui` int(100) NOT NULL,
@@ -624,7 +626,7 @@ CREATE TABLE `kinhmat` (
 -- Đang đổ dữ liệu cho bảng `kinhmat`
 --
 
-INSERT INTO `kinhmat` (`makinhmat`, `tensanpham`, `giatien`, `rongmat`, `songmui`, `daigong`, `tinhnang`, `tragop`, `soluong`, `NGAYTHEM`, `thongtin`) VALUES
+INSERT INTO `kinhmat` (`makinhmat`, `tenkinhmat`, `giatien`, `rongmat`, `songmui`, `daigong`, `tinhnang`, `tragop`, `soluong`, `NGAYTHEM`, `thongtin`) VALUES
 (1, 'Kính mát PHILIPPE AUGUSTE PA555-008-G', 3280000, 53, 20, 135, 'Chống chói lóa, tia UV', 0, 15, '2024-06-21', 'Kính mắt sang trọng này không chỉ là một phụ kiện thời trang, mà còn là biểu tượng của sự thanh lịch và phong cách đỉnh cao. Được chế tác tỉ mỉ từ những vật liệu cao cấp nhất, gọng kính được làm từ hợp kim titanium nhẹ nhưng vô cùng bền bỉ, mang đến sự thoải mái tối đa khi đeo suốt cả ngày dài. Màu sắc của gọng kính được hoàn thiện với lớp phủ chống ăn mòn, giữ cho vẻ ngoài luôn mới mẻ và rạng rỡ.\r\n\r\nMắt kính được làm từ chất liệu polycarbonate chống trầy xước, không chỉ bền bỉ mà còn mang đến khả năng chống tia UV hoàn hảo, bảo vệ đôi mắt của bạn khỏi tác hại của ánh nắng mặt trời. Lớp phủ chống lóa trên bề mặt mắt kính giúp giảm thiểu hiện tượng chói mắt, mang lại tầm nhìn rõ ràng và sắc nét ngay cả trong điều kiện ánh sáng mạnh.\r\n\r\nThiết kế của kính mắt này mang phong cách hiện đại với các đường nét tinh tế và cân đối, phù hợp với nhiều kiểu dáng khuôn mặt khác nhau. Phần đệm mũi được làm từ silicon mềm mại, có thể điều chỉnh dễ dàng để ôm sát vừa vặn, không gây cảm giác khó chịu hay để lại vết hằn trên da. Bản lề kính được thiết kế chắc chắn, đảm bảo sự linh hoạt và độ bền cao, cho phép bạn mở và gập kính một cách mượt mà và dễ dàng.\r\n\r\nMỗi chi tiết nhỏ trên chiếc kính mắt này đều được chăm chút tỉ mỉ, từ logo thương hiệu được khắc nổi tinh tế trên gọng kính, đến các đường nét hoàn thiện tinh xảo trên mắt kính. Đây chính là sự kết hợp hoàn hảo giữa nghệ thuật chế tác và công nghệ hiện đại, mang đến cho bạn một sản phẩm không chỉ đẹp mà còn vô cùng tiện ích.\r\n\r\nKính mắt sang trọng này không chỉ giúp bảo vệ đôi mắt của bạn mà còn tôn lên vẻ đẹp, phong cách và đẳng cấp của bạn. Dù bạn đang đi làm, đi dự tiệc hay dạo phố, chiếc kính này sẽ là người bạn đồng hành lý tưởng, giúp bạn tự tin và nổi bật trong mọi tình huống. Đây là món quà hoàn hảo dành cho những người yêu thích thời trang và luôn tìm kiếm những sản phẩm chất lượng cao.\r\n\r\nHãy để kính mắt sang trọng này trở thành điểm nhấn trong phong cách của bạn, mang đến cho bạn không chỉ sự bảo vệ tuyệt vời mà còn là cảm giác tự tin và phong cách trong từng khoảnh khắc. Với mỗi chi tiết được chế tác công phu, kính mắt này thực sự là một kiệt tác, là sự lựa chọn hoàn hảo cho những ai yêu thích sự hoàn hảo và đẳng cấp.'),
 (2, 'Kính mát PHILIPPE AUGUSTE PA555-007-F', 3090000, 51, 20, 145, 'Chống chói lóa, tia UV', 0, 50, '2024-06-21', 'Kính mắt sang trọng này không chỉ là một phụ kiện thời trang, mà còn là biểu tượng của sự thanh lịch và phong cách đỉnh cao. Được chế tác tỉ mỉ từ những vật liệu cao cấp nhất, gọng kính được làm từ hợp kim titanium nhẹ nhưng vô cùng bền bỉ, mang đến sự thoải mái tối đa khi đeo suốt cả ngày dài. Màu sắc của gọng kính được hoàn thiện với lớp phủ chống ăn mòn, giữ cho vẻ ngoài luôn mới mẻ và rạng rỡ.\r\n\r\nMắt kính được làm từ chất liệu polycarbonate chống trầy xước, không chỉ bền bỉ mà còn mang đến khả năng chống tia UV hoàn hảo, bảo vệ đôi mắt của bạn khỏi tác hại của ánh nắng mặt trời. Lớp phủ chống lóa trên bề mặt mắt kính giúp giảm thiểu hiện tượng chói mắt, mang lại tầm nhìn rõ ràng và sắc nét ngay cả trong điều kiện ánh sáng mạnh.\r\n\r\nThiết kế của kính mắt này mang phong cách hiện đại với các đường nét tinh tế và cân đối, phù hợp với nhiều kiểu dáng khuôn mặt khác nhau. Phần đệm mũi được làm từ silicon mềm mại, có thể điều chỉnh dễ dàng để ôm sát vừa vặn, không gây cảm giác khó chịu hay để lại vết hằn trên da. Bản lề kính được thiết kế chắc chắn, đảm bảo sự linh hoạt và độ bền cao, cho phép bạn mở và gập kính một cách mượt mà và dễ dàng.\r\n\r\nMỗi chi tiết nhỏ trên chiếc kính mắt này đều được chăm chút tỉ mỉ, từ logo thương hiệu được khắc nổi tinh tế trên gọng kính, đến các đường nét hoàn thiện tinh xảo trên mắt kính. Đây chính là sự kết hợp hoàn hảo giữa nghệ thuật chế tác và công nghệ hiện đại, mang đến cho bạn một sản phẩm không chỉ đẹp mà còn vô cùng tiện ích.\r\n\r\nKính mắt sang trọng này không chỉ giúp bảo vệ đôi mắt của bạn mà còn tôn lên vẻ đẹp, phong cách và đẳng cấp của bạn. Dù bạn đang đi làm, đi dự tiệc hay dạo phố, chiếc kính này sẽ là người bạn đồng hành lý tưởng, giúp bạn tự tin và nổi bật trong mọi tình huống. Đây là món quà hoàn hảo dành cho những người yêu thích thời trang và luôn tìm kiếm những sản phẩm chất lượng cao.\r\n\r\nHãy để kính mắt sang trọng này trở thành điểm nhấn trong phong cách của bạn, mang đến cho bạn không chỉ sự bảo vệ tuyệt vời mà còn là cảm giác tự tin và phong cách trong từng khoảnh khắc. Với mỗi chi tiết được chế tác công phu, kính mắt này thực sự là một kiệt tác, là sự lựa chọn hoàn hảo cho những ai yêu thích sự hoàn hảo và đẳng cấp.'),
 (3, 'Kính mát PHILIPPE AUGUSTE PA555-007-B', 3090000, 51, 20, 145, 'Chống chói lóa, tia UV', 0, 44, '2024-06-21', 'Kính mắt sang trọng này không chỉ là một phụ kiện thời trang, mà còn là biểu tượng của sự thanh lịch và phong cách đỉnh cao. Được chế tác tỉ mỉ từ những vật liệu cao cấp nhất, gọng kính được làm từ hợp kim titanium nhẹ nhưng vô cùng bền bỉ, mang đến sự thoải mái tối đa khi đeo suốt cả ngày dài. Màu sắc của gọng kính được hoàn thiện với lớp phủ chống ăn mòn, giữ cho vẻ ngoài luôn mới mẻ và rạng rỡ.\r\n\r\nMắt kính được làm từ chất liệu polycarbonate chống trầy xước, không chỉ bền bỉ mà còn mang đến khả năng chống tia UV hoàn hảo, bảo vệ đôi mắt của bạn khỏi tác hại của ánh nắng mặt trời. Lớp phủ chống lóa trên bề mặt mắt kính giúp giảm thiểu hiện tượng chói mắt, mang lại tầm nhìn rõ ràng và sắc nét ngay cả trong điều kiện ánh sáng mạnh.\r\n\r\nThiết kế của kính mắt này mang phong cách hiện đại với các đường nét tinh tế và cân đối, phù hợp với nhiều kiểu dáng khuôn mặt khác nhau. Phần đệm mũi được làm từ silicon mềm mại, có thể điều chỉnh dễ dàng để ôm sát vừa vặn, không gây cảm giác khó chịu hay để lại vết hằn trên da. Bản lề kính được thiết kế chắc chắn, đảm bảo sự linh hoạt và độ bền cao, cho phép bạn mở và gập kính một cách mượt mà và dễ dàng.\r\n\r\nMỗi chi tiết nhỏ trên chiếc kính mắt này đều được chăm chút tỉ mỉ, từ logo thương hiệu được khắc nổi tinh tế trên gọng kính, đến các đường nét hoàn thiện tinh xảo trên mắt kính. Đây chính là sự kết hợp hoàn hảo giữa nghệ thuật chế tác và công nghệ hiện đại, mang đến cho bạn một sản phẩm không chỉ đẹp mà còn vô cùng tiện ích.\r\n\r\nKính mắt sang trọng này không chỉ giúp bảo vệ đôi mắt của bạn mà còn tôn lên vẻ đẹp, phong cách và đẳng cấp của bạn. Dù bạn đang đi làm, đi dự tiệc hay dạo phố, chiếc kính này sẽ là người bạn đồng hành lý tưởng, giúp bạn tự tin và nổi bật trong mọi tình huống. Đây là món quà hoàn hảo dành cho những người yêu thích thời trang và luôn tìm kiếm những sản phẩm chất lượng cao.\r\n\r\nHãy để kính mắt sang trọng này trở thành điểm nhấn trong phong cách của bạn, mang đến cho bạn không chỉ sự bảo vệ tuyệt vời mà còn là cảm giác tự tin và phong cách trong từng khoảnh khắc. Với mỗi chi tiết được chế tác công phu, kính mắt này thực sự là một kiệt tác, là sự lựa chọn hoàn hảo cho những ai yêu thích sự hoàn hảo và đẳng cấp.'),
@@ -805,7 +807,7 @@ CREATE TABLE `thongke` (
 --
 
 INSERT INTO `thongke` (`mathongke`, `dongho`, `butky`, `phukien`, `trangsuc`, `kinhmat`, `donhang`, `donhangdahuy`, `donhangdagiao`, `khachhang`, `luottruycap`, `tilechuyendoi`, `doanhthu`, `von`, `donhangchoxacnhan`, `donhangdaxacnhan`, `donhangdanggiao`, `luotdangkymoi`, `chiphi`, `luotxemsanpham`, `luotthemgiohang`, `luotdathang`, `luotthanhtoan`, `luothoanthanhdon`, `NGAYTHEM`) VALUES
-(1, 48, 5, 5, 5, 5, 4, 5, 2, 8, 479, 0.461894, 16470000, 1000000, 4, 0, 1, 11, 2024439510, 160, 17, 8, 2, 2, '2024-06-28');
+(1, 48, 6, 5, 5, 5, 4, 5, 2, 8, 536, 0.374532, 16470000, 1000000000, 4, 0, 1, 11, 2024439520, 165, 17, 8, 2, 2, '2024-06-28');
 
 -- --------------------------------------------------------
 
@@ -816,7 +818,7 @@ INSERT INTO `thongke` (`mathongke`, `dongho`, `butky`, `phukien`, `trangsuc`, `k
 CREATE TABLE `trangsuc` (
   `matrangsuc` int(11) NOT NULL,
   `soluong` int(11) NOT NULL,
-  `gia` int(11) NOT NULL,
+  `giatien` int(11) NOT NULL,
   `tragop` int(100) NOT NULL DEFAULT 0,
   `thongtin` text NOT NULL,
   `NGAYTHEM` date NOT NULL DEFAULT current_timestamp(),
@@ -827,7 +829,7 @@ CREATE TABLE `trangsuc` (
 -- Đang đổ dữ liệu cho bảng `trangsuc`
 --
 
-INSERT INTO `trangsuc` (`matrangsuc`, `soluong`, `gia`, `tragop`, `thongtin`, `NGAYTHEM`, `tentrangsuc`) VALUES
+INSERT INTO `trangsuc` (`matrangsuc`, `soluong`, `giatien`, `tragop`, `thongtin`, `NGAYTHEM`, `tentrangsuc`) VALUES
 (1, 10, 1200000, 0, 'Thép 316L là một chất liệu có độ cứng cao, siêu bền và khả năng chống ăn mòn tốt. Vòng tay kim cương cao cấp này là đỉnh cao của sự xa hoa và tinh tế, mang đến vẻ đẹp rực rỡ và đẳng cấp cho người đeo. Được chế tác tỉ mỉ từ vàng trắng 18k hoặc bạch kim, vòng tay lấp lánh với những viên kim cương được cắt gọt hoàn hảo, đính kết tinh xảo dọc theo thân vòng. Mỗi viên kim cương toát lên sự lấp lánh tuyệt đẹp, bắt sáng từ mọi góc độ, tạo nên một dải ánh sáng rực rỡ và mê hoặc.\n\nThiết kế của vòng tay kết hợp hoàn hảo giữa sự thanh lịch và hiện đại, với các chi tiết chạm khắc tinh tế và cân đối. Các móc khóa chắc chắn nhưng dễ dàng thao tác, đảm bảo vòng tay luôn ôm sát cổ tay một cách hoàn hảo và an toàn. Vòng tay này không chỉ là một món trang sức mà còn là một tác phẩm nghệ thuật, thể hiện đẳng cấp và gu thẩm mỹ của người đeo.\n\nVới vòng tay kim cương cao cấp này, bạn sẽ luôn tỏa sáng và nổi bật trong mọi dịp, từ những bữa tiệc xa hoa đến các sự kiện quan trọng. Đây là món quà tuyệt vời dành cho những người phụ nữ yêu thích sự hoàn hảo và muốn khẳng định phong cách riêng biệt của mình. Hãy để vòng tay kim cương cao cấp này tô điểm cho vẻ đẹp của bạn, mang đến sự tự tin và cuốn hút không thể cưỡng lại.', '2024-06-21', 'Vòng tay cao cấp Diamond D DM-BR001IG'),
 (2, 15, 1200000, 0, 'Thép 316L là một chất liệu có độ cứng cao, siêu bền và khả năng chống ăn mòn tốt. Vòng tay kim cương cao cấp này là đỉnh cao của sự xa hoa và tinh tế, mang đến vẻ đẹp rực rỡ và đẳng cấp cho người đeo. Được chế tác tỉ mỉ từ vàng trắng 18k hoặc bạch kim, vòng tay lấp lánh với những viên kim cương được cắt gọt hoàn hảo, đính kết tinh xảo dọc theo thân vòng. Mỗi viên kim cương toát lên sự lấp lánh tuyệt đẹp, bắt sáng từ mọi góc độ, tạo nên một dải ánh sáng rực rỡ và mê hoặc.\n\nThiết kế của vòng tay kết hợp hoàn hảo giữa sự thanh lịch và hiện đại, với các chi tiết chạm khắc tinh tế và cân đối. Các móc khóa chắc chắn nhưng dễ dàng thao tác, đảm bảo vòng tay luôn ôm sát cổ tay một cách hoàn hảo và an toàn. Vòng tay này không chỉ là một món trang sức mà còn là một tác phẩm nghệ thuật, thể hiện đẳng cấp và gu thẩm mỹ của người đeo.\n\nVới vòng tay kim cương cao cấp này, bạn sẽ luôn tỏa sáng và nổi bật trong mọi dịp, từ những bữa tiệc xa hoa đến các sự kiện quan trọng. Đây là món quà tuyệt vời dành cho những người phụ nữ yêu thích sự hoàn hảo và muốn khẳng định phong cách riêng biệt của mình. Hãy để vòng tay kim cương cao cấp này tô điểm cho vẻ đẹp của bạn, mang đến sự tự tin và cuốn hút không thể cưỡng lại.', '2024-06-21', 'Vòng tay cao cấp Diamond D DM-BR001RG'),
 (3, 10, 1200000, 0, 'Thép 316L là một chất liệu có độ cứng cao, siêu bền và khả năng chống ăn mòn tốt. Vòng tay kim cương cao cấp này là đỉnh cao của sự xa hoa và tinh tế, mang đến vẻ đẹp rực rỡ và đẳng cấp cho người đeo. Được chế tác tỉ mỉ từ vàng trắng 18k hoặc bạch kim, vòng tay lấp lánh với những viên kim cương được cắt gọt hoàn hảo, đính kết tinh xảo dọc theo thân vòng. Mỗi viên kim cương toát lên sự lấp lánh tuyệt đẹp, bắt sáng từ mọi góc độ, tạo nên một dải ánh sáng rực rỡ và mê hoặc.\n\nThiết kế của vòng tay kết hợp hoàn hảo giữa sự thanh lịch và hiện đại, với các chi tiết chạm khắc tinh tế và cân đối. Các móc khóa chắc chắn nhưng dễ dàng thao tác, đảm bảo vòng tay luôn ôm sát cổ tay một cách hoàn hảo và an toàn. Vòng tay này không chỉ là một món trang sức mà còn là một tác phẩm nghệ thuật, thể hiện đẳng cấp và gu thẩm mỹ của người đeo.\n\nVới vòng tay kim cương cao cấp này, bạn sẽ luôn tỏa sáng và nổi bật trong mọi dịp, từ những bữa tiệc xa hoa đến các sự kiện quan trọng. Đây là món quà tuyệt vời dành cho những người phụ nữ yêu thích sự hoàn hảo và muốn khẳng định phong cách riêng biệt của mình. Hãy để vòng tay kim cương cao cấp này tô điểm cho vẻ đẹp của bạn, mang đến sự tự tin và cuốn hút không thể cưỡng lại.', '2024-06-21', 'Vòng tay cao cấp Diamond D DM-BR001W');
@@ -957,16 +959,40 @@ ALTER TABLE `trangsuc`
 --
 
 --
+-- AUTO_INCREMENT cho bảng `anh_butky`
+--
+ALTER TABLE `anh_butky`
+  MODIFY `maanh` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT cho bảng `anh_dongho`
 --
 ALTER TABLE `anh_dongho`
   MODIFY `maanh` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
+-- AUTO_INCREMENT cho bảng `anh_kinhmat`
+--
+ALTER TABLE `anh_kinhmat`
+  MODIFY `maanh` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT cho bảng `anh_phukien`
+--
+ALTER TABLE `anh_phukien`
+  MODIFY `maanh` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT cho bảng `anh_trangsuc`
+--
+ALTER TABLE `anh_trangsuc`
+  MODIFY `maanh` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT cho bảng `butky`
 --
 ALTER TABLE `butky`
-  MODIFY `mabutky` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `mabutky` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT cho bảng `chitietdonhang`

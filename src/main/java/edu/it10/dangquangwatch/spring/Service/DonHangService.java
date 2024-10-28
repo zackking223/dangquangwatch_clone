@@ -33,5 +33,5 @@ public interface DonHangService {
    * @param page : Số trang
    * @return : Phân trang đơn hàng dựa theo số trang, mỗi trang tối đa 10 dòng
    */
-  Page<DonHang> searchDonHang(String hoten, String diachi, String tensanpham, String tinhtrang, String thanhtoan, Integer tongtien, String from, String to, int page);
+  Page<DonHang> searchDonHang(String username, String hoten, String diachi, String tensanpham, String tinhtrang, String thanhtoan, Integer tongtien, String from, String to, int page);
 }

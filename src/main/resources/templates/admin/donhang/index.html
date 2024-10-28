@@ -5,15 +5,21 @@
   <link rel="icon" type="image/png" href="/images/LogoMobile.png">
   <title>Đơn hàng</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}" />
 </head>
 
 <body>
   <div th:replace="~{fragments/sidebar :: sidebar}"></div>
-  <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg md:mx-auto pl-11">
+  <div class="p-4 w-full bg-slate-50 shadow-sm rounded-lg md:mx-auto pl-11">
     <h1 class="font-bold text-center my-2">Quản lý đơn hàng</h1>
-    <form action="" class="w-full max-w-[90vw] flex flex-col gap-2 my-2">
-      <section class="grid grid-cols-3 gap-2">
+    <form action="" class="w-full mx-auto max-w-[90vw] flex flex-col gap-2 my-2">
+      <section class="grid lg:grid-cols-3 grid-cols-1 gap-2">
+        <div>
+          <label class="block font-medium" th:for="hoten">Email</label>
+          <input class="block p-2 w-full border border-black rounded" name="email" th:value="${email}" type="text"
+            placeholder="user@email.com" />
+        </div>
         <div>
           <label class="block font-medium" th:for="hoten">Tên khách hàng</label>
           <input class="block p-2 w-full border border-black rounded" name="hoten" th:value="${hoten}" type="text"
@@ -24,14 +30,14 @@
           <input class="block p-2 w-full border border-black rounded" name="diachi" th:value="${diachi}" type="text"
             placeholder="Địa chỉ giao" />
         </div>
+      </section>
+
+      <section class="grid lg:grid-cols-4 grid-cols-2 gap-2">
         <div>
           <label class="block font-medium" th:for="tensanpham">Tên sản phẩm</label>
           <input class="block p-2 w-full border border-black rounded" name="tensanpham" th:value="${tensanpham}"
             type="text" placeholder="Tên sản phẩm" />
         </div>
-      </section>
-
-      <section class="grid grid-cols-3 gap-2">
         <div>
           <label class="block font-medium" th:for="tongtien">Tổng tiền</label>
           <input class="block p-2 w-full border border-black rounded" name="tongtien" th:value="${tongtien}"
@@ -57,7 +63,7 @@
         </div>
       </section>
 
-      <section class="grid grid-cols-2 gap-2">
+      <section class="grid sm:grid-cols-2 grid-cols-1 gap-2">
         <div>
           <label class="block font-medium" for="from">Từ ngày</label>
           <input class="block p-2 w-full border border-black rounded" type="date" name="from" id="from"
@@ -71,87 +77,93 @@
 
       <button class="p-2 w-max my-2 bg-blue-500 rounded block text-white flex-shrink-0">Tìm kiếm</button>
     </form>
-    <table>
-      <tr>
-        <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Mã đơn hàng
-        </th>
-        <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Khách hàng
-        </th>
-        <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Tổng tiền
-        </th>
-        <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Địa chỉ</th>
-        <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Ghi chú</th>
-        <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Tình trạng
-        </th>
-        <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Thanh toán
-        </th>
-        <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Sản phẩm mua
-        </th>
-        <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Ngày thêm
-        </th>
-        <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Tùy chỉnh
-        </th>
-      </tr>
-      <tr th:each="donhang : ${donhangs}" th:if="${donhangs}">
-        <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
-          th:text="${donhang.getMaDonHang()}"></td>
-        <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
-          th:text="@{${donhang.getTaikhoan().getUsername()} + ' - ' +${donhang.getTaikhoan().getHoten()}}"></td>
-        <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
-          th:text="${donhang.getTongTienFormatted()}"></td>
-        <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden" th:text="${donhang.getDiaChi()}">
-        </td>
-        <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
-          th:text="${donhang.getGhiChu() ?: ''}"></td>
-        <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
-          th:text="${donhang.getTinhTrang()}"></td>
-        <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
-          th:text="${donhang.getThanhToan()}"></td>
-        <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
-          <p class="my-1" th:each="sp : ${donhang.getItems()}"><a target="_blank"
-              class="text-sm rounded-sm p-1 bg-slate-200 hover:text-yellow-400 hover:bg-slate-900"
-              th:href="${sp.getLink()}" th:text="${sp.getTensanpham()}"></a> x <span
-              th:text="${sp.getSoLuong()}"></span></p>
-        </td>
-        <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
-          th:text="${donhang.getNGAYTHEM()}"></td>
-        <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
-          <div class="flex flex-col items-center gap-2">
-            <form action="/admin/donhang/xacnhan" th:if="${donhang.getTinhTrang() == 'Chờ xác nhận'}">
-              <input type="number" name="madonhang" class="hidden" th:value="${donhang.getMaDonHang()}">
-              <button class="block p-2 rounded bg-blue-500 text-white">Xác nhận</button>
-            </form>
-            <form action="/admin/donhang/vanchuyen" th:if="${donhang.getTinhTrang() == 'Đã xác nhận'}">
-              <input type="number" name="madonhang" class="hidden" th:value="${donhang.getMaDonHang()}">
-              <button class="block p-2 rounded bg-green-500 text-white">Vận chuyển</button>
-            </form>
-            <form action="/admin/donhang/huy" th:if="${donhang.getTinhTrang() == 'Đã xác nhận'}">
-              <input type="number" name="madonhang" class="hidden" th:value="${donhang.getMaDonHang()}">
-              <button class="block p-2 rounded bg-red-500 text-white">Hủy
-                đơn</button>
-            </form>
-            <form action="/admin/donhang/danhan" th:if="${donhang.getTinhTrang() == 'Đang vận chuyển'}">
-              <input type="number" name="madonhang" class="hidden" th:value="${donhang.getMaDonHang()}">
-              <button class="block p-2 rounded bg-green-500 text-white">Đã nhận hàng</button>
-            </form>
-            <a th:if="${donhang.getTinhTrang() == 'Chờ xác nhận'}"
-              th:href="@{/admin/donhang/edit?id={id}(id=${donhang.getMaDonHang()})}"
-              class="block w-max p-2 rounded bg-green-500 text-white">Sửa</a>
-            <button class="p-2 rounded bg-red-500 text-white" th:data-id="${donhang.getMaDonHang()}"
-              onclick="confirmDelete(this);">Xóa</button>
-          </div>
-        </td>
-      </tr>
-    </table>
-    <ul th:if="${sotrang > 1}" class="flex items-center flex-wrap w-full gap-2 mt-4">
+    <ul th:if="${sotrang > 1}" class="flex items-center flex-wrap w-full sm:gap-2 gap-1 my-4">
       <li>Trang:</li>
       <li th:each="i:${#numbers.sequence(1,sotrang,1)}">
         <a th:classappend="${page + 1 == i} ? 'bg-black text-white' : 'bg-white text-black'"
           class="p-2 aspect-square border border-b hover:text-blue-500"
-          th:href="@{'/admin/donhang/?page=' + ${i} + '&hoten=' + ${hoten} + '&diachi=' + ${diachi} + '&tensanpham=' + ${tensanpham} + '&tinhtrang=' + ${tinhtrang} + '&thanhtoan=' + ${thanhtoan} + '&tongtien=' + ${tongtien} + '&from=' + ${from} + '&to=' + ${to}}"
+          th:href="@{'/admin/donhang/?page=' + ${i} + '&email=' + ${email} + '&hoten=' + ${hoten} + '&diachi=' + ${diachi} + '&tensanpham=' + ${tensanpham} + '&tinhtrang=' + ${tinhtrang} + '&thanhtoan=' + ${thanhtoan} + '&tongtien=' + ${tongtien} + '&from=' + ${from} + '&to=' + ${to}}"
           th:text="${i}"></a>
       </li>
     </ul>
+    <section class="w-full overflow-x-auto">
+      <table class="w-max">
+        <tr>
+          <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Mã đơn hàng
+          </th>
+          <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Khách hàng
+          </th>
+          <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Tổng tiền
+          </th>
+          <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Địa chỉ
+          </th>
+          <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Ghi chú
+          </th>
+          <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Tình trạng
+          </th>
+          <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Thanh toán
+          </th>
+          <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Sản phẩm
+            mua
+          </th>
+          <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Ngày thêm
+          </th>
+          <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Tùy chỉnh
+          </th>
+        </tr>
+        <tr th:each="donhang : ${donhangs}" th:if="${donhangs}">
+          <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+            th:text="${donhang.getMaDonHang()}"></td>
+          <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+            th:text="@{${donhang.getTaikhoan().getUsername()} + ' - ' +${donhang.getTaikhoan().getHoten()}}"></td>
+          <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+            th:text="${donhang.getTongTienFormatted()}"></td>
+          <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+            th:text="${donhang.getDiaChi()}">
+          </td>
+          <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+            th:text="${donhang.getGhiChu() ?: ''}"></td>
+          <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+            th:text="${donhang.getTinhTrang()}"></td>
+          <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+            th:text="${donhang.getThanhToan()}"></td>
+          <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+            <p class="my-1" th:each="sp : ${donhang.getItems()}"><a target="_blank"
+                class="text-sm rounded-sm p-1 bg-slate-200 hover:text-yellow-400 hover:bg-slate-900"
+                th:href="${sp.getLink()}" th:text="${sp.getTensanpham()}"></a> x <span
+                th:text="${sp.getSoLuong()}"></span></p>
+          </td>
+          <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+            th:text="${donhang.getNGAYTHEM()}"></td>
+          <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+            <div class="flex flex-col items-center gap-2">
+              <form action="/admin/donhang/xacnhan" th:if="${donhang.getTinhTrang() == 'Chờ xác nhận'}">
+                <input type="number" name="madonhang" class="hidden" th:value="${donhang.getMaDonHang()}">
+                <button class="block p-2 rounded bg-blue-500 text-white">Xác nhận</button>
+              </form>
+              <form action="/admin/donhang/vanchuyen" th:if="${donhang.getTinhTrang() == 'Đã xác nhận'}">
+                <input type="number" name="madonhang" class="hidden" th:value="${donhang.getMaDonHang()}">
+                <button class="block p-2 rounded bg-green-500 text-white">Vận chuyển</button>
+              </form>
+              <form action="/admin/donhang/huy" th:if="${donhang.getTinhTrang() == 'Đã xác nhận'}">
+                <input type="number" name="madonhang" class="hidden" th:value="${donhang.getMaDonHang()}">
+                <button class="block p-2 rounded bg-red-500 text-white">Hủy
+                  đơn</button>
+              </form>
+              <form action="/admin/donhang/danhan" th:if="${donhang.getTinhTrang() == 'Đang vận chuyển'}">
+                <input type="number" name="madonhang" class="hidden" th:value="${donhang.getMaDonHang()}">
+                <button class="block p-2 rounded bg-green-500 text-white">Đã nhận hàng</button>
+              </form>
+              <a th:if="${donhang.getTinhTrang() == 'Chờ xác nhận'}"
+                th:href="@{/admin/donhang/edit?id={id}(id=${donhang.getMaDonHang()})}"
+                class="block w-max p-2 rounded bg-green-500 text-white">Sửa</a>
+              <button class="p-2 rounded bg-red-500 text-white" th:data-id="${donhang.getMaDonHang()}"
+                onclick="confirmDelete(this);">Xóa</button>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </section>
   </div>
   <script src="/js/sweetalert.min.js"></script>
   <script>

@@ -29,6 +29,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -56,10 +57,18 @@ public class SpringSecurityConfig {
   SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
         .authorizeHttpRequests(configurer -> configurer
-            .requestMatchers("/admin/**").hasRole("QUANTRI") // Yêu cầu đăng nhập cho các đường dẫn bắt đầu bằng /admin/
+            .requestMatchers("/admin/**", "/ws/**").hasRole("QUANTRI") // Yêu cầu đăng nhập cho các đường dẫn bắt đầu bằng /admin/
             .requestMatchers("/profile/**").authenticated()
             .anyRequest().permitAll() // Các đường dẫn còn lại không yêu cầu đăng nhập
         )
+        .csrf(configurer -> configurer.disable()) // Disable csrf for testing
+        .cors(cors -> cors.configurationSource(request -> {
+          var config = new org.springframework.web.cors.CorsConfiguration();
+          config.setAllowedOrigins(List.of("http://localhost:3000")); // Chỉ cho phép frontend
+          config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+          config.setAllowCredentials(true); // Cho phép cookie/sessions
+          return config;
+        }))
         .oauth2Login(page -> page
             .loginPage("/login")
             .userInfoEndpoint(endpoint -> endpoint
@@ -143,7 +152,7 @@ public class SpringSecurityConfig {
         String login = oAuth2User.getAttribute("login");
         String tempEmail = oAuth2User.getAttribute("email");
         if (tempEmail != null) {
-          email =  tempEmail;
+          email = tempEmail;
         } else if (login != null) {
           email = login.trim();
         } else {
@@ -156,7 +165,7 @@ public class SpringSecurityConfig {
 
       // Get user details from authentication object
       TaiKhoan userData = taiKhoanService.getTaiKhoan(email);
-      
+
       if (userData != null) {
         // Add fullname to session
         request.getSession().setAttribute("username", userData.getUsername());

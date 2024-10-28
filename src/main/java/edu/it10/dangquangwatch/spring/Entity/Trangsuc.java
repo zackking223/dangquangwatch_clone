@@ -23,7 +23,7 @@ public class Trangsuc {
   @Column(name = "tentrangsuc")
   private String tentrangsuc;
 
-  @Column(name = "gia")
+  @Column(name = "giatien")
   private Integer gia;
 
   @Column(name = "soluong")

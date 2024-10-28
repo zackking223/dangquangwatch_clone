@@ -21,7 +21,7 @@ public class KinhMat {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer maKinhMat;
 
-  @Column(name = "tensanpham")
+  @Column(name = "tenkinhmat")
   private String tenSanPham;
 
   @Column(name = "giatien")
