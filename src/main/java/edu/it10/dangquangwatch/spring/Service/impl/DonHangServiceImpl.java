@@ -26,11 +26,12 @@ import edu.it10.dangquangwatch.spring.service.PhuKienService;
 import edu.it10.dangquangwatch.spring.service.TrangsucService;
 import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
-@Slf4j
 public class DonHangServiceImpl implements DonHangService {
+  private static final Logger log = LoggerFactory.getLogger(DonHangServiceImpl.class);
   @Autowired
   DonHangRepository donHangRepository;
   @Autowired

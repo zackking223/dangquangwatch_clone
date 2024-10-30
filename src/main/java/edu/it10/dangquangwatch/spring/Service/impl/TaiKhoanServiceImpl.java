@@ -29,11 +29,12 @@ import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
-@Slf4j
 public class TaiKhoanServiceImpl implements TaiKhoanService {
+  private static final Logger log = LoggerFactory.getLogger(TaiKhoanServiceImpl.class);
   @Autowired
   private TaiKhoanRepository taiKhoanRepository;
   @Autowired

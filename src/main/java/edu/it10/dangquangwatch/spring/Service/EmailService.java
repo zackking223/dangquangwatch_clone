@@ -15,11 +15,12 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 import edu.it10.dangquangwatch.spring.entity.DonHang;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
-@Slf4j
 public class EmailService {
+  private static final Logger log = LoggerFactory.getLogger(EmailService.class);
   @Autowired
   private JavaMailSender mailSender;
   @Autowired

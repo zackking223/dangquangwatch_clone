@@ -24,7 +24,7 @@ public class Trangsuc {
   private String tentrangsuc;
 
   @Column(name = "giatien")
-  private Integer gia;
+  private Integer giaTien;
 
   @Column(name = "soluong")
   private Integer soluong;
@@ -53,8 +53,8 @@ public class Trangsuc {
     return "/images/placeholder.png";
   }
 
-  public String getGiaFormatted() {
-    return NumberFormat.getInstance().format(this.gia);
+  public String getGiaTienFormatted() {
+    return NumberFormat.getInstance().format(this.giaTien);
   }
 
 
@@ -64,7 +64,7 @@ public class Trangsuc {
   public Trangsuc(Integer matrangsuc, String tentrangsuc, Integer gia, Integer soluong, Integer tragop, String NGAYTHEM, String thongtin, List<Anhtrangsuc> images) {
     this.matrangsuc = matrangsuc;
     this.tentrangsuc = tentrangsuc;
-    this.gia = gia;
+    this.giaTien = gia;
     this.soluong = soluong;
     this.tragop = tragop;
     this.NGAYTHEM = NGAYTHEM;
@@ -88,12 +88,12 @@ public class Trangsuc {
     this.tentrangsuc = tentrangsuc;
   }
 
-  public Integer getGia() {
-    return this.gia;
+  public Integer getGiaTien() {
+    return this.giaTien;
   }
 
-  public void setGia(Integer gia) {
-    this.gia = gia;
+  public void setGiaTien(Integer gia) {
+    this.giaTien = gia;
   }
 
   public Integer getSoluong() {
@@ -147,7 +147,7 @@ public class Trangsuc {
   }
 
   public Trangsuc gia(Integer gia) {
-    setGia(gia);
+    setGiaTien(gia);
     return this;
   }
 
@@ -184,12 +184,12 @@ public class Trangsuc {
             return false;
         }
         Trangsuc trangsuc = (Trangsuc) o;
-        return Objects.equals(matrangsuc, trangsuc.matrangsuc) && Objects.equals(tentrangsuc, trangsuc.tentrangsuc) && Objects.equals(gia, trangsuc.gia) && Objects.equals(soluong, trangsuc.soluong) && Objects.equals(tragop, trangsuc.tragop) && Objects.equals(NGAYTHEM, trangsuc.NGAYTHEM) && Objects.equals(thongtin, trangsuc.thongtin) && Objects.equals(images, trangsuc.images);
+        return Objects.equals(matrangsuc, trangsuc.matrangsuc) && Objects.equals(tentrangsuc, trangsuc.tentrangsuc) && Objects.equals(giaTien, trangsuc.giaTien) && Objects.equals(soluong, trangsuc.soluong) && Objects.equals(tragop, trangsuc.tragop) && Objects.equals(NGAYTHEM, trangsuc.NGAYTHEM) && Objects.equals(thongtin, trangsuc.thongtin) && Objects.equals(images, trangsuc.images);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(matrangsuc, tentrangsuc, gia, soluong, tragop, NGAYTHEM, thongtin, images);
+    return Objects.hash(matrangsuc, tentrangsuc, giaTien, soluong, tragop, NGAYTHEM, thongtin, images);
   }
 
   @Override
@@ -197,7 +197,7 @@ public class Trangsuc {
     return "{" +
       " matrangsuc='" + getMatrangsuc() + "'" +
       ", tentrangsuc='" + getTentrangsuc() + "'" +
-      ", gia='" + getGia() + "'" +
+      ", gia='" + getGiaTien() + "'" +
       ", soluong='" + getSoluong() + "'" +
       ", tragop='" + getTragop() + "'" +
       ", NGAYTHEM='" + getNGAYTHEM() + "'" +
