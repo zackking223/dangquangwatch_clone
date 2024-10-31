@@ -114,8 +114,9 @@
         <tr th:each="donhang : ${donhangs}" th:if="${donhangs}">
           <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
             th:text="${donhang.getMaDonHang()}"></td>
-          <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
-            th:text="@{${donhang.getTaikhoan().getUsername()} + ' - ' +${donhang.getTaikhoan().getHoten()}}"></td>
+          <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+            <a th:href="${'?email=' + donhang.getTaikhoan().getUsername()}" th:text="@{${donhang.getTaikhoan().getUsername()} + ' - ' +${donhang.getTaikhoan().getHoten()}}" class="hover:text-yellow-400 hover:bg-slate-900"></a>
+          </td>
           <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
             th:text="${donhang.getTongTienFormatted()}"></td>
           <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
@@ -123,8 +124,23 @@
           </td>
           <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
             th:text="${donhang.getGhiChu() ?: ''}"></td>
-          <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
-            th:text="${donhang.getTinhTrang()}"></td>
+          <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+            <a href="?tinhtrang=Chờ+xác+nhận" class="py-1 px-[6px] rounded-sm bg-orange-500 font-medium text-white" th:if="${donhang.getTinhTrang() == 'Chờ xác nhận'}">
+              Chờ xác nhận
+            </a>
+            <a href="?tinhtrang=Đã+xác+nhận" class="py-1 px-[6px] rounded-sm bg-blue-500 font-medium text-white" th:if="${donhang.getTinhTrang() == 'Đã xác nhận'}">
+              Đã xác nhận
+            </a>
+            <a href="?tinhtrang=Đã+hủy" class="py-1 px-[6px] rounded-sm bg-red-500 font-medium text-white" th:if="${donhang.getTinhTrang() == 'Đã hủy'}">
+              Đã hủy
+            </a>
+            <a href="?tinhtrang=Đã+nhận+hàng" class="py-1 px-[6px] rounded-sm bg-green-500 font-medium text-white" th:if="${donhang.getTinhTrang() == 'Đã nhận hàng'}">
+              Đã nhận hàng
+            </a>
+            <a href="?tinhtrang=Đang+vận+chuyển" class="py-1 px-[6px] rounded-sm bg-amber-500 font-medium text-white" th:if="${donhang.getTinhTrang() == 'Đang vận chuyển'}">
+              Vận chuyển
+            </a>
+          </td>
           <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
             th:text="${donhang.getThanhToan()}"></td>
           <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
@@ -137,28 +153,31 @@
             th:text="${donhang.getNGAYTHEM()}"></td>
           <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
             <div class="flex flex-col items-center gap-2">
-              <form action="/admin/donhang/xacnhan" th:if="${donhang.getTinhTrang() == 'Chờ xác nhận'}">
-                <input type="number" name="madonhang" class="hidden" th:value="${donhang.getMaDonHang()}">
-                <button class="block p-2 rounded bg-blue-500 text-white">Xác nhận</button>
-              </form>
-              <form action="/admin/donhang/vanchuyen" th:if="${donhang.getTinhTrang() == 'Đã xác nhận'}">
-                <input type="number" name="madonhang" class="hidden" th:value="${donhang.getMaDonHang()}">
-                <button class="block p-2 rounded bg-green-500 text-white">Vận chuyển</button>
-              </form>
-              <form action="/admin/donhang/huy" th:if="${donhang.getTinhTrang() == 'Đã xác nhận'}">
-                <input type="number" name="madonhang" class="hidden" th:value="${donhang.getMaDonHang()}">
-                <button class="block p-2 rounded bg-red-500 text-white">Hủy
-                  đơn</button>
-              </form>
-              <form action="/admin/donhang/danhan" th:if="${donhang.getTinhTrang() == 'Đang vận chuyển'}">
-                <input type="number" name="madonhang" class="hidden" th:value="${donhang.getMaDonHang()}">
-                <button class="block p-2 rounded bg-green-500 text-white">Đã nhận hàng</button>
-              </form>
               <a th:if="${donhang.getTinhTrang() == 'Chờ xác nhận'}"
                 th:href="@{/admin/donhang/edit?id={id}(id=${donhang.getMaDonHang()})}"
-                class="block w-max p-2 rounded bg-green-500 text-white">Sửa</a>
-              <button class="p-2 rounded bg-red-500 text-white" th:data-id="${donhang.getMaDonHang()}"
-                onclick="confirmDelete(this);">Xóa</button>
+                class="block w-max p-2 rounded bg-purple-500 text-white">Sửa đơn</a>
+
+              <button class="p-2 rounded bg-blue-500 text-white" th:if="${donhang.getTinhTrang() == 'Chờ xác nhận'}"
+                th:data-id="${donhang.getMaDonHang()}" th:data-action="xacnhan" onclick="confirmAction(this);">
+                Xác nhận
+              </button>
+              <button class="p-2 rounded bg-amber-500 text-white" th:if="${donhang.getTinhTrang() == 'Đã xác nhận'}"
+                th:data-id="${donhang.getMaDonHang()}" th:data-action="vanchuyen" onclick="confirmAction(this);">
+                Vận chuyển
+              </button>
+              <button class="p-2 rounded bg-blue-500 text-white" th:if="${donhang.getTinhTrang() == 'Đang vận chuyển'}"
+                th:data-id="${donhang.getMaDonHang()}" th:data-action="danhan" onclick="confirmAction(this);">
+                Đã nhận
+              </button>
+              <button class="p-2 rounded bg-red-500 text-white"
+                th:if="${donhang.getTinhTrang() != 'Chờ xác nhận' && donhang.getTinhTrang() != 'Đã nhận hàng' && donhang.getTinhTrang() != 'Đã hủy'}"
+                th:data-id="${donhang.getMaDonHang()}" th:data-action="huy" onclick="confirmAction(this);">
+                Hủy đơn
+              </button>
+              <button class="p-2 rounded bg-red-500 text-white" th:if="${donhang.getTinhTrang() == 'Chờ xác nhận'}"
+                th:data-id="${donhang.getMaDonHang()}" onclick="confirmDelete(this);">
+                Xóa đơn
+              </button>
             </div>
           </td>
         </tr>
@@ -182,6 +201,53 @@
       }).then((result) => {
         if (result.isConfirmed) {
           window.location.href = `/admin/donhang/delete?id=${id}`;
+        }
+      });
+    }
+
+    function confirmAction(element) {
+      const id = element.getAttribute('data-id'); // Lấy giá trị từ data-attribute
+      const action = element.getAttribute('data-action'); // Lấy giá trị từ data-attribute
+      let title = "";
+      let text = "";
+      let icon = "info";
+
+      switch (action) {
+        case "xacnhan":
+          title = "Xác nhận đơn hàng?";
+          text = "Khách hàng sẽ được thông báo đơn hàng đã được xác nhận.";
+          break;
+        case "vanchuyen":
+          title = "Vận chuyển đơn hàng?";
+          text = "Khách hàng sẽ được thông báo đơn hàng đang được vận chuyển.";
+          break;
+        case "danhan":
+          title = "Xác nhận đơn hàng?";
+          text = "Đánh dấu đơn hàng là đã được nhận.";
+          break;
+        case "huy":
+          title = "Hủy đơn hàng?";
+          text = "Hành động này không thể hoàn tác!";
+          icon = "warning"
+          break;
+        default:
+          throw new Error("Button data-action is invalid!");
+          break;
+      }
+
+
+      Swal.fire({
+        title,
+        text,
+        icon,
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Xác nhận',
+        cancelButtonText: 'Hủy'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = `/admin/donhang/${action}?madonhang=${id}`;
         }
       });
     }
