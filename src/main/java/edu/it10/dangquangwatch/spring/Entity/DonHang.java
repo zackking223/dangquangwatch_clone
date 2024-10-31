@@ -14,6 +14,8 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.Objects;
 
+import edu.it10.dangquangwatch.spring.entity.enumeration.OrderStatus;
+
 @Entity
 @Table(name = "donhang")
 public class DonHang {
@@ -35,7 +37,7 @@ public class DonHang {
    * "Chờ xác nhận" / "Đã xác nhận" / "Đang vận chuyển" / "Đã nhận hàng" / "Đã hủy"
    */
   @Column(name = "tinhtrang")
-  private String tinhTrang;
+  private OrderStatus tinhTrang;
 
   /**
    * "Đã thanh toán" / "Khi nhận hàng"
@@ -60,7 +62,7 @@ public class DonHang {
   public DonHang() {
   }
 
-  public DonHang(Integer maDonHang, Integer tongTien, String diaChi, String ghiChu, String tinhTrang, String thanhToan,
+  public DonHang(Integer maDonHang, Integer tongTien, String diaChi, String ghiChu, OrderStatus tinhTrang, String thanhToan,
       String NGAYTHEM, List<ChiTietDonHang> items, TaiKhoan taikhoan) {
     this.maDonHang = maDonHang;
     this.tongTien = tongTien;
@@ -105,11 +107,11 @@ public class DonHang {
     this.ghiChu = ghiChu;
   }
 
-  public String getTinhTrang() {
+  public OrderStatus getTinhTrang() {
     return this.tinhTrang;
   }
 
-  public void setTinhTrang(String tinhTrang) {
+  public void setTinhTrang(OrderStatus tinhTrang) {
     this.tinhTrang = tinhTrang;
   }
 
@@ -165,7 +167,7 @@ public class DonHang {
     return this;
   }
 
-  public DonHang tinhTrang(String tinhTrang) {
+  public DonHang tinhTrang(OrderStatus tinhTrang) {
     setTinhTrang(tinhTrang);
     return this;
   }

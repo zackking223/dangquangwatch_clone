@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import edu.it10.dangquangwatch.spring.AppCustomException.EmptyOrNullListException;
 import edu.it10.dangquangwatch.spring.AppCustomException.OrderItemException;
+import edu.it10.dangquangwatch.spring.AppCustomException.ServiceException;
 import edu.it10.dangquangwatch.spring.entity.Butky;
 import edu.it10.dangquangwatch.spring.entity.ChiTietDonHang;
 import edu.it10.dangquangwatch.spring.entity.DonHang;
@@ -16,6 +17,7 @@ import edu.it10.dangquangwatch.spring.entity.Dongho;
 import edu.it10.dangquangwatch.spring.entity.KinhMat;
 import edu.it10.dangquangwatch.spring.entity.PhuKien;
 import edu.it10.dangquangwatch.spring.entity.Trangsuc;
+import edu.it10.dangquangwatch.spring.entity.enumeration.OrderStatus;
 import edu.it10.dangquangwatch.spring.repository.DonHangRepository;
 import edu.it10.dangquangwatch.spring.service.ButkyService;
 import edu.it10.dangquangwatch.spring.service.DonHangService;
@@ -38,7 +40,6 @@ public class DonHangServiceImpl implements DonHangService {
   ChiTietDonHangServiceImpl ctdhService;
   @Autowired
   EmailService emailService;
-
   @Autowired
   DonghoService donghoService;
   @Autowired
@@ -58,7 +59,8 @@ public class DonHangServiceImpl implements DonHangService {
   @Override
   public Page<DonHang> searchDonHang(String username, String hoten, String diachi, String tensanpham, String tinhtrang,
       String thanhtoan, Integer tongtien, String from, String to, int page) {
-    return donHangRepository.searchDonHang(username, hoten, diachi, tensanpham, tinhtrang, thanhtoan, tongtien, from, to,
+    return donHangRepository.searchDonHang(username, hoten, diachi, tensanpham, tinhtrang, thanhtoan, tongtien, from,
+        to,
         PageRequest.of(page, 10));
   }
 
@@ -257,6 +259,28 @@ public class DonHangServiceImpl implements DonHangService {
 
       donHangRepository.save(donhang);
       ctdhService.saveCTDH(ctdh);
+    }
+  }
+
+  @Override
+  public void updateStatus(Integer madonhang, OrderStatus status) {
+    Optional<DonHang> opt = donHangRepository.findById(madonhang);
+    ServiceException exception = new ServiceException();
+    exception.setPath("/admin/donhang");
+
+    if (opt.isPresent()) {
+      DonHang currentData = opt.get();
+      if (currentData.getTinhTrang().equals(OrderStatus.CANCELLED)) {
+        exception.setMessage("Đơn hàng " + madonhang + " đã bị hủy!");
+        throw exception;
+      } else {
+        currentData.setTinhTrang(status);
+        updateDonHang(currentData);
+      }
+
+    } else {
+      exception.setMessage("Không tìm thấy đơn hàng mã: " + madonhang);
+      throw exception;
     }
   }
 }

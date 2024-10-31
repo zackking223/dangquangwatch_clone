@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 
 import edu.it10.dangquangwatch.spring.entity.ChiTietDonHang;
 import edu.it10.dangquangwatch.spring.entity.DonHang;
+import edu.it10.dangquangwatch.spring.entity.enumeration.OrderStatus;
 
 public interface DonHangService {
   Page<DonHang> getAllDonHang(int page);
@@ -17,6 +18,8 @@ public interface DonHangService {
   void addDonHang(DonHang donHang);
 
   void updateDonHang(DonHang donHang);
+
+  void updateStatus(Integer madonhang, OrderStatus status);
   
   void deleteDonHang(int madonhang);
 

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.it10.dangquangwatch.spring.entity.DonHang;
 import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
+import edu.it10.dangquangwatch.spring.entity.enumeration.OrderStatus;
 import edu.it10.dangquangwatch.spring.service.ChiTietDonHangService;
 import edu.it10.dangquangwatch.spring.service.DonHangService;
 import edu.it10.dangquangwatch.spring.service.TaiKhoanService;
@@ -149,8 +150,8 @@ public class DonhangController {
     thanhtoan_options.add("Đã nhận hàng");
     Optional<DonHang> donHangEdit = donHangService.findDonHangById(madonHang);
     if (donHangEdit.isPresent()) {
-      if (!donHangEdit.get().getTinhTrang().equals("Chờ xác nhận")
-          && !donHangEdit.get().getTinhTrang().equals("Đã xác nhận")) {
+      if (!donHangEdit.get().getTinhTrang().equals(OrderStatus.PENDING)
+          && !donHangEdit.get().getTinhTrang().equals(OrderStatus.APPROVED)) {
         return "redirect:/admin/donhang/";
       }
       model.addAttribute("donHang", donHangEdit.get());
@@ -172,47 +173,25 @@ public class DonhangController {
 
   @GetMapping(value = "/huy")
   public String huy(@RequestParam("madonhang") Integer madonhang) {
-    Optional<DonHang> data = donHangService.findDonHangById(madonhang);
-    if (data.isPresent()) {
-      DonHang dh = data.get();
-      dh.setTinhTrang("Đã hủy");
-      dh.setThanhToan("Đã hủy");
-      donHangService.updateDonHang(dh);
-    }
+    donHangService.updateStatus(madonhang, OrderStatus.CANCELLED);
     return "redirect:/admin/donhang/";
   }
 
   @GetMapping(value = "/xacnhan")
   public String xacnhan(@RequestParam("madonhang") Integer madonhang) {
-    Optional<DonHang> data = donHangService.findDonHangById(madonhang);
-    if (data.isPresent()) {
-      DonHang dh = data.get();
-      dh.setTinhTrang("Đã xác nhận");
-      donHangService.updateDonHang(dh);
-    }
+    donHangService.updateStatus(madonhang, OrderStatus.APPROVED);
     return "redirect:/admin/donhang/";
   }
 
   @GetMapping(value = "/vanchuyen")
   public String vanchuyen(@RequestParam("madonhang") Integer madonhang) {
-    Optional<DonHang> data = donHangService.findDonHangById(madonhang);
-    if (data.isPresent()) {
-      DonHang dh = data.get();
-      dh.setTinhTrang("Đang vận chuyển");
-      donHangService.updateDonHang(dh);
-    }
+    donHangService.updateStatus(madonhang, OrderStatus.MOVING);
     return "redirect:/admin/donhang/";
   }
 
   @GetMapping(value = "/danhan")
   public String danhan(@RequestParam("madonhang") Integer madonhang) {
-    Optional<DonHang> data = donHangService.findDonHangById(madonhang);
-    if (data.isPresent()) {
-      DonHang dh = data.get();
-      dh.setThanhToan("Đã thanh toán");
-      dh.setTinhTrang("Đã nhận hàng");
-      donHangService.updateDonHang(dh);
-    }
+    donHangService.updateStatus(madonhang, OrderStatus.COMPLETED);
     return "redirect:/admin/donhang/";
   }
 

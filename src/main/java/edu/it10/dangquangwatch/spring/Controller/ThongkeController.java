@@ -21,8 +21,8 @@ public class ThongkeController {
   private ThongKeService thongKeService;
 
   @GetMapping("/admin/")
-  public String adminIndex(Model model, @RequestParam("editcapital") Optional<String> editcapital_opt) {
-    return trangThongKe(model, editcapital_opt);
+  public String adminIndex() {
+    return "redirect:/admin/thongke/";
   }
 
   @GetMapping("/admin/thongke/")

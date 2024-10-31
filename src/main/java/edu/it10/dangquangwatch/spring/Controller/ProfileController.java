@@ -18,6 +18,7 @@ import edu.it10.dangquangwatch.spring.AppCustomException.ErrorEnum;
 import edu.it10.dangquangwatch.spring.entity.ApiResponse;
 import edu.it10.dangquangwatch.spring.entity.DonHang;
 import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
+import edu.it10.dangquangwatch.spring.entity.enumeration.OrderStatus;
 import edu.it10.dangquangwatch.spring.notification.NotificationBody;
 import edu.it10.dangquangwatch.spring.notification.NotificationType;
 import edu.it10.dangquangwatch.spring.service.ChiTietDonHangService;
@@ -152,7 +153,7 @@ public class ProfileController {
       return ResponseEntity.ok(response);
     }
 
-    donHang.setTinhTrang("Chờ xác nhận");
+    donHang.setTinhTrang(OrderStatus.PENDING);
 
     if (donHang.getDiaChi() == null || donHang.getDiaChi().isEmpty()) {
       donHang.setDiaChi(taiKhoan.getDiachi());
@@ -193,12 +194,8 @@ public class ProfileController {
 
     if (data.isPresent()) {
       DonHang donHang = data.get();
-
       if (donHang.getTaikhoan().getUsername() == currentUser.getUsername() || currentUser.isAdmin()) {
-        donHang.setTinhTrang("Đã hủy");
-        donHang.setThanhToan("Đã hủy");
-
-        donHangService.addDonHang(donHang);
+        donHangService.updateStatus(madonHang, OrderStatus.CANCELLED);
       }
     }
 
