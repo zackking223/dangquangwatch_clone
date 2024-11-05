@@ -28,7 +28,17 @@ public class PhuKienServiceImpl implements PhuKienService {
 
   @Override
   public PhuKien savePhuKien(PhuKien phuKien) {
-    return phuKienRepository.save(phuKien);
+    Optional<PhuKien> opt = phuKienRepository.findByTenPhuKien(phuKien.getTenPhuKien());
+
+    if (opt.isPresent()) {
+      PhuKien existed = opt.get();
+
+      existed.setSoLuong(existed.getSoLuong() + phuKien.getSoLuong());
+
+      return phuKienRepository.save(existed);
+    } else {
+      return phuKienRepository.save(phuKien);
+    }
   }
 
   @Override

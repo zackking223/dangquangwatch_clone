@@ -21,8 +21,18 @@ public class TrangsucServiceImpl implements TrangsucService {
   }  
 
   @Override  
-  public Trangsuc saveTrangsuc(Trangsuc trangsuc) {  
-    return trangsucRepository.save(trangsuc);  
+  public Trangsuc saveTrangsuc(Trangsuc trangsuc) {
+    Optional<Trangsuc> opt = trangsucRepository.findByTentrangsuc(trangsuc.getTentrangsuc());
+
+    if (opt.isPresent()) {
+      Trangsuc existed = opt.get();
+
+      existed.setSoluong(existed.getSoluong() + trangsuc.getSoluong());
+
+      return trangsucRepository.save(existed);
+    } else {
+      return trangsucRepository.save(trangsuc);  
+    }
   }  
 
   @Override  

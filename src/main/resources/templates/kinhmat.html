@@ -76,7 +76,7 @@
                     </div>
                 </div>
                 <div class="md:w-2/3 p-6">
-                    <h1 class="text-2xl font-bold mb-4" th:text="${kinhmat.getTenSanPham()}"></h1>
+                    <h1 class="text-2xl font-bold mb-4" th:text="${kinhmat.getTenKinhMat()}"></h1>
                     <div class="flex items-center mb-4">
                         <span class="text-2xl font-bold mr-2" th:text="${kinhmat.getGiaTienFormatted() + ' đ'}"></span>
                     </div>
@@ -111,7 +111,7 @@
                         </div>
                     </section>
                     <div class="flex gap-4 my-4">
-                        <button th:data-tsp="${kinhmat.getTenSanPham()}" th:data-msp="${kinhmat.getMaKinhMat()}"
+                        <button th:data-tsp="${kinhmat.getTenKinhMat()}" th:data-msp="${kinhmat.getMaKinhMat()}"
                             th:data-gt="${kinhmat.getGiaTien()}" th:data-asp="${kinhmat.getFirstImageUrl()}"
                             onclick="addItem(this.getAttribute('data-tsp'),parseInt(this.getAttribute('data-msp')), 'kinhmat',parseInt(this.getAttribute('data-gt')), this.getAttribute('data-asp')); redirectToCart()"
                             class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded flex gap-2 items-center">
@@ -120,7 +120,7 @@
                                 Mua ngay
                             </p>
                         </button>
-                        <button th:data-tsp="${kinhmat.getTenSanPham()}" th:data-msp="${kinhmat.getMaKinhMat()}"
+                        <button th:data-tsp="${kinhmat.getTenKinhMat()}" th:data-msp="${kinhmat.getMaKinhMat()}"
                             th:data-gt="${kinhmat.getGiaTien()}" th:data-asp="${kinhmat.getFirstImageUrl()}"
                             onclick="addItem(this.getAttribute('data-tsp'),parseInt(this.getAttribute('data-msp')), 'kinhmat',parseInt(this.getAttribute('data-gt')), this.getAttribute('data-asp'));"
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex gap-2 items-center">

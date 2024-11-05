@@ -115,7 +115,7 @@ public class IndexController {
                 searchStr = search.get().trim();
             thongKeService.tangluotxemsanpham();
             model.addAttribute("kinhmat", kinhmat);
-            model.addAttribute("title", kinhmat.getTenSanPham());
+            model.addAttribute("title", kinhmat.getTenKinhMat());
             model.addAttribute("search", searchStr);
             model.addAttribute("searchPath", "/dongho");
         });

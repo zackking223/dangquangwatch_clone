@@ -27,11 +27,11 @@
           <img th:src="${kinhmat.getFirstImageUrl()}" class="w-full aspect-square" alt="anhkinhmat" />
           <div class="p-2 flex flex-col gap-2">
             <a class="hover:text-yellow-400 text-sm" th:href="@{'/kinhmat/' + ${kinhmat.getMaKinhMat()}}"
-              th:text="@{${kinhmat.getTenSanPham()}}">
+              th:text="@{${kinhmat.getTenKinhMat()}}">
             </a>
             <p class="font-bold text-red-600" th:text="@{${kinhmat.getGiaTienFormatted()} + 'đ'}"></p>
             <div class="flex gap-2">
-              <button th:data-tsp="${kinhmat.getTenSanPham()}" th:data-msp="${kinhmat.getMaKinhMat()}"
+              <button th:data-tsp="${kinhmat.getTenKinhMat()}" th:data-msp="${kinhmat.getMaKinhMat()}"
                 th:data-gt="${kinhmat.getGiaTien()}" th:data-asp="${kinhmat.getFirstImageUrl()}"
                 onclick="addItem(this.getAttribute('data-tsp'),parseInt(this.getAttribute('data-msp')), 'kinhmat',parseInt(this.getAttribute('data-gt')), this.getAttribute('data-asp')); redirectToCart()"
                 class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded flex gap-2 items-center">
@@ -40,7 +40,7 @@
                   Mua ngay
                 </p>
               </button>
-              <button th:data-tsp="${kinhmat.getTenSanPham()}" th:data-msp="${kinhmat.getMaKinhMat()}"
+              <button th:data-tsp="${kinhmat.getTenKinhMat()}" th:data-msp="${kinhmat.getMaKinhMat()}"
                 th:data-gt="${kinhmat.getGiaTien()}" th:data-asp="${kinhmat.getFirstImageUrl()}"
                 onclick="addItem(this.getAttribute('data-tsp'),parseInt(this.getAttribute('data-msp')), 'kinhmat',parseInt(this.getAttribute('data-gt')), this.getAttribute('data-asp'));"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex gap-2 items-center">

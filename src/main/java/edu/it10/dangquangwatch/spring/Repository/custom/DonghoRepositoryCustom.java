@@ -6,5 +6,5 @@ import org.springframework.data.domain.Pageable;
 import edu.it10.dangquangwatch.spring.entity.Dongho;
 
 public interface DonghoRepositoryCustom {
-  Page<Dongho> searchDongho(String searchValues, Dongho searchData, String from, String to, Pageable pageable);
+  Page<Dongho> searchDongHo(String searchValues, Dongho searchData, String from, String to, Pageable pageable);
 }

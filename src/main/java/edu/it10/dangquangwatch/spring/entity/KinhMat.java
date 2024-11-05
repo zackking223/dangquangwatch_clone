@@ -11,7 +11,6 @@ import jakarta.persistence.Table;
 import java.text.NumberFormat;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "kinhmat")
@@ -22,7 +21,7 @@ public class KinhMat {
   private Integer maKinhMat;
 
   @Column(name = "tenkinhmat")
-  private String tenSanPham;
+  private String tenKinhMat;
 
   @Column(name = "giatien")
   private int giaTien;
@@ -74,39 +73,24 @@ public class KinhMat {
   public KinhMat() {
   }
 
-  public KinhMat(int maKinhMat, String tenSanPham, int giaTien, int rongMat, int songMui, int daiGong, String tinhNang, int traGop, int soLuong, String thongTin, String NGAYTHEM, List<Anhkinhmat> images) {
-    this.maKinhMat = maKinhMat;
-    this.tenSanPham = tenSanPham;
-    this.giaTien = giaTien;
-    this.rongMat = rongMat;
-    this.songMui = songMui;
-    this.daiGong = daiGong;
-    this.tinhNang = tinhNang;
-    this.traGop = traGop;
-    this.soLuong = soLuong;
-    this.thongTin = thongTin;
-    this.NGAYTHEM = NGAYTHEM;
-    this.images = images;
-  }
-
   public Integer getMaKinhMat() {
-    return this.maKinhMat;
+    return maKinhMat;
   }
 
-  public void setMaKinhMat(int maKinhMat) {
+  public void setMaKinhMat(Integer maKinhMat) {
     this.maKinhMat = maKinhMat;
   }
 
-  public String getTenSanPham() {
-    return this.tenSanPham;
+  public String getTenKinhMat() {
+    return tenKinhMat;
   }
 
-  public void setTenSanPham(String tenSanPham) {
-    this.tenSanPham = tenSanPham;
+  public void setTenKinhMat(String tenKinhMat) {
+    this.tenKinhMat = tenKinhMat;
   }
 
   public int getGiaTien() {
-    return this.giaTien;
+    return giaTien;
   }
 
   public void setGiaTien(int giaTien) {
@@ -114,7 +98,7 @@ public class KinhMat {
   }
 
   public int getRongMat() {
-    return this.rongMat;
+    return rongMat;
   }
 
   public void setRongMat(int rongMat) {
@@ -122,7 +106,7 @@ public class KinhMat {
   }
 
   public int getSongMui() {
-    return this.songMui;
+    return songMui;
   }
 
   public void setSongMui(int songMui) {
@@ -130,7 +114,7 @@ public class KinhMat {
   }
 
   public int getDaiGong() {
-    return this.daiGong;
+    return daiGong;
   }
 
   public void setDaiGong(int daiGong) {
@@ -138,7 +122,7 @@ public class KinhMat {
   }
 
   public String getTinhNang() {
-    return this.tinhNang;
+    return tinhNang;
   }
 
   public void setTinhNang(String tinhNang) {
@@ -146,7 +130,7 @@ public class KinhMat {
   }
 
   public int getTraGop() {
-    return this.traGop;
+    return traGop;
   }
 
   public void setTraGop(int traGop) {
@@ -154,7 +138,7 @@ public class KinhMat {
   }
 
   public int getSoLuong() {
-    return this.soLuong;
+    return soLuong;
   }
 
   public void setSoLuong(int soLuong) {
@@ -162,7 +146,7 @@ public class KinhMat {
   }
 
   public String getThongTin() {
-    return this.thongTin;
+    return thongTin;
   }
 
   public void setThongTin(String thongTin) {
@@ -170,113 +154,18 @@ public class KinhMat {
   }
 
   public String getNGAYTHEM() {
-    return this.NGAYTHEM;
+    return NGAYTHEM;
   }
 
-  public void setNGAYTHEM(String NGAYTHEM) {
-    this.NGAYTHEM = NGAYTHEM;
+  public void setNGAYTHEM(String nGAYTHEM) {
+    NGAYTHEM = nGAYTHEM;
   }
 
   public List<Anhkinhmat> getImages() {
-    return this.images;
+    return images;
   }
 
   public void setImages(List<Anhkinhmat> images) {
     this.images = images;
   }
-
-  public KinhMat maKinhMat(int maKinhMat) {
-    setMaKinhMat(maKinhMat);
-    return this;
-  }
-
-  public KinhMat tenSanPham(String tenSanPham) {
-    setTenSanPham(tenSanPham);
-    return this;
-  }
-
-  public KinhMat giaTien(int giaTien) {
-    setGiaTien(giaTien);
-    return this;
-  }
-
-  public KinhMat rongMat(int rongMat) {
-    setRongMat(rongMat);
-    return this;
-  }
-
-  public KinhMat songMui(int songMui) {
-    setSongMui(songMui);
-    return this;
-  }
-
-  public KinhMat daiGong(int daiGong) {
-    setDaiGong(daiGong);
-    return this;
-  }
-
-  public KinhMat tinhNang(String tinhNang) {
-    setTinhNang(tinhNang);
-    return this;
-  }
-
-  public KinhMat traGop(int traGop) {
-    setTraGop(traGop);
-    return this;
-  }
-
-  public KinhMat soLuong(int soLuong) {
-    setSoLuong(soLuong);
-    return this;
-  }
-
-  public KinhMat thongTin(String thongTin) {
-    setThongTin(thongTin);
-    return this;
-  }
-
-  public KinhMat NGAYTHEM(String NGAYTHEM) {
-    setNGAYTHEM(NGAYTHEM);
-    return this;
-  }
-
-  public KinhMat images(List<Anhkinhmat> images) {
-    setImages(images);
-    return this;
-  }
-
-  @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof KinhMat)) {
-            return false;
-        }
-        KinhMat kinhMat = (KinhMat) o;
-        return maKinhMat == kinhMat.maKinhMat && Objects.equals(tenSanPham, kinhMat.tenSanPham) && giaTien == kinhMat.giaTien && rongMat == kinhMat.rongMat && songMui == kinhMat.songMui && daiGong == kinhMat.daiGong && Objects.equals(tinhNang, kinhMat.tinhNang) && traGop == kinhMat.traGop && soLuong == kinhMat.soLuong && Objects.equals(thongTin, kinhMat.thongTin) && Objects.equals(NGAYTHEM, kinhMat.NGAYTHEM) && Objects.equals(images, kinhMat.images);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(maKinhMat, tenSanPham, giaTien, rongMat, songMui, daiGong, tinhNang, traGop, soLuong, thongTin, NGAYTHEM, images);
-  }
-
-  @Override
-  public String toString() {
-    return "{" +
-      " maKinhMat='" + getMaKinhMat() + "'" +
-      ", tenSanPham='" + getTenSanPham() + "'" +
-      ", giaTien='" + getGiaTien() + "'" +
-      ", rongMat='" + getRongMat() + "'" +
-      ", songMui='" + getSongMui() + "'" +
-      ", daiGong='" + getDaiGong() + "'" +
-      ", tinhNang='" + getTinhNang() + "'" +
-      ", traGop='" + getTraGop() + "'" +
-      ", soLuong='" + getSoLuong() + "'" +
-      ", thongTin='" + getThongTin() + "'" +
-      ", NGAYTHEM='" + getNGAYTHEM() + "'" +
-      ", images='" + getImages() + "'" +
-      "}";
-  }
-  
 }

@@ -18,7 +18,7 @@ public class DonghoRepositoryCustomImpl implements DonghoRepositoryCustom {
   EntityManager entityManager;
 
   @Override
-  public Page<Dongho> searchDongho(String searchStr, Dongho searchData, String from, String to, Pageable pageable) {
+  public Page<Dongho> searchDongHo(String searchStr, Dongho searchData, String from, String to, Pageable pageable) {
     StringBuilder queryString = new StringBuilder("SELECT DISTINCT d FROM Dongho d WHERE ");
     queryString.append("(UPPER(d.tendongho) LIKE UPPER(CONCAT('%', :searchStr, '%')) OR UPPER(d.thongtin) LIKE UPPER(CONCAT('%', :searchStr, '%')))");
 

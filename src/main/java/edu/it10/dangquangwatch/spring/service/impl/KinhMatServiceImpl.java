@@ -28,7 +28,17 @@ public class KinhMatServiceImpl implements KinhMatService {
 
   @Override
   public KinhMat saveKinhMat(KinhMat kinhMat) {
-    return kinhMatRepository.save(kinhMat);
+    Optional<KinhMat> opt = kinhMatRepository.findByTenKinhMat(kinhMat.getTenKinhMat());
+
+    if (opt.isPresent()) {
+      KinhMat existed = opt.get();
+
+      existed.setSoLuong(existed.getSoLuong() + kinhMat.getSoLuong());
+
+      return kinhMatRepository.save(existed);
+    } else {
+      return kinhMatRepository.save(kinhMat);
+    }
   }
 
   @Override

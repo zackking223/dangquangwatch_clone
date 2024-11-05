@@ -19,12 +19,22 @@ public class DonghoServiceImpl implements DonghoService {
 
   @Override  
   public List<Dongho> getAllDongho() {  
-    return (List<Dongho>) donghoRepository.findAll();  
+    return donghoRepository.findAll();  
   }  
 
   @Override  
-  public Dongho saveDongho(Dongho dongho) {  
-    return donghoRepository.save(dongho);  
+  public Dongho saveDongho(Dongho dongho) {
+    Optional<Dongho> opt = donghoRepository.findByTendongho(dongho.getTendongho());
+
+    if (opt.isPresent()) {
+      Dongho existed = opt.get();
+      existed.setSoluong(existed.getSoluong() + dongho.getSoluong());
+
+      return donghoRepository.save(existed);
+    } else {
+      return donghoRepository.save(dongho);  
+    }
+    
   }  
 
   @Override  
@@ -45,6 +55,6 @@ public class DonghoServiceImpl implements DonghoService {
 
   @Override
   public Page<Dongho> searchDongho(String searchStr, Dongho searchData, String from, String to, int pageNum) {
-    return donghoRepository.searchDongho(searchStr, searchData, from, to, PageRequest.of(pageNum, 10));
+    return donghoRepository.searchDongHo(searchStr, searchData, from, to, PageRequest.of(pageNum, 10));
   }  
 }

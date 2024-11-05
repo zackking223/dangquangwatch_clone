@@ -23,7 +23,16 @@ public class ButkyServiceImpl implements ButkyService {
 
   @Override
   public Butky saveButky(Butky butky) {
-    return butkyRepository.save(butky);
+    Optional<Butky> opt = butkyRepository.findByTenbutky(butky.getTenbutky());
+
+    if (opt.isPresent()) {
+      Butky existed = opt.get();
+      existed.setSoluong(existed.getSoluong() + butky.getSoluong());
+
+      return butkyRepository.save(existed);
+    } else {
+      return butkyRepository.save(butky);
+    }
   }
 
   @Override
