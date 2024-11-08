@@ -53,7 +53,7 @@ const classPrefix = getRandomStr(5);
 function initContainer() {
   const container = document.createElement('section');
   container.id = classPrefix + "_notification_container";
-  container.style.position = "absolute";
+  container.style.position = "fixed";
   container.style.top = "20px";
   container.style.right = "20px";
   container.style.display = "flex";
@@ -131,7 +131,12 @@ function initContainer() {
 }
 initContainer();
 
-// type = success, error, info
+// {
+//   title: String,
+//   message: String,
+//   type: success | error | info | warning
+//   url?: String
+// }
 function showNotification(data, duration = 8000) {
   if (data.message == null) {
     throw new Error("Notification format is invalid!", data);

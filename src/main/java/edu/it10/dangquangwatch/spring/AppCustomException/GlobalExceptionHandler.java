@@ -8,7 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-import edu.it10.dangquangwatch.spring.entity.ApiResponse;
+import edu.it10.dangquangwatch.spring.entity.response.ApiResponse;
+import edu.it10.dangquangwatch.spring.payment.PaymentException;
 import jakarta.servlet.http.HttpSession;
 
 @ControllerAdvice
@@ -23,8 +24,15 @@ public class GlobalExceptionHandler {
         .body(new ApiResponse(false, ex.getMessage()));
   }
 
-  @ExceptionHandler(OrderItemException.class)
-  public ResponseEntity<ApiResponse> handleOrderItemException(OrderItemException ex) {
+  @ExceptionHandler(PaymentException.class)
+  public ResponseEntity<ApiResponse> handlePaymentException(PaymentException ex) {
+    return ResponseEntity
+        .status(HttpStatus.BAD_REQUEST)
+        .body(new ApiResponse(false, ex.getMessage()));
+  }
+
+  @ExceptionHandler(OrderException.class)
+  public ResponseEntity<ApiResponse> handleOrderItemException(OrderException ex) {
     return ResponseEntity
         .status(HttpStatus.BAD_REQUEST)
         .body(new ApiResponse(false, ex.getMessage()));

@@ -8,25 +8,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import edu.it10.dangquangwatch.spring.AppCustomException.SaveAccountException;
 import edu.it10.dangquangwatch.spring.AppCustomException.EmptyOrNullListException;
 import edu.it10.dangquangwatch.spring.AppCustomException.ErrorEnum;
-import edu.it10.dangquangwatch.spring.entity.ApiResponse;
 import edu.it10.dangquangwatch.spring.entity.DonHang;
 import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
 import edu.it10.dangquangwatch.spring.entity.enumeration.OrderStatus;
-import edu.it10.dangquangwatch.spring.notification.NotificationBody;
-import edu.it10.dangquangwatch.spring.notification.NotificationType;
+import edu.it10.dangquangwatch.spring.entity.response.ApiResponse;
+import edu.it10.dangquangwatch.spring.entity.response.ObjectResponse;
+import edu.it10.dangquangwatch.spring.payment.CardInfo;
+import edu.it10.dangquangwatch.spring.payment.GlobalCardInfo;
+import edu.it10.dangquangwatch.spring.payment.LocalCardInfo;
 import edu.it10.dangquangwatch.spring.service.ChiTietDonHangService;
 import edu.it10.dangquangwatch.spring.service.DonHangService;
 import edu.it10.dangquangwatch.spring.service.TaiKhoanService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,8 +43,6 @@ public class ProfileController {
   ChiTietDonHangService ctdhService;
   @Autowired
   TaiKhoanService taiKhoanService;
-  @Autowired
-  private SimpMessagingTemplate messagingTemplate;
 
   @GetMapping("/giohang")
   public String cart(HttpSession session, Model model) {
@@ -126,62 +124,45 @@ public class ProfileController {
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
   }
 
-  @PostMapping("/dathang")
-  public ResponseEntity<ApiResponse> placeOrder(HttpServletRequest request, @RequestBody DonHang donHang) {
-    HttpSession session = request.getSession(false);
-    if (donHang.getItems() == null) {
-      ApiResponse response = new ApiResponse(false, "Danh sách sản phẩm trống!");
-      return ResponseEntity.ok(response);
-    }
-
-    if (donHang.getItems().size() < 1) {
-      ApiResponse response = new ApiResponse(false, "Phải có ít nhất 1 sản phẩm!");
-      return ResponseEntity.ok(response);
-    }
-
+  @PostMapping("/kiemtradonhang")
+  public ResponseEntity<ObjectResponse<DonHang>> toCheckOut(
+      HttpSession session,
+      Model model,
+      @RequestBody DonHang donHang) {
     String username = (String) session.getAttribute("username");
+    TaiKhoan user = taiKhoanService.getTaiKhoan(username);
+    
+    TaiKhoan tempTaiKhoan = new TaiKhoan();
+    tempTaiKhoan.setUsername(username);
+    tempTaiKhoan.setDiachi(user.getDiachi());
+    tempTaiKhoan.setSodienthoai(user.getSodienthoai());
+    tempTaiKhoan.setHoten(user.getHoten());
 
-    TaiKhoan taiKhoan = taiKhoanService.getTaiKhoan(username);
+    // Check don hang valid
+    donHang = donHangService.validate(donHang, tempTaiKhoan);
 
-    if (taiKhoan.getSodienthoai() == null) {
-      ApiResponse response = new ApiResponse(false, "Vui lòng thêm số điện thoại cho tài khoản!");
+    return ResponseEntity.ok(new ObjectResponse<DonHang>(true, "Đơn hàng hợp lệ!", donHang));
+  }
+
+  @PostMapping("/checkout")
+  public ResponseEntity<ApiResponse> placeOrder(
+      @RequestBody DonHang donHang,
+      @RequestBody Optional<CardInfo> cardInfo) {
+    if (cardInfo.isPresent()) {
+      CardInfo info = cardInfo.get();
+      ApiResponse response = null;
+      if (info instanceof GlobalCardInfo) {
+        response = donHangService.checkOutDonHang(donHang, (GlobalCardInfo)info);
+      } else if (info instanceof LocalCardInfo) {
+        response = donHangService.checkOutDonHang(donHang, (LocalCardInfo)info);
+      }
+
+      return ResponseEntity.ok(response);
+    } else {
+      ApiResponse response = donHangService.checkOutDonHang(donHang);
+
       return ResponseEntity.ok(response);
     }
-
-    if (taiKhoan.getDiachi().equals("Chưa có") || taiKhoan.getDiachi() == null) {
-      ApiResponse response = new ApiResponse(false, "Vui lòng địa chỉ cho tài khoản!");
-      return ResponseEntity.ok(response);
-    }
-
-    donHang.setTinhTrang(OrderStatus.PENDING);
-
-    if (donHang.getDiaChi() == null || donHang.getDiaChi().isEmpty()) {
-      donHang.setDiaChi(taiKhoan.getDiachi());
-    }
-
-    if (donHang.getGhiChu() == null || donHang.getGhiChu().isEmpty()) {
-      donHang.setGhiChu("Không có");
-    }
-
-    if (donHang.getNGAYTHEM() == null) {
-      donHang.setNGAYTHEM(Helper.getCurrentDateFormatted());
-    }
-
-    donHang.setTaikhoan(taiKhoan);
-
-    donHangService.addDonHang(donHang);
-
-    // Gửi thông báo cho quản trị viên
-    NotificationBody notification = new NotificationBody();
-    notification.setMessage(username + " đã đặt một đơn hàng mới!");
-    notification.setTitle("Đơn hàng mới");
-    notification.setType(NotificationType.SUCCESS);
-    notification.setUrl("/admin/donhang/?email=" + username);
-
-    messagingTemplate.convertAndSend("/topic/notifications", notification);
-
-    ApiResponse response = new ApiResponse(true, "Đặt hàng thành công!");
-    return ResponseEntity.ok(response);
   }
 
   @PostMapping("/huydon")

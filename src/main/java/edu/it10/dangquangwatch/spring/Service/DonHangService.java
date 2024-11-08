@@ -6,7 +6,11 @@ import org.springframework.data.domain.Page;
 
 import edu.it10.dangquangwatch.spring.entity.ChiTietDonHang;
 import edu.it10.dangquangwatch.spring.entity.DonHang;
+import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
 import edu.it10.dangquangwatch.spring.entity.enumeration.OrderStatus;
+import edu.it10.dangquangwatch.spring.entity.response.ApiResponse;
+import edu.it10.dangquangwatch.spring.payment.GlobalCardInfo;
+import edu.it10.dangquangwatch.spring.payment.LocalCardInfo;
 
 public interface DonHangService {
   Page<DonHang> getAllDonHang(int page);
@@ -15,7 +19,11 @@ public interface DonHangService {
 
   Optional<DonHang> findDonHangById(int madonhang);
 
-  void addDonHang(DonHang donHang);
+  DonHang validate(DonHang donHang, TaiKhoan taiKhoan);
+
+  ApiResponse checkOutDonHang(DonHang donHang);
+  ApiResponse checkOutDonHang(DonHang donHang, GlobalCardInfo cardInfo);
+  ApiResponse checkOutDonHang(DonHang donHang, LocalCardInfo cardInfo);
 
   void updateDonHang(DonHang donHang);
 

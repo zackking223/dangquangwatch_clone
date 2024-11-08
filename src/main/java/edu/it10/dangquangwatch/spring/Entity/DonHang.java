@@ -14,6 +14,7 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.Objects;
 
+import edu.it10.dangquangwatch.spring.entity.enumeration.OrderPaymentStatus;
 import edu.it10.dangquangwatch.spring.entity.enumeration.OrderStatus;
 
 @Entity
@@ -37,7 +38,7 @@ public class DonHang {
    * "Chờ xác nhận" / "Đã xác nhận" / "Đang vận chuyển" / "Đã nhận hàng" / "Đã hủy"
    */
   @Column(name = "tinhtrang")
-  private OrderStatus tinhTrang;
+  private String tinhTrang;
 
   /**
    * "Đã thanh toán" / "Khi nhận hàng"
@@ -60,19 +61,6 @@ public class DonHang {
   }
 
   public DonHang() {
-  }
-
-  public DonHang(Integer maDonHang, Integer tongTien, String diaChi, String ghiChu, OrderStatus tinhTrang, String thanhToan,
-      String NGAYTHEM, List<ChiTietDonHang> items, TaiKhoan taikhoan) {
-    this.maDonHang = maDonHang;
-    this.tongTien = tongTien;
-    this.diaChi = diaChi;
-    this.ghiChu = ghiChu;
-    this.tinhTrang = tinhTrang;
-    this.thanhToan = thanhToan;
-    this.NGAYTHEM = NGAYTHEM;
-    this.items = items;
-    this.taikhoan = taikhoan;
   }
 
   public Integer getMaDonHang() {
@@ -107,12 +95,16 @@ public class DonHang {
     this.ghiChu = ghiChu;
   }
 
-  public OrderStatus getTinhTrang() {
+  public String getTinhTrang() {
     return this.tinhTrang;
   }
 
-  public void setTinhTrang(OrderStatus tinhTrang) {
+  public void setTinhTrang(String tinhTrang) {
     this.tinhTrang = tinhTrang;
+  }
+
+  public void setTinhTrang(OrderStatus tinhTrang) {
+    this.tinhTrang = tinhTrang.getValue();
   }
 
   public String getThanhToan() {
@@ -121,6 +113,10 @@ public class DonHang {
 
   public void setThanhToan(String thanhToan) {
     this.thanhToan = thanhToan;
+  }
+
+  public void setThanhToan(OrderPaymentStatus status) {
+    this.thanhToan = status.getValue();
   }
 
   public String getNGAYTHEM() {
@@ -215,15 +211,15 @@ public class DonHang {
   @Override
   public String toString() {
     return "{" +
-        " maDonHang='" + getMaDonHang() + "'" +
-        ", tongTien='" + getTongTien() + "'" +
-        ", diaChi='" + getDiaChi() + "'" +
-        ", ghiChu='" + getGhiChu() + "'" +
-        ", tinhTrang='" + getTinhTrang() + "'" +
-        ", thanhToan='" + getThanhToan() + "'" +
-        ", NGAYTHEM='" + getNGAYTHEM() + "'" +
-        ", items='" + getItems() + "'" +
-        ", taikhoan='" + getTaikhoan() + "'" +
+        " maDonHang:'" + getMaDonHang() + "'" +
+        ", tongTien:'" + getTongTien() + "'" +
+        ", diaChi:'" + getDiaChi() + "'" +
+        ", ghiChu:'" + getGhiChu() + "'" +
+        ", tinhTrang:'" + getTinhTrang() + "'" +
+        ", thanhToan:'" + getThanhToan() + "'" +
+        ", NGAYTHEM:'" + getNGAYTHEM() + "'" +
+        ", items:'" + getItems() + "'" +
+        ", taikhoan:'" + getTaikhoan().toString() + "'" +
         "}";
   }
 }

@@ -1,4 +1,4 @@
-package edu.it10.dangquangwatch.spring.entity;
+package edu.it10.dangquangwatch.spring.entity.response;
 
 public class ApiResponse {
   private boolean status;

@@ -203,14 +203,14 @@ public class TaiKhoan {
   @Override
   public String toString() {
     return "{" +
-        " username='" + getUsername() + "'" +
-        ", password='" + getPassword() + "'" +
-        ", hoten='" + getHoten() + "'" +
-        ", sodienthoai='" + getSodienthoai() + "'" +
-        ", diachi='" + getDiachi() + "'" +
-        ", loai_tai_khoan='" + getLoai_tai_khoan() + "'" +
-        ", enabled='" + getEnabled() + "'" +
-        ", NGAYTHEM='" + getNGAYTHEM() + "'" +
+        " username:'" + getUsername() + "'" +
+        ", password:'" + getPassword() + "'" +
+        ", hoten:'" + getHoten() + "'" +
+        ", sodienthoai:'" + getSodienthoai() + "'" +
+        ", diachi:'" + getDiachi() + "'" +
+        ", loai_tai_khoan:'" + getLoai_tai_khoan() + "'" +
+        ", enabled:'" + getEnabled() + "'" +
+        ", NGAYTHEM:'" + getNGAYTHEM() + "'" +
         "}";
   }
 }

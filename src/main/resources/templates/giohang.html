@@ -17,14 +17,48 @@
 
   <div class="w-full xl:max-w-[1215px] max-w-[1021px] mx-auto my-9 min-h-[85vh]">
     <div class="flex gap-2 w-max mx-auto items-end">
-      <h1 class="p-2 bg-slate-400 rounded-tl rounded-tr text-xl hover:text-yellow-500"><a href="/profile/doithongtin">Đổi thông tin</a></h1>
-      <h1 class="p-2 bg-slate-400 rounded-tl rounded-tr text-xl hover:text-yellow-500"><a href="/profile/donhang">Đơn hàng</a></h1>
-      <h1 class="p-2 bg-white rounded-tl rounded-tr text-xl text-yellow-500 font-bold underline"><a href="/profile/giohang">Giỏ hàng</a></h1>
+      <h1 class="p-2 bg-slate-400 rounded-tl rounded-tr text-xl hover:text-yellow-500"><a
+          href="/profile/doithongtin">Đổi thông tin</a></h1>
+      <h1 class="p-2 bg-slate-400 rounded-tl rounded-tr text-xl hover:text-yellow-500"><a href="/profile/donhang">Đơn
+          hàng</a></h1>
+      <h1 class="p-2 bg-white rounded-tl rounded-tr text-xl text-yellow-500 font-bold underline"><a
+          href="/profile/giohang">Giỏ hàng</a></h1>
     </div>
     <div class="bg-white shadow-md rounded-lg overflow-hidden p-4 min-h-[800px]">
       <section id="cart-container" class="w-full">
         <!-- DANH SACH DON HANG -->
       </section>
+
+
+      <form id="paymentForm" class="flex-col gap-4 w-full sm:p-4 p-2 hidden">
+        <div class="w-full h-[1px] bg-neutral-500 my-4"></div>
+        <div class="w-full">
+          <label class="block font-medium mb-1 mt-2" for="thanhToanOption">Phương thức thanh toán</label>
+          <select class="w-full p-2 rounded border border-black" id="thanhToanOption">
+            <option value="1" selected>Thanh toán khi nhận hàng</option>
+            <option value="2">Thanh toán online</option>
+          </select>
+        </div>
+        <section id="paymentContainer" class="grid md:grid-cols-2 grid-cols-1 gap-4 w-full">
+          <!-- PAYMENT CONTAINER -->
+          <div class="w-full">
+            <button id="checkout-btn" onclick="checkout()" type="button"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 pl-3 pr-4 rounded flex gap-2 items-center">
+              <img src="/svg/danggiao.svg" class="w-5 h-5" alt="order">
+              <p>
+                Đặt hàng
+              </p>
+            </button>
+            <button id="hidden-checkout-btn"
+              class="bg-slate-500 text-white font-bold py-2 pl-3 pr-4 rounded gap-2 items-center cursor-wait hidden">
+              <img src="/svg/danggiao.svg" class="w-5 h-5" alt="order">
+              <p>
+                Đặt hàng
+              </p>
+            </button>
+          </div>
+        </section>
+      </form>
     </div>
   </div>
 
@@ -52,11 +86,11 @@
                 <p class="text-gray-600">Giá: ${formatCurrencyVND(item.giaTien)}</p>
             </div>
             <div class="flex items-center">
-                <button class="reduce-item bg-red-500 text-white px-2 py-1 mr-2" data-loai="${item.loaiSanPham}" data-ma="${item.maSanPham}">-</button>
+                <button class="reduce-item rounded-sm bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 mr-2" data-loai="${item.loaiSanPham}" data-ma="${item.maSanPham}">-</button>
                 <span id="${item.maSanPham}-${item.loaiSanPham}">${item.soLuong}</span>
-                <button class="add-item bg-green-500 text-white px-2 py-1 ml-2" data-loai="${item.loaiSanPham}" data-ma="${item.maSanPham}">+</button>
+                <button class="add-item rounded-sm bg-green-500 hover:bg-green-600 text-white px-2 py-1 ml-2" data-loai="${item.loaiSanPham}" data-ma="${item.maSanPham}">+</button>
             </div>
-            <button class="remove-item bg-gray-500 text-white px-2 py-1 ml-4" data-loai="${item.loaiSanPham}" data-ma="${item.maSanPham}">Xóa</button>
+            <button class="remove-item rounded-sm bg-red-500 hover:bg-red-600 text-white px-2 py-1 ml-4" data-loai="${item.loaiSanPham}" data-ma="${item.maSanPham}">Xóa</button>
         </div>
     `).join('');
 
@@ -65,12 +99,6 @@
             ${cartItems}
         </div>
         <form onsubmit="null" class="p-4 mt-2 flex flex-col gap-2">
-          <div class="mb-2">
-            <label class="block font-medium mb-1 mt-2" for="thanhToan">Phương thức thanh toán</label>
-            <select class="w-full p-2 rounded border border-black cursor-not-allowed" id="thanhToan" disabled>
-              <option>Thanh toán khi nhận hàng</option>
-            </select>
-          </div>
           <div>
             <label class="block font-medium mb-1 mt-2" for="diaChi">Địa chỉ giao</label>
             <textarea class="w-full p-2 rounded border border-black" rows="3" id="diaChi"
@@ -86,24 +114,21 @@
             <p class="text-lg font-semibold w-max mr-auto" id="tongtiendonhang">Tổng Tiền: ${formatCurrencyVND(cart.tongTien)}</p>
             <button
                 id="dathang-btn"
-                onclick="dathang()"
-                class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded flex gap-2 items-center">
+                onclick="kiemtradonhang()"
+                class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 pl-3 pr-4 rounded flex gap-2 items-center">
                 <img src="/svg/tocheckout.svg" class="w-5 h-5" alt="tocheckout">
                 <p>
-                    Đặt hàng
+                    Tới thanh toán
                 </p>
             </button>
             <button
-                id="hidden-btn"
-                class="bg-slate-500 text-white font-bold py-2 px-4 rounded flex gap-2 items-center cursor-wait hidden">
+                id="hidden-dathang-btn"
+                class="bg-slate-500 text-white font-bold py-2 pl-3 pr-4 rounded hidden gap-2 items-center cursor-wait">
                 <img src="/svg/tocheckout.svg" class="w-5 h-5" alt="tocheckout">
                 <p>
-                    Đặt hàng
+                    Tới thanh toán
                 </p>
             </button>
-        </div>
-        <div id="error" class="p-4 select-none rounded bg-red-500 text-white w-full text-center hidden">
-          Đã có lỗi xảy ra
         </div>
     `;
 

@@ -21,6 +21,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.web.cors.CorsConfiguration;
 
 import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
 import edu.it10.dangquangwatch.spring.service.TaiKhoanService;
@@ -62,8 +63,8 @@ public class SpringSecurityConfig {
             .anyRequest().permitAll() // Các đường dẫn còn lại không yêu cầu đăng nhập
         )
         .csrf(configurer -> configurer.disable()) // Disable csrf for testing
-        .cors(cors -> cors.configurationSource(request -> {
-          var config = new org.springframework.web.cors.CorsConfiguration();
+        .cors(cors -> cors.configurationSource(_ -> {
+          CorsConfiguration config = new CorsConfiguration();
           config.setAllowedOrigins(List.of("http://localhost:3000")); // Chỉ cho phép frontend
           config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
           config.setAllowCredentials(true); // Cho phép cookie/sessions

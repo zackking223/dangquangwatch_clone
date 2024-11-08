@@ -16,7 +16,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "chitietdonhang")
-@JsonIgnoreProperties({ "donhang" })
+@JsonIgnoreProperties("donhang")
 public class ChiTietDonHang {
   @Id
   @Column(name = "machitietdonhang")
@@ -52,7 +52,10 @@ public class ChiTietDonHang {
   private String anhsanpham;
 
   public Integer getMaDonHang() {
-    return this.donhang.getMaDonHang();
+    if (this.donhang != null) {
+      return this.donhang.getMaDonHang();
+    }
+    return null;
   }
 
   public String getLink() {

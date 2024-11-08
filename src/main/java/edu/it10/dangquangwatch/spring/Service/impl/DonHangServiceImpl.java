@@ -5,19 +5,28 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
-import edu.it10.dangquangwatch.spring.AppCustomException.EmptyOrNullListException;
-import edu.it10.dangquangwatch.spring.AppCustomException.OrderItemException;
+import edu.it10.dangquangwatch.spring.AppCustomException.OrderException;
 import edu.it10.dangquangwatch.spring.AppCustomException.ServiceException;
+import edu.it10.dangquangwatch.spring.controller.Helper;
 import edu.it10.dangquangwatch.spring.entity.Butky;
 import edu.it10.dangquangwatch.spring.entity.ChiTietDonHang;
 import edu.it10.dangquangwatch.spring.entity.DonHang;
 import edu.it10.dangquangwatch.spring.entity.Dongho;
 import edu.it10.dangquangwatch.spring.entity.KinhMat;
 import edu.it10.dangquangwatch.spring.entity.PhuKien;
+import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
 import edu.it10.dangquangwatch.spring.entity.Trangsuc;
+import edu.it10.dangquangwatch.spring.entity.enumeration.OrderPaymentStatus;
 import edu.it10.dangquangwatch.spring.entity.enumeration.OrderStatus;
+import edu.it10.dangquangwatch.spring.entity.response.ApiResponse;
+import edu.it10.dangquangwatch.spring.notification.NotificationBody;
+import edu.it10.dangquangwatch.spring.notification.NotificationType;
+import edu.it10.dangquangwatch.spring.payment.GlobalCardInfo;
+import edu.it10.dangquangwatch.spring.payment.LocalCardInfo;
+import edu.it10.dangquangwatch.spring.payment.PaymentService;
 import edu.it10.dangquangwatch.spring.repository.DonHangRepository;
 import edu.it10.dangquangwatch.spring.service.ButkyService;
 import edu.it10.dangquangwatch.spring.service.DonHangService;
@@ -50,6 +59,10 @@ public class DonHangServiceImpl implements DonHangService {
   TrangsucService trangSucService;
   @Autowired
   PhuKienService phuKienService;
+  @Autowired
+  SimpMessagingTemplate messagingTemplate;
+  @Autowired
+  PaymentService paymentService;
 
   @Override
   public Page<DonHang> getAllDonHang(int page) {
@@ -69,30 +82,170 @@ public class DonHangServiceImpl implements DonHangService {
     return donHangRepository.findById(madonhang);
   }
 
-  @Override
-  @Transactional
-  public void addDonHang(DonHang donHang) {
-    if (donHang.getItems() != null) {
+  void checkForException(DonHang donHang) {
+    if (donHang.getTaikhoan() == null) {
+      throw new OrderException("Không tìm thấy tài khoản");
+    }
+
+    if (donHang.getItems() == null) {
+      throw new OrderException("Phải có ít nhất 1 sản phẩm!");
+    }
+
+    if (donHang.getItems().size() < 1) {
+      throw new OrderException("Phải có ít nhất 1 sản phẩm!");
+    }
+
+    if (donHang.getTaikhoan().getSodienthoai() == null) {
+      throw new OrderException("Vui lòng thêm số điện thoại cho tài khoản!");
+    }
+
+    if (donHang.getTaikhoan().getDiachi().equals("Chưa có") || donHang.getTaikhoan().getDiachi() == null) {
+      throw new OrderException("Vui lòng địa chỉ cho tài khoản!");
+    }
+
+    if (donHang.getItems() == null) {
       if (donHang.getItems().size() > 0) {
         for (ChiTietDonHang item : donHang.getItems()) {
           checkItemQuantity(item);
         }
-
-        DonHang result = donHangRepository.save(donHang);
-
-        for (ChiTietDonHang item : donHang.getItems()) {
-          saveOrderItem(item, result);
-        }
-
-        try {
-          emailService.sendOrderSuccessEmail(donHangRepository.findById(result.getMaDonHang()).get());
-        } catch (MessagingException e) {
-          log.warn("WARNING - Cannot send order confirm to {}", result.getTaikhoan().getUsername());
-        }
-      } else {
-        throw new EmptyOrNullListException("Phải có ít nhất 1 đơn hàng!");
       }
     }
+  }
+
+  @Override
+  public DonHang validate(DonHang donHang, TaiKhoan taiKhoan) {
+    if (taiKhoan == null) {
+      throw new OrderException("Không tìm thấy tài khoản");
+    }
+
+    if (donHang.getItems() == null) {
+      throw new OrderException("Phải có ít nhất 1 sản phẩm!");
+    }
+
+    if (donHang.getItems().size() < 1) {
+      throw new OrderException("Phải có ít nhất 1 sản phẩm!");
+    }
+
+    if (taiKhoan.getSodienthoai() == null) {
+      throw new OrderException("Vui lòng thêm số điện thoại cho tài khoản!");
+    }
+
+    if (taiKhoan.getDiachi().equals("Chưa có") || taiKhoan.getDiachi() == null) {
+      throw new OrderException("Vui lòng địa chỉ cho tài khoản!");
+    }
+
+    donHang.setTinhTrang(OrderStatus.PENDING);
+
+    if (donHang.getDiaChi() == null || donHang.getDiaChi().isEmpty()) {
+      donHang.setDiaChi(taiKhoan.getDiachi());
+    }
+
+    if (donHang.getGhiChu() == null || donHang.getGhiChu().isEmpty()) {
+      donHang.setGhiChu("Không có");
+    }
+
+    if (donHang.getNGAYTHEM() == null) {
+      donHang.setNGAYTHEM(Helper.getCurrentDateFormatted());
+    }
+
+    donHang.setTaikhoan(taiKhoan);
+
+    if (donHang.getItems() == null) {
+      if (donHang.getItems().size() > 0) {
+        for (ChiTietDonHang item : donHang.getItems()) {
+          checkItemQuantity(item);
+        }
+      }
+    }
+
+    return donHang;
+  }
+
+  @Override
+  @Transactional
+  public ApiResponse checkOutDonHang(DonHang donHang) {
+    checkForException(donHang);
+    donHang.setThanhToan(OrderPaymentStatus.ON_RECIEVED);
+
+    DonHang result = donHangRepository.save(donHang);
+
+    for (ChiTietDonHang item : donHang.getItems()) {
+      saveOrderItem(item, result);
+    }
+
+    try {
+      emailService.sendOrderSuccessEmail(donHangRepository.findById(result.getMaDonHang()).get());
+    } catch (MessagingException e) {
+      log.warn("WARNING - Cannot send order confirm to {}", result.getTaikhoan().getUsername());
+    }
+
+    // Gửi thông báo cho quản trị viên
+    NotificationBody notification = new NotificationBody();
+    notification.setMessage(donHang.getTaikhoan().getUsername() + " đã đặt một đơn hàng mới!");
+    notification.setTitle("Đơn hàng mới");
+    notification.setType(NotificationType.SUCCESS);
+    notification.setUrl("/admin/donhang/?email=" + donHang.getTaikhoan().getUsername());
+
+    messagingTemplate.convertAndSend("/topic/notifications", notification);
+    return new ApiResponse(true, "Đặt hàng thành công!");
+  }
+
+  @Override
+  @Transactional
+  public ApiResponse checkOutDonHang(DonHang donHang, GlobalCardInfo cardInfo) {
+    checkForException(donHang);
+    paymentService.processPayment(cardInfo);
+    donHang.setThanhToan(OrderPaymentStatus.PAID);
+    DonHang result = donHangRepository.save(donHang);
+
+    for (ChiTietDonHang item : donHang.getItems()) {
+      saveOrderItem(item, result);
+    }
+
+    try {
+      emailService.sendOrderSuccessEmail(donHangRepository.findById(result.getMaDonHang()).get());
+    } catch (MessagingException e) {
+      log.warn("WARNING - Cannot send order confirm to {}", result.getTaikhoan().getUsername());
+    }
+
+    // Gửi thông báo cho quản trị viên
+    NotificationBody notification = new NotificationBody();
+    notification.setMessage(donHang.getTaikhoan().getUsername() + " đã đặt một đơn hàng mới!");
+    notification.setTitle("Đơn hàng mới");
+    notification.setType(NotificationType.SUCCESS);
+    notification.setUrl("/admin/donhang/?email=" + donHang.getTaikhoan().getUsername());
+
+    messagingTemplate.convertAndSend("/topic/notifications", notification);
+    return new ApiResponse(true, "Đặt hàng thành công!");
+  }
+
+  @Override
+  @Transactional
+  public ApiResponse checkOutDonHang(DonHang donHang, LocalCardInfo cardInfo) {
+    checkForException(donHang);
+    paymentService.processPayment(cardInfo);
+    donHang.setThanhToan(OrderPaymentStatus.PAID);
+    DonHang result = donHangRepository.save(donHang);
+
+    for (ChiTietDonHang item : donHang.getItems()) {
+      saveOrderItem(item, result);
+    }
+
+    try {
+      emailService.sendOrderSuccessEmail(donHangRepository.findById(result.getMaDonHang()).get());
+    } catch (MessagingException e) {
+      log.warn("WARNING - Cannot send order confirm to {}", result.getTaikhoan().getUsername());
+    }
+
+    // Gửi thông báo cho quản trị viên
+    NotificationBody notification = new NotificationBody();
+    notification.setMessage(donHang.getTaikhoan().getUsername() + " đã đặt một đơn hàng mới!");
+    notification.setTitle("Đơn hàng mới");
+    notification.setType(NotificationType.SUCCESS);
+    notification.setUrl("/admin/donhang/?email=" + donHang.getTaikhoan().getUsername());
+
+    messagingTemplate.convertAndSend("/topic/notifications", notification);
+    return new ApiResponse(true, "Đặt hàng thành công!");
   }
 
   void saveOrderItem(ChiTietDonHang item, DonHang result) {
@@ -101,36 +254,36 @@ public class DonHangServiceImpl implements DonHangService {
     switch (item.getLoaiSanPham()) {
       case "dongho":
         Dongho dongHo = donghoService.findDonghoById(item.getMaSanPham())
-            .orElseThrow(() -> new OrderItemException("Đồng hồ không tồn tại, mã: " + item.getMaSanPham()));
+            .orElseThrow(() -> new OrderException("Đồng hồ không tồn tại, mã: " + item.getMaSanPham()));
         dongHo.setSoluong(dongHo.getSoluong() - item.getSoLuong());
         donghoService.saveDongho(dongHo);
         break;
       case "phukien":
         PhuKien phuKien = phuKienService.findPhuKienById(item.getMaSanPham())
-            .orElseThrow(() -> new OrderItemException("Phụ kiện không tồn tại, mã: " + item.getMaSanPham()));
+            .orElseThrow(() -> new OrderException("Phụ kiện không tồn tại, mã: " + item.getMaSanPham()));
         phuKien.setSoLuong(phuKien.getSoLuong() - item.getSoLuong());
         phuKienService.savePhuKien(phuKien);
         break;
       case "kinhmat":
         KinhMat kinhMat = kinhMatService.findKinhMatById(item.getMaSanPham())
-            .orElseThrow(() -> new OrderItemException("Kính mắt không tồn tại, mã: " + item.getMaSanPham()));
+            .orElseThrow(() -> new OrderException("Kính mắt không tồn tại, mã: " + item.getMaSanPham()));
         kinhMat.setSoLuong(kinhMat.getSoLuong() - item.getSoLuong());
         kinhMatService.saveKinhMat(kinhMat);
         break;
       case "butky":
         Butky butKy = butKyService.findButkyById(item.getMaSanPham())
-            .orElseThrow(() -> new OrderItemException("Bút ký không tồn tại, mã: " + item.getMaSanPham()));
+            .orElseThrow(() -> new OrderException("Bút ký không tồn tại, mã: " + item.getMaSanPham()));
         butKy.setSoluong(butKy.getSoluong() - item.getSoLuong());
         butKyService.saveButky(butKy);
         break;
       case "trangsuc":
         Trangsuc trangSuc = trangSucService.findTrangsucById(item.getMaSanPham())
-            .orElseThrow(() -> new OrderItemException("Trang sức không tồn tại, mã: " + item.getMaSanPham()));
+            .orElseThrow(() -> new OrderException("Trang sức không tồn tại, mã: " + item.getMaSanPham()));
         trangSuc.setSoluong(trangSuc.getSoluong() - item.getSoLuong());
         trangSucService.saveTrangsuc(trangSuc);
         break;
       default:
-        throw new OrderItemException("Loại sản phẩm không tồn tại, mã: " + item.getMaSanPham());
+        throw new OrderException("Loại sản phẩm không tồn tại, mã: " + item.getMaSanPham());
     }
     ctdhService.saveCTDH(item);
   }
@@ -139,41 +292,41 @@ public class DonHangServiceImpl implements DonHangService {
     switch (item.getLoaiSanPham()) {
       case "dongho":
         Dongho dongHo = donghoService.findDonghoById(item.getMaSanPham())
-            .orElseThrow(() -> new OrderItemException("Đồng hồ không tồn tại, mã: " + item.getMaSanPham()));
+            .orElseThrow(() -> new OrderException("Đồng hồ không tồn tại, mã: " + item.getMaSanPham()));
         if (dongHo.getSoluong() < item.getSoLuong()) {
-          throw new OrderItemException("Số lượng mua vượt giới hạn, mã đồng hồ: " + item.getMaSanPham());
+          throw new OrderException("Số lượng mua vượt giới hạn, mã đồng hồ: " + item.getMaSanPham());
         }
         break;
       case "phukien":
         PhuKien phuKien = phuKienService.findPhuKienById(item.getMaSanPham())
-            .orElseThrow(() -> new OrderItemException("Phụ kiện không tồn tại, mã: " + item.getMaSanPham()));
+            .orElseThrow(() -> new OrderException("Phụ kiện không tồn tại, mã: " + item.getMaSanPham()));
         if (phuKien.getSoLuong() < item.getSoLuong()) {
-          throw new OrderItemException("Số lượng mua vượt giới hạn, mã phụ kiện: " + item.getMaSanPham());
+          throw new OrderException("Số lượng mua vượt giới hạn, mã phụ kiện: " + item.getMaSanPham());
         }
         break;
       case "kinhmat":
         KinhMat kinhMat = kinhMatService.findKinhMatById(item.getMaSanPham())
-            .orElseThrow(() -> new OrderItemException("Kính mắt không tồn tại, mã: " + item.getMaSanPham()));
+            .orElseThrow(() -> new OrderException("Kính mắt không tồn tại, mã: " + item.getMaSanPham()));
         if (kinhMat.getSoLuong() < item.getSoLuong()) {
-          throw new OrderItemException("Số lượng mua vượt giới hạn, mã kính mắt: " + item.getMaSanPham());
+          throw new OrderException("Số lượng mua vượt giới hạn, mã kính mắt: " + item.getMaSanPham());
         }
         break;
       case "butky":
         Butky butKy = butKyService.findButkyById(item.getMaSanPham())
-            .orElseThrow(() -> new OrderItemException("Bút ký không tồn tại, mã: " + item.getMaSanPham()));
+            .orElseThrow(() -> new OrderException("Bút ký không tồn tại, mã: " + item.getMaSanPham()));
         if (butKy.getSoluong() < item.getSoLuong()) {
-          throw new OrderItemException("Số lượng mua vượt giới hạn, mã bút ký: " + item.getMaSanPham());
+          throw new OrderException("Số lượng mua vượt giới hạn, mã bút ký: " + item.getMaSanPham());
         }
         break;
       case "trangsuc":
         Trangsuc trangSuc = trangSucService.findTrangsucById(item.getMaSanPham())
-            .orElseThrow(() -> new OrderItemException("Trang sức không tồn tại, mã: " + item.getMaSanPham()));
+            .orElseThrow(() -> new OrderException("Trang sức không tồn tại, mã: " + item.getMaSanPham()));
         if (trangSuc.getSoluong() < item.getSoLuong()) {
-          throw new OrderItemException("Số lượng mua vượt giới hạn, mã trang sức: " + item.getMaSanPham());
+          throw new OrderException("Số lượng mua vượt giới hạn, mã trang sức: " + item.getMaSanPham());
         }
         break;
       default:
-        throw new OrderItemException("Loại sản phẩm không tồn tại, mã: " + item.getMaSanPham());
+        throw new OrderException("Loại sản phẩm không tồn tại, mã: " + item.getMaSanPham());
     }
   }
 
