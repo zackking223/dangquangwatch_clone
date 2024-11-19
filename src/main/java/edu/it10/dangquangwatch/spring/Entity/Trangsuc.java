@@ -29,6 +29,12 @@ public class Trangsuc {
   @Column(name = "soluong")
   private Integer soluong;
 
+  @Column(name = "soluongdatmua")
+  private Integer soluongdatmua;
+
+  @Column(name = "kichhoat")
+  private Integer kichhoat;
+
   @Column(name = "tragop")
   private Integer tragop;
 
@@ -204,5 +210,21 @@ public class Trangsuc {
       ", thongtin='" + getThongtin() + "'" +
       ", images='" + getImages() + "'" +
       "}";
+  }
+
+  public Integer getSoluongdatmua() {
+    return soluongdatmua;
+  }
+
+  public void setSoluongdatmua(Integer soluongdatmua) {
+    this.soluongdatmua = soluongdatmua;
+  }
+
+  public Integer getKichhoat() {
+    return kichhoat;
+  }
+
+  public void setKichhoat(Integer kichhoat) {
+    this.kichhoat = kichhoat;
   }
 }

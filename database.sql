@@ -559,23 +559,23 @@ CREATE TRIGGER `donhang_after_nhan` AFTER UPDATE ON `donhang` FOR EACH ROW BEGIN
             CASE v_loaisanpham
                 WHEN 'dongho' THEN
                     UPDATE dongho
-                    SET dongho.soluong = dongho.soluong - v_soluong
+                    SET dongho.soluongdatmua = dongho.soluongdatmua - v_soluong
                     WHERE dongho.madongho = v_masanpham;
                 WHEN 'butky' THEN
                     UPDATE butky
-                    SET butky.soluong = butky.soluong - v_soluong
+                    SET butky.soluongdatmua = butky.soluongdatmua - v_soluong
                     WHERE butky.mabutky = v_masanpham;
                 WHEN 'kinhmat' THEN
                     UPDATE kinhmat
-                    SET kinhmat.soluong = kinhmat.soluong - v_soluong
+                    SET kinhmat.soluongdatmua = kinhmat.soluongdatmua - v_soluong
                     WHERE kinhmat.makinhmat = v_masanpham;
                 WHEN 'phukien' THEN
                     UPDATE phukien
-                    SET phukien.soluong = phukien.soluong - v_soluong
+                    SET phukien.soluongdatmua = phukien.soluongdatmua - v_soluong
                     WHERE phukien.maphukien = v_masanpham;
                 WHEN 'trangsuc' THEN
                     UPDATE trangsuc
-                    SET trangsuc.soluong = trangsuc.soluong - v_soluong
+                    SET trangsuc.soluongdatmua = trangsuc.soluongdatmua - v_soluong
                     WHERE trangsuc.matrangsuc = v_masanpham;
                 ELSE
                     SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = v_loaisanpham;

@@ -14,41 +14,76 @@ import edu.it10.dangquangwatch.spring.service.KinhMatService;
 
 @Service
 public class KinhMatServiceImpl implements KinhMatService {
-  @Autowired private KinhMatRepository kinhMatRepository;
+  @Autowired
+  private KinhMatRepository kinhMatRepository;
 
   @Override
-  public List<KinhMat> getAllKinhMat() {
+  public List<KinhMat> getAll() {
     return (List<KinhMat>) kinhMatRepository.findAll();
   }
 
   @Override
-  public Page<KinhMat> searchKinhMat(String searchStr, String from, String to, Integer pageNum) {
+  public Page<KinhMat> search(String searchStr, String from, String to, Integer pageNum) {
     return kinhMatRepository.searchKinhMat(searchStr, from, to, PageRequest.of(pageNum, 10));
   }
 
   @Override
-  public KinhMat saveKinhMat(KinhMat kinhMat) {
-    Optional<KinhMat> opt = kinhMatRepository.findByTenKinhMat(kinhMat.getTenKinhMat());
+  public Page<KinhMat> searchAvaiable(String searchStr, String from, String to, Integer pageNum) {
+    return kinhMatRepository.searchKinhMatActive(searchStr, from, to, PageRequest.of(pageNum, 10));
+  }
+
+  @Override
+  public KinhMat save(KinhMat kinhMat) {
+    return kinhMatRepository.save(kinhMat);
+  }
+
+  @Override
+  public void activate(Integer maKinhMat) {
+    Optional<KinhMat> opt = kinhMatRepository.findById(maKinhMat);
 
     if (opt.isPresent()) {
-      KinhMat existed = opt.get();
+      KinhMat kinhMat = opt.get();
+      kinhMat.setKichhoat(1);
 
-      existed.setSoLuong(existed.getSoLuong() + kinhMat.getSoLuong());
-
-      return kinhMatRepository.save(existed);
-    } else {
-      return kinhMatRepository.save(kinhMat);
+      save(kinhMat);
     }
   }
 
   @Override
-  public void deleteKinhMat(Integer maKinhMat) {
-    kinhMatRepository.deleteById(maKinhMat);
+  public void deactivate(Integer maKinhMat) {
+    Optional<KinhMat> opt = kinhMatRepository.findById(maKinhMat);
+
+    if (opt.isPresent()) {
+      KinhMat kinhMat = opt.get();
+      kinhMat.setKichhoat(0);
+
+      save(kinhMat);
+    }
   }
 
   @Override
-  public Optional<KinhMat> findKinhMatById(Integer maKinhMat) {
+  public Optional<KinhMat> findById(Integer maKinhMat) {
     return kinhMatRepository.findById(maKinhMat);
   }
-  
+
+  @Override
+  public void incAmount(Integer amount, Integer id) {
+    Optional<KinhMat> opt = kinhMatRepository.findById(id);
+    if (opt.isPresent()) {
+      KinhMat kinhMat = opt.get();
+      kinhMat.setSoLuong(kinhMat.getSoLuong() + amount);
+      save(kinhMat);
+    }
+  }
+
+  @Override
+  public void decAmount(Integer amount, Integer id) {
+    Optional<KinhMat> opt = kinhMatRepository.findById(id);
+
+    if (opt.isPresent()) {
+      KinhMat kinhMat = opt.get();
+      kinhMat.setSoLuong(kinhMat.getSoLuong() - amount);
+      save(kinhMat);
+    }
+  }
 }

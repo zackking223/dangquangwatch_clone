@@ -48,7 +48,7 @@ public class IndexController {
             @PathVariable("id") String slug) {
         int id = convertToNum(slug);
 
-        Optional<Dongho> donghoEdit = donghoService.findDonghoById(id);// dich vu dong ho -> repository -> csdl
+        Optional<Dongho> donghoEdit = donghoService.findById(id);// dich vu dong ho -> repository -> csdl
         donghoEdit.ifPresent(dongho -> {
             String searchStr = "";
             if (search.isPresent())
@@ -68,7 +68,7 @@ public class IndexController {
             @PathVariable("id") String slug) {
         int id = convertToNum(slug);
 
-        Optional<PhuKien> phukienEdit = phuKienService.findPhuKienById(id);
+        Optional<PhuKien> phukienEdit = phuKienService.findById(id);
         phukienEdit.ifPresent(phukien -> {
             String searchStr = "";
             if (search.isPresent())
@@ -88,7 +88,7 @@ public class IndexController {
             @PathVariable("id") String slug) {
         int id = convertToNum(slug);
 
-        Optional<Butky> butkyEdit = butkyService.findButkyById(id);
+        Optional<Butky> butkyEdit = butkyService.findById(id);
         butkyEdit.ifPresent(butky -> {
             String searchStr = "";
             if (search.isPresent())
@@ -108,7 +108,7 @@ public class IndexController {
             @PathVariable("id") String slug) {
         int id = convertToNum(slug);
 
-        Optional<KinhMat> kinhmatEdit = kinhMatService.findKinhMatById(id);
+        Optional<KinhMat> kinhmatEdit = kinhMatService.findById(id);
         kinhmatEdit.ifPresent(kinhmat -> {
             String searchStr = "";
             if (search.isPresent())
@@ -128,7 +128,7 @@ public class IndexController {
             @PathVariable("id") String slug) {
         int id = convertToNum(slug);
 
-        Optional<Trangsuc> trangsucEdit = trangsucService.findTrangsucById(id);
+        Optional<Trangsuc> trangsucEdit = trangsucService.findById(id);
         trangsucEdit.ifPresent(trangsuc -> {
             String searchStr = "";
             if (search.isPresent())
@@ -155,7 +155,7 @@ public class IndexController {
             searchStr = search.get().trim();
         if (page.isPresent())
             pageNum = page.get() - 1;
-        data = butkyService.searchButky(searchStr, "2001-01-01", "3000-01-01", pageNum);
+        data = butkyService.searchAvaiable(searchStr, "2001-01-01", "3000-01-01", pageNum);
 
         model.addAttribute("butkys", data.getContent());
         model.addAttribute("page", pageNum);
@@ -178,7 +178,7 @@ public class IndexController {
             searchStr = search.get().trim();
         if (page.isPresent())
             pageNum = page.get() - 1;
-        data = donghoService.getAllDonghoByTendongho(searchStr, "2001-01-01", "3000-01-01", pageNum);
+        data = donghoService.searchAvaiable(searchStr, "2001-01-01", "3000-01-01", pageNum);
 
         model.addAttribute("dongho", fieldData);
         model.addAttribute("donghos", data.getContent());
@@ -200,7 +200,7 @@ public class IndexController {
             searchStr = search.get().trim();
         if (page.isPresent())
             pageNum = page.get() - 1;
-        data = kinhMatService.searchKinhMat(searchStr, "2001-01-01", "3000-01-01", pageNum);
+        data = kinhMatService.searchAvaiable(searchStr, "2001-01-01", "3000-01-01", pageNum);
 
         model.addAttribute("kinhmats", data.getContent());
         model.addAttribute("page", pageNum);
@@ -222,7 +222,7 @@ public class IndexController {
             searchStr = search.get().trim();
         if (page.isPresent())
             pageNum = page.get() - 1;
-        data = phuKienService.searchPhuKien(searchStr, "2001-01-01", "3000-01-01", pageNum);
+        data = phuKienService.searchAvaiable(searchStr, "2001-01-01", "3000-01-01", pageNum);
 
         model.addAttribute("phukiens", data.getContent());
         model.addAttribute("page", pageNum);
@@ -244,7 +244,7 @@ public class IndexController {
             searchStr = search.get().trim();
         if (page.isPresent())
             pageNum = page.get() - 1;
-        data = trangsucService.searchTrangsuc(searchStr, "2001-01-01", "3000-01-01", pageNum);
+        data = trangsucService.searchAvaiable(searchStr, "2001-01-01", "3000-01-01", pageNum);
 
         model.addAttribute("trangsucs", data.getContent());
         model.addAttribute("page", pageNum);
@@ -275,21 +275,21 @@ public class IndexController {
             }
 
             List<Integer> soTrang_list = new ArrayList<Integer>();
-            Page<Dongho> dongho_page = donghoService.getAllDonghoByTendongho(searchStr, "2001-01-01", "3000-01-01",
+            Page<Dongho> dongho_page = donghoService.searchAvaiable(searchStr, "2001-01-01", "3000-01-01",
                     pageNum);
             soTrang_list.add(dongho_page.getTotalPages());
 
-            Page<Trangsuc> trangsuc_page = trangsucService.searchTrangsuc(searchStr, "2001-01-01", "3000-01-01",
+            Page<Trangsuc> trangsuc_page = trangsucService.searchAvaiable(searchStr, "2001-01-01", "3000-01-01",
                     pageNum);
             soTrang_list.add(trangsuc_page.getTotalPages());
 
-            Page<PhuKien> phukien_page = phuKienService.searchPhuKien(searchStr, "2001-01-01", "3000-01-01", pageNum);
+            Page<PhuKien> phukien_page = phuKienService.searchAvaiable(searchStr, "2001-01-01", "3000-01-01", pageNum);
             soTrang_list.add(phukien_page.getTotalPages());
 
-            Page<Butky> butky_page = butkyService.searchButky(searchStr, "2001-01-01", "3000-01-01", pageNum);
+            Page<Butky> butky_page = butkyService.searchAvaiable(searchStr, "2001-01-01", "3000-01-01", pageNum);
             soTrang_list.add(butky_page.getTotalPages());
 
-            Page<KinhMat> kinhmat_page = kinhMatService.searchKinhMat(searchStr, "2001-01-01", "3000-01-01", pageNum);
+            Page<KinhMat> kinhmat_page = kinhMatService.searchAvaiable(searchStr, "2001-01-01", "3000-01-01", pageNum);
             soTrang_list.add(kinhmat_page.getTotalPages());
 
             model.addAttribute("search", searchStr);
@@ -310,23 +310,23 @@ public class IndexController {
     private String renderIndex(Model model) {
         thongKeService.tangluottruycap();
         model.addAttribute("sanphambanchay",
-                donghoService.getAllDonghoByTendongho("", "2001-01-01", "3000-01-01", 0).getContent());
+                donghoService.getAll("", "2001-01-01", "3000-01-01", 0).getContent());
         model.addAttribute("donghoeposswiss",
-                donghoService.getAllDonghoByTendongho("Epos Swiss", "2001-01-01", "3000-01-01", 0).getContent());
+                donghoService.getAll("Epos Swiss", "2001-01-01", "3000-01-01", 0).getContent());
         model.addAttribute("diamondd",
-                donghoService.getAllDonghoByTendongho("Diamond", "2001-01-01", "3000-01-01", 0).getContent());
+                donghoService.getAll("Diamond", "2001-01-01", "3000-01-01", 0).getContent());
         model.addAttribute("philippeauguste",
-                donghoService.getAllDonghoByTendongho("Auguste", "2001-01-01", "3000-01-01", 0).getContent());
+                donghoService.getAll("Auguste", "2001-01-01", "3000-01-01", 0).getContent());
         model.addAttribute("jacqueslemans",
-                donghoService.getAllDonghoByTendongho("Jacques", "2001-01-01", "3000-01-01", 0).getContent());
+                donghoService.getAll("Jacques", "2001-01-01", "3000-01-01", 0).getContent());
         model.addAttribute("ariesgold",
-                donghoService.getAllDonghoByTendongho("Aries", "2001-01-01", "3000-01-01", 0).getContent());
+                donghoService.getAll("Aries", "2001-01-01", "3000-01-01", 0).getContent());
         model.addAttribute("atlanticswiss",
-                donghoService.getAllDonghoByTendongho("Atlantic", "2001-01-01", "3000-01-01", 0).getContent());
+                donghoService.getAll("Atlantic", "2001-01-01", "3000-01-01", 0).getContent());
         model.addAttribute("citizen",
-                donghoService.getAllDonghoByTendongho("Citizen", "2001-01-01", "3000-01-01", 0).getContent());
+                donghoService.getAll("Citizen", "2001-01-01", "3000-01-01", 0).getContent());
         model.addAttribute("tsarbomba",
-                donghoService.getAllDonghoByTendongho("Tsar", "2001-01-01", "3000-01-01", 0).getContent());
+                donghoService.getAll("Tsar", "2001-01-01", "3000-01-01", 0).getContent());
 
         return "index";
     }

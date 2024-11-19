@@ -8,13 +8,18 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;  
 
 public interface TrangsucService {  
-  List<Trangsuc> getAllTrangsuc();  
+  List<Trangsuc> getAll();  
 
-  Trangsuc saveTrangsuc(Trangsuc trangsuc);  
+  Trangsuc save(Trangsuc trangsuc);  
 
-  Page<Trangsuc> searchTrangsuc(String searchStr, String from, String to, Integer pageNum);
+  Page<Trangsuc> search(String searchStr, String from, String to, Integer pageNum);
+  Page<Trangsuc> searchAvaiable(String searchStr, String from, String to, Integer pageNum);
 
-  void deleteTrangsuc(Integer matrangsuc);  
+  void activate(Integer matrangsuc);
+  void deactivate(Integer matrangsuc);  
 
-  Optional<Trangsuc> findTrangsucById(Integer matrangsuc);  
+  Optional<Trangsuc> findById(Integer matrangsuc);
+  
+  void incAmount(Integer amount, Integer id);
+  void decAmount(Integer amount, Integer id);
 }

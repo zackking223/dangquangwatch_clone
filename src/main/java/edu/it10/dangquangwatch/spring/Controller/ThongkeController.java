@@ -13,6 +13,7 @@ import edu.it10.dangquangwatch.spring.service.ThongKeService;
 import jakarta.servlet.http.HttpSession;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -27,7 +28,8 @@ public class ThongkeController {
 
   @GetMapping("/admin/thongke/")
   public String trangThongKe(Model model, @RequestParam("editcapital") Optional<String> editcapital_opt) {
-    ThongKe thongKe = thongKeService.getAllThongKe().getFirst();
+    List<ThongKe> thongKes = thongKeService.getAllThongKe();
+    ThongKe thongKe = thongKes.getFirst();
     boolean editcapital = editcapital_opt.isPresent();
 
     Float newTiLe = thongKe.tinhTile();
@@ -37,6 +39,8 @@ public class ThongkeController {
 
     model.addAttribute("thongKe", thongKe);
     model.addAttribute("editcapital", editcapital);
+    model.addAttribute("thongKes", thongKes);
+
     return "admin/thongke/index";
   }
 

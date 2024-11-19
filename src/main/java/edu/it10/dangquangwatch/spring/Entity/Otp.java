@@ -25,8 +25,13 @@ public class Otp {
   @Column(name = "email")
   private String email;
 
-  @Nullable
+  @Column(name = "action")
+  private String action;
   
+  @Column(name = "payload")
+  private String payload;
+
+  @Nullable
   @Column(name = "expiry_date")
   private String expiryDate;
 

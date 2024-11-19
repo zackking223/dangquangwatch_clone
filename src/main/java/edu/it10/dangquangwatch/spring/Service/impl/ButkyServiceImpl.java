@@ -17,36 +17,71 @@ public class ButkyServiceImpl implements ButkyService {
   private ButkyRepository butkyRepository;
 
   @Override
-  public List<Butky> getAllButky() {
+  public List<Butky> getAll() {
     return (List<Butky>) butkyRepository.findAll();
   }
 
   @Override
-  public Butky saveButky(Butky butky) {
-    Optional<Butky> opt = butkyRepository.findByTenbutky(butky.getTenbutky());
+  public Butky save(Butky butky) {
+    return butkyRepository.save(butky);
+  }
+
+  @Override
+  public void activate(Integer mabutky) {
+    Optional<Butky> opt = butkyRepository.findById(mabutky);
 
     if (opt.isPresent()) {
-      Butky existed = opt.get();
-      existed.setSoluong(existed.getSoluong() + butky.getSoluong());
-
-      return butkyRepository.save(existed);
-    } else {
-      return butkyRepository.save(butky);
+      Butky butky = opt.get();
+      butky.setKichhoat(1);
+      save(butky);
     }
   }
 
   @Override
-  public void deleteButky(Integer mabutky) {
-    butkyRepository.deleteById(mabutky);
+  public void deactivate(Integer mabutky) {
+    Optional<Butky> opt = butkyRepository.findById(mabutky);
+
+    if (opt.isPresent()) {
+      Butky butky = opt.get();
+      butky.setKichhoat(0);
+      save(butky);
+    }
   }
 
   @Override
-  public Optional<Butky> findButkyById(Integer mabutky) {
+  public Optional<Butky> findById(Integer mabutky) {
     return butkyRepository.findById(mabutky);
   }
 
   @Override
-  public Page<Butky> searchButky(String searchStr, String from, String to, Integer pageNum) {
+  public Page<Butky> search(String searchStr, String from, String to, Integer pageNum) {
     return butkyRepository.searchButKy(searchStr, from, to, PageRequest.of(pageNum, 10));
+  }
+
+  @Override
+  public Page<Butky> searchAvaiable(String searchStr, String from, String to, Integer pageNum) {
+    return butkyRepository.searchActiveButKy(searchStr, from, to, PageRequest.of(pageNum, 10));
+  }
+
+  @Override
+  public void incAmount(Integer amount, Integer id) {
+    Optional<Butky> opt = butkyRepository.findById(id);
+
+    if (opt.isPresent()) {
+      Butky butky = opt.get();
+      butky.setSoluong(butky.getSoluong() + amount);
+      save(butky);
+    }
+  }
+
+  @Override
+  public void decAmount(Integer amount, Integer id) {
+    Optional<Butky> opt = butkyRepository.findById(id);
+
+    if (opt.isPresent()) {
+      Butky butky = opt.get();
+      butky.setSoluong(butky.getSoluong() - amount);
+      save(butky);
+    }
   }
 }

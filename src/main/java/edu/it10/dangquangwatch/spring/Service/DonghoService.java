@@ -10,13 +10,18 @@ import org.springframework.data.domain.Page;
 public interface DonghoService {  
   List<Dongho> getAllDongho();  
 
-  Page<Dongho> getAllDonghoByTendongho(String tendongho, String from, String to, int pageNum);  
+  Page<Dongho> getAll(String tendongho, String from, String to, int pageNum);  
+  Page<Dongho> searchAvaiable(String tendongho, String from, String to, int pageNum);  
 
-  Page<Dongho> searchDongho(String searchStr, Dongho searchData, String from, String to, int pageNum);
+  Page<Dongho> search(String searchStr, Dongho searchData, String from, String to, int pageNum);
 
-  Dongho saveDongho(Dongho dongho);  
+  Dongho save(Dongho dongho);  
 
-  void deleteDongho(Integer madongho);  
+  void activate(Integer madongho);
+  void deactivate(Integer madongho);  
 
-  Optional<Dongho> findDonghoById(Integer madongho);  
+  Optional<Dongho> findById(Integer madongho);
+  
+  void incAmount(Integer amount, Integer id);
+  void decAmount(Integer amount, Integer id);
 }

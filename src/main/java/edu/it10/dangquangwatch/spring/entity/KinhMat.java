@@ -44,6 +44,12 @@ public class KinhMat {
   @Column(name = "soluong")
   private int soLuong;
 
+  @Column(name = "soluongdatmua")
+  private Integer soluongdatmua;
+
+  @Column(name = "kichhoat")
+  private Integer kichhoat;
+
   @Column(name = "thongtin")
   private String thongTin;
 
@@ -167,5 +173,21 @@ public class KinhMat {
 
   public void setImages(List<Anhkinhmat> images) {
     this.images = images;
+  }
+
+  public Integer getSoluongdatmua() {
+    return soluongdatmua;
+  }
+
+  public void setSoluongdatmua(Integer soluongdatmua) {
+    this.soluongdatmua = soluongdatmua;
+  }
+
+  public Integer getKichhoat() {
+    return kichhoat;
+  }
+
+  public void setKichhoat(Integer kichhoat) {
+    this.kichhoat = kichhoat;
   }
 }

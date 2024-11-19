@@ -29,6 +29,12 @@ public class Butky {
     @Column(name = "soluong")
     private Integer soluong;
 
+    @Column(name = "soluongdatmua")
+    private Integer soluongdatmua;
+
+    @Column(name = "kichhoat")
+    private Integer kichhoat;
+
     @Column(name = "tragop")
     private Integer tragop;
 
@@ -57,11 +63,11 @@ public class Butky {
         return NumberFormat.getInstance().format(this.giatien);
     }
 
-
     public Butky() {
     }
 
-    public Butky(Integer mabutky, String tenbutky, Integer giatien, Integer soluong, Integer tragop, String NGAYTHEM, String thongtin, List<Anhbutky> images) {
+    public Butky(Integer mabutky, String tenbutky, Integer giatien, Integer soluong, Integer tragop, String NGAYTHEM,
+            String thongtin, List<Anhbutky> images) {
         this.mabutky = mabutky;
         this.tenbutky = tenbutky;
         this.giatien = giatien;
@@ -184,7 +190,10 @@ public class Butky {
             return false;
         }
         Butky butky = (Butky) o;
-        return Objects.equals(mabutky, butky.mabutky) && Objects.equals(tenbutky, butky.tenbutky) && Objects.equals(giatien, butky.giatien) && Objects.equals(soluong, butky.soluong) && Objects.equals(tragop, butky.tragop) && Objects.equals(NGAYTHEM, butky.NGAYTHEM) && Objects.equals(thongtin, butky.thongtin) && Objects.equals(images, butky.images);
+        return Objects.equals(mabutky, butky.mabutky) && Objects.equals(tenbutky, butky.tenbutky)
+                && Objects.equals(giatien, butky.giatien) && Objects.equals(soluong, butky.soluong)
+                && Objects.equals(tragop, butky.tragop) && Objects.equals(NGAYTHEM, butky.NGAYTHEM)
+                && Objects.equals(thongtin, butky.thongtin) && Objects.equals(images, butky.images);
     }
 
     @Override
@@ -195,14 +204,30 @@ public class Butky {
     @Override
     public String toString() {
         return "{" +
-            " mabutky='" + getMabutky() + "'" +
-            ", tenbutky='" + getTenbutky() + "'" +
-            ", giatien='" + getGiatien() + "'" +
-            ", soluong='" + getSoluong() + "'" +
-            ", tragop='" + getTragop() + "'" +
-            ", NGAYTHEM='" + getNGAYTHEM() + "'" +
-            ", thongtin='" + getThongtin() + "'" +
-            ", images='" + getImages() + "'" +
-            "}";
+                " mabutky='" + getMabutky() + "'" +
+                ", tenbutky='" + getTenbutky() + "'" +
+                ", giatien='" + getGiatien() + "'" +
+                ", soluong='" + getSoluong() + "'" +
+                ", tragop='" + getTragop() + "'" +
+                ", NGAYTHEM='" + getNGAYTHEM() + "'" +
+                ", thongtin='" + getThongtin() + "'" +
+                ", images='" + getImages() + "'" +
+                "}";
+    }
+
+    public Integer getSoluongdatmua() {
+        return soluongdatmua;
+    }
+
+    public void setSoluongdatmua(Integer soluongdatmua) {
+        this.soluongdatmua = soluongdatmua;
+    }
+
+    public Integer getKichhoat() {
+        return kichhoat;
+    }
+
+    public void setKichhoat(Integer kichhoat) {
+        this.kichhoat = kichhoat;
     }
 }

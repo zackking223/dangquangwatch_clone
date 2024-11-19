@@ -43,7 +43,7 @@
                     <div class="overflow-hidden relative w-full h-full">
                         <div id="slider" class="flex transition-transform duration-500 ease-in-out overflow-visible">
                             <div th:each="image : ${kinhmat.getImages()}"
-                                class="w-full flex-shrink-0 aspect-ratio-1-1_2 relative">
+                                class="w-full flex-shrink-0 aspect-ratio-1-1_2 relative overflow-hidden">
                                 <img th:src="${image.getUrl()}" th:alt="${image.getTenanh()}">
                             </div>
                             <div class="w-full flex-shrink-0 aspect-ratio-1-1_2 relative">
@@ -110,7 +110,7 @@
                             <span th:text="${kinhmat.getNGAYTHEM()}"></span>
                         </div>
                     </section>
-                    <div class="flex gap-4 my-4">
+                    <div th:if="${kinhmat.kichhoat == 1}" class="flex gap-4 my-4">
                         <button th:data-tsp="${kinhmat.getTenKinhMat()}" th:data-msp="${kinhmat.getMaKinhMat()}"
                             th:data-gt="${kinhmat.getGiaTien()}" th:data-asp="${kinhmat.getFirstImageUrl()}"
                             onclick="addItem(this.getAttribute('data-tsp'),parseInt(this.getAttribute('data-msp')), 'kinhmat',parseInt(this.getAttribute('data-gt')), this.getAttribute('data-asp')); redirectToCart()"
@@ -129,6 +129,10 @@
                                 Thêm vào giỏ
                             </p>
                         </button>
+                    </div>
+
+                    <div th:if="${kinhmat.kichhoat == 0 || kinhmat.soLuong == 0}" class="bg-slate-500 cursor-not-allowed text-white font-bold py-2 px-4 rounded w-max">
+                        Sản phẩm ngừng kinh doanh
                     </div>
                 </div>
             </div>

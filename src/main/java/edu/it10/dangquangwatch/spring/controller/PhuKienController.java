@@ -56,7 +56,7 @@ public class PhuKienController {
       pageNum = page.get() - 1;
     }
 
-    Page<PhuKien> data = phuKienService.searchPhuKien(searchStr, fromStr, toStr, pageNum);
+    Page<PhuKien> data = phuKienService.search(searchStr, fromStr, toStr, pageNum);
     List<PhuKien> phukiens = data.getContent();
 
     model.addAttribute("phuKiens", phukiens);
@@ -69,14 +69,14 @@ public class PhuKienController {
   }
 
   @GetMapping("/add")
-  public String addPhuKien(Model model) {
+  public String add(Model model) {
     model.addAttribute("phuKien", new PhuKien());
     return "admin/phukien/addPhuKien";
   }
 
   @GetMapping("/edit")
-  public String editPhuKien(@RequestParam("id") Integer maPhuKien, Model model) {
-    Optional<PhuKien> phuKienEdit = phuKienService.findPhuKienById(maPhuKien);
+  public String edit(@RequestParam("id") Integer maPhuKien, Model model) {
+    Optional<PhuKien> phuKienEdit = phuKienService.findById(maPhuKien);
     phuKienEdit.ifPresent(phuKien -> {
       model.addAttribute("phuKien", phuKien);
       model.addAttribute("images", phuKien.getImages());
@@ -125,7 +125,7 @@ public class PhuKienController {
   @PostMapping("/uploadimage")
   public String uploadImage(@RequestParam("file") List<MultipartFile> files, @RequestParam("id") Integer maphukien,
       Model model) {
-    Optional<PhuKien> phukien = phuKienService.findPhuKienById(maphukien);
+    Optional<PhuKien> phukien = phuKienService.findById(maphukien);
 
     phukien.ifPresent(dh -> {
       for (MultipartFile file : files) {
@@ -144,9 +144,15 @@ public class PhuKienController {
     return "redirect:/admin/phukien/edit?id=" + maphukien;
   }
 
-  @GetMapping("/delete")
-  public String deletePhuKien(@RequestParam("id") Integer maPhuKien, Model model) {
-    phuKienService.deletePhuKien(maPhuKien);
+  @GetMapping("/activate")
+  public String activate(@RequestParam("id") Integer maPhuKien, Model model) {
+    phuKienService.activate(maPhuKien);
+    return "redirect:/admin/phukien/";
+  }
+
+  @GetMapping("/deactivate")
+  public String deactivate(@RequestParam("id") Integer maPhuKien, Model model) {
+    phuKienService.deactivate(maPhuKien);
     return "redirect:/admin/phukien/";
   }
 

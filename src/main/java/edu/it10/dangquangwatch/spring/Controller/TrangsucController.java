@@ -55,7 +55,7 @@ public class TrangsucController {
       pageNum = page.get() - 1;
     }
 
-    Page<Trangsuc> data = trangsucService.searchTrangsuc(searchStr, fromStr, toStr, pageNum);
+    Page<Trangsuc> data = trangsucService.search(searchStr, fromStr, toStr, pageNum);
     List<Trangsuc> trangsucs = data.getContent();
 
     model.addAttribute("trangsucs", trangsucs);
@@ -69,14 +69,14 @@ public class TrangsucController {
   }
 
   @GetMapping(value = "/add")
-  public String addTrangsuc(Model model) {
+  public String add(Model model) {
     model.addAttribute("trangsuc", new Trangsuc());
     return "/admin/trangsuc/addTrangsuc";
   }
 
   @GetMapping(value = "/edit")
-  public String editTrangsuc(@RequestParam("id") Integer matrangsuc, Model model) {
-    Optional<Trangsuc> trangsucEdit = trangsucService.findTrangsucById(matrangsuc);
+  public String edit(@RequestParam("id") Integer matrangsuc, Model model) {
+    Optional<Trangsuc> trangsucEdit = trangsucService.findById(matrangsuc);
     trangsucEdit.ifPresent(trangsuc -> {
       model.addAttribute("trangsuc", trangsuc);
       model.addAttribute("images", trangsuc.getImages());
@@ -86,7 +86,7 @@ public class TrangsucController {
 
   @PostMapping(value = "/update")
   public String update(Trangsuc trangsuc) {
-    trangsucService.saveTrangsuc(trangsuc);
+    trangsucService.save(trangsuc);
     return "redirect:/admin/trangsuc/";
   }
 
@@ -104,9 +104,9 @@ public class TrangsucController {
           e.printStackTrace();
         }
       }
-      trangsucService.saveTrangsuc(trangsuc);
+      trangsucService.save(trangsuc);
     } else {
-      Trangsuc data = trangsucService.saveTrangsuc(trangsuc);
+      Trangsuc data = trangsucService.save(trangsuc);
       for (MultipartFile file : files) {
         Anhtrangsuc anhtrangsuc = new Anhtrangsuc();
         anhtrangsuc.setFile(file);
@@ -125,7 +125,7 @@ public class TrangsucController {
   @PostMapping("/uploadimage")
   public String uploadImage(@RequestParam("file") List<MultipartFile> files, @RequestParam("id") Integer matrangsuc,
       Model model) {
-    Optional<Trangsuc> trangsuc = trangsucService.findTrangsucById(matrangsuc);
+    Optional<Trangsuc> trangsuc = trangsucService.findById(matrangsuc);
 
     trangsuc.ifPresent(dh -> {
       for (MultipartFile file : files) {
@@ -144,9 +144,15 @@ public class TrangsucController {
     return "redirect:/admin/trangsuc/edit?id=" + matrangsuc;
   }
 
-  @GetMapping(value = "/delete")
-  public String deleteTrangsuc(@RequestParam("id") Integer matrangsuc, Model model) {
-    trangsucService.deleteTrangsuc(matrangsuc);
+  @GetMapping(value = "/activate")
+  public String activate(@RequestParam("id") Integer matrangsuc, Model model) {
+    trangsucService.activate(matrangsuc);
+    return "redirect:/admin/trangsuc/";
+  }
+
+  @GetMapping(value = "/deactivate")
+  public String deactivate(@RequestParam("id") Integer matrangsuc, Model model) {
+    trangsucService.deactivate(matrangsuc);
     return "redirect:/admin/trangsuc/";
   }
 

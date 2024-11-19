@@ -17,5 +17,8 @@ public interface KinhMatRepository extends JpaRepository<KinhMat, Integer> {
   @Query("SELECT DISTINCT b FROM KinhMat b WHERE (UPPER(b.tenKinhMat) LIKE UPPER(CONCAT('%', :searchStr, '%')) OR UPPER(b.thongTin) LIKE UPPER(CONCAT('%', :searchStr, '%'))) AND b.NGAYTHEM >= :from AND b.NGAYTHEM <= :to ORDER BY b.NGAYTHEM DESC")
   Page<KinhMat> searchKinhMat(@Param("searchStr") String searchStr, @Param("from") String from, @Param("to") String to, Pageable pageable);
 
+  @Query("SELECT DISTINCT b FROM KinhMat b WHERE (UPPER(b.tenKinhMat) LIKE UPPER(CONCAT('%', :searchStr, '%')) OR UPPER(b.thongTin) LIKE UPPER(CONCAT('%', :searchStr, '%'))) AND b.NGAYTHEM >= :from AND b.NGAYTHEM <= :to AND b.kichhoat = 1 AND b.soLuong > 0 ORDER BY b.NGAYTHEM DESC")
+  Page<KinhMat> searchKinhMatActive(@Param("searchStr") String searchStr, @Param("from") String from, @Param("to") String to, Pageable pageable);
+
   Optional<KinhMat> findByTenKinhMat(String tenKinhMat);
 }

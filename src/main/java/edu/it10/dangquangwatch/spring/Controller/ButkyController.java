@@ -55,7 +55,7 @@ public class ButkyController {
       pageNum = page.get() - 1;
     }
 
-    Page<Butky> data = butkyService.searchButky(searchStr, fromStr, toStr, pageNum);
+    Page<Butky> data = butkyService.search(searchStr, fromStr, toStr, pageNum);
     List<Butky> butkys = data.getContent();
 
     model.addAttribute("butkys", butkys);
@@ -69,14 +69,14 @@ public class ButkyController {
   }
 
   @GetMapping(value = "/add")
-  public String addButky(Model model) {
+  public String add(Model model) {
     model.addAttribute("butky", new Butky());
     return "/admin/butky/addButky";
   }
 
   @GetMapping(value = "/edit")
-  public String editButky(@RequestParam("id") Integer mabutky, Model model) {
-    Optional<Butky> butkyEdit = butkyService.findButkyById(mabutky);
+  public String edit(@RequestParam("id") Integer mabutky, Model model) {
+    Optional<Butky> butkyEdit = butkyService.findById(mabutky);
     butkyEdit.ifPresent(butky -> {
       model.addAttribute("butky", butky);
       model.addAttribute("images", butky.getImages());
@@ -86,7 +86,7 @@ public class ButkyController {
 
   @PostMapping("/update")
   public String update(Butky butky) {
-    butkyService.saveButky(butky);
+    butkyService.save(butky);
     return "redirect:/admin/butky/";
   }
 
@@ -104,9 +104,9 @@ public class ButkyController {
           e.printStackTrace();
         }
       }
-      butkyService.saveButky(butky);
+      butkyService.save(butky);
     } else {
-      Butky data = butkyService.saveButky(butky);
+      Butky data = butkyService.save(butky);
       for (MultipartFile file : files) {
         Anhbutky anhbutky = new Anhbutky();
         anhbutky.setFile(file);
@@ -125,7 +125,7 @@ public class ButkyController {
   @PostMapping("/uploadimage")
   public String uploadImage(@RequestParam("file") List<MultipartFile> files, @RequestParam("id") Integer mabutky,
       Model model) {
-    Optional<Butky> butky = butkyService.findButkyById(mabutky);
+    Optional<Butky> butky = butkyService.findById(mabutky);
 
     butky.ifPresent(dh -> {
       for (MultipartFile file : files) {
@@ -144,9 +144,15 @@ public class ButkyController {
     return "redirect:/admin/butky/edit?id=" + mabutky;
   }
 
-  @GetMapping(value = "/delete")
-  public String deleteButky(@RequestParam("id") Integer mabutky, Model model) {
-    butkyService.deleteButky(mabutky);
+  @GetMapping(value = "/activate")
+  public String activate(@RequestParam("id") Integer mabutky, Model model) {
+    butkyService.activate(mabutky);
+    return "redirect:/admin/butky/";
+  }
+
+  @GetMapping(value = "/deactivate")
+  public String deactivate(@RequestParam("id") Integer mabutky, Model model) {
+    butkyService.deactivate(mabutky);
     return "redirect:/admin/butky/";
   }
 

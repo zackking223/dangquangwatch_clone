@@ -87,3 +87,15 @@
 ![Email confirmation](screenshots/email_confirmation.png "Screenshot")
 - Order successful email:
 ![Order email](screenshots/email_order.png "Screenshot")
+
+### Deploy maven with docker:
+1. Build docker image: `docker build -t dangquangwatch .`
+2. Run docker image: `docker run -p 8080:8080 dangquangwatch`
+3. Access the application: `http://localhost:8080`
+
+### Deploy maven with heroku:
+1. Build docker image: `docker build -t dangquangwatch .`
+2. Run docker image: `docker run -p 8080:8080 dangquangwatch`
+3. Access the application: `http://localhost:8080`
+4. Deploy to heroku: `heroku container:push web`
+5. Access the application: `https://dangquangwatch.herokuapp.com`

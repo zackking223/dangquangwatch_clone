@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import edu.it10.dangquangwatch.spring.AppCustomException.ErrorEnum;
 import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
+import edu.it10.dangquangwatch.spring.helper.PasswordHelper;
 import edu.it10.dangquangwatch.spring.service.TaiKhoanService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -108,14 +109,19 @@ public class DangkyController {
   @PostMapping("/dangky")
   public String postDangky(HttpSession session, @RequestParam("username") String username,
       @RequestParam("password") String password, @RequestParam("diachi") String diachi,
-      @RequestParam("hoten") String hoten, @RequestParam("sodienthoai") String sodienthoai,
+      @RequestParam("hoten") String hoten,
       @RequestParam("agree") Optional<String> agree) {
 
     TaiKhoan taikhoan = new TaiKhoan();
+    
+    if (!PasswordHelper.isValidPassword(password)) {
+      session.setAttribute(ErrorEnum.REGISTER_ERROR.name(), "Mật khẩu không hợp lệ!");
+      session.setAttribute("taikhoan", taikhoan);
+      return "redirect:/dangky";
+    }
 
     taikhoan.setUsername(username);
     taikhoan.setPassword(password);
-    taikhoan.setSodienthoai(sodienthoai);
     taikhoan.setDiachi(diachi);
     taikhoan.setHoten(hoten);
 
@@ -123,12 +129,6 @@ public class DangkyController {
     taikhoan.setEnabled(0);
     if (!agree.isPresent()) {
       session.setAttribute(ErrorEnum.REGISTER_ERROR.name(), "Bạn phải đồng ý điều khoản!");
-      session.setAttribute("taikhoan", taikhoan);
-      return "redirect:/dangky";
-    }
-
-    if (sodienthoai == null) {
-      session.setAttribute(ErrorEnum.REGISTER_ERROR.name(), "Số điện thoại không hợp lệ!");
       session.setAttribute("taikhoan", taikhoan);
       return "redirect:/dangky";
     }

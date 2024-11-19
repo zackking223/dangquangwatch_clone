@@ -56,6 +56,12 @@ public class Dongho {
   @Column(name = "gioitinh")
   private String gioitinh;
 
+  @Column(name = "soluongdatmua")
+  private Integer soluongdatmua;
+
+  @Column(name = "kichhoat")
+  private Integer kichhoat;
+  
   @OneToMany(mappedBy = "dongho", targetEntity = Anhdongho.class)
   private List<Anhdongho> images;
 
@@ -75,8 +81,6 @@ public class Dongho {
     return NumberFormat.getInstance().format(this.giatien);
   }
 
-
-  
   public Dongho() {
   }
 
@@ -298,5 +302,21 @@ public class Dongho {
       ", gioitinh='" + getGioitinh() + "'" +
       ", images='" + getImages() + "'" +
       "}";
+  }
+
+  public Integer getSoluongdatmua() {
+    return soluongdatmua;
+  }
+
+  public void setSoluongdatmua(Integer soluongdatmua) {
+    this.soluongdatmua = soluongdatmua;
+  }
+
+  public Integer getKichhoat() {
+    return kichhoat;
+  }
+
+  public void setKichhoat(Integer kichhoat) {
+    this.kichhoat = kichhoat;
   }  
 }

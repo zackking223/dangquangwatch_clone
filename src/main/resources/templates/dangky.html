@@ -32,28 +32,42 @@
 
     <form method="post" action="/dangky" class="flex flex-col gap-2 rounded-lg shadow shadow-black bg-white p-4">
       <h1 class="text-2xl font-bold text-center my-2">Đăng ký</h1>
-      <div id="notification" class="p-2 bg-red-500 rounded-md text-white hover:cursor-pointer" th:if="${notification}"
-        th:text="${notification}"></div>
       <div>
         <label class="block font-medium" for="username">Email:</label>
         <input class="block p-2 max-w-[300px] w-screen rounded border border-black overflow-hidden" type="email"
           name="username" placeholder="user@emai.com" th:value="${email ?: ''}" required>
       </div>
       <div>
-        <label class="block font-medium" for="password">Password:</label>
-        <input class="block p-2 max-w-[300px] w-screen rounded border border-black overflow-hidden" type="password"
-          name="password" placeholder="Mật khẩu" th:value="${password ?: ''}" required>
+        <label class="block font-medium" for="password">Mật khẩu:</label>
+        <section class="relative max-w-[300px] w-screen">
+          <input class="block relative p-2 w-full rounded border border-black overflow-hidden" type="password"
+            name="password" id="password" placeholder="P@ssword12345" th:value="${password ?: ''}" required>
+          <button id="visibilityOn" type="button" class="absolute top-3 right-3">
+            <img src="/svg/visibility.svg" alt="Xem mật khẩu" class="w-5 h-5 opacity-10 hover:opacity-100">
+          </button>
+          <button id="visibilityOff" type="button" class="absolute top-3 right-3" style="display: none;">
+            <img src="/svg/visibility_off.svg" alt="Xem mật khẩu" class="w-5 h-5 opacity-10 hover:opacity-100">
+          </button>
+        </section>
+          <ul class="text-sm text-slate-500 ml-2 my-2">
+            <li class="flex items-center gap-1 pointer-events-none">
+              <input type="checkbox" name="passwordCheck" id="passwordLength" class="block" required>
+              <label id="passwordLengthLabel" for="passwordLength">Độ dài tối thiểu là 8 ký tự.</label>
+            </li>
+            <li class="flex items-center gap-1 pointer-events-none">
+              <input type="checkbox" name="passwordCheck" id="passwordReq1" class="block" required>
+              <label id="passwordReq1Label" for="passwordReq1">Bao gồm cả chữ hoa, chữ thường và số.</label>
+            </li>
+            <li class="flex items-center gap-1 pointer-events-none">
+              <input type="checkbox" name="passwordCheck" id="passwordReq2" class="block" required>
+              <label id="passwordReq2Label" for="passwordReq2">Bao gồm ký tự đặc biệt như: @, #, $,...</label>
+            </li>
+          </ul>
       </div>
       <div>
         <label class="block font-medium" for="hoten">Họ tên:</label>
         <input class="block p-2 max-w-[300px] w-screen rounded border border-black overflow-hidden" type="text"
           name="hoten" placeholder="Họ tên" th:value="${hoten ?: ''}" required>
-      </div>
-      <div>
-        <label class="block font-medium" for="sodienthoai">Số điện thoại:</label>
-        <input class="block p-2 max-w-[300px] w-screen rounded border border-black overflow-hidden" type="text"
-          name="sodienthoai" placeholder="Số diện thoại" onkeypress='validate(event)' th:value="${sodienthoai ?: ''}"
-          required>
       </div>
       <div>
         <label class="block font-medium" for="diachi">Địa chỉ:</label>
@@ -88,6 +102,65 @@
   </div>
   <script src="/js/address.js"></script>
   <script>
+    const password = document.getElementById("password");
+    const visibilityOn = document.getElementById("visibilityOn");
+    const visibilityOff = document.getElementById("visibilityOff");
+    const passwordLength = document.getElementById("passwordLength");
+    const passwordReq1 = document.getElementById("passwordReq1");
+    const passwordReq2 = document.getElementById("passwordReq2");
+    const passwordLengthLabel = document.getElementById("passwordLengthLabel");
+    const passwordReq1Label = document.getElementById("passwordReq1Label"); 
+    const passwordReq2Label = document.getElementById("passwordReq2Label");
+
+    password.addEventListener("input", (event) => {
+      if (event.target.value.length == 0) {
+        passwordLengthLabel.style.color = "#64748b";
+        passwordLength.checked = false;
+        passwordReq1Label.style.color = "#64748b";
+        passwordReq1.checked = false;
+        passwordReq2Label.style.color = "#64748b";  
+        passwordReq2.checked = false;
+
+        return;
+      }
+
+      if (event.target.value.length >= 8) {
+        passwordLengthLabel.style.color = "#3b82f6";
+        passwordLength.checked = true;
+      } else {
+        passwordLengthLabel.style.color = "#ef4444";
+        passwordLength.checked = false;
+      }
+
+      if (event.target.value.match(/[a-z]/g) && event.target.value.match(/[A-Z]/g) && event.target.value.match(/[0-9]/g)) {
+        passwordReq1Label.style.color = "#3b82f6";
+        passwordReq1.checked = true;
+      } else {
+        passwordReq1Label.style.color = "#ef4444";
+        passwordReq1.checked = false;
+      }
+
+      if (event.target.value.match(/[@#\$%\^&\*\+\-\_\=\|\:\;\?\<\>\(\)\[\]\{\}\.]/g)) {
+        passwordReq2Label.style.color = "#3b82f6";
+        passwordReq2.checked = true;
+      } else {
+        passwordReq2Label.style.color = "#ef4444";
+        passwordReq2.checked = false;
+      }
+    });
+
+    visibilityOn.addEventListener("click", () => {
+      password.type = "text";
+      visibilityOn.style.display = "none";
+      visibilityOff.style.display = "block";
+    });
+
+    visibilityOff.addEventListener("click", () => {
+      password.type = "password";
+      visibilityOn.style.display = "block";
+      visibilityOff.style.display = "none";
+    });
+
     const err = document.getElementById("error");
     if (err != null) {
       err.addEventListener("click", () => {
@@ -99,26 +172,6 @@
       notif.addEventListener("click", () => {
         notif.classList.add("hidden");
       });
-    }
-
-    function validate(evt) {
-      if (evt.key == "Backspace" || evt.key == "Del") return true;
-
-      var theEvent = evt || window.event;
-
-      // Handle paste
-      if (theEvent.type === 'paste') {
-        key = event.clipboardData.getData('text/plain');
-      } else {
-        // Handle key press
-        var key = theEvent.keyCode || theEvent.which;
-        key = String.fromCharCode(key);
-      }
-      var regex = /[0-9]|\./;
-      if (!regex.test(key)) {
-        theEvent.returnValue = false;
-        if (theEvent.preventDefault) theEvent.preventDefault();
-      }
     }
   </script>
   <script th:inline="javascript">
@@ -133,7 +186,7 @@
         const district = document.getElementById("districtSelect");
         const ward = document.getElementById("wardSelect");
         const extraAddress = document.getElementById("extraAddress");
-  
+
         province.value = provinceValue;
         populateDistricts();
         district.value = districtValue;

@@ -14,40 +14,79 @@ import edu.it10.dangquangwatch.spring.service.PhuKienService;
 
 @Service
 public class PhuKienServiceImpl implements PhuKienService {
-  @Autowired private PhuKienRepository phuKienRepository;
+  @Autowired
+  private PhuKienRepository phuKienRepository;
 
   @Override
-  public List<PhuKien> getAllPhuKien() {
+  public List<PhuKien> getAll() {
     return (List<PhuKien>) phuKienRepository.findAll();
   }
 
   @Override
-  public Page<PhuKien> searchPhuKien(String searchStr, String from, String to, Integer pageNum) {
+  public Page<PhuKien> search(String searchStr, String from, String to, Integer pageNum) {
     return phuKienRepository.searchPhuKien(searchStr, from, to, PageRequest.of(pageNum, 10));
   }
 
   @Override
+  public Page<PhuKien> searchAvaiable(String searchStr, String from, String to, Integer pageNum) {
+    return phuKienRepository.searchActivePhuKien(searchStr, from, to, PageRequest.of(pageNum, 10));
+  }
+
+  @Override
   public PhuKien savePhuKien(PhuKien phuKien) {
-    Optional<PhuKien> opt = phuKienRepository.findByTenPhuKien(phuKien.getTenPhuKien());
+    return phuKienRepository.save(phuKien);
+  }
+
+  @Override
+  public void activate(Integer maPhuKien) {
+    Optional<PhuKien> opt = phuKienRepository.findById(maPhuKien);
 
     if (opt.isPresent()) {
-      PhuKien existed = opt.get();
+      PhuKien phuKien = opt.get();
 
-      existed.setSoLuong(existed.getSoLuong() + phuKien.getSoLuong());
+      phuKien.setKichhoat(1);
 
-      return phuKienRepository.save(existed);
-    } else {
-      return phuKienRepository.save(phuKien);
+      phuKienRepository.save(phuKien);
     }
   }
 
   @Override
-  public void deletePhuKien(Integer maPhuKien) {
-    phuKienRepository.deleteById(maPhuKien);
+  public void deactivate(Integer maPhuKien) {
+    Optional<PhuKien> opt = phuKienRepository.findById(maPhuKien);
+
+    if (opt.isPresent()) {
+      PhuKien phuKien = opt.get();
+
+      phuKien.setKichhoat(0);
+
+      phuKienRepository.save(phuKien);
+    }
   }
 
   @Override
-  public Optional<PhuKien> findPhuKienById(Integer maPhuKien) {
+  public Optional<PhuKien> findById(Integer maPhuKien) {
     return phuKienRepository.findById(maPhuKien);
+  }
+
+  @Override
+  public void incAmount(Integer amount, Integer id) {
+    Optional<PhuKien> opt = phuKienRepository.findById(id);
+
+    if (opt.isPresent()) {
+      PhuKien phuKien = opt.get();
+      phuKien.setSoLuong(phuKien.getSoLuong() + amount);
+      phuKienRepository.save(phuKien);
+    }
+  }
+
+  @Override
+  public void decAmount(Integer amount, Integer id) {
+    Optional<PhuKien> opt = phuKienRepository.findById(id);
+
+    if (opt.isPresent()) {
+      PhuKien phuKien = opt.get();
+      phuKien.setSoLuong(phuKien.getSoLuong() - amount);
+      phuKienRepository.save(phuKien);
+    }
   }
 }

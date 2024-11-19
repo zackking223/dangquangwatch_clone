@@ -33,6 +33,12 @@ public class PhuKien {
   @Column(name = "soluong")
   private int soLuong;
 
+  @Column(name = "soluongdatmua")
+  private Integer soluongdatmua;
+
+  @Column(name = "kichhoat")
+  private Integer kichhoat;
+
   @Column(name = "thongtin")
   private String thongTin;
 
@@ -205,5 +211,25 @@ public class PhuKien {
       ", NGAYTHEM='" + getNGAYTHEM() + "'" +
       ", images='" + getImages() + "'" +
       "}";
+  }
+
+  public void setMaPhuKien(Integer maPhuKien) {
+    this.maPhuKien = maPhuKien;
+  }
+
+  public Integer getSoluongdatmua() {
+    return soluongdatmua;
+  }
+
+  public void setSoluongdatmua(Integer soluongdatmua) {
+    this.soluongdatmua = soluongdatmua;
+  }
+
+  public Integer getKichhoat() {
+    return kichhoat;
+  }
+
+  public void setKichhoat(Integer kichhoat) {
+    this.kichhoat = kichhoat;
   }  
 }

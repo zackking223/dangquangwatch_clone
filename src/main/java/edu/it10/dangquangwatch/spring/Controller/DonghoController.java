@@ -63,9 +63,9 @@ public class DonghoController {
 
     if (dongho.isPresent()) {
       fieldData = dongho.get();
-      data = donghoService.searchDongho(searchStr, fieldData, fromStr, toStr, pageNum);
+      data = donghoService.search(searchStr, fieldData, fromStr, toStr, pageNum);
     } else {
-      data = donghoService.getAllDonghoByTendongho(searchStr, fromStr, toStr, pageNum);
+      data = donghoService.getAll(searchStr, fromStr, toStr, pageNum);
     }
 
     model.addAttribute("dongho", fieldData);
@@ -85,18 +85,18 @@ public class DonghoController {
   }
 
   @GetMapping(value = "/add")
-  public String addDongho(Model model) {
+  public String add(Model model) {
     model.addAttribute("dongho", new Dongho());
     return "admin/dongho/addDongHo";
   }
 
   @GetMapping(value = "/edit")
-  public String editDongho(@RequestParam("id") Integer madongho, Model model) {
+  public String edit(@RequestParam("id") Integer madongho, Model model) {
     List<String> gioitinh_options = new ArrayList<String>();
     gioitinh_options.add("Nam");
     gioitinh_options.add("Nữ");
 
-    Optional<Dongho> donghoEdit = donghoService.findDonghoById(madongho);
+    Optional<Dongho> donghoEdit = donghoService.findById(madongho);
     donghoEdit.ifPresent(dongho -> {
       model.addAttribute("dongho", dongho);
       model.addAttribute("images", dongho.getImages());
@@ -108,7 +108,7 @@ public class DonghoController {
 
   @PostMapping("/update")
   public String update(Dongho dongho) {
-    donghoService.saveDongho(dongho);
+    donghoService.save(dongho);
     return "redirect:/admin/dongho/edit?id=" + dongho.getMadongho();
   }
 
@@ -126,9 +126,9 @@ public class DonghoController {
           e.printStackTrace();
         }
       }
-      donghoService.saveDongho(dongho);
+      donghoService.save(dongho);
     } else {
-      Dongho data = donghoService.saveDongho(dongho);
+      Dongho data = donghoService.save(dongho);
 
       for (MultipartFile file : files) {
         Anhdongho anhdongho = new Anhdongho();
@@ -149,7 +149,7 @@ public class DonghoController {
   @PostMapping("/uploadimage")
   public String uploadImage(@RequestParam("file") List<MultipartFile> files, @RequestParam("id") Integer madongho,
       Model model) {
-    Optional<Dongho> dongho = donghoService.findDonghoById(madongho);
+    Optional<Dongho> dongho = donghoService.findById(madongho);
 
     dongho.ifPresent(dh -> {
       for (MultipartFile file : files) {
@@ -168,9 +168,15 @@ public class DonghoController {
     return "redirect:/admin/dongho/edit?id=" + madongho;
   }
 
-  @GetMapping("/delete")
-  public String deleteDongho(@RequestParam("id") Integer madongho, Model model) {
-    donghoService.deleteDongho(madongho);
+  @GetMapping("/activate")
+  public String activate(@RequestParam("id") Integer madongho, Model model) {
+    donghoService.activate(madongho);
+    return "redirect:/admin/dongho/";
+  }
+
+  @GetMapping("/deactivate")
+  public String deactivate(@RequestParam("id") Integer madongho, Model model) {
+    donghoService.deactivate(madongho);
     return "redirect:/admin/dongho/";
   }
 

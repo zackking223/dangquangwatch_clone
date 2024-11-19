@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
   
 
 @Repository  
-public interface ThongKeRepository extends JpaRepository<ThongKe, Integer> {
+public interface ThongKeRepository extends JpaRepository<ThongKe, String> {
     @Query("SELECT tk FROM ThongKe tk where tk.NGAYTHEM >= :tu and tk.NGAYTHEM <= :den")
     Page<ThongKe> searchThongKe(@Param("tu") String tu, @Param("den") String den, Pageable pageable);
 

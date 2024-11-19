@@ -16,37 +16,71 @@ public class TrangsucServiceImpl implements TrangsucService {
   @Autowired private TrangsucRepository trangsucRepository;  
 
   @Override  
-  public List<Trangsuc> getAllTrangsuc() {  
+  public List<Trangsuc> getAll() {  
     return (List<Trangsuc>) trangsucRepository.findAll();  
   }  
 
   @Override  
-  public Trangsuc saveTrangsuc(Trangsuc trangsuc) {
-    Optional<Trangsuc> opt = trangsucRepository.findByTentrangsuc(trangsuc.getTentrangsuc());
+  public Trangsuc save(Trangsuc trangsuc) {
+    return trangsucRepository.save(trangsuc);  
+  }  
 
-    if (opt.isPresent()) {
-      Trangsuc existed = opt.get();
+  @Override  
+  public void activate(Integer matrangsuc) {  
+    Optional<Trangsuc> opt = trangsucRepository.findById(matrangsuc);  
 
-      existed.setSoluong(existed.getSoluong() + trangsuc.getSoluong());
-
-      return trangsucRepository.save(existed);
-    } else {
-      return trangsucRepository.save(trangsuc);  
+    if (opt.isPresent()) {  
+      Trangsuc trangsuc = opt.get();  
+      trangsuc.setKichhoat(1);  
+      save(trangsuc);  
     }
   }  
 
   @Override  
-  public void deleteTrangsuc(Integer matrangsuc) {  
-    trangsucRepository.deleteById(matrangsuc);  
+  public void deactivate(Integer matrangsuc) {  
+    Optional<Trangsuc> opt = trangsucRepository.findById(matrangsuc);  
+
+    if (opt.isPresent()) {  
+      Trangsuc trangsuc = opt.get();  
+      trangsuc.setKichhoat(0);  
+      save(trangsuc);  
+    }
   }  
 
   @Override  
-  public Optional<Trangsuc> findTrangsucById(Integer matrangsuc) {  
+  public Optional<Trangsuc> findById(Integer matrangsuc) {  
     return trangsucRepository.findById(matrangsuc);  
   }  
 
   @Override
-  public Page<Trangsuc> searchTrangsuc(String searchStr, String from, String to, Integer pageNum) {
+  public Page<Trangsuc> search(String searchStr, String from, String to, Integer pageNum) {
     return trangsucRepository.searchTrangsuc(searchStr, from, to, PageRequest.of(pageNum, 10));
+  }
+
+  @Override
+  public Page<Trangsuc> searchAvaiable(String searchStr, String from, String to, Integer pageNum) {
+    return trangsucRepository.searchActiveTrangsuc(searchStr, from, to, PageRequest.of(pageNum, 10));
+  }
+
+  @Override
+  public void incAmount(Integer amount, Integer id) {
+    Optional<Trangsuc> opt = trangsucRepository.findById(id);
+
+    if (opt.isPresent()) {
+      Trangsuc trangsuc = opt.get();
+      trangsuc.setSoluong(trangsuc.getSoluong() + amount);
+      save(trangsuc);
+    }
+  }
+
+  @Override
+  public void decAmount(Integer amount, Integer id) {
+    Optional<Trangsuc> opt = trangsucRepository.findById(id);
+
+    if (opt.isPresent()) {
+      Trangsuc trangsuc = opt.get();
+      trangsuc.setSoluong(trangsuc.getSoluong() - amount);
+      save(trangsuc);
+    }
   }
 }

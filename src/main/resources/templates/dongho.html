@@ -43,7 +43,7 @@
                     <div class="overflow-hidden relative w-full h-full">
                         <div id="slider" class="flex transition-transform duration-500 ease-in-out overflow-visible">
                             <div th:each="image : ${dongho.getImages()}"
-                                class="w-full flex-shrink-0 aspect-ratio-1-1_2 relative">
+                                class="w-full flex-shrink-0 aspect-ratio-1-1_2 relative overflow-hidden">
                                 <img th:src="${image.getUrl()}" th:alt="${image.getTenanh()}">
                             </div>
                             <div class="w-full flex-shrink-0 aspect-ratio-1-1_2 relative">
@@ -121,7 +121,7 @@
                             <span th:text="${dongho.getNGAYTHEM()}"></span>
                         </div>
                     </section>
-                    <div class="flex gap-2">
+                    <div th:if="${dongho.kichhoat == 1}" class="flex gap-2">
                         <button th:data-tsp="${dongho.getTendongho()}" th:data-msp="${dongho.getMadongho()}"
                             th:data-gt="${dongho.getGiatien()}" th:data-asp="${dongho.getFirstImageUrl()}"
                             onclick="addItem(this.getAttribute('data-tsp'),parseInt(this.getAttribute('data-msp')), 'dongho',parseInt(this.getAttribute('data-gt')), this.getAttribute('data-asp')); redirectToCart()"
@@ -140,6 +140,10 @@
                                 Thêm vào giỏ
                             </p>
                         </button>
+                    </div>
+
+                    <div th:if="${dongho.kichhoat == 0 || dongho.soluong == 0}" class="bg-slate-500 cursor-not-allowed text-white font-bold py-2 px-4 rounded w-max">
+                        Sản phẩm ngừng kinh doanh
                     </div>
                 </div>
             </div>

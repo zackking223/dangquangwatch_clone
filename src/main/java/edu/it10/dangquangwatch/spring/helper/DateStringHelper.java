@@ -1,11 +1,27 @@
-package edu.it10.dangquangwatch.spring.controller;
+package edu.it10.dangquangwatch.spring.helper;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-public class Helper {
+public class DateStringHelper {
+  public static String getPreviousMonthYear() {
+    // Lấy ngày hiện tại và trừ 1 tháng
+    LocalDate previousMonth = LocalDate.now().minusMonths(1);
+    // Định dạng theo MM/YYYY
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yyyy");
+    return previousMonth.format(formatter);
+  }
+
+  public static String getCurrentMonthYear() {
+    // Lấy ngày hiện tại
+    LocalDate today = LocalDate.now();
+    // Định dạng theo MM/YYYY
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yyyy");
+    return today.format(formatter);
+  }
+
   public static String getCurrentDateFormatted() {
     // Lấy ngày hiện tại
     LocalDate today = LocalDate.now();

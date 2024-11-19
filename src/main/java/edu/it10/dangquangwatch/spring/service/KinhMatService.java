@@ -8,13 +8,18 @@ import org.springframework.data.domain.Page;
 import edu.it10.dangquangwatch.spring.entity.KinhMat;
 
 public interface KinhMatService {
-  List<KinhMat> getAllKinhMat();  
+  List<KinhMat> getAll();
 
-  Page<KinhMat> searchKinhMat(String searchStr, String from, String to, Integer pageNum);
+  Page<KinhMat> search(String searchStr, String from, String to, Integer pageNum);
+  Page<KinhMat> searchAvaiable(String searchStr, String from, String to, Integer pageNum);
 
-  KinhMat saveKinhMat(KinhMat kinhMat);  
+  KinhMat save(KinhMat kinhMat);  
 
-  void deleteKinhMat(Integer maKinhMat);  
+  void activate(Integer maKinhMat);  
+  void deactivate(Integer maKinhMat);  
 
-  Optional<KinhMat> findKinhMatById(Integer maKinhMat);  
+  Optional<KinhMat> findById(Integer maKinhMat);
+
+  void incAmount(Integer amount, Integer id);
+  void decAmount(Integer amount, Integer id);
 }

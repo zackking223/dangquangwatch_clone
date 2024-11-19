@@ -8,13 +8,18 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;  
 
 public interface ButkyService {  
-  List<Butky> getAllButky();
+  List<Butky> getAll();
   
-  Page<Butky> searchButky(String searchStr, String from, String to, Integer pageNum);
+  Page<Butky> search(String searchStr, String from, String to, Integer pageNum);
+  Page<Butky> searchAvaiable(String searchStr, String from, String to, Integer pageNum);
 
-  Butky saveButky(Butky butky);  
+  Butky save(Butky butky);  
 
-  void deleteButky(Integer mabutky);  
+  void activate(Integer mabutky);  
+  void deactivate(Integer mabutky);  
 
-  Optional<Butky> findButkyById(Integer mabutky);  
+  Optional<Butky> findById(Integer mabutky);  
+
+  void incAmount(Integer amount, Integer id);
+  void decAmount(Integer amount, Integer id);
 }

@@ -18,9 +18,9 @@ import org.springframework.stereotype.Service;
 
 import edu.it10.dangquangwatch.spring.AppCustomException.SaveAccountException;
 import edu.it10.dangquangwatch.spring.AppCustomException.ErrorEnum;
-import edu.it10.dangquangwatch.spring.controller.Helper;
 import edu.it10.dangquangwatch.spring.entity.Otp;
 import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
+import edu.it10.dangquangwatch.spring.helper.DateStringHelper;
 import edu.it10.dangquangwatch.spring.repository.OtpRepository;
 import edu.it10.dangquangwatch.spring.repository.TaiKhoanRepository;
 import edu.it10.dangquangwatch.spring.service.EmailService;
@@ -114,7 +114,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
   public void dangKyKhachHang(TaiKhoan taiKhoan, String path) {
     String plainText = taiKhoan.getPassword();
     taiKhoan.setUsername(removeWhitespace(taiKhoan.getUsername()));
-    taiKhoan.setNGAYTHEM(Helper.getCurrentDateFormatted());
+    taiKhoan.setNGAYTHEM(DateStringHelper.getCurrentDateFormatted());
     taiKhoan.setLoai_tai_khoan("ROLE_KHACHHANG");
     taiKhoan.setPassword("{bcrypt}" + passwordEncoder.encode(plainText));
 
@@ -175,7 +175,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
   public void dangKyQuanTri(TaiKhoan taiKhoan) throws SaveAccountException {
     String plainText = taiKhoan.getPassword();
     taiKhoan.setUsername(removeWhitespace(taiKhoan.getUsername()));
-    taiKhoan.setNGAYTHEM(Helper.getCurrentDateFormatted());
+    taiKhoan.setNGAYTHEM(DateStringHelper.getCurrentDateFormatted());
     taiKhoan.setLoai_tai_khoan("ROLE_QUANTRI");
     taiKhoan.setDiachi("QUANTRI ko can dia chi");
     taiKhoan.setPassword("{bcrypt}" + passwordEncoder.encode(plainText));

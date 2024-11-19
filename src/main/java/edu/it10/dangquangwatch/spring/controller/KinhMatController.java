@@ -57,7 +57,7 @@ public class KinhMatController {
       pageNum = page.get() - 1;
     }
 
-    Page<KinhMat> data = kinhMatService.searchKinhMat(searchStr, fromStr, toStr, pageNum);
+    Page<KinhMat> data = kinhMatService.search(searchStr, fromStr, toStr, pageNum);
     List<KinhMat> kinhmats = data.getContent();
 
     model.addAttribute("kinhMats", kinhmats);
@@ -71,14 +71,14 @@ public class KinhMatController {
   }
 
   @GetMapping("/add")
-  public String addKinhMat(Model model) {
+  public String add(Model model) {
     model.addAttribute("kinhMat", new KinhMat());
     return "admin/kinhmat/addKinhMat";
   }
 
   @GetMapping("/edit")
-  public String editKinhMat(@RequestParam("id") Integer maKinhMat, Model model) {
-    Optional<KinhMat> kinhMatEdit = kinhMatService.findKinhMatById(maKinhMat);
+  public String edit(@RequestParam("id") Integer maKinhMat, Model model) {
+    Optional<KinhMat> kinhMatEdit = kinhMatService.findById(maKinhMat);
     kinhMatEdit.ifPresent(kinhMat -> {
       model.addAttribute("kinhMat", kinhMat);
       model.addAttribute("images", kinhMat.getImages());
@@ -88,7 +88,7 @@ public class KinhMatController {
 
   @PostMapping("/update")
   public String update(KinhMat kinhMat) {
-    kinhMatService.saveKinhMat(kinhMat);
+    kinhMatService.save(kinhMat);
     return "redirect:/admin/kinhmat/";
   }
 
@@ -106,9 +106,9 @@ public class KinhMatController {
           e.printStackTrace();
         }
       }
-      kinhMatService.saveKinhMat(kinhMat);
+      kinhMatService.save(kinhMat);
     } else {
-      KinhMat data = kinhMatService.saveKinhMat(kinhMat);
+      KinhMat data = kinhMatService.save(kinhMat);
       for (MultipartFile file : files) {
         Anhkinhmat anhkinhmat = new Anhkinhmat();
         anhkinhmat.setFile(file);
@@ -127,7 +127,7 @@ public class KinhMatController {
   @PostMapping("/uploadimage")
   public String uploadImage(@RequestParam("file") List<MultipartFile> files, @RequestParam("id") Integer makinhmat,
       Model model) {
-    Optional<KinhMat> kinhmat = kinhMatService.findKinhMatById(makinhmat);
+    Optional<KinhMat> kinhmat = kinhMatService.findById(makinhmat);
 
     kinhmat.ifPresent(dh -> {
       for (MultipartFile file : files) {
@@ -146,9 +146,15 @@ public class KinhMatController {
     return "redirect:/admin/kinhmat/edit?id=" + makinhmat;
   }
 
-  @GetMapping("/delete")
-  public String deleteKinhMat(@RequestParam("id") Integer maKinhMat, Model model) {
-    kinhMatService.deleteKinhMat(maKinhMat);
+  @GetMapping("/activate")
+  public String activate(@RequestParam("id") Integer maKinhMat, Model model) {
+    kinhMatService.activate(maKinhMat);
+    return "redirect:/admin/kinhmat/";
+  }
+
+  @GetMapping("/deactivate")
+  public String deactivate(@RequestParam("id") Integer maKinhMat, Model model) {
+    kinhMatService.deactivate(maKinhMat);
     return "redirect:/admin/kinhmat/";
   }
 

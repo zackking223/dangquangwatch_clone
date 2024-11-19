@@ -44,7 +44,7 @@ public class TaiKhoan {
   private List<DonHang> donHangList;
 
   public boolean isAdmin() {
-    return loai_tai_khoan == "ROLE_QUANTRI";
+    return loai_tai_khoan.equals("ROLE_QUANTRI");
   }
 
   public TaiKhoan() {

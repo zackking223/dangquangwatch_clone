@@ -2,8 +2,6 @@ package edu.it10.dangquangwatch.spring.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -15,38 +13,38 @@ import java.util.Objects;
 @Table(name = "thongke")
 public class ThongKe {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer mathongke;
+    // MM/YYYY
+    private String mathongke;
 
     @Column(name = "dongho")
-    private Integer dongHo;
+    private Long dongHo;
 
     @Column(name = "butky")
-    private Integer butKy;
+    private Long butKy;
 
     @Column(name = "phukien")
-    private Integer phuKien;
+    private Long phuKien;
 
     @Column(name = "trangsuc")
-    private Integer trangSuc;
+    private Long trangSuc;
 
     @Column(name = "kinhmat")
-    private Integer kinhMat;
+    private Long kinhMat;
 
     @Column(name = "donhang")
-    private Integer donHang;
+    private Long donHang;
 
     @Column(name = "donhangdahuy")
-    private Integer donHangDaHuy;
+    private Long donHangDaHuy;
 
     @Column(name = "donhangdagiao")
-    private Integer donHangDaGiao;
+    private Long donHangDaGiao;
 
     @Column(name = "khachhang")
-    private Integer khachHang;
+    private Long khachHang;
 
     @Column(name = "luottruycap")
-    private Integer luotTruyCap;
+    private Long luotTruyCap;
 
     @Column(name = "tilechuyendoi")
     private Float tiLeChuyenDoi;
@@ -58,39 +56,43 @@ public class ThongKe {
     private BigDecimal von;
 
     @Column(name = "donhangchoxacnhan")
-    private Integer donHangChoXacNhan;
+    private Long donHangChoXacNhan;
 
     @Column(name = "donhangdaxacnhan")
-    private Integer donHangDaXacNhan;
+    private Long donHangDaXacNhan;
 
     @Column(name = "donhangdanggiao")
-    private Integer donHangDangGiao;
+    private Long donHangDangGiao;
 
     @Column(name = "luotdangkymoi")
-    private Integer luotDangKyMoi;
+    private Long luotDangKyMoi;
 
     @Column(name = "chiphi")
     private BigDecimal chiPhi;
 
     @Column(name = "luotxemsanpham")
-    private Integer luotXemSanPham;
+    private Long luotXemSanPham;
 
     @Column(name = "luotthemgiohang")
-    private Integer luotThemGioHang;
+    private Long luotThemGioHang;
 
     @Column(name = "luotdathang")
-    private Integer luotDatHang;
+    private Long luotDatHang;
 
     @Column(name = "luotthanhtoan")
-    private Integer luotThanhToan;
+    private Long luotThanhToan;
 
     @Column(name = "luothoanthanhdon")
-    private Integer luotHoanThanhDon;
+    private Long luotHoanThanhDon;
 
     @Column(name = "NGAYTHEM")
     private String NGAYTHEM;
 
-    public String getFormattedVND(Integer num) {
+    public String getMaThongKeFormatted() {
+        return "Tháng " + mathongke.split("/")[0] + ", năm " + mathongke.split("/")[1];
+    }
+
+    public String getFormattedVND(Long num) {
         return NumberFormat.getInstance().format(num) + " đ";
     }
 
@@ -107,124 +109,91 @@ public class ThongKe {
     public ThongKe() {
     }
 
-    public ThongKe(Integer mathongke, Integer dongHo, Integer butKy, Integer phuKien, Integer trangSuc, Integer kinhMat,
-            Integer donHang, Integer donHangDaHuy, Integer donHangDaGiao, Integer khachHang, Integer luotTruyCap,
-            Float tiLeChuyenDoi, BigDecimal doanhThu, BigDecimal von, Integer donHangChoXacNhan, Integer donHangDaXacNhan,
-            Integer donHangDangGiao, Integer luotDangKyMoi, BigDecimal chiPhi, Integer luotXemSanPham,
-            Integer luotThemGioHang, Integer luotDatHang, Integer luotThanhToan, Integer luotHoanThanhDon,
-            String NGAYTHEM) {
-        this.mathongke = mathongke;
-        this.dongHo = dongHo;
-        this.butKy = butKy;
-        this.phuKien = phuKien;
-        this.trangSuc = trangSuc;
-        this.kinhMat = kinhMat;
-        this.donHang = donHang;
-        this.donHangDaHuy = donHangDaHuy;
-        this.donHangDaGiao = donHangDaGiao;
-        this.khachHang = khachHang;
-        this.luotTruyCap = luotTruyCap;
-        this.tiLeChuyenDoi = tiLeChuyenDoi;
-        this.doanhThu = doanhThu;
-        this.von = von;
-        this.donHangChoXacNhan = donHangChoXacNhan;
-        this.donHangDaXacNhan = donHangDaXacNhan;
-        this.donHangDangGiao = donHangDangGiao;
-        this.luotDangKyMoi = luotDangKyMoi;
-        this.chiPhi = chiPhi;
-        this.luotXemSanPham = luotXemSanPham;
-        this.luotThemGioHang = luotThemGioHang;
-        this.luotDatHang = luotDatHang;
-        this.luotThanhToan = luotThanhToan;
-        this.luotHoanThanhDon = luotHoanThanhDon;
-        this.NGAYTHEM = NGAYTHEM;
-    }
-
-    public Integer getMathongke() {
+    public String getMathongke() {
         return this.mathongke;
     }
 
-    public void setMathongke(Integer mathongke) {
+    public void setMathongke(String mathongke) {
         this.mathongke = mathongke;
     }
 
-    public Integer getDongHo() {
+    public Long getDongHo() {
         return this.dongHo;
     }
 
-    public void setDongHo(Integer dongHo) {
+    public void setDongHo(Long dongHo) {
         this.dongHo = dongHo;
     }
 
-    public Integer getButKy() {
+    public Long getButKy() {
         return this.butKy;
     }
 
-    public void setButKy(Integer butKy) {
+    public void setButKy(Long butKy) {
         this.butKy = butKy;
     }
 
-    public Integer getPhuKien() {
+    public Long getPhuKien() {
         return this.phuKien;
     }
 
-    public void setPhuKien(Integer phuKien) {
+    public void setPhuKien(Long phuKien) {
         this.phuKien = phuKien;
     }
 
-    public Integer getTrangSuc() {
+    public Long getTrangSuc() {
         return this.trangSuc;
     }
 
-    public void setTrangSuc(Integer trangSuc) {
+    public void setTrangSuc(Long trangSuc) {
         this.trangSuc = trangSuc;
     }
 
-    public Integer getKinhMat() {
+    public Long getKinhMat() {
         return this.kinhMat;
     }
 
-    public void setKinhMat(Integer kinhMat) {
+    public void setKinhMat(Long kinhMat) {
         this.kinhMat = kinhMat;
     }
 
-    public Integer getDonHang() {
+    public Long getDonHang() {
         return this.donHang;
     }
 
-    public void setDonHang(Integer donHang) {
+    public void setDonHang(Long donHang) {
         this.donHang = donHang;
     }
 
-    public Integer getDonHangDaHuy() {
+    public Long getDonHangDaHuy() {
         return this.donHangDaHuy;
     }
 
-    public void setDonHangDaHuy(Integer donHangDaHuy) {
+    public void setDonHangDaHuy(Long donHangDaHuy) {
         this.donHangDaHuy = donHangDaHuy;
     }
 
-    public Integer getDonHangDaGiao() {
+    public Long getDonHangDaGiao() {
         return this.donHangDaGiao;
     }
 
-    public void setDonHangDaGiao(Integer donHangDaGiao) {
+    public void setDonHangDaGiao(Long donHangDaGiao) {
         this.donHangDaGiao = donHangDaGiao;
     }
 
-    public Integer getKhachHang() {
+    public Long getKhachHang() {
         return this.khachHang;
     }
 
-    public void setKhachHang(Integer khachHang) {
+    public void setKhachHang(Long khachHang) {
         this.khachHang = khachHang;
     }
 
-    public Integer getLuotTruyCap() {
+    public Long getLuotTruyCap() {
         return this.luotTruyCap;
     }
 
-    public void setLuotTruyCap(Integer luotTruyCap) {
+    public void setLuotTruyCap(Long luotTruyCap) {
         this.luotTruyCap = luotTruyCap;
     }
 
@@ -252,35 +221,35 @@ public class ThongKe {
         this.von = von;
     }
 
-    public Integer getDonHangChoXacNhan() {
+    public Long getDonHangChoXacNhan() {
         return this.donHangChoXacNhan;
     }
 
-    public void setDonHangChoXacNhan(Integer donHangChoXacNhan) {
+    public void setDonHangChoXacNhan(Long donHangChoXacNhan) {
         this.donHangChoXacNhan = donHangChoXacNhan;
     }
 
-    public Integer getDonHangDaXacNhan() {
+    public Long getDonHangDaXacNhan() {
         return this.donHangDaXacNhan;
     }
 
-    public void setDonHangDaXacNhan(Integer donHangDaXacNhan) {
+    public void setDonHangDaXacNhan(Long donHangDaXacNhan) {
         this.donHangDaXacNhan = donHangDaXacNhan;
     }
 
-    public Integer getDonHangDangGiao() {
+    public Long getDonHangDangGiao() {
         return this.donHangDangGiao;
     }
 
-    public void setDonHangDangGiao(Integer donHangDangGiao) {
+    public void setDonHangDangGiao(Long donHangDangGiao) {
         this.donHangDangGiao = donHangDangGiao;
     }
 
-    public Integer getLuotDangKyMoi() {
+    public Long getLuotDangKyMoi() {
         return this.luotDangKyMoi;
     }
 
-    public void setLuotDangKyMoi(Integer luotDangKyMoi) {
+    public void setLuotDangKyMoi(Long luotDangKyMoi) {
         this.luotDangKyMoi = luotDangKyMoi;
     }
 
@@ -292,43 +261,43 @@ public class ThongKe {
         this.chiPhi = chiPhi;
     }
 
-    public Integer getLuotXemSanPham() {
+    public Long getLuotXemSanPham() {
         return this.luotXemSanPham;
     }
 
-    public void setLuotXemSanPham(Integer luotXemSanPham) {
+    public void setLuotXemSanPham(Long luotXemSanPham) {
         this.luotXemSanPham = luotXemSanPham;
     }
 
-    public Integer getLuotThemGioHang() {
+    public Long getLuotThemGioHang() {
         return this.luotThemGioHang;
     }
 
-    public void setLuotThemGioHang(Integer luotThemGioHang) {
+    public void setLuotThemGioHang(Long luotThemGioHang) {
         this.luotThemGioHang = luotThemGioHang;
     }
 
-    public Integer getLuotDatHang() {
+    public Long getLuotDatHang() {
         return this.luotDatHang;
     }
 
-    public void setLuotDatHang(Integer luotDatHang) {
+    public void setLuotDatHang(Long luotDatHang) {
         this.luotDatHang = luotDatHang;
     }
 
-    public Integer getLuotThanhToan() {
+    public Long getLuotThanhToan() {
         return this.luotThanhToan;
     }
 
-    public void setLuotThanhToan(Integer luotThanhToan) {
+    public void setLuotThanhToan(Long luotThanhToan) {
         this.luotThanhToan = luotThanhToan;
     }
 
-    public Integer getLuotHoanThanhDon() {
+    public Long getLuotHoanThanhDon() {
         return this.luotHoanThanhDon;
     }
 
-    public void setLuotHoanThanhDon(Integer luotHoanThanhDon) {
+    public void setLuotHoanThanhDon(Long luotHoanThanhDon) {
         this.luotHoanThanhDon = luotHoanThanhDon;
     }
 
@@ -340,57 +309,57 @@ public class ThongKe {
         this.NGAYTHEM = NGAYTHEM;
     }
 
-    public ThongKe mathongke(Integer mathongke) {
+    public ThongKe mathongke(String mathongke) {
         setMathongke(mathongke);
         return this;
     }
 
-    public ThongKe dongHo(Integer dongHo) {
+    public ThongKe dongHo(Long dongHo) {
         setDongHo(dongHo);
         return this;
     }
 
-    public ThongKe butKy(Integer butKy) {
+    public ThongKe butKy(Long butKy) {
         setButKy(butKy);
         return this;
     }
 
-    public ThongKe phuKien(Integer phuKien) {
+    public ThongKe phuKien(Long phuKien) {
         setPhuKien(phuKien);
         return this;
     }
 
-    public ThongKe trangSuc(Integer trangSuc) {
+    public ThongKe trangSuc(Long trangSuc) {
         setTrangSuc(trangSuc);
         return this;
     }
 
-    public ThongKe kinhMat(Integer kinhMat) {
+    public ThongKe kinhMat(Long kinhMat) {
         setKinhMat(kinhMat);
         return this;
     }
 
-    public ThongKe donHang(Integer donHang) {
+    public ThongKe donHang(Long donHang) {
         setDonHang(donHang);
         return this;
     }
 
-    public ThongKe donHangDaHuy(Integer donHangDaHuy) {
+    public ThongKe donHangDaHuy(Long donHangDaHuy) {
         setDonHangDaHuy(donHangDaHuy);
         return this;
     }
 
-    public ThongKe donHangDaGiao(Integer donHangDaGiao) {
+    public ThongKe donHangDaGiao(Long donHangDaGiao) {
         setDonHangDaGiao(donHangDaGiao);
         return this;
     }
 
-    public ThongKe khachHang(Integer khachHang) {
+    public ThongKe khachHang(Long khachHang) {
         setKhachHang(khachHang);
         return this;
     }
 
-    public ThongKe luotTruyCap(Integer luotTruyCap) {
+    public ThongKe luotTruyCap(Long luotTruyCap) {
         setLuotTruyCap(luotTruyCap);
         return this;
     }
@@ -410,22 +379,22 @@ public class ThongKe {
         return this;
     }
 
-    public ThongKe donHangChoXacNhan(Integer donHangChoXacNhan) {
+    public ThongKe donHangChoXacNhan(Long donHangChoXacNhan) {
         setDonHangChoXacNhan(donHangChoXacNhan);
         return this;
     }
 
-    public ThongKe donHangDaXacNhan(Integer donHangDaXacNhan) {
+    public ThongKe donHangDaXacNhan(Long donHangDaXacNhan) {
         setDonHangDaXacNhan(donHangDaXacNhan);
         return this;
     }
 
-    public ThongKe donHangDangGiao(Integer donHangDangGiao) {
+    public ThongKe donHangDangGiao(Long donHangDangGiao) {
         setDonHangDangGiao(donHangDangGiao);
         return this;
     }
 
-    public ThongKe luotDangKyMoi(Integer luotDangKyMoi) {
+    public ThongKe luotDangKyMoi(Long luotDangKyMoi) {
         setLuotDangKyMoi(luotDangKyMoi);
         return this;
     }
@@ -435,27 +404,27 @@ public class ThongKe {
         return this;
     }
 
-    public ThongKe luotXemSanPham(Integer luotXemSanPham) {
+    public ThongKe luotXemSanPham(Long luotXemSanPham) {
         setLuotXemSanPham(luotXemSanPham);
         return this;
     }
 
-    public ThongKe luotThemGioHang(Integer luotThemGioHang) {
+    public ThongKe luotThemGioHang(Long luotThemGioHang) {
         setLuotThemGioHang(luotThemGioHang);
         return this;
     }
 
-    public ThongKe luotDatHang(Integer luotDatHang) {
+    public ThongKe luotDatHang(Long luotDatHang) {
         setLuotDatHang(luotDatHang);
         return this;
     }
 
-    public ThongKe luotThanhToan(Integer luotThanhToan) {
+    public ThongKe luotThanhToan(Long luotThanhToan) {
         setLuotThanhToan(luotThanhToan);
         return this;
     }
 
-    public ThongKe luotHoanThanhDon(Integer luotHoanThanhDon) {
+    public ThongKe luotHoanThanhDon(Long luotHoanThanhDon) {
         setLuotHoanThanhDon(luotHoanThanhDon);
         return this;
     }

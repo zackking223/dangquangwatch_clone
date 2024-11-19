@@ -62,7 +62,7 @@
                         class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-yellow-500 text-white p-2 opacity-20 hover:opacity-100 transition-all duration-75">⮞</button>
                     <div id="thumbnails" class="absolute bottom-0 left-0 right-0 flex justify-center gap-1">
                         <div th:each="image : ${phukien.getImages()}"
-                            class="thumbnail selected w-[60px] h-[60px] aspect-square">
+                            class="thumbnail selected w-[60px] h-[60px] aspect-square overflow-hidden">
                             <img th:src="${image.getUrl()}" th:alt="${image.getTenanh()}">
                         </div>
                         <div class="thumbnail selected w-[60px] h-[60px] aspect-square">
@@ -95,7 +95,7 @@
                             <span th:text="${phukien.getNGAYTHEM()}"></span>
                         </div>
                     </section>
-                    <div class="flex gap-2 my-4">
+                    <div th:if="${phukien.kichhoat == 1}" class="flex gap-2 my-4">
                         <button th:data-tsp="${phukien.getTenPhuKien()}" th:data-msp="${phukien.getMaPhuKien()}"
                             th:data-gt="${phukien.getGiaTien()}" th:data-asp="${phukien.getFirstImageUrl()}"
                             onclick="addItem(this.getAttribute('data-tsp'),parseInt(this.getAttribute('data-msp')), 'phukien',parseInt(this.getAttribute('data-gt')), this.getAttribute('data-asp')); redirectToCart()"
@@ -114,6 +114,10 @@
                                 Thêm vào giỏ
                             </p>
                         </button>
+                    </div>
+
+                    <div th:if="${phukien.kichhoat == 0 || phukien.soLuong == 0}" class="bg-slate-500 cursor-not-allowed text-white font-bold py-2 px-4 rounded w-max">
+                        Sản phẩm ngừng kinh doanh
                     </div>
                 </div>
             </div>
