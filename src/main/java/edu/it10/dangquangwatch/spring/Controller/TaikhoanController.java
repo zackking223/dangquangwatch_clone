@@ -100,8 +100,20 @@ public class TaikhoanController {
   }
 
   @GetMapping(value = "/delete")
-  public String deleteTaiKhoan(@RequestParam("id") String username) {
-    taikhoanService.deleteTaiKhoanByUsername(username);
+  public String delete(@RequestParam("id") String username) {
+    taikhoanService.deleteById(username);
+    return "redirect:/admin/accounts/";
+  }
+
+  @GetMapping(value = "/activate")
+  public String activate(@RequestParam("id") String username) {
+    taikhoanService.activate(username);
+    return "redirect:/admin/accounts/";
+  }
+
+  @GetMapping(value = "/deactivate")
+  public String deactivate(@RequestParam("id") String username) {
+    taikhoanService.deactivate(username);
     return "redirect:/admin/accounts/";
   }
 }

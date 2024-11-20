@@ -62,7 +62,7 @@ public class KhachhangController {
   }
 
   @GetMapping(value = "/add")
-  public String addTaikhoan(HttpSession session, Model model, @RequestParam("error") Optional<String> error) {
+  public String add(HttpSession session, Model model, @RequestParam("error") Optional<String> error) {
     String errorMessage = null;
     String province = "";
     String district = "";
@@ -119,7 +119,7 @@ public class KhachhangController {
   }
 
   @GetMapping(value = "/edit")
-  public String editTaiKhoan(HttpSession session, @RequestParam("id") String username, Model model) {
+  public String edit(HttpSession session, @RequestParam("id") String username, Model model) {
     TaiKhoan taikhoanEdit = taikhoanService.getTaiKhoan(username);
 
     if (taikhoanEdit == null) {
@@ -158,7 +158,7 @@ public class KhachhangController {
   }
 
   @PostMapping(value = "/add")
-  public String addTaiKhoan(HttpSession session, TaiKhoan taikhoan, Model model) {
+  public String add(HttpSession session, TaiKhoan taikhoan, Model model) {
     String diachi = taikhoan.getDiachi();
 
     if (diachi == null || diachi.isEmpty() || diachi.split(", ", 4).length < 4) {
@@ -188,9 +188,15 @@ public class KhachhangController {
     return "redirect:/admin/khachhang/";
   }
 
-  @GetMapping(value = "/delete")
-  public String deleteTaiKhoan(@RequestParam("id") String username, Model model) {
-    taikhoanService.deleteTaiKhoanByUsername(username);
+  @GetMapping(value = "/activate")
+  public String activate(@RequestParam("id") String username, Model model) {
+    taikhoanService.activate(username);
+    return "redirect:/admin/khachhang/";
+  }
+
+  @GetMapping(value = "/deactivate")
+  public String deactivate(@RequestParam("id") String username, Model model) {
+    taikhoanService.deactivate(username);
     return "redirect:/admin/khachhang/";
   }
 }

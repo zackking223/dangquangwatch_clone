@@ -27,7 +27,9 @@ public interface TaiKhoanService {
 
   public Page<TaiKhoan> findTaiKhoanByUsername(String username, Integer page);
 
-  public void deleteTaiKhoanByUsername(String username);
+  public void activate(String username);
+  public void deactivate(String username);
+  public void deleteById(String username);
 
   public boolean verifyOtp(String password, String email);
 } 

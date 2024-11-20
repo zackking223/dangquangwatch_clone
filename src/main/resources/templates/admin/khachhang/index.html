@@ -87,8 +87,10 @@
                     <td class="p-2 border border-solid border-black max-w-[250px] overflow-hidden">
                         <a class="p-2 rounded bg-green-500 text-white"
                             th:href="@{/admin/khachhang/edit?id={id}(id=${taikhoan.getUsername()})}">Sửa</a>
-                        <button class="p-2 rounded bg-red-500 text-white" th:data-id="${taikhoan.getUsername()}"
-                            onclick="confirmDelete(this);">Xóa</button>
+                        <button th:if="${taikhoan.getEnabled() == 1}" class="p-2 rounded bg-red-500 text-white"
+                            th:data-id="${taikhoan.getUsername()}" onclick="confirmDeactivate(this);">Cấm</button>
+                        <button th:if="${taikhoan.getEnabled() == 0}" class="p-2 rounded bg-blue-500 text-white"
+                            th:data-id="${taikhoan.getUsername()}" onclick="confirmActivate(this);">Kích hoạt</button>
                     </td>
                 </tr>
             </table>
@@ -96,21 +98,39 @@
     </div>
     <script src="/js/sweetalert.min.js"></script>
     <script>
-        function confirmDelete(element) {
+        function confirmDeactivate(element) {
             const id = element.getAttribute('data-id'); // Lấy giá trị từ data-attribute
 
             Swal.fire({
-                title: 'Bạn có chắc chắn muốn xóa?',
-                text: "Hành động này không thể hoàn tác!",
+                title: 'Bạn có chắc chắn muốn cấm?',
+                text: "Tài khoản sẽ bị vô hiệu hóa!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Vâng, xóa nó!',
+                confirmButtonText: 'Vâng, cấm nó!',
                 cancelButtonText: 'Hủy'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = `/admin/khachhang/delete?id=${id}`;
+                    window.location.href = `/admin/khachhang/deactivate?id=${id}`;
+                }
+            });
+        }
+        function confirmActivate(element) {
+            const id = element.getAttribute('data-id'); // Lấy giá trị từ data-attribute
+
+            Swal.fire({
+                title: 'Bạn có chắc chắn muốn bỏ kích hoạt?',
+                text: "Tài khoản sẽ được hoạt động bình thường!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Vâng, bỏ cấm!',
+                cancelButtonText: 'Hủy'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = `/admin/khachhang/activate?id=${id}`;
                 }
             });
         }
