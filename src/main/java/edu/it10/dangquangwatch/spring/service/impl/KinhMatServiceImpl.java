@@ -8,9 +8,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import edu.it10.dangquangwatch.spring.AppCustomException.ErrorEnum;
+import edu.it10.dangquangwatch.spring.AppCustomException.ServiceException;
 import edu.it10.dangquangwatch.spring.entity.KinhMat;
 import edu.it10.dangquangwatch.spring.repository.KinhMatRepository;
 import edu.it10.dangquangwatch.spring.service.KinhMatService;
+import jakarta.validation.Valid;
 
 @Service
 public class KinhMatServiceImpl implements KinhMatService {
@@ -33,7 +36,12 @@ public class KinhMatServiceImpl implements KinhMatService {
   }
 
   @Override
-  public KinhMat save(KinhMat kinhMat) {
+  public KinhMat save(@Valid KinhMat kinhMat) {
+    if (kinhMat.getMaKinhMat() == null) {
+      kinhMat.setKichhoat(1);
+      kinhMat.setSoluongdatmua(0);
+    }
+
     return kinhMatRepository.save(kinhMat);
   }
 
@@ -69,10 +77,23 @@ public class KinhMatServiceImpl implements KinhMatService {
   @Override
   public void incAmount(Integer amount, Integer id) {
     Optional<KinhMat> opt = kinhMatRepository.findById(id);
+
+    if (amount <= 0) {
+      throw new ServiceException(
+          "Số lượng nhập phải là số nguyên dương",
+          ErrorEnum.IMPORT,
+          "/admin/kinhmat/nhap?id=" + id);
+    }
+
     if (opt.isPresent()) {
       KinhMat kinhMat = opt.get();
       kinhMat.setSoLuong(kinhMat.getSoLuong() + amount);
       save(kinhMat);
+    } else {
+      throw new ServiceException(
+          "Không tìm thấy sản phẩm",
+          ErrorEnum.INDEX,
+          "/admin/kinhmat/");
     }
   }
 
@@ -80,10 +101,22 @@ public class KinhMatServiceImpl implements KinhMatService {
   public void decAmount(Integer amount, Integer id) {
     Optional<KinhMat> opt = kinhMatRepository.findById(id);
 
+    if (amount <= 0) {
+      throw new ServiceException(
+          "Số lượng xuất phải là số nguyên dương",
+          ErrorEnum.EXPORT,
+          "/admin/kinhmat/xuat?id=" + id);
+    }
+
     if (opt.isPresent()) {
       KinhMat kinhMat = opt.get();
       kinhMat.setSoLuong(kinhMat.getSoLuong() - amount);
       save(kinhMat);
+    } else {
+      throw new ServiceException(
+          "Không tìm thấy sản phẩm",
+          ErrorEnum.INDEX,
+          "/admin/kinhmat/");
     }
   }
 }

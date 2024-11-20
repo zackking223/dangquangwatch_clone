@@ -5,5 +5,10 @@ public enum ErrorEnum {
   ADMIN_ACCOUNTS_ERROR,
   REGISTER_ERROR,
   OTP_ERROR,
-  ADMIN_ERROR
+  ADMIN_ERROR,
+  ADD,
+  EDIT,
+  INDEX,
+  IMPORT,
+  EXPORT
 }

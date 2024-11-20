@@ -167,7 +167,6 @@ public class ThongKeServiceImpl implements ThongKeService {
         // Tăng giá trị
         thongKe.setLuotTruyCap(thongKe.getLuotTruyCap() + 1);
 
-        // Lưu lại vào cơ sở dữ liệu
         thongKeRepository.save(thongKe);
     }
 
@@ -179,7 +178,6 @@ public class ThongKeServiceImpl implements ThongKeService {
         // Tăng giá trị
         thongKe.setLuotXemSanPham(thongKe.getLuotXemSanPham() + 1);
 
-        // Lưu lại vào cơ sở dữ liệu
         thongKeRepository.save(thongKe);
     }
 
@@ -191,7 +189,6 @@ public class ThongKeServiceImpl implements ThongKeService {
         // Tăng giá trị
         thongKe.setLuotThemGioHang(thongKe.getLuotThemGioHang() + 1);
 
-        // Lưu lại vào cơ sở dữ liệu
         thongKeRepository.save(thongKe);
     }
 
@@ -203,7 +200,6 @@ public class ThongKeServiceImpl implements ThongKeService {
         // Tăng giá trị
         thongKe.setVon(newCapital);
 
-        // Lưu lại vào cơ sở dữ liệu
         thongKeRepository.save(thongKe);
     }
 
@@ -215,7 +211,6 @@ public class ThongKeServiceImpl implements ThongKeService {
         // Tăng giá trị
         thongKe.setVon(thongKe.getVon().add(amount));
 
-        // Lưu lại vào cơ sở dữ liệu
         thongKeRepository.save(thongKe);
     }
 
@@ -232,7 +227,6 @@ public class ThongKeServiceImpl implements ThongKeService {
         } else {
             thongKe.setVon(thongKe.getVon().subtract(amount));
         }
-        // Lưu lại vào cơ sở dữ liệu
         thongKeRepository.save(thongKe);
     }
 
@@ -242,7 +236,15 @@ public class ThongKeServiceImpl implements ThongKeService {
 
         thongKe.setTiLeChuyenDoi(newTiLe);
 
-        // Lưu lại vào cơ sở dữ liệu
+        thongKeRepository.save(thongKe);
+    }
+
+    @Override
+    public void incChiPhi(BigDecimal amount) {
+        ThongKe thongKe = getCurrent();
+
+        thongKe.setChiPhi(thongKe.getChiPhi().add(amount));
+
         thongKeRepository.save(thongKe);
     }
 }

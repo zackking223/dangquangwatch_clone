@@ -8,9 +8,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import edu.it10.dangquangwatch.spring.AppCustomException.ErrorEnum;
+import edu.it10.dangquangwatch.spring.AppCustomException.ServiceException;
 import edu.it10.dangquangwatch.spring.entity.PhuKien;
 import edu.it10.dangquangwatch.spring.repository.PhuKienRepository;
 import edu.it10.dangquangwatch.spring.service.PhuKienService;
+import jakarta.validation.Valid;
 
 @Service
 public class PhuKienServiceImpl implements PhuKienService {
@@ -33,14 +36,19 @@ public class PhuKienServiceImpl implements PhuKienService {
   }
 
   @Override
-  public PhuKien savePhuKien(PhuKien phuKien) {
+  public PhuKien savePhuKien(@Valid PhuKien phuKien) {
+    if (phuKien.getMaPhuKien() == null) {
+      phuKien.setKichhoat(1);
+      phuKien.setSoluongdatmua(0);
+    }
+
     return phuKienRepository.save(phuKien);
   }
 
   @Override
   public void activate(Integer maPhuKien) {
     Optional<PhuKien> opt = phuKienRepository.findById(maPhuKien);
-
+    
     if (opt.isPresent()) {
       PhuKien phuKien = opt.get();
 
@@ -53,7 +61,7 @@ public class PhuKienServiceImpl implements PhuKienService {
   @Override
   public void deactivate(Integer maPhuKien) {
     Optional<PhuKien> opt = phuKienRepository.findById(maPhuKien);
-
+    
     if (opt.isPresent()) {
       PhuKien phuKien = opt.get();
 
@@ -72,10 +80,22 @@ public class PhuKienServiceImpl implements PhuKienService {
   public void incAmount(Integer amount, Integer id) {
     Optional<PhuKien> opt = phuKienRepository.findById(id);
 
+    if (amount <= 0) {
+      throw new ServiceException(
+          "Số lượng nhập phải là số nguyên dương",
+          ErrorEnum.IMPORT,
+          "/admin/phukien/nhap?id=" + id);
+    }
+
     if (opt.isPresent()) {
       PhuKien phuKien = opt.get();
       phuKien.setSoLuong(phuKien.getSoLuong() + amount);
       phuKienRepository.save(phuKien);
+    } else {
+      throw new ServiceException(
+          "Không tìm thấy sản phẩm",
+          ErrorEnum.INDEX,
+          "/admin/phukien/");
     }
   }
 
@@ -83,10 +103,22 @@ public class PhuKienServiceImpl implements PhuKienService {
   public void decAmount(Integer amount, Integer id) {
     Optional<PhuKien> opt = phuKienRepository.findById(id);
 
+    if (amount <= 0) {
+      throw new ServiceException(
+          "Số lượng xuất phải là số nguyên dương",
+          ErrorEnum.EXPORT,
+          "/admin/phukien/xuat?id=" + id);
+    }
+
     if (opt.isPresent()) {
       PhuKien phuKien = opt.get();
       phuKien.setSoLuong(phuKien.getSoLuong() - amount);
       phuKienRepository.save(phuKien);
+    } else {
+      throw new ServiceException(
+          "Không tìm thấy sản phẩm",
+          ErrorEnum.INDEX,
+          "/admin/phukien/");
     }
   }
 }

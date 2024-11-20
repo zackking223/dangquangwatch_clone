@@ -9,6 +9,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.Objects;
 
 import java.util.List;
@@ -24,36 +26,47 @@ public class Dongho {
   private Integer madongho;
 
   @Column(name = "tendongho")
+  @NotNull(message = "Tên đồng hồ không được để trống.")
   private String tendongho;
 
   @Column(name = "giatien")
+  @NotNull(message = "Giá tiền không được để trống.")
   private Integer giatien;
 
   @Column(name = "soluong")
+  @NotNull(message = "Số lượng không được để trống.")
   private Integer soluong;
 
   @Column(name = "tragop")
+  @NotNull(message = "Trả góp không được để trống.")
   private Integer tragop;
 
   @Column(name = "duongkinh")
+  @NotNull(message = "Đường kính không được để trống.")
   private Integer duongkinh;
 
   @Column(name = "chongnuoc")
+  @NotNull(message = "Độ chống nước không được để trống.")
   private Integer chongnuoc;
 
   @Column(name = "bomay")
+  @NotNull(message = "Loại bộ máy không được để trống.")
   private String bomay;
 
   @Column(name = "NGAYTHEM")
+  @NotNull(message = "Ngày thêm không được để trống.")
   private String NGAYTHEM;
 
   @Column(name = "thongtin")
+  @NotNull(message = "Thông tin không được để trống.")
   private String thongtin;
 
   @Column(name = "chatlieu")
+  @NotNull(message = "Chất liệu không được để trống.")
   private String chatlieu;
 
   @Column(name = "gioitinh")
+  @NotNull(message = "Giới tính không được để trống.")
   private String gioitinh;
 
   @Column(name = "soluongdatmua")

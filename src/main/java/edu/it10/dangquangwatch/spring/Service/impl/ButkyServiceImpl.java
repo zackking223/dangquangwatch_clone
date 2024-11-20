@@ -1,8 +1,12 @@
 package edu.it10.dangquangwatch.spring.service.impl;
 
+import edu.it10.dangquangwatch.spring.AppCustomException.ErrorEnum;
+import edu.it10.dangquangwatch.spring.AppCustomException.ServiceException;
 import edu.it10.dangquangwatch.spring.entity.Butky;
 import edu.it10.dangquangwatch.spring.repository.ButkyRepository;
 import edu.it10.dangquangwatch.spring.service.ButkyService;
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,7 +26,12 @@ public class ButkyServiceImpl implements ButkyService {
   }
 
   @Override
-  public Butky save(Butky butky) {
+  public Butky save(@Valid Butky butky) {
+    if (butky.getMabutky() == null) {
+      butky.setKichhoat(1);
+      butky.setSoluongdatmua(0);
+    }
+
     return butkyRepository.save(butky);
   }
 
@@ -67,10 +76,22 @@ public class ButkyServiceImpl implements ButkyService {
   public void incAmount(Integer amount, Integer id) {
     Optional<Butky> opt = butkyRepository.findById(id);
 
+    if (amount <= 0) {
+      throw new ServiceException(
+          "Số lượng nhập phải là số nguyên dương",
+          ErrorEnum.IMPORT,
+          "/admin/butky/nhap?id=" + id);
+    }
+
     if (opt.isPresent()) {
       Butky butky = opt.get();
       butky.setSoluong(butky.getSoluong() + amount);
       save(butky);
+    } else {
+      throw new ServiceException(
+          "Không tìm thấy sản phẩm",
+          ErrorEnum.INDEX,
+          "/admin/butky/");
     }
   }
 
@@ -78,10 +99,22 @@ public class ButkyServiceImpl implements ButkyService {
   public void decAmount(Integer amount, Integer id) {
     Optional<Butky> opt = butkyRepository.findById(id);
 
+    if (amount <= 0) {
+      throw new ServiceException(
+          "Số lượng xuất phải là số nguyên dương",
+          ErrorEnum.EXPORT,
+          "/admin/butky/xuat?id=" + id);
+    }
+
     if (opt.isPresent()) {
       Butky butky = opt.get();
       butky.setSoluong(butky.getSoluong() - amount);
       save(butky);
+    } else {
+      throw new ServiceException(
+          "Không tìm thấy sản phẩm",
+          ErrorEnum.INDEX,
+          "/admin/butky/");
     }
   }
 }

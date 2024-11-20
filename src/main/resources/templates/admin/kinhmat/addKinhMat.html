@@ -18,49 +18,51 @@
         enctype="multipart/form-data">
         <div class="mb-4">
           <label class="block text-gray-700 text-sm font-bold mb-2" for="file">Chọn ảnh:</label>
-          <input type="file" id="file" name="file" class="border border-black rounded form-input mt-1 block w-full" multiple="multiple"
-            accept="image/*" onchange="previewImages(event)" required>
+          <input type="file" id="file" name="file" class="border border-black rounded form-input mt-1 block w-full"
+            multiple="multiple" accept="image/*" onchange="previewImages(event)" required>
         </div>
         <div id="preview-container" class="mb-4 flex flex-wrap">
           <!-- Images preview will be shown here -->
         </div>
         <div>
           <label class="block font-medium" th:for="tenKinhMat">Tên sản phẩm</label>
-          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{tenKinhMat}"
-            placeholder="Tên sản phẩm" />
+          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
+            th:field="*{tenKinhMat}" placeholder="Tên sản phẩm" />
         </div>
 
         <div style="clear: both; display: block; height: 10px"></div>
         <div>
           <label class="block font-medium" th:for="soLuong">Số lượng</label>
-          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{soLuong}" placeholder="Số lượng" />
+          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number"
+            th:field="*{soLuong}" placeholder="Số lượng" />
         </div>
 
         <div style="clear: both; display: block; height: 10px"></div>
         <div>
           <label class="block font-medium" th:for="giaTien">Giá tiền</label>
-          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{giaTien}" placeholder="Giá tiền" />
+          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number"
+            th:field="*{giaTien}" placeholder="Giá tiền" />
         </div>
 
         <div style="clear: both; display: block; height: 10px"></div>
         <div>
           <label class="block font-medium" th:for="rongMat">Rộng mắt</label>
-          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{rongMat}"
-            placeholder="Độ rộng mắt" />
+          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number"
+            th:field="*{rongMat}" placeholder="Độ rộng mắt" />
         </div>
 
         <div style="clear: both; display: block; height: 10px"></div>
         <div>
           <label class="block font-medium" th:for="songMui">Sống mũi</label>
-          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{songMui}"
-            placeholder="Dài sống mũi" />
+          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number"
+            th:field="*{songMui}" placeholder="Dài sống mũi" />
         </div>
 
         <div style="clear: both; display: block; height: 10px"></div>
         <div>
           <label class="block font-medium" th:for="daiGong">Dài gọng</label>
-          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{daiGong}"
-            placeholder="Độ dài gọng" />
+          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number"
+            th:field="*{daiGong}" placeholder="Độ dài gọng" />
         </div>
 
         <div style="clear: both; display: block; height: 10px"></div>
@@ -73,7 +75,7 @@
         <div style="clear: both; display: block; height: 10px"></div>
         <div>
           <label class="block font-medium" th:for="traGop">Trả góp</label>
-          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{traGop}" 
+          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number" th:field="*{traGop}"
             placeholder="Trả góp" />
         </div>
 
@@ -107,6 +109,19 @@
         };
         reader.readAsDataURL(files[i]);
       }
+    }
+  </script>
+  <script src="/js/notification.js"></script>
+  <script th:inline="javascript">
+    const errorMessage = /*[[${errorMessage}]]*/ '';
+    if (errorMessage) {
+      showNotification(
+        {
+          title: "Lỗi",
+          message: errorMessage,
+          type: "error"
+        }
+      );
     }
   </script>
 </body>

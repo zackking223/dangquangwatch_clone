@@ -28,17 +28,13 @@
   <div class="p-6 w-full bg-slate-50 shadow-sm rounded-lg md:mx-auto pl-12">
     <section class="flex items-center flex-wrap w-max mx-auto gap-3">
       <h1 class="font-bold text-center my-2">Tổng quan</h1>
-      <select name="month" id="month" th:each="tk : ${thongKes}" class="border border-black rounded block p-2 min-w-[280px]">
-        <option th:each="tk : ${thongKes}"
-            th:value="${tk.mathongke}"
-            th:text="${tk.getMaThongKeFormatted()}"
-            th:if="${tk.mathongke == thongKe.mathongke}" 
-            selected>
+      <select name="month" id="month" th:each="tk : ${thongKes}"
+        class="border border-black rounded block p-2 min-w-[280px]">
+        <option th:each="tk : ${thongKes}" th:value="${tk.mathongke}" th:text="${tk.getMaThongKeFormatted()}"
+          th:if="${tk.mathongke == thongKe.mathongke}" selected>
         </option>
-        <option th:each="tk : ${thongKes}"
-                th:value="${tk.mathongke}"
-                th:text="${tk.getMaThongKeFormatted()}"
-                th:unless="${tk.mathongke == thongKe.mathongke}">
+        <option th:each="tk : ${thongKes}" th:value="${tk.mathongke}" th:text="${tk.getMaThongKeFormatted()}"
+          th:unless="${tk.mathongke == thongKe.mathongke}">
         </option>
       </select>
     </section>
@@ -364,6 +360,19 @@
       });
     </script>
   </div>
+  <script src="/js/notification.js"></script>
+  <script th:inline="javascript">
+    const errorMessage = /*[[${errorMessage}]]*/ '';
+    if (errorMessage) {
+      showNotification(
+        {
+          title: "Lỗi",
+          message: errorMessage,
+          type: "error"
+        }
+      );
+    }
+  </script>
 </body>
 
 </html>

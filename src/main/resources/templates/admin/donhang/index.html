@@ -115,7 +115,9 @@
           <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
             th:text="${donhang.getMaDonHang()}"></td>
           <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
-            <a th:href="${'?email=' + donhang.getTaikhoan().getUsername()}" th:text="@{${donhang.getTaikhoan().getUsername()} + ' - ' +${donhang.getTaikhoan().getHoten()}}" class="hover:text-yellow-400 hover:bg-slate-900"></a>
+            <a th:href="${'?email=' + donhang.getTaikhoan().getUsername()}"
+              th:text="@{${donhang.getTaikhoan().getUsername()} + ' - ' +${donhang.getTaikhoan().getHoten()}}"
+              class="hover:text-yellow-400 hover:bg-slate-900"></a>
           </td>
           <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
             th:text="${donhang.getTongTienFormatted()}"></td>
@@ -125,19 +127,24 @@
           <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
             th:text="${donhang.getGhiChu() ?: ''}"></td>
           <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
-            <a href="?tinhtrang=Chờ+xác+nhận" class="py-1 px-[6px] rounded-sm bg-orange-500 font-medium text-white" th:if="${donhang.getTinhTrang() == 'Chờ xác nhận'}">
+            <a href="?tinhtrang=Chờ+xác+nhận" class="py-1 px-[6px] rounded-sm bg-orange-500 font-medium text-white"
+              th:if="${donhang.getTinhTrang() == 'Chờ xác nhận'}">
               Chờ xác nhận
             </a>
-            <a href="?tinhtrang=Đã+xác+nhận" class="py-1 px-[6px] rounded-sm bg-blue-500 font-medium text-white" th:if="${donhang.getTinhTrang() == 'Đã xác nhận'}">
+            <a href="?tinhtrang=Đã+xác+nhận" class="py-1 px-[6px] rounded-sm bg-blue-500 font-medium text-white"
+              th:if="${donhang.getTinhTrang() == 'Đã xác nhận'}">
               Đã xác nhận
             </a>
-            <a href="?tinhtrang=Đã+hủy" class="py-1 px-[6px] rounded-sm bg-red-500 font-medium text-white" th:if="${donhang.getTinhTrang() == 'Đã hủy'}">
+            <a href="?tinhtrang=Đã+hủy" class="py-1 px-[6px] rounded-sm bg-red-500 font-medium text-white"
+              th:if="${donhang.getTinhTrang() == 'Đã hủy'}">
               Đã hủy
             </a>
-            <a href="?tinhtrang=Đã+nhận+hàng" class="py-1 px-[6px] rounded-sm bg-green-500 font-medium text-white" th:if="${donhang.getTinhTrang() == 'Đã nhận hàng'}">
+            <a href="?tinhtrang=Đã+nhận+hàng" class="py-1 px-[6px] rounded-sm bg-green-500 font-medium text-white"
+              th:if="${donhang.getTinhTrang() == 'Đã nhận hàng'}">
               Đã nhận hàng
             </a>
-            <a href="?tinhtrang=Đang+vận+chuyển" class="py-1 px-[6px] rounded-sm bg-amber-500 font-medium text-white" th:if="${donhang.getTinhTrang() == 'Đang vận chuyển'}">
+            <a href="?tinhtrang=Đang+vận+chuyển" class="py-1 px-[6px] rounded-sm bg-amber-500 font-medium text-white"
+              th:if="${donhang.getTinhTrang() == 'Đang vận chuyển'}">
               Vận chuyển
             </a>
           </td>
@@ -250,6 +257,19 @@
           window.location.href = `/admin/donhang/${action}?madonhang=${id}`;
         }
       });
+    }
+  </script>
+  <script src="/js/notification.js"></script>
+  <script th:inline="javascript">
+    const errorMessage = /*[[${errorMessage}]]*/ '';
+    if (errorMessage) {
+      showNotification(
+        {
+          title: "Lỗi",
+          message: errorMessage,
+          type: "error"
+        }
+      );
     }
   </script>
 </body>

@@ -77,7 +77,8 @@
                     <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
                         th:text="${butky.getMabutky()}"></td>
                     <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
-                        <a th:href="${'/butky/' + butky.getMabutky()}" th:text="${butky.getTenbutky()}" class="hover:text-yellow-500" target="_blank"></a>
+                        <a th:href="${'/butky/' + butky.getMabutky()}" th:text="${butky.getTenbutky()}"
+                            class="hover:text-yellow-500" target="_blank"></a>
                     </td>
                     <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
                         th:text="${butky.getGiatien()}"></td>
@@ -91,11 +92,15 @@
                     <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
                         th:text="${butky.getNGAYTHEM()}"></td>
                     <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
-                        <a class="p-2 rounded bg-green-500 text-white"
+                        <a class="block w-max text-center my-1 p-2 rounded bg-green-500 text-white"
                             th:href="@{/admin/butky/edit?id={id}(id=${butky.getMabutky()})}">Sửa</a>
-                        <button th:if="${butky.kichhoat == 1}" class="p-2 rounded bg-red-500 text-white"
+                        <a th:href="@{/admin/butky/nhap?id={id}(id=${butky.getMabutky()})}"
+                            class="block w-max text-center my-1 p-2 rounded bg-purple-500 text-white">Nhập</a>
+                        <a th:href="@{/admin/butky/xuat?id={id}(id=${butky.getMabutky()})}"
+                            class="block w-max text-center my-1 p-2 rounded bg-orange-500 text-white">Xuất</a>
+                        <button th:if="${butky.kichhoat == 1}" class="block w-max text-center my-1 p-2 rounded bg-red-500 text-white"
                             th:data-id="${butky.getMabutky()}" onclick="confirmDeactivate(this);">Tắt</button>
-                        <button th:if="${butky.kichhoat == 0}" class="p-2 rounded bg-blue-500 text-white"
+                        <button th:if="${butky.kichhoat == 0}" class="block w-max text-center my-1 p-2 rounded bg-blue-500 text-white"
                             th:data-id="${butky.getMabutky()}" onclick="confirmActivate(this);">Bật</button>
                     </td>
                 </tr>
@@ -141,6 +146,19 @@
                     window.location.href = `/admin/butky/activate?id=${id}`;
                 }
             });
+        }
+    </script>
+    <script src="/js/notification.js"></script>
+    <script th:inline="javascript">
+        const errorMessage = /*[[${errorMessage}]]*/ '';
+        if (errorMessage) {
+            showNotification(
+                {
+                    title: "Lỗi",
+                    message: errorMessage,
+                    type: "error"
+                }
+            );
         }
     </script>
 </body>

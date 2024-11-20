@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 import java.text.NumberFormat;
 import java.util.Iterator;
@@ -21,12 +22,15 @@ public class Trangsuc {
   private Integer matrangsuc;
 
   @Column(name = "tentrangsuc")
+  @NotNull(message = "Tên trang sức không được để trống.")
   private String tentrangsuc;
 
   @Column(name = "giatien")
+  @NotNull(message = "Giá tiền không được để trống.")
   private Integer giaTien;
 
   @Column(name = "soluong")
+  @NotNull(message = "Số lượng không được để trống.")
   private Integer soluong;
 
   @Column(name = "soluongdatmua")
@@ -36,12 +40,14 @@ public class Trangsuc {
   private Integer kichhoat;
 
   @Column(name = "tragop")
+  @NotNull(message = "Trả góp không được để trống.")
   private Integer tragop;
 
   @Column(name = "NGAYTHEM")
   private String NGAYTHEM;
 
   @Column(name = "thongtin")
+  @NotNull(message = "Thông tin không được để trống.")
   private String thongtin;
 
   @OneToMany(mappedBy = "trangsuc", targetEntity = Anhtrangsuc.class)

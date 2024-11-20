@@ -1,9 +1,14 @@
 package edu.it10.dangquangwatch.spring.controller;
 
+import edu.it10.dangquangwatch.spring.AppCustomException.ControllerException;
+import edu.it10.dangquangwatch.spring.AppCustomException.ErrorEnum;
 import edu.it10.dangquangwatch.spring.entity.Anhbutky;
 import edu.it10.dangquangwatch.spring.entity.Butky;
 import edu.it10.dangquangwatch.spring.service.AnhbutkyService;
 import edu.it10.dangquangwatch.spring.service.ButkyService;
+import edu.it10.dangquangwatch.spring.service.LichSuKhoService;
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -15,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,9 +31,13 @@ public class ButkyController {
   private ButkyService butkyService;
   @Autowired
   private AnhbutkyService anhbutkyService;
+  @Autowired
+  private LichSuKhoService lichSuKhoService;
 
   @GetMapping("/")
-  public String index(Model model,
+  public String index(
+      HttpSession session,
+      Model model,
       @RequestParam("page") Optional<Integer> page,
       @RequestParam("search") Optional<String> search,
       @RequestParam("from") Optional<String> from,
@@ -64,24 +74,119 @@ public class ButkyController {
     model.addAttribute("from", from.isPresent() ? from.get() : "");
     model.addAttribute("to", to.isPresent() ? to.get() : "");
     model.addAttribute("sotrang", data.getTotalPages());
+    
+    var errorMessage = session.getAttribute(ErrorEnum.INDEX.name());
+    if (errorMessage != null) {
+      session.removeAttribute(ErrorEnum.INDEX.name());
+      model.addAttribute("errorMessage", errorMessage);
+    }
 
     return "/admin/butky/index";
   }
 
   @GetMapping(value = "/add")
-  public String add(Model model) {
+  public String add(HttpSession session, Model model) {
     model.addAttribute("butky", new Butky());
+    var errorMessage = session.getAttribute(ErrorEnum.INDEX.name());
+    if (errorMessage != null) {
+      session.removeAttribute(ErrorEnum.ADD.name());
+      model.addAttribute("errorMessage", errorMessage);
+    }
     return "/admin/butky/addButky";
   }
 
   @GetMapping(value = "/edit")
-  public String edit(@RequestParam("id") Integer mabutky, Model model) {
+  public String edit(HttpSession session, @RequestParam("id") Integer mabutky, Model model) {
     Optional<Butky> butkyEdit = butkyService.findById(mabutky);
     butkyEdit.ifPresent(butky -> {
       model.addAttribute("butky", butky);
       model.addAttribute("images", butky.getImages());
     });
+    var errorMessage = session.getAttribute(ErrorEnum.INDEX.name());
+    if (errorMessage != null) {
+      session.removeAttribute(ErrorEnum.EDIT.name());
+      model.addAttribute("errorMessage", errorMessage);
+    }
     return "/admin/butky/editButky";
+  }
+
+  @GetMapping("/nhap")
+  public String nhap(
+      HttpSession session,
+      @RequestParam("id") Integer mabutky,
+      Model model) {
+    Optional<Butky> data = butkyService.findById(mabutky);
+    if (data.isPresent()) {
+      Butky butky = data.get();
+      model.addAttribute("butky", butky);
+    } else {
+      throw new ControllerException("Không tìm thấy sản phẩm", ErrorEnum.INDEX, "/admin/butky/");
+    }
+
+    var errorMessage = session.getAttribute(ErrorEnum.IMPORT.name());
+
+    if (errorMessage != null) {
+      session.removeAttribute(ErrorEnum.IMPORT.name());
+      model.addAttribute("errorMessage", errorMessage);
+    }
+
+    return "admin/butky/nhap";
+  }
+
+  @PostMapping("/nhap")
+  public String nhap(
+      HttpSession session,
+      @RequestParam("id") Integer id,
+      @RequestParam("soLuong") Integer soLuong,
+      @RequestParam("giaTien") BigDecimal giaTien,
+      @RequestParam("thongTinNhap") String thongTinNhap) {
+    butkyService.incAmount(soLuong, id);
+    String username = (String) session.getAttribute("username");
+    lichSuKhoService.NhapKho(
+        username + " nhập " + soLuong + " đồng hồ mã " + id + ". Hết tổng cộng: " + giaTien + " vnđ. " + thongTinNhap,
+        username, giaTien);
+
+    return "redirect:/admin/butky/";
+  }
+
+  @GetMapping("/xuat")
+  public String xuat(
+      HttpSession session,
+      @RequestParam("id") Integer mabutky,
+      Model model) {
+    Optional<Butky> data = butkyService.findById(mabutky);
+    if (data.isPresent()) {
+      Butky butky = data.get();
+      model.addAttribute("butky", butky);
+    } else {
+      throw new ControllerException("Không tìm thấy sản phẩm", ErrorEnum.INDEX, "/admin/butky/");
+    }
+
+    var errorMessage = session.getAttribute(ErrorEnum.EXPORT.name()).toString();
+
+    if (errorMessage != null) {
+      session.removeAttribute(ErrorEnum.EXPORT.name());
+      model.addAttribute("errorMessage", errorMessage);
+    }
+
+    return "admin/butky/xuat";
+  }
+
+  @PostMapping("/xuat")
+  public String xuat(
+      HttpSession session,
+      @RequestParam("id") Integer id,
+      @RequestParam("soLuong") Integer soLuong,
+      @RequestParam("giaTien") BigDecimal giaTien,
+      @RequestParam("thongTinXuat") String thongTinXuat) {
+
+    butkyService.decAmount(soLuong, id);
+    String username = (String) session.getAttribute("username");
+    lichSuKhoService.XuatKho(
+        username + " xuất " + soLuong + " đồng hồ mã " + id + ". Trị giá: " + giaTien + ". " + thongTinXuat,
+        username);
+
+    return "redirect:/admin/butky/";
   }
 
   @PostMapping("/update")

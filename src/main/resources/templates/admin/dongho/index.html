@@ -144,7 +144,8 @@
                     <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
                         th:text="${dongho.getMadongho()}"></td>
                     <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
-                        <a th:href="${'/dongho/' + dongho.getMadongho()}" th:text="${dongho.getTendongho()}" class="hover:text-yellow-500" target="_blank"></a>
+                        <a th:href="${'/dongho/' + dongho.getMadongho()}" th:text="${dongho.getTendongho()}"
+                            class="hover:text-yellow-500" target="_blank"></a>
                     </td>
                     <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
                         th:text="${dongho.getGiatien()}"></td>
@@ -169,10 +170,14 @@
                         th:text="${dongho.getNGAYTHEM()}"></td>
                     <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
                         <a th:href="@{/admin/dongho/edit?id={id}(id=${dongho.getMadongho()})}"
-                            class="p-2 rounded bg-green-500 text-white">Sửa</a>
-                        <button th:if="${dongho.kichhoat == 1}" class="p-2 rounded bg-red-500 text-white"
+                            class="block w-max text-center my-1 p-2 rounded bg-green-500 text-white">Sửa</a>
+                        <a th:href="@{/admin/dongho/nhap?id={id}(id=${dongho.getMadongho()})}"
+                            class="block w-max text-center my-1 p-2 rounded bg-purple-500 text-white">Nhập</a>
+                        <a th:href="@{/admin/dongho/xuat?id={id}(id=${dongho.getMadongho()})}"
+                            class="block w-max text-center my-1 p-2 rounded bg-orange-500 text-white">Xuất</a>
+                        <button th:if="${dongho.kichhoat == 1}" class="block w-max text-center my-1 p-2 rounded bg-red-500 text-white"
                             th:data-id="${dongho.getMadongho()}" onclick="confirmDeactivate(this);">Tắt</button>
-                        <button th:if="${dongho.kichhoat == 0}" class="p-2 rounded bg-blue-500 text-white"
+                        <button th:if="${dongho.kichhoat == 0}" class="block w-max text-center my-1 p-2 rounded bg-blue-500 text-white"
                             th:data-id="${dongho.getMadongho()}" onclick="confirmActivate(this);">Bật</button>
                     </td>
                 </tr>
@@ -217,6 +222,19 @@
                     window.location.href = `/admin/dongho/activate?id=${id}`;
                 }
             });
+        }
+    </script>
+    <script src="/js/notification.js"></script>
+    <script th:inline="javascript">
+        const errorMessage = /*[[${errorMessage}]]*/ '';
+        if (errorMessage) {
+            showNotification(
+                {
+                    title: "Lỗi",
+                    message: errorMessage,
+                    type: "error"
+                }
+            );
         }
     </script>
 </body>

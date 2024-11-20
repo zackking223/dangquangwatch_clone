@@ -25,7 +25,8 @@
         <div style="clear: both; display: block; height: 10px"></div>
         <div>
           <label class="block font-medium" th:for="hoten">Họ tên</label>
-          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{hoten}" required />
+          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{hoten}"
+            required />
         </div>
 
         <div style="clear: both; display: block; height: 10px"></div>
@@ -132,6 +133,19 @@
       }
     }
     fillAddress();
+  </script>
+  <script src="/js/notification.js"></script>
+  <script th:inline="javascript">
+    const errorMessage = /*[[${errorMessage}]]*/ '';
+    if (errorMessage) {
+      showNotification(
+        {
+          title: "Lỗi",
+          message: errorMessage,
+          type: "error"
+        }
+      );
+    }
   </script>
 </body>
 

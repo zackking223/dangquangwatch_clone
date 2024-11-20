@@ -1,8 +1,11 @@
 package edu.it10.dangquangwatch.spring.service.impl;
 
+import edu.it10.dangquangwatch.spring.AppCustomException.ErrorEnum;
+import edu.it10.dangquangwatch.spring.AppCustomException.ServiceException;
 import edu.it10.dangquangwatch.spring.entity.Dongho;
 import edu.it10.dangquangwatch.spring.repository.DonghoRepository;
 import edu.it10.dangquangwatch.spring.service.DonghoService;
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,7 +27,12 @@ public class DonghoServiceImpl implements DonghoService {
   }
 
   @Override
-  public Dongho save(Dongho dongho) {
+  public Dongho save(@Valid Dongho dongho) {
+    if (dongho.getMadongho() == null) {
+      dongho.setKichhoat(1);
+      dongho.setSoluongdatmua(0);
+    }
+
     return donghoRepository.save(dongho);
   }
 
@@ -76,10 +84,22 @@ public class DonghoServiceImpl implements DonghoService {
   public void incAmount(Integer amount, Integer id) {
     Optional<Dongho> opt = donghoRepository.findById(id);
 
+    if (amount <= 0) {
+      throw new ServiceException(
+          "Số lượng nhập phải là số nguyên dương",
+          ErrorEnum.IMPORT,
+          "/admin/dongho/nhap?id=" + id);
+    }
+
     if (opt.isPresent()) {
       Dongho dongho = opt.get();
       dongho.setSoluong(dongho.getSoluong() + amount);
       save(dongho);
+    } else {
+      throw new ServiceException(
+          "Không tìm thấy sản phẩm",
+          ErrorEnum.INDEX,
+          "/admin/dongho/");
     }
   }
 
@@ -87,10 +107,22 @@ public class DonghoServiceImpl implements DonghoService {
   public void decAmount(Integer amount, Integer id) {
     Optional<Dongho> opt = donghoRepository.findById(id);
 
+    if (amount <= 0) {
+      throw new ServiceException(
+          "Số lượng xuất phải là số nguyên dương",
+          ErrorEnum.EXPORT,
+          "/admin/dongho/xuat?id=" + id);
+    }
+
     if (opt.isPresent()) {
       Dongho dongho = opt.get();
       dongho.setSoluong(dongho.getSoluong() - amount);
       save(dongho);
+    } else {
+      throw new ServiceException(
+          "Không tìm thấy sản phẩm",
+          ErrorEnum.INDEX,
+          "/admin/dongho/");
     }
   }
 }

@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 import java.text.NumberFormat;
 import java.util.Iterator;
@@ -21,12 +22,15 @@ public class Butky {
     private Integer mabutky;
 
     @Column(name = "tenbutky")
+    @NotNull(message = "Tên bút ký không được để trống.")
     private String tenbutky;
 
     @Column(name = "giatien")
+    @NotNull(message = "Giá tiền không được để trống.")
     private Integer giatien;
 
     @Column(name = "soluong")
+    @NotNull(message = "Số lượng không được để trống.")
     private Integer soluong;
 
     @Column(name = "soluongdatmua")
@@ -36,12 +40,14 @@ public class Butky {
     private Integer kichhoat;
 
     @Column(name = "tragop")
+    @NotNull(message = "Trả góp không được để trống.")
     private Integer tragop;
 
     @Column(name = "NGAYTHEM")
     private String NGAYTHEM;
 
     @Column(name = "thongtin")
+    @NotNull(message = "Ngày thêm không được để trống.")
     private String thongtin;
 
     @OneToMany(mappedBy = "butky", targetEntity = Anhbutky.class)

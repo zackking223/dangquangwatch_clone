@@ -50,6 +50,19 @@
             err.classList.add("hidden");
         })
     </script>
+    <script src="/js/notification.js"></script>
+    <script th:inline="javascript">
+        const errorMessage = /*[[${errorMessage}]]*/ '';
+        if (errorMessage) {
+            showNotification(
+                {
+                    title: "Lỗi",
+                    message: errorMessage,
+                    type: "error"
+                }
+            );
+        }
+    </script>
 </body>
 
 </html>

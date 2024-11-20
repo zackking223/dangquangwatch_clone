@@ -1,27 +1,27 @@
 package edu.it10.dangquangwatch.spring.AppCustomException;
 
-public class ServiceException extends RuntimeException {
+public class ControllerException extends RuntimeException {
   private String path;
   private String sessionErrorAttribute;
   private String message;
   private String redirect;
 
-  public ServiceException() {
+  public ControllerException() {
   }
 
-  public ServiceException(String message) {
-    this.message = message;
-  }
-
-  public ServiceException(String message, String path) {
+  public ControllerException(String message, String path) {
     this.path = path;
     this.message = message;
   }
 
-  public ServiceException(String message, ErrorEnum attributeName, String path) {
+  public ControllerException(String message, ErrorEnum attributeName, String path) {
     this.path = path;
     this.message = message;
     this.sessionErrorAttribute = attributeName.name();
+  }
+
+  public void setRedirect(String redirect) {
+    this.redirect = redirect;
   }
 
   public String getRedirect() {

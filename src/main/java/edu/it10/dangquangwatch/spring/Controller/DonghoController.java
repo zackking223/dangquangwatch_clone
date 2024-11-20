@@ -1,9 +1,13 @@
 package edu.it10.dangquangwatch.spring.controller;
 
+import edu.it10.dangquangwatch.spring.AppCustomException.ControllerException;
+import edu.it10.dangquangwatch.spring.AppCustomException.ErrorEnum;
 import edu.it10.dangquangwatch.spring.entity.Anhdongho;
 import edu.it10.dangquangwatch.spring.entity.Dongho;
 import edu.it10.dangquangwatch.spring.service.AnhdonghoService;
 import edu.it10.dangquangwatch.spring.service.DonghoService;
+import edu.it10.dangquangwatch.spring.service.LichSuKhoService;
+import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -28,9 +33,12 @@ public class DonghoController {
   private DonghoService donghoService;
   @Autowired
   private AnhdonghoService anhdonghoService;
+  @Autowired
+  private LichSuKhoService lichSuKhoService;
 
   @GetMapping("/")
   public String index(
+      HttpSession session,
       @RequestParam("search") Optional<String> search,
       @RequestParam("page") Optional<Integer> page,
       @RequestParam("from") Optional<String> from,
@@ -68,6 +76,7 @@ public class DonghoController {
       data = donghoService.getAll(searchStr, fromStr, toStr, pageNum);
     }
 
+    
     model.addAttribute("dongho", fieldData);
     model.addAttribute("donghos", data.getContent());
     model.addAttribute("page", pageNum);
@@ -75,6 +84,12 @@ public class DonghoController {
     model.addAttribute("from", from.isPresent() ? from.get() : "");
     model.addAttribute("to", to.isPresent() ? to.get() : "");
     model.addAttribute("sotrang", data.getTotalPages());
+    
+    var errorMessage = session.getAttribute(ErrorEnum.INDEX.name());
+    if (errorMessage != null) {
+      session.removeAttribute(ErrorEnum.INDEX.name());
+      model.addAttribute("errorMessage", errorMessage);
+    }
 
     return "admin/dongho/index";
   }
@@ -85,13 +100,20 @@ public class DonghoController {
   }
 
   @GetMapping(value = "/add")
-  public String add(Model model) {
+  public String add(HttpSession session, Model model) {
+    String errorMessage = (String) session.getAttribute(ErrorEnum.ADD.name());
+
+    if (errorMessage != null) {
+      session.removeAttribute(ErrorEnum.IMPORT.name());
+      model.addAttribute("errorMessage", errorMessage);
+    }
+
     model.addAttribute("dongho", new Dongho());
     return "admin/dongho/addDongHo";
   }
 
   @GetMapping(value = "/edit")
-  public String edit(@RequestParam("id") Integer madongho, Model model) {
+  public String edit(HttpSession session, @RequestParam("id") Integer madongho, Model model) {
     List<String> gioitinh_options = new ArrayList<String>();
     gioitinh_options.add("Nam");
     gioitinh_options.add("Nữ");
@@ -103,7 +125,93 @@ public class DonghoController {
       model.addAttribute("gioitinh", dongho.getGioitinh());
       model.addAttribute("gioitinh_options", gioitinh_options);
     });
+
+    String errorMessage = (String) session.getAttribute(ErrorEnum.EDIT.name());
+
+    if (errorMessage != null) {
+      session.removeAttribute(ErrorEnum.IMPORT.name());
+      model.addAttribute("errorMessage", errorMessage);
+    }
     return "admin/dongho/editDongHo";
+  }
+
+  @GetMapping("/nhap")
+  public String nhap(
+      HttpSession session,
+      @RequestParam("id") Integer madongho,
+      Model model) {
+    Optional<Dongho> data = donghoService.findById(madongho);
+    if (data.isPresent()) {
+      Dongho dongho = data.get();
+      model.addAttribute("dongho", dongho);
+    } else {
+      throw new ControllerException("Không tìm thấy sản phẩm", ErrorEnum.INDEX, "/admin/dongho/");
+    }
+
+    var errorMessage = session.getAttribute(ErrorEnum.IMPORT.name());
+
+    if (errorMessage != null) {
+      session.removeAttribute(ErrorEnum.IMPORT.name());
+      model.addAttribute("errorMessage", errorMessage);
+    }
+
+    return "admin/dongho/nhap";
+  }
+
+  @PostMapping("/nhap")
+  public String nhap(
+      HttpSession session,
+      @RequestParam("id") Integer id,
+      @RequestParam("soLuong") Integer soLuong,
+      @RequestParam("giaTien") BigDecimal giaTien,
+      @RequestParam("thongTinNhap") String thongTinNhap) {
+    donghoService.incAmount(soLuong, id);
+    String username = (String) session.getAttribute("username");
+    lichSuKhoService.NhapKho(
+        username + " nhập " + soLuong + " đồng hồ mã " + id + ". Hết tổng cộng: " + giaTien + " vnđ. " + thongTinNhap,
+        username, giaTien);
+
+    return "redirect:/admin/dongho/";
+  }
+
+  @GetMapping("/xuat")
+  public String xuat(
+      HttpSession session,
+      @RequestParam("id") Integer madongho,
+      Model model) {
+    Optional<Dongho> data = donghoService.findById(madongho);
+    if (data.isPresent()) {
+      Dongho dongho = data.get();
+      model.addAttribute("dongho", dongho);
+    } else {
+      throw new ControllerException("Không tìm thấy sản phẩm", ErrorEnum.INDEX, "/admin/dongho/");
+    }
+
+    var errorMessage = session.getAttribute(ErrorEnum.EXPORT.name()).toString();
+
+    if (errorMessage != null) {
+      session.removeAttribute(ErrorEnum.EXPORT.name());
+      model.addAttribute("errorMessage", errorMessage);
+    }
+
+    return "admin/dongho/xuat";
+  }
+
+  @PostMapping("/xuat")
+  public String xuat(
+      HttpSession session,
+      @RequestParam("id") Integer id,
+      @RequestParam("soLuong") Integer soLuong,
+      @RequestParam("giaTien") BigDecimal giaTien,
+      @RequestParam("thongTinXuat") String thongTinXuat) {
+
+    donghoService.decAmount(soLuong, id);
+    String username = (String) session.getAttribute("username");
+    lichSuKhoService.XuatKho(
+        username + " xuất " + soLuong + " đồng hồ mã " + id + ". Trị giá: " + giaTien + ". " + thongTinXuat,
+        username);
+
+    return "redirect:/admin/dongho/";
   }
 
   @PostMapping("/update")

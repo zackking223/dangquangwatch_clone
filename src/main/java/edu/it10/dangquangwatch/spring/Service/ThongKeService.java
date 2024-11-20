@@ -16,6 +16,7 @@ public interface ThongKeService {
   void tangluotxemsanpham();
   void tangluotthemgiohang();
   void updateVon(BigDecimal newCapital);
+  void incChiPhi(BigDecimal amount);
   void incVon(BigDecimal amount);
   void decVon(BigDecimal amount);
   void updateTiLeChuyenDoi(Float newTiLe);

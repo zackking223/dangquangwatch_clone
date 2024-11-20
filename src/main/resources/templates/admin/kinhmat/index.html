@@ -65,7 +65,8 @@
                     <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${kinhMat.getMaKinhMat()}">
                     </td>
                     <td class="p-2 border border-solid border-black max-w-[200px]">
-                        <a th:href="${'/kinhmat/' + kinhMat.getMaKinhMat()}" th:text="${kinhMat.getTenKinhMat()}" class="hover:text-yellow-500" target="_blank"></a>
+                        <a th:href="${'/kinhmat/' + kinhMat.getMaKinhMat()}" th:text="${kinhMat.getTenKinhMat()}"
+                            class="hover:text-yellow-500" target="_blank"></a>
                     </td>
                     <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${kinhMat.getGiaTien()}">
                     </td>
@@ -87,11 +88,15 @@
                     <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${kinhMat.getNGAYTHEM()}">
                     </td>
                     <td class="p-2 border border-solid border-black max-w-[200px]">
-                        <a class="p-2 rounded bg-green-500 text-white"
+                        <a class="block w-max text-center my-1 p-2 rounded bg-green-500 text-white"
                             th:href="@{/admin/kinhmat/edit?id={id}(id=${kinhMat.getMaKinhMat()})}">Sửa</a>
-                        <button th:if="${kinhMat.kichhoat == 1}" class="p-2 rounded bg-red-500 text-white"
+                        <a th:href="@{/admin/kinhmat/nhap?id={id}(id=${kinhMat.getMaKinhMat()})}"
+                            class="block w-max text-center my-1 p-2 rounded bg-purple-500 text-white">Nhập</a>
+                        <a th:href="@{/admin/kinhmat/xuat?id={id}(id=${kinhMat.getMaKinhMat()})}"
+                            class="block w-max text-center my-1 p-2 rounded bg-orange-500 text-white">Xuất</a>
+                        <button th:if="${kinhMat.kichhoat == 1}" class="block w-max text-center my-1 p-2 rounded bg-red-500 text-white"
                             th:data-id="${kinhMat.getMaKinhMat()}" onclick="confirmDeactivate(this);">Tắt</button>
-                        <button th:if="${kinhMat.kichhoat == 0}" class="p-2 rounded bg-blue-500 text-white"
+                        <button th:if="${kinhMat.kichhoat == 0}" class="block w-max text-center my-1 p-2 rounded bg-blue-500 text-white"
                             th:data-id="${kinhMat.getMaKinhMat()}" onclick="confirmActivate(this);">Bật</button>
                     </td>
                 </tr>
@@ -136,6 +141,19 @@
                     window.location.href = `/admin/kinhmat/activate?id=${id}`;
                 }
             });
+        }
+    </script>
+    <script src="/js/notification.js"></script>
+    <script th:inline="javascript">
+        const errorMessage = /*[[${errorMessage}]]*/ '';
+        if (errorMessage) {
+            showNotification(
+                {
+                    title: "Lỗi",
+                    message: errorMessage,
+                    type: "error"
+                }
+            );
         }
     </script>
 </body>

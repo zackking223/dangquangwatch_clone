@@ -134,7 +134,7 @@ initContainer();
 // {
 //   title: String,
 //   message: String,
-//   type: success | error | info | warning
+//   type: "success" | "error" | "info" | "warning",
 //   url?: String
 // }
 function showNotification(data, duration = 8000) {
@@ -183,6 +183,7 @@ function showNotification(data, duration = 8000) {
   // Notification close button
   const closeButton = document.createElement("button");
   closeButton.style.display = "block";
+  closeButton.style.marginLeft = "auto";
   closeButton.style.flexShrink = "0";
   closeButton.innerHTML = `<img src="/svg/close.svg" style="display:block;height=24px;width=24px;" />`
   notification.appendChild(closeButton);

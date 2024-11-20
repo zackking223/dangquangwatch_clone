@@ -55,7 +55,7 @@
                         th:field="*{thongtin}" placeholder="Thông tin sản phẩm"></textarea>
                 </div>
 
-                <input class="hidden" type="date" id="datePicker" name="NGAYTHEM" />
+                <input class="hidden" type="date" id="NGAYTHEM" name="NGAYTHEM" />
 
                 <div style="clear: both; display: block; height: 10px"></div>
                 <input class="p-2 w-max bg-green-500 rounded block mt-4 text-white" type="submit" value="Thêm" />
@@ -63,7 +63,7 @@
         </div>
     </div>
     <script>
-        document.getElementById('datePicker').valueAsDate = new Date();
+        document.getElementById('NGAYTHEM').valueAsDate = new Date();
         function previewImages(event) {
             var files = event.target.files;
             var container = document.getElementById('preview-container');
@@ -78,6 +78,19 @@
                 };
                 reader.readAsDataURL(files[i]);
             }
+        }
+    </script>
+    <script src="/js/notification.js"></script>
+    <script th:inline="javascript">
+        const errorMessage = /*[[${errorMessage}]]*/ '';
+        if (errorMessage) {
+            showNotification(
+                {
+                    title: "Lỗi",
+                    message: errorMessage,
+                    type: "error"
+                }
+            );
         }
     </script>
 </body>
