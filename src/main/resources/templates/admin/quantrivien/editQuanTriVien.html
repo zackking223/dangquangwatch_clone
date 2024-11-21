@@ -37,7 +37,16 @@
       </div>
       <div style="clear: both; display: block; height: 10px"></div>
 
-      <input class="hidden" value="ROLE_QUANTRI" type="text" th:field="*{loai_tai_khoan}" />
+      <div>
+        <label class="block font-medium" th:for="loai_tai_khoan">Vai trò</label>
+        <select name="loai_tai_khoan" id="loai_tai_khoan"
+          class="border border-black rounded block p-2 w-[80vw] min-w-[280px]">
+          <option th:if="${taikhoan.getLoai_tai_khoan() == 'ROLE_NHANVIEN'}" value="ROLE_NHANVIEN" selected>Nhân viên</option>
+          <option th:if="${taikhoan.getLoai_tai_khoan() != 'ROLE_NHANVIEN'}" value="ROLE_NHANVIEN">Nhân viên</option>
+          <option th:if="${taikhoan.getLoai_tai_khoan() == 'ROLE_QUANLY'}" value="ROLE_QUANLY" selected>Quản lý</option>
+          <option th:if="${taikhoan.getLoai_tai_khoan() != 'ROLE_QUANLY'}" value="ROLE_QUANLY">Quản lý</option>
+        </select>
+      </div>  
       <input class="hidden" value="1" type="number" th:field="*{enabled}" />
       <input class="hidden" type="date" th:field="*{NGAYTHEM}" />
 

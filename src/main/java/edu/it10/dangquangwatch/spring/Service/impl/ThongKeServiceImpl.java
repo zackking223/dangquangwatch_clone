@@ -161,7 +161,7 @@ public class ThongKeServiceImpl implements ThongKeService {
 
     @Override
     @Transactional
-    public void tangluottruycap() {
+    public void incLuotTruyCap() {
         ThongKe thongKe = getCurrent();
 
         // Tăng giá trị
@@ -172,7 +172,7 @@ public class ThongKeServiceImpl implements ThongKeService {
 
     @Override
     @Transactional
-    public void tangluotxemsanpham() {
+    public void incLuotXemSanPham() {
         ThongKe thongKe = getCurrent();
 
         // Tăng giá trị
@@ -183,7 +183,7 @@ public class ThongKeServiceImpl implements ThongKeService {
 
     @Override
     @Transactional
-    public void tangluotthemgiohang() {
+    public void incLuotThemGioHang() {
         ThongKe thongKe = getCurrent();
 
         // Tăng giá trị
@@ -244,6 +244,15 @@ public class ThongKeServiceImpl implements ThongKeService {
         ThongKe thongKe = getCurrent();
 
         thongKe.setChiPhi(thongKe.getChiPhi().add(amount));
+
+        thongKeRepository.save(thongKe);
+    }
+
+    @Override
+    public void incDoanhThu(BigDecimal amount) {
+        ThongKe thongKe = getCurrent();
+
+        thongKe.setDoanhThu(thongKe.getDoanhThu().add(amount));
 
         thongKeRepository.save(thongKe);
     }

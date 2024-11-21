@@ -178,8 +178,8 @@
                 Hủy đơn
               </button>
               <button class="p-2 rounded bg-red-500 text-white" th:if="${donhang.getTinhTrang() == 'Chờ xác nhận'}"
-                th:data-id="${donhang.getMaDonHang()}" onclick="confirmDelete(this);">
-                Xóa đơn
+                th:data-id="${donhang.getMaDonHang()}"th:data-action="huy" onclick="confirmAction(this);">
+                Từ chối
               </button>
             </div>
           </td>
@@ -189,25 +189,6 @@
   </div>
   <script src="/js/sweetalert.min.js"></script>
   <script>
-    function confirmDelete(element) {
-      const id = element.getAttribute('data-id'); // Lấy giá trị từ data-attribute
-
-      Swal.fire({
-        title: 'Bạn có chắc chắn muốn xóa?',
-        text: "Hành động này không thể hoàn tác!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Vâng, xóa nó!',
-        cancelButtonText: 'Hủy'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.location.href = `/admin/donhang/delete?id=${id}`;
-        }
-      });
-    }
-
     function confirmAction(element) {
       const id = element.getAttribute('data-id'); // Lấy giá trị từ data-attribute
       const action = element.getAttribute('data-action'); // Lấy giá trị từ data-attribute

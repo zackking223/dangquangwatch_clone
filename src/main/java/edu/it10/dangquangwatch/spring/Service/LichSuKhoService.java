@@ -18,7 +18,7 @@ public class LichSuKhoService {
   @Autowired
   private ThongKeService thongKeService;
 
-  Page<LichSuKho> searchLichSuKho(String thongTin, String hanhDong, String nguoiThucHien, String from, String to, int pageNum) {
+  public Page<LichSuKho> search(String thongTin, String hanhDong, String nguoiThucHien, String from, String to, int pageNum) {
     return lichSuKhoRepository.searchLichSuKho(thongTin, hanhDong, nguoiThucHien, from, to, PageRequest.of(pageNum, 10));
   }
 

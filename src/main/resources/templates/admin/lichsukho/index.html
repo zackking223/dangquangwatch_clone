@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="icon" type="image/png" href="/images/LogoMobile.png">
+  <title>Lịch sử kho</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}" />
+</head>
+
+<body>
+  <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+  <div class="p-4 w-full bg-slate-50 shadow-sm rounded-lg md:mx-auto pl-11">
+    <h1 class="font-bold text-center my-2">Lịch sử kho</h1>
+    <form action="" class="w-full flex flex-col gap-2 my-2">
+      <section class="grid sm:grid-cols-2 grid-cols-1 gap-2">
+        <div>
+          <label class="block font-medium" for="nguoithuchien">Người thực hiện</label>
+          <input class="p-2 rounded block w-full outline-none border border-black" type="text" name="nguoithuchien"
+            th:value="${nguoithuchien}" placeholder="admin@email.com">
+        </div>
+        <div>
+          <label class="block font-medium" for="hanhdong">Hành động</label>
+          <select name="hanhdong" id="hanhdong" class="p-2 rounded block w-full outline-none border border-black">
+            <option value="">Chưa chọn</option>
+            <option th:if="${hanhdong == 'Nhập hàng'}" value="Nhập hàng" selected>Nhập hàng</option>
+            <option th:if="${hanhdong != 'Nhập hàng'}" value="Nhập hàng">Nhập hàng</option>
+            <option th:if="${hanhdong == 'Xuất hàng'}" value="Xuất hàng" selected>Xuất hàng</option>
+            <option th:if="${hanhdong != 'Xuất hàng'}" value="Xuất hàng">Xuất hàng</option>
+          </select>
+        </div>
+      </section>
+      <section>
+        <label class="block font-medium" for="thongtin">Thông tin hành động</label>
+        <input class="p-2 rounded block w-full outline-none border border-black" type="text" name="thongtin"
+          th:value="${thongtin}" placeholder="Thông tin hành động">
+      </section>
+      <section class="grid sm:grid-cols-2 grid-cols-1 gap-2">
+        <div>
+          <label class="block font-medium" for="from">Từ thời gian</label>
+          <input class="block p-2 w-full border border-black rounded" type="datetime-local" name="from" id="from"
+            th:value="${from}">
+        </div>
+        <div>
+          <label class="block font-medium" for="to">Đến thời gian</label>
+          <input class="block p-2 w-full border border-black rounded" type="datetime-local" name="to" id="to" th:value="${to}">
+        </div>
+      </section>
+      <section class="flex gap-1 items-center">
+        <button class="p-2 w-max bg-blue-500 rounded block text-white flex-shrink-0">Tìm kiếm</button>
+      </section>
+      <ul th:if="${sotrang > 1}" class="flex items-center flex-wrap w-full sm:gap-2 gap-1 my-4">
+        <li>Trang:</li>
+        <li th:each="i:${#numbers.sequence(1,sotrang,1)}">
+          <a th:classappend="${page + 1 == i} ? 'bg-black text-white' : 'bg-white text-black'"
+            class="p-2 aspect-square border border-b hover:text-blue-500"
+            th:href="@{'/admin/butky/?thongtin=' + ${thongtin} + '&page=' + ${i} + '&from=' + ${from} + '&to=' + ${to} + '&hanhdong=' + ${hanhdong} + '&nguoithuchien=' + ${nguoithuchien}}"
+            th:text="${i}"></a>
+        </li>
+      </ul>
+    </form>
+    <section class="w-full overflow-x-auto">
+      <table class="w-full mx-auto">
+        <tr>
+          <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+            Mã lịch sử</th>
+          <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+            Thời gian</th>
+          <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+            Hành động</th>
+          <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+            Thông tin</th>
+          <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+            Người thực hiện</th>
+        </tr>
+        <tr th:each="activity : ${activities}">
+          <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+            th:text="${activity.maLichSu}"></td>
+            <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+            th:text="${activity.thoiGian}"></td>
+            <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+            th:text="${activity.hanhDong}"></td>
+            <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+            th:text="${activity.thongTin}"></td>
+            <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+            th:text="${activity.nguoiThucHien}"></td>
+        </tr>
+      </table>
+    </section>
+  </div>
+  <script src="/js/notification.js"></script>
+  <script th:inline="javascript">
+    const errorMessage = /*[[${errorMessage}]]*/ '';
+    if (errorMessage) {
+      showNotification(
+        {
+          title: "Lỗi",
+          message: errorMessage,
+          type: "error"
+        }
+      );
+    }
+  </script>
+</body>
+
+</html>

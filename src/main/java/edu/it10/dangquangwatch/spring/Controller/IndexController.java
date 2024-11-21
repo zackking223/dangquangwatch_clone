@@ -53,7 +53,7 @@ public class IndexController {
             String searchStr = "";
             if (search.isPresent())
                 searchStr = search.get().trim();
-            thongKeService.tangluotxemsanpham();
+            thongKeService.incLuotXemSanPham();
             model.addAttribute("dongho", dongho); // them thuoc tinh cho trang .html (thymeleaf) su dung
             model.addAttribute("title", dongho.getTendongho());
             model.addAttribute("search", searchStr);
@@ -73,7 +73,7 @@ public class IndexController {
             String searchStr = "";
             if (search.isPresent())
                 searchStr = search.get().trim();
-            thongKeService.tangluotxemsanpham();
+            thongKeService.incLuotXemSanPham();
             model.addAttribute("phukien", phukien);
             model.addAttribute("title", phukien.getTenPhuKien());
             model.addAttribute("search", searchStr);
@@ -93,7 +93,7 @@ public class IndexController {
             String searchStr = "";
             if (search.isPresent())
                 searchStr = search.get().trim();
-            thongKeService.tangluotxemsanpham();
+            thongKeService.incLuotXemSanPham();
             model.addAttribute("butky", butky);
             model.addAttribute("title", butky.getTenbutky());
             model.addAttribute("search", searchStr);
@@ -113,7 +113,7 @@ public class IndexController {
             String searchStr = "";
             if (search.isPresent())
                 searchStr = search.get().trim();
-            thongKeService.tangluotxemsanpham();
+            thongKeService.incLuotXemSanPham();
             model.addAttribute("kinhmat", kinhmat);
             model.addAttribute("title", kinhmat.getTenKinhMat());
             model.addAttribute("search", searchStr);
@@ -133,7 +133,7 @@ public class IndexController {
             String searchStr = "";
             if (search.isPresent())
                 searchStr = search.get().trim();
-            thongKeService.tangluotxemsanpham();
+            thongKeService.incLuotXemSanPham();
             model.addAttribute("trangsuc", trangsuc);
             model.addAttribute("title", trangsuc.getTentrangsuc());
             model.addAttribute("search", searchStr);
@@ -308,7 +308,7 @@ public class IndexController {
     }
 
     private String renderIndex(Model model) {
-        thongKeService.tangluottruycap();
+        thongKeService.incLuotTruyCap();
         model.addAttribute("sanphambanchay",
                 donghoService.getAll("", "2001-01-01", "3000-01-01", 0).getContent());
         model.addAttribute("donghoeposswiss",

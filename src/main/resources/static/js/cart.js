@@ -236,7 +236,8 @@ const globalCardFunc = () => {
     cardOwner: "",
     verifyCode: "",
     expiryDate: "",
-    cardIssuer: ""
+    cardIssuer: "",
+    type: "global"
   }
 
   const setCardNumber = (cardNumber) => {
@@ -280,7 +281,8 @@ const globalCardFunc = () => {
       cardOwner: "",
       verifyCode: "",
       expiryDate: "",
-      cardIssuer: ""
+      cardIssuer: "",
+      type: "global"
     }
   }
 
@@ -308,7 +310,8 @@ const localCardFunc = () => {
     cardNumber: "",
     cardOwner: "",
     issueDate: "",
-    localBank: ""
+    localBank: "",
+    type: "local"
   }
 
   const setCardNumber = (cardNumber) => {
@@ -344,7 +347,8 @@ const localCardFunc = () => {
       cardNumber: "",
       cardOwner: "",
       expiryDate: "",
-      localBank: ""
+      localBank: "",
+      type: "local"
     }
   }
 
@@ -700,8 +704,7 @@ thanhToanOption.addEventListener("change", (ev) => {
 
 const checkout = async () => {
   document.getElementById("checkout-btn").style.display = "none";
-  document.getElementById("hidden-checkout-btn").classList.remove("hidden");
-  document.getElementById("hidden-checkout-btn").classList.add("flex");
+  document.getElementById("hidden-checkout-btn").style.display = "flex"
 
   let cart = getCart();
 
@@ -723,8 +726,10 @@ const checkout = async () => {
 
   if (data.status) {
     resetCart();
-    location.reload(); 
+    location.reload();
   } else {
+    document.getElementById("checkout-btn").style.display = "flex";
+    document.getElementById("hidden-checkout-btn").style.display = "none"
     showNotification({
       title: "Lỗi đặt hàng",
       message: data.message,

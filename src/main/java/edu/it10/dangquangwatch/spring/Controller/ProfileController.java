@@ -47,14 +47,23 @@ public class ProfileController {
   @Autowired
   TaiKhoanService taiKhoanService;
 
+  @GetMapping("/")
+  public String index() {
+    return "redirect:/profile/giohang";
+  }
+
   @GetMapping("/giohang")
   public String cart(HttpSession session, Model model) {
-    String username = (String) session.getAttribute("username");
+    var username = session.getAttribute("username");
 
-    TaiKhoan taikhoan = taiKhoanService.getTaiKhoan(username);
-
-    model.addAttribute("taikhoan", taikhoan);
-    return "giohang";
+    if (username != null) {
+      TaiKhoan taikhoan = taiKhoanService.getTaiKhoan((String)username);
+  
+      model.addAttribute("taikhoan", taikhoan);
+      return "giohang";
+    } else {
+      return "redirect:/";
+    }
   }
 
   @GetMapping("/donhang")
@@ -192,14 +201,19 @@ public class ProfileController {
 
   @GetMapping("/doithongtin")
   public String doithongtin(HttpSession session, Model model) {
-    String username = (String) session.getAttribute("username");
+    var username = session.getAttribute("username");
+
+    if (username == null) {
+      return "redirect:/";
+    }
+
     var sessionErr = session.getAttribute(ErrorEnum.UPDATE_PROFILE_ERROR.name());
     if (sessionErr != null) {
       model.addAttribute("errorMessage", (String) sessionErr);
       session.removeAttribute(ErrorEnum.UPDATE_PROFILE_ERROR.name());
     }
 
-    TaiKhoan taikhoan = taiKhoanService.getTaiKhoan(username);
+    TaiKhoan taikhoan = taiKhoanService.getTaiKhoan((String)username);
 
     model.addAttribute("taikhoan", taikhoan);
 

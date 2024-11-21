@@ -82,8 +82,10 @@
                     </td>
                     <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
                         th:text="${trangsuc.getGiaTien()}"></td>
-                    <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
-                        th:text="${trangsuc.getSoluong()}"></td>
+                    <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+                        <p th:text="${trangsuc.getSoluong()}"></p>
+                        <p class="text-orange-500" th:text="${'Đặt: ' + trangsuc.getSoluongdatmua()}"></p>
+                    </td>
                     <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
                         th:text="${trangsuc.getTragop()}"></td>
                     <td class="max-h-[200px] p-2 border border-solid border-black max-w-[200px] overflow-hidden">
@@ -98,9 +100,11 @@
                             class="block w-max text-center my-1 p-2 rounded bg-purple-500 text-white">Nhập</a>
                         <a th:href="@{/admin/trangsuc/xuat?id={id}(id=${trangsuc.getMatrangsuc()})}"
                             class="block w-max text-center my-1 p-2 rounded bg-orange-500 text-white">Xuất</a>
-                        <button th:if="${trangsuc.kichhoat == 1}" class="block w-max text-center my-1 p-2 rounded bg-red-500 text-white"
+                        <button th:if="${trangsuc.kichhoat == 1}"
+                            class="block w-max text-center my-1 p-2 rounded bg-red-500 text-white"
                             th:data-id="${trangsuc.getMatrangsuc()}" onclick="confirmDeactivate(this);">Tắt</button>
-                        <button th:if="${trangsuc.kichhoat == 0}" class="block w-max text-center my-1 p-2 rounded bg-blue-500 text-white"
+                        <button th:if="${trangsuc.kichhoat == 0}"
+                            class="block w-max text-center my-1 p-2 rounded bg-blue-500 text-white"
                             th:data-id="${trangsuc.getMatrangsuc()}" onclick="confirmActivate(this);">Bật</button>
                     </td>
                 </tr>

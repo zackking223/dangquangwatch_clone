@@ -82,8 +82,9 @@
                     </td>
                     <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
                         th:text="${butky.getGiatien()}"></td>
-                    <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
-                        th:text="${butky.getSoluong()}"></td>
+                    <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+                        <p th:text="${butky.getSoluong()}"></p>
+                        <p class="text-orange-500" th:text="${'Đặt: ' + butky.getSoluongdatmua()}"></p></td>
                     <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
                         th:text="${butky.getTragop()}"></td>
                     <td class=" max-h-[200px] p-2 border border-solid border-black max-w-[200px] overflow-hidden">

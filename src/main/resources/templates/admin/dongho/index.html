@@ -149,8 +149,10 @@
                     </td>
                     <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
                         th:text="${dongho.getGiatien()}"></td>
-                    <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
-                        th:text="${dongho.getSoluong()}"></td>
+                    <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+                        <p th:text="${dongho.getSoluong()}"></p>
+                        <p class="text-orange-500" th:text="${'Đặt: ' + dongho.getSoluongdatmua()}"></p>
+                    </td>
                     <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
                         th:text="${dongho.getTragop()}"></td>
                     <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"

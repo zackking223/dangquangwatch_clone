@@ -80,7 +80,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
   @Override
   public Page<TaiKhoan> getAllTaiKhoanQuanTri(String from, String to, Integer page) {
     TypedQuery<TaiKhoan> query = entityManager.createQuery(
-        "SELECT tk FROM TaiKhoan tk where tk.loai_tai_khoan = 'ROLE_QUANTRI' and tk.NGAYTHEM >= \'" + from
+        "SELECT distinct tk FROM TaiKhoan tk where tk.loai_tai_khoan <> 'ROLE_KHACHHANG' and tk.NGAYTHEM >= \'" + from
             + "\' AND tk.NGAYTHEM <= \'" + to + "\'",
         TaiKhoan.class);
 
@@ -274,7 +274,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
   public Page<TaiKhoan> searchTaiKhoanQuanTri(String username, String from, String to, Integer page) {
     username = "%" + username + "%";
     TypedQuery<TaiKhoan> query = entityManager.createQuery(
-        "SELECT DISTINCT tk FROM TaiKhoan tk where tk.loai_tai_khoan = 'ROLE_QUANTRI' and tk.username LIKE :username and tk.NGAYTHEM >= \'"
+        "SELECT DISTINCT tk FROM TaiKhoan tk where tk.loai_tai_khoan <> 'ROLE_KHACHHANG' and tk.username LIKE :username and tk.NGAYTHEM >= \'"
             + from
             + "\' AND tk.NGAYTHEM <= \'" + to + "\'",
         TaiKhoan.class);

@@ -12,9 +12,10 @@ public interface ThongKeService {
   ThongKe getCurrent();   
   Optional<ThongKe> findThongKeById(String mathongke);
   
-  void tangluottruycap();
-  void tangluotxemsanpham();
-  void tangluotthemgiohang();
+  void incLuotTruyCap();
+  void incLuotXemSanPham();
+  void incLuotThemGioHang();
+  void incDoanhThu(BigDecimal amount);
   void updateVon(BigDecimal newCapital);
   void incChiPhi(BigDecimal amount);
   void incVon(BigDecimal amount);

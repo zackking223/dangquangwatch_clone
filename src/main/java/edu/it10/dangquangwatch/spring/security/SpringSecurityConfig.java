@@ -58,7 +58,7 @@ public class SpringSecurityConfig {
   SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
         .authorizeHttpRequests(configurer -> configurer
-            .requestMatchers("/admin/**", "/ws/**").hasRole("QUANTRI") // Yêu cầu đăng nhập cho các đường dẫn bắt đầu bằng /admin/
+            .requestMatchers("/admin/**", "/ws/**").hasAnyRole("NHANVIEN", "QUANLY") // Yêu cầu đăng nhập cho các đường dẫn bắt đầu bằng /admin/
             .requestMatchers("/profile/**").authenticated()
             .anyRequest().permitAll() // Các đường dẫn còn lại không yêu cầu đăng nhập
         )

@@ -72,6 +72,8 @@ public class DonHangRepositoryCustomImpl implements DonHangRepositoryCustom {
       jpql.append(")");
     }
 
+    jpql.append(" ORDER BY dh.NGAYTHEM DESC");
+
     TypedQuery<DonHang> query = entityManager.createQuery(jpql.toString(), DonHang.class);
 
     if (username != null && !username.isEmpty()) {

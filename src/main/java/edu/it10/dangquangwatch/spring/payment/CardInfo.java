@@ -11,9 +11,10 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(value = GlobalCardInfo.class, name = "global"),
     @JsonSubTypes.Type(value = LocalCardInfo.class, name = "local")
 })
-public abstract class CardInfo {
-  protected String cardNumber;
-  protected String cardOwner;
+public class CardInfo {
+  private String cardNumber;
+  private String cardOwner;
+  private String type;
 
   public String getCardNumber() {
     return cardNumber;
@@ -27,4 +28,11 @@ public abstract class CardInfo {
   public void setCardOwner(String cardOwner) {
     this.cardOwner = cardOwner;
   }
+  public String getType() {
+    return type;
+  }
+  public void setType(String type) {
+    this.type = type;
+  }
+  
 }

@@ -23,7 +23,7 @@
             </form>
 
             <ul class="flex sm:gap-4 gap-1 items-center text-sm text-white xl:mx-0 px-2">
-                <li th:if="${session.role == 'ROLE_QUANTRI'}" class="relative">
+                <li th:if="${session.role == 'ROLE_NHANVIEN' || session.role == 'ROLE_QUANLY'}" class="relative">
                     <a class="flex items-center gap-1" href="/admin/donhang/">
                         <span class="material-symbols-outlined text-white hover:text-yellow-400 text-[28px] translate-y-[2px]">
                             folder_managed

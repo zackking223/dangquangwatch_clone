@@ -23,11 +23,17 @@ public class ThongkeController {
 
   @GetMapping("/admin/")
   public String adminIndex() {
-    return "redirect:/admin/thongke/";
+    return "redirect:/admin/donhang/";
   }
 
   @GetMapping("/admin/thongke/")
-  public String trangThongKe(Model model, @RequestParam("editcapital") Optional<String> editcapital_opt) {
+  public String trangThongKe(HttpSession session, Model model, @RequestParam("editcapital") Optional<String> editcapital_opt) {
+    String role = (String) session.getAttribute("role");
+
+    if (!role.equals("ROLE_QUANLY")) {
+      return "redirect:/admin/donhang/";
+    }  
+
     List<ThongKe> thongKes = thongKeService.getAllThongKe();
     ThongKe thongKe = thongKes.getFirst();
     boolean editcapital = editcapital_opt.isPresent();
@@ -70,7 +76,7 @@ public class ThongkeController {
     if (session.getAttribute("username") != null) {
       ApiResponse response = new ApiResponse(true, "Lượt xem tăng thành công");
 
-      thongKeService.tangluotxemsanpham();
+      thongKeService.incLuotXemSanPham();
 
       return ResponseEntity.ok(response);
     }
@@ -85,7 +91,7 @@ public class ThongkeController {
     if (session.getAttribute("username") != null) {
       ApiResponse response = new ApiResponse(true, "Lượt xem tăng thành công");
 
-      thongKeService.tangluotthemgiohang();
+      thongKeService.incLuotThemGioHang();
 
       return ResponseEntity.ok(response);
     }

@@ -34,12 +34,20 @@
                     <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
                         th:field="*{hoten}" placeholder="Họ tên" />
                 </div>
+                <div style="clear: both; display: block; height: 10px"></div>
+
+                <div>
+                    <label class="block font-medium" th:for="loai_tai_khoan">Vai trò</label>
+                    <select name="loai_tai_khoan" id="loai_tai_khoan" class="border border-black rounded block p-2 w-[80vw] min-w-[280px]">
+                        <option value="ROLE_NHANVIEN" selected>Nhân viên</option>
+                        <option value="ROLE_QUANLY">Quản lý</option>
+                    </select>
+                </div>
+                <div style="clear: both; display: block; height: 10px"></div>
 
                 <input class="hidden" value="ROLE_QUANTRI" type="text" name="diachi" />
-                <input class="hidden" value="ROLE_QUANTRI" type="text" name="loai_tai_khoan" />
                 <input class="hidden" value="1" type="number" name="enabled" />
 
-                <div style="clear: both; display: block; height: 10px"></div>
                 <input class="p-2 w-max bg-green-500 rounded block mt-4 text-white" type="submit" value="Thêm" />
             </form>
         </div>

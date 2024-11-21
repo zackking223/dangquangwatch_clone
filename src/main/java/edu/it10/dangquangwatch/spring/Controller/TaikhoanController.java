@@ -23,11 +23,20 @@ public class TaikhoanController {
   private TaiKhoanService taikhoanService;
 
   @GetMapping("/")
-  public String index(Model model,
+  public String index(
+      HttpSession session,
+      Model model,
       @RequestParam("search") Optional<String> username,
       @RequestParam("page") Optional<Integer> page,
       @RequestParam("from") Optional<String> from,
       @RequestParam("to") Optional<String> to) {
+
+    String role = (String) session.getAttribute("role");
+
+    if (!role.equals("ROLE_QUANLY")) {
+      return "redirect:/admin/donhang/";
+    }
+
     String fromStr = "2001-01-01";
     String toStr = "3000-01-01";
     String usernameStr = "";
@@ -61,9 +70,15 @@ public class TaikhoanController {
 
   @GetMapping(value = "/add")
   public String addTaikhoan(Model model, HttpSession session) {
+    String role = (String) session.getAttribute("role");
+
+    if (!role.equals("ROLE_QUANLY")) {
+      return "redirect:/admin/donhang/";
+    }  
+
     var errorMessage = session.getAttribute(ErrorEnum.ADMIN_ACCOUNTS_ERROR.name());
     if (errorMessage != null) {
-      model.addAttribute("errorMessage", (String)errorMessage);
+      model.addAttribute("errorMessage", (String) errorMessage);
       session.removeAttribute(ErrorEnum.ADMIN_ACCOUNTS_ERROR.name());
     }
     model.addAttribute("taikhoan", new TaiKhoan());
@@ -71,7 +86,12 @@ public class TaikhoanController {
   }
 
   @GetMapping(value = "/edit")
-  public String editTaiKhoan(@RequestParam("id") String username, Model model) {
+  public String editTaiKhoan(HttpSession session, @RequestParam("id") String username, Model model) {
+    String role = (String) session.getAttribute("role");
+
+    if (!role.equals("ROLE_QUANLY")) {
+      return "redirect:/admin/donhang/";
+    }
     TaiKhoan taikhoanEdit = taikhoanService.getTaiKhoan(username);
     if (taikhoanEdit != null) {
       model.addAttribute("taikhoan", taikhoanEdit);
@@ -83,6 +103,11 @@ public class TaikhoanController {
 
   @PostMapping(value = "/add")
   public String addTaiKhoan(TaiKhoan taikhoan, HttpSession session) {
+    String role = (String) session.getAttribute("role");
+
+    if (!role.equals("ROLE_QUANLY")) {
+      return "redirect:/admin/donhang/";
+    }  
     try {
       taikhoanService.dangKyQuanTri(taikhoan);
     } catch (SaveAccountException e) {
@@ -94,25 +119,45 @@ public class TaikhoanController {
   }
 
   @PostMapping(value = "/save")
-  public String save(TaiKhoan taikhoan) {
+  public String save(TaiKhoan taikhoan, HttpSession session) {
+    String role = (String) session.getAttribute("role");
+
+    if (!role.equals("ROLE_QUANLY")) {
+      return "redirect:/admin/donhang/";
+    }
     taikhoanService.updateTaiKhoan(taikhoan, "/admin/accounts/edit?id=" + taikhoan.getUsername());
     return "redirect:/admin/accounts/";
   }
 
   @GetMapping(value = "/delete")
-  public String delete(@RequestParam("id") String username) {
+  public String delete(HttpSession session, @RequestParam("id") String username) {
+    String role = (String) session.getAttribute("role");
+
+    if (!role.equals("ROLE_QUANLY")) {
+      return "redirect:/admin/donhang/";
+    }
     taikhoanService.deleteById(username);
     return "redirect:/admin/accounts/";
   }
 
   @GetMapping(value = "/activate")
-  public String activate(@RequestParam("id") String username) {
+  public String activate(HttpSession session, @RequestParam("id") String username) {
+    String role = (String) session.getAttribute("role");
+
+    if (!role.equals("ROLE_QUANLY")) {
+      return "redirect:/admin/donhang/";
+    }
     taikhoanService.activate(username);
     return "redirect:/admin/accounts/";
   }
 
   @GetMapping(value = "/deactivate")
-  public String deactivate(@RequestParam("id") String username) {
+  public String deactivate(HttpSession session, @RequestParam("id") String username) {
+    String role = (String) session.getAttribute("role");
+
+    if (!role.equals("ROLE_QUANLY")) {
+      return "redirect:/admin/donhang/";
+    }
     taikhoanService.deactivate(username);
     return "redirect:/admin/accounts/";
   }

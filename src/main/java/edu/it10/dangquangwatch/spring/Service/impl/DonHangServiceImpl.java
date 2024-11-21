@@ -1,5 +1,6 @@
 package edu.it10.dangquangwatch.spring.service.impl;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,7 @@ import edu.it10.dangquangwatch.spring.service.DonghoService;
 import edu.it10.dangquangwatch.spring.service.EmailService;
 import edu.it10.dangquangwatch.spring.service.KinhMatService;
 import edu.it10.dangquangwatch.spring.service.PhuKienService;
+import edu.it10.dangquangwatch.spring.service.ThongKeService;
 import edu.it10.dangquangwatch.spring.service.TrangsucService;
 import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
@@ -63,6 +65,8 @@ public class DonHangServiceImpl implements DonHangService {
   SimpMessagingTemplate messagingTemplate;
   @Autowired
   PaymentService paymentService;
+  @Autowired
+  ThongKeService thongKeService;
 
   @Override
   public Page<DonHang> getAllDonHang(int page) {
@@ -519,6 +523,7 @@ public class DonHangServiceImpl implements DonHangService {
           for (ChiTietDonHang item : currentData.getItems()) {
             clearTempAmount(item);
           }
+          thongKeService.incDoanhThu(BigDecimal.valueOf(currentData.getTongTien()));
         } 
         currentData.setTinhTrang(status);
         updateDonHang(currentData);
