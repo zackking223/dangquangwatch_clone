@@ -87,18 +87,18 @@
                 <button class="p-2 w-max my-2 bg-blue-500 rounded block text-white flex-shrink-0">Tìm kiếm</button>
                 <a href="/admin/dongho/add" class="p-2 w-max bg-green-500 rounded block text-white">Thêm đông hồ</a>
             </section>
+            <ul th:if="${sotrang > 1}" class="flex items-center flex-wrap w-full sm:gap-2 gap-1 my-4">
+                <li>Trang:</li>
+                <li th:each="i:${#numbers.sequence(1,sotrang,1)}">
+                    <a th:classappend="${page + 1 == i} ? 'bg-black text-white' : 'bg-white text-black'"
+                        class="p-2 aspect-square border border-b hover:text-blue-500"
+                        th:href="@{'/admin/dongho/?page=' + ${i} + '&search=' + ${search} + '&from=' + ${from} + '&to=' + ${to} + '&giatien=' + ${dongho.getGiatien() ?: ''} + '&soluong=' + ${dongho.getSoluong() ?: ''} + '&tragop=' + ${dongho.getTragop() ?: ''} + '&duongkinh=' + ${dongho.getDuongkinh() ?: ''} + '&chongnuoc=' + ${dongho.getChongnuoc() ?: ''} + '&bomay=' + ${dongho.getBomay() ?: ''} + '&chatlieu=' + ${dongho.getChatlieu() ?: ''} + '&gioitinh=' + ${dongho.getGioitinh() ?: ''}}"
+                        th:text="${i}"></a>
+                </li>
+            </ul>
         </form>
-        <ul th:if="${sotrang > 1}" class="flex items-center flex-wrap w-full sm:gap-2 gap-1 my-4">
-            <li>Trang:</li>
-            <li th:each="i:${#numbers.sequence(1,sotrang,1)}">
-                <a th:classappend="${page + 1 == i} ? 'bg-black text-white' : 'bg-white text-black'"
-                    class="p-2 aspect-square border border-b hover:text-blue-500"
-                    th:href="@{'/admin/dongho/?page=' + ${i} + '&search=' + ${search} + '&from=' + ${from} + '&to=' + ${to} + '&giatien=' + ${dongho.getGiatien() ?: ''} + '&soluong=' + ${dongho.getSoluong() ?: ''} + '&tragop=' + ${dongho.getTragop() ?: ''} + '&duongkinh=' + ${dongho.getDuongkinh() ?: ''} + '&chongnuoc=' + ${dongho.getChongnuoc() ?: ''} + '&bomay=' + ${dongho.getBomay() ?: ''} + '&chatlieu=' + ${dongho.getChatlieu() ?: ''} + '&gioitinh=' + ${dongho.getGioitinh() ?: ''}}"
-                    th:text="${i}"></a>
-            </li>
-        </ul>
         <section class="w-full overflow-x-auto">
-            <table class="w-max">
+            <table class="w-max mx-auto">
                 <tr>
                     <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">
                         Mã

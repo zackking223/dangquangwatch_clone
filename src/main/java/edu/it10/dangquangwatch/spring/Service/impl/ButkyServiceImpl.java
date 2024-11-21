@@ -30,6 +30,7 @@ public class ButkyServiceImpl implements ButkyService {
     if (butky.getMabutky() == null) {
       butky.setKichhoat(1);
       butky.setSoluongdatmua(0);
+      butky.setSoluong(0);
     }
 
     return butkyRepository.save(butky);

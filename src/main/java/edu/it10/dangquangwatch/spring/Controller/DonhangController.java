@@ -150,8 +150,8 @@ public class DonhangController {
     thanhtoan_options.add("Đã nhận hàng");
     Optional<DonHang> donHangEdit = donHangService.findDonHangById(madonHang);
     if (donHangEdit.isPresent()) {
-      if (!donHangEdit.get().getTinhTrang().equals(OrderStatus.PENDING)
-          && !donHangEdit.get().getTinhTrang().equals(OrderStatus.APPROVED)) {
+      if (!donHangEdit.get().getTinhTrang().equals(OrderStatus.PENDING.name())
+          && !donHangEdit.get().getTinhTrang().equals(OrderStatus.APPROVED.name())) {
         return "redirect:/admin/donhang/";
       }
       model.addAttribute("donHang", donHangEdit.get());

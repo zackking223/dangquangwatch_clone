@@ -87,7 +87,7 @@ public class ButkyController {
   @GetMapping(value = "/add")
   public String add(HttpSession session, Model model) {
     model.addAttribute("butky", new Butky());
-    var errorMessage = session.getAttribute(ErrorEnum.INDEX.name());
+    var errorMessage = session.getAttribute(ErrorEnum.ADD.name());
     if (errorMessage != null) {
       session.removeAttribute(ErrorEnum.ADD.name());
       model.addAttribute("errorMessage", errorMessage);
@@ -102,7 +102,7 @@ public class ButkyController {
       model.addAttribute("butky", butky);
       model.addAttribute("images", butky.getImages());
     });
-    var errorMessage = session.getAttribute(ErrorEnum.INDEX.name());
+    var errorMessage = session.getAttribute(ErrorEnum.EDIT.name());
     if (errorMessage != null) {
       session.removeAttribute(ErrorEnum.EDIT.name());
       model.addAttribute("errorMessage", errorMessage);
@@ -143,7 +143,7 @@ public class ButkyController {
     butkyService.incAmount(soLuong, id);
     String username = (String) session.getAttribute("username");
     lichSuKhoService.NhapKho(
-        username + " nhập " + soLuong + " đồng hồ mã " + id + ". Hết tổng cộng: " + giaTien + " vnđ. " + thongTinNhap,
+        username + " nhập " + soLuong + " bút ký mã " + id + ". Hết tổng cộng: " + giaTien + " vnđ. " + thongTinNhap,
         username, giaTien);
 
     return "redirect:/admin/butky/";
@@ -183,7 +183,7 @@ public class ButkyController {
     butkyService.decAmount(soLuong, id);
     String username = (String) session.getAttribute("username");
     lichSuKhoService.XuatKho(
-        username + " xuất " + soLuong + " đồng hồ mã " + id + ". Trị giá: " + giaTien + ". " + thongTinXuat,
+        username + " xuất " + soLuong + " bút ký mã " + id + ". Trị giá: " + giaTien + ". " + thongTinXuat,
         username);
 
     return "redirect:/admin/butky/";

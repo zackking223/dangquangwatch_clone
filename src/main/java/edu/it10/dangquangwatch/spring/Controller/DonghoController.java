@@ -101,10 +101,10 @@ public class DonghoController {
 
   @GetMapping(value = "/add")
   public String add(HttpSession session, Model model) {
-    String errorMessage = (String) session.getAttribute(ErrorEnum.ADD.name());
+    var errorMessage = session.getAttribute(ErrorEnum.ADD.name());
 
     if (errorMessage != null) {
-      session.removeAttribute(ErrorEnum.IMPORT.name());
+      session.removeAttribute(ErrorEnum.ADD.name());
       model.addAttribute("errorMessage", errorMessage);
     }
 
@@ -126,10 +126,10 @@ public class DonghoController {
       model.addAttribute("gioitinh_options", gioitinh_options);
     });
 
-    String errorMessage = (String) session.getAttribute(ErrorEnum.EDIT.name());
+    var errorMessage = session.getAttribute(ErrorEnum.EDIT.name());
 
     if (errorMessage != null) {
-      session.removeAttribute(ErrorEnum.IMPORT.name());
+      session.removeAttribute(ErrorEnum.EDIT.name());
       model.addAttribute("errorMessage", errorMessage);
     }
     return "admin/dongho/editDongHo";
@@ -138,9 +138,9 @@ public class DonghoController {
   @GetMapping("/nhap")
   public String nhap(
       HttpSession session,
-      @RequestParam("id") Integer madongho,
+      @RequestParam("id") Integer id,
       Model model) {
-    Optional<Dongho> data = donghoService.findById(madongho);
+    Optional<Dongho> data = donghoService.findById(id);
     if (data.isPresent()) {
       Dongho dongho = data.get();
       model.addAttribute("dongho", dongho);
@@ -177,9 +177,9 @@ public class DonghoController {
   @GetMapping("/xuat")
   public String xuat(
       HttpSession session,
-      @RequestParam("id") Integer madongho,
+      @RequestParam("id") Integer id,
       Model model) {
-    Optional<Dongho> data = donghoService.findById(madongho);
+    Optional<Dongho> data = donghoService.findById(id);
     if (data.isPresent()) {
       Dongho dongho = data.get();
       model.addAttribute("dongho", dongho);

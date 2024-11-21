@@ -31,6 +31,7 @@ public class DonghoServiceImpl implements DonghoService {
     if (dongho.getMadongho() == null) {
       dongho.setKichhoat(1);
       dongho.setSoluongdatmua(0);
+      dongho.setSoluong(0);
     }
 
     return donghoRepository.save(dongho);

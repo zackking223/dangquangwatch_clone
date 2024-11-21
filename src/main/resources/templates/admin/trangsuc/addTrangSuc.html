@@ -43,11 +43,8 @@
                         th:field="*{giaTien}" placeholder="Giá tiền" />
                 </div>
                 <div style="clear: both; display: block; height: 10px"></div>
-                <div>
-                    <label class="block font-medium" th:for="soluong">Số lượng</label>
-                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number"
-                        th:field="*{soluong}" placeholder="Số lượng" />
-                </div>
+                <input type="hidden" th:field="*{soluong}" value="0" />
+
                 <div style="clear: both; display: block; height: 10px"></div>
                 <div>
                     <label class="block font-medium" th:for="tragop">Trả góp</label>

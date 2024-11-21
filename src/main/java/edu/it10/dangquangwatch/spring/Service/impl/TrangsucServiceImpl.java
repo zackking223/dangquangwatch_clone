@@ -30,6 +30,7 @@ public class TrangsucServiceImpl implements TrangsucService {
     if (trangsuc.getMatrangsuc() == null) {
       trangsuc.setKichhoat(1);
       trangsuc.setSoluongdatmua(0);
+      trangsuc.setSoluong(0);
     }
     
     return trangsucRepository.save(trangsuc);

@@ -1,6 +1,7 @@
 package edu.it10.dangquangwatch.spring.controller;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,10 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import edu.it10.dangquangwatch.spring.AppCustomException.ControllerException;
+import edu.it10.dangquangwatch.spring.AppCustomException.ErrorEnum;
 import edu.it10.dangquangwatch.spring.entity.Anhphukien;
 import edu.it10.dangquangwatch.spring.entity.PhuKien;
 import edu.it10.dangquangwatch.spring.service.AnhphukienService;
+import edu.it10.dangquangwatch.spring.service.LichSuKhoService;
 import edu.it10.dangquangwatch.spring.service.PhuKienService;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(path = "/admin/phukien")
@@ -26,9 +31,13 @@ public class PhuKienController {
   private PhuKienService phuKienService;
   @Autowired
   private AnhphukienService anhphukienService;
+  @Autowired
+  LichSuKhoService lichSuKhoService;
 
   @GetMapping("/")
-  public String index(Model model,
+  public String index(
+      HttpSession session,
+      Model model,
       @RequestParam("page") Optional<Integer> page,
       @RequestParam("search") Optional<String> search,
       @RequestParam("from") Optional<String> from,
@@ -65,23 +74,123 @@ public class PhuKienController {
     model.addAttribute("from", from.isPresent() ? from.get() : "");
     model.addAttribute("to", to.isPresent() ? to.get() : "");
     model.addAttribute("sotrang", data.getTotalPages());
+
+    var errorMessage = session.getAttribute(ErrorEnum.INDEX.name());
+    if (errorMessage != null) {
+      session.removeAttribute(ErrorEnum.INDEX.name());
+      model.addAttribute("errorMessage", errorMessage);
+    }
+
     return "admin/phukien/index";
   }
 
   @GetMapping("/add")
-  public String add(Model model) {
+  public String add(HttpSession session, Model model) {
     model.addAttribute("phuKien", new PhuKien());
+
+    var errorMessage = session.getAttribute(ErrorEnum.ADD.name());
+    if (errorMessage != null) {
+      session.removeAttribute(ErrorEnum.ADD.name());
+      model.addAttribute("errorMessage", errorMessage);
+    }
+
     return "admin/phukien/addPhuKien";
   }
 
   @GetMapping("/edit")
-  public String edit(@RequestParam("id") Integer maPhuKien, Model model) {
+  public String edit(HttpSession session, @RequestParam("id") Integer maPhuKien, Model model) {
     Optional<PhuKien> phuKienEdit = phuKienService.findById(maPhuKien);
     phuKienEdit.ifPresent(phuKien -> {
       model.addAttribute("phuKien", phuKien);
       model.addAttribute("images", phuKien.getImages());
     });
+
+    var errorMessage = session.getAttribute(ErrorEnum.EDIT.name());
+    if (errorMessage != null) {
+      session.removeAttribute(ErrorEnum.EDIT.name());
+      model.addAttribute("errorMessage", errorMessage);
+    }
+
     return "admin/phukien/editPhuKien";
+  }
+
+  @GetMapping("/nhap")
+  public String nhap(
+      HttpSession session,
+      @RequestParam("id") Integer id,
+      Model model) {
+    Optional<PhuKien> data = phuKienService.findById(id);
+    if (data.isPresent()) {
+      PhuKien phuKien = data.get();
+      model.addAttribute("phuKien", phuKien);
+    } else {
+      throw new ControllerException("Không tìm thấy sản phẩm", ErrorEnum.INDEX, "/admin/phukien/");
+    }
+
+    var errorMessage = session.getAttribute(ErrorEnum.IMPORT.name());
+
+    if (errorMessage != null) {
+      session.removeAttribute(ErrorEnum.IMPORT.name());
+      model.addAttribute("errorMessage", errorMessage);
+    }
+
+    return "admin/phukien/nhap";
+  }
+
+  @PostMapping("/nhap")
+  public String nhap(
+      HttpSession session,
+      @RequestParam("id") Integer id,
+      @RequestParam("soLuong") Integer soLuong,
+      @RequestParam("giaTien") BigDecimal giaTien,
+      @RequestParam("thongTinNhap") String thongTinNhap) {
+    phuKienService.incAmount(soLuong, id);
+    String username = (String) session.getAttribute("username");
+    lichSuKhoService.NhapKho(
+        username + " nhập " + soLuong + " phụ kiện mã " + id + ". Hết tổng cộng: " + giaTien + " vnđ. " + thongTinNhap,
+        username, giaTien);
+
+    return "redirect:/admin/phukien/";
+  }
+
+  @GetMapping("/xuat")
+  public String xuat(
+      HttpSession session,
+      @RequestParam("id") Integer id,
+      Model model) {
+    Optional<PhuKien> data = phuKienService.findById(id);
+    if (data.isPresent()) {
+      PhuKien phuKien = data.get();
+      model.addAttribute("phuKien", phuKien);
+    } else {
+      throw new ControllerException("Không tìm thấy sản phẩm", ErrorEnum.INDEX, "/admin/phukien/");
+    }
+
+    var errorMessage = session.getAttribute(ErrorEnum.EXPORT.name()).toString();
+
+    if (errorMessage != null) {
+      session.removeAttribute(ErrorEnum.EXPORT.name());
+      model.addAttribute("errorMessage", errorMessage);
+    }
+
+    return "admin/phukien/xuat";
+  }
+
+  @PostMapping("/xuat")
+  public String xuat(
+      HttpSession session,
+      @RequestParam("id") Integer id,
+      @RequestParam("soLuong") Integer soLuong,
+      @RequestParam("giaTien") BigDecimal giaTien,
+      @RequestParam("thongTinXuat") String thongTinXuat) {
+
+    phuKienService.decAmount(soLuong, id);
+    String username = (String) session.getAttribute("username");
+    lichSuKhoService.XuatKho(
+        username + " xuất " + soLuong + " phụ kiện mã " + id + ". Trị giá: " + giaTien + ". " + thongTinXuat,
+        username);
+
+    return "redirect:/admin/phukien/";
   }
 
   @PostMapping("/update")

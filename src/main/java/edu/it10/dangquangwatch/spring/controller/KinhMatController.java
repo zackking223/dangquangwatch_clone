@@ -1,6 +1,7 @@
 package edu.it10.dangquangwatch.spring.controller;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,10 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import edu.it10.dangquangwatch.spring.AppCustomException.ControllerException;
+import edu.it10.dangquangwatch.spring.AppCustomException.ErrorEnum;
 import edu.it10.dangquangwatch.spring.entity.Anhkinhmat;
 import edu.it10.dangquangwatch.spring.entity.KinhMat;
 import edu.it10.dangquangwatch.spring.service.AnhkinhmatService;
 import edu.it10.dangquangwatch.spring.service.KinhMatService;
+import edu.it10.dangquangwatch.spring.service.LichSuKhoService;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(path = "/admin/kinhmat")
@@ -26,9 +31,13 @@ public class KinhMatController {
   private KinhMatService kinhMatService;
   @Autowired
   private AnhkinhmatService anhkinhmatService;
+  @Autowired
+  private LichSuKhoService lichSuKhoService;
 
   @GetMapping("/")
-  public String index(Model model,
+  public String index(
+      HttpSession session,
+      Model model,
       @RequestParam("page") Optional<Integer> page,
       @RequestParam("search") Optional<String> search,
       @RequestParam("from") Optional<String> from,
@@ -67,23 +76,120 @@ public class KinhMatController {
     model.addAttribute("to", to.isPresent() ? to.get() : "");
     model.addAttribute("sotrang", data.getTotalPages());
 
+    var errorMessage = session.getAttribute(ErrorEnum.INDEX.name());
+    if (errorMessage != null) {
+      session.removeAttribute(ErrorEnum.INDEX.name());
+      model.addAttribute("errorMessage", errorMessage);
+    }
     return "admin/kinhmat/index";
   }
 
   @GetMapping("/add")
-  public String add(Model model) {
+  public String add(HttpSession session, Model model) {
     model.addAttribute("kinhMat", new KinhMat());
+
+    var errorMessage = session.getAttribute(ErrorEnum.ADD.name());
+    if (errorMessage != null) {
+      session.removeAttribute(ErrorEnum.ADD.name());
+      model.addAttribute("errorMessage", errorMessage);
+    }
     return "admin/kinhmat/addKinhMat";
   }
 
   @GetMapping("/edit")
-  public String edit(@RequestParam("id") Integer maKinhMat, Model model) {
+  public String edit(HttpSession session, @RequestParam("id") Integer maKinhMat, Model model) {
     Optional<KinhMat> kinhMatEdit = kinhMatService.findById(maKinhMat);
     kinhMatEdit.ifPresent(kinhMat -> {
       model.addAttribute("kinhMat", kinhMat);
       model.addAttribute("images", kinhMat.getImages());
     });
+
+    var errorMessage = session.getAttribute(ErrorEnum.EDIT.name());
+    if (errorMessage != null) {
+      session.removeAttribute(ErrorEnum.EDIT.name());
+      model.addAttribute("errorMessage", errorMessage);
+    }
+
     return "admin/kinhmat/editKinhMat";
+  }
+
+  @GetMapping("/nhap")
+  public String nhap(
+      HttpSession session,
+      @RequestParam("id") Integer id,
+      Model model) {
+    Optional<KinhMat> data = kinhMatService.findById(id);
+    if (data.isPresent()) {
+      KinhMat kinhMat = data.get();
+      model.addAttribute("kinhMat", kinhMat);
+    } else {
+      throw new ControllerException("Không tìm thấy sản phẩm", ErrorEnum.INDEX, "/admin/kinhmat/");
+    }
+
+    var errorMessage = session.getAttribute(ErrorEnum.IMPORT.name());
+
+    if (errorMessage != null) {
+      session.removeAttribute(ErrorEnum.IMPORT.name());
+      model.addAttribute("errorMessage", errorMessage);
+    }
+
+    return "admin/kinhmat/nhap";
+  }
+
+  @PostMapping("/nhap")
+  public String nhap(
+      HttpSession session,
+      @RequestParam("id") Integer id,
+      @RequestParam("soLuong") Integer soLuong,
+      @RequestParam("giaTien") BigDecimal giaTien,
+      @RequestParam("thongTinNhap") String thongTinNhap) {
+    kinhMatService.incAmount(soLuong, id);
+    String username = (String) session.getAttribute("username");
+    lichSuKhoService.NhapKho(
+        username + " nhập " + soLuong + " kính mắt mã " + id + ". Hết tổng cộng: " + giaTien + " vnđ. " + thongTinNhap,
+        username, giaTien);
+
+    return "redirect:/admin/kinhmat/";
+  }
+
+  @GetMapping("/xuat")
+  public String xuat(
+      HttpSession session,
+      @RequestParam("id") Integer id,
+      Model model) {
+    Optional<KinhMat> data = kinhMatService.findById(id);
+    if (data.isPresent()) {
+      KinhMat kinhMat = data.get();
+      model.addAttribute("kinhMat", kinhMat);
+    } else {
+      throw new ControllerException("Không tìm thấy sản phẩm", ErrorEnum.INDEX, "/admin/kinhmat/");
+    }
+
+    var errorMessage = session.getAttribute(ErrorEnum.EXPORT.name()).toString();
+
+    if (errorMessage != null) {
+      session.removeAttribute(ErrorEnum.EXPORT.name());
+      model.addAttribute("errorMessage", errorMessage);
+    }
+
+    return "admin/kinhmat/xuat";
+  }
+
+  @PostMapping("/xuat")
+  public String xuat(
+      HttpSession session,
+      @RequestParam("id") Integer id,
+      @RequestParam("soLuong") Integer soLuong,
+      @RequestParam("giaTien") BigDecimal giaTien,
+      @RequestParam("thongTinXuat") String thongTinXuat) {
+
+    kinhMatService.decAmount(soLuong, id);
+    String username = (String) session.getAttribute("username");
+    lichSuKhoService.XuatKho(
+        username + " xuất " + soLuong + " kính mắt mã " + id + ". Trị giá: " + giaTien + ". " + thongTinXuat,
+        username);
+
+    return "redirect:/admin/kinhmat/";
   }
 
   @PostMapping("/update")

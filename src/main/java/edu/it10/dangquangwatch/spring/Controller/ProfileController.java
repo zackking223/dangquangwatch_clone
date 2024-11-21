@@ -137,6 +137,7 @@ public class ProfileController {
     tempTaiKhoan.setDiachi(user.getDiachi());
     tempTaiKhoan.setSodienthoai(user.getSodienthoai());
     tempTaiKhoan.setHoten(user.getHoten());
+    tempTaiKhoan.setLoai_tai_khoan(user.getLoai_tai_khoan());
 
     // Check don hang valid
     donHang = donHangService.validate(donHang, tempTaiKhoan);

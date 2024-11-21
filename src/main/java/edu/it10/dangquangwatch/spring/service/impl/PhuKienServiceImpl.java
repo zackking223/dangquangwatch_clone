@@ -40,6 +40,7 @@ public class PhuKienServiceImpl implements PhuKienService {
     if (phuKien.getMaPhuKien() == null) {
       phuKien.setKichhoat(1);
       phuKien.setSoluongdatmua(0);
+      phuKien.setSoLuong(0);
     }
 
     return phuKienRepository.save(phuKien);

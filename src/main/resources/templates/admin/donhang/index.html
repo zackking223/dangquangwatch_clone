@@ -76,18 +76,18 @@
       </section>
 
       <button class="p-2 w-max my-2 bg-blue-500 rounded block text-white flex-shrink-0">Tìm kiếm</button>
+      <ul th:if="${sotrang > 1}" class="flex items-center flex-wrap w-full sm:gap-2 gap-1 my-4">
+        <li>Trang:</li>
+        <li th:each="i:${#numbers.sequence(1,sotrang,1)}">
+          <a th:classappend="${page + 1 == i} ? 'bg-black text-white' : 'bg-white text-black'"
+            class="p-2 aspect-square border border-b hover:text-blue-500"
+            th:href="@{'/admin/donhang/?page=' + ${i} + '&email=' + ${email} + '&hoten=' + ${hoten} + '&diachi=' + ${diachi} + '&tensanpham=' + ${tensanpham} + '&tinhtrang=' + ${tinhtrang} + '&thanhtoan=' + ${thanhtoan} + '&tongtien=' + ${tongtien} + '&from=' + ${from} + '&to=' + ${to}}"
+            th:text="${i}"></a>
+        </li>
     </form>
-    <ul th:if="${sotrang > 1}" class="flex items-center flex-wrap w-full sm:gap-2 gap-1 my-4">
-      <li>Trang:</li>
-      <li th:each="i:${#numbers.sequence(1,sotrang,1)}">
-        <a th:classappend="${page + 1 == i} ? 'bg-black text-white' : 'bg-white text-black'"
-          class="p-2 aspect-square border border-b hover:text-blue-500"
-          th:href="@{'/admin/donhang/?page=' + ${i} + '&email=' + ${email} + '&hoten=' + ${hoten} + '&diachi=' + ${diachi} + '&tensanpham=' + ${tensanpham} + '&tinhtrang=' + ${tinhtrang} + '&thanhtoan=' + ${thanhtoan} + '&tongtien=' + ${tongtien} + '&from=' + ${from} + '&to=' + ${to}}"
-          th:text="${i}"></a>
-      </li>
     </ul>
     <section class="w-full overflow-x-auto">
-      <table class="w-max">
+      <table class="w-max mx-auto">
         <tr>
           <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Mã đơn hàng
           </th>
@@ -145,7 +145,7 @@
             </a>
             <a href="?tinhtrang=Đang+vận+chuyển" class="py-1 px-[6px] rounded-sm bg-amber-500 font-medium text-white"
               th:if="${donhang.getTinhTrang() == 'Đang vận chuyển'}">
-              Vận chuyển
+              Đang giao
             </a>
           </td>
           <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
@@ -160,10 +160,6 @@
             th:text="${donhang.getNGAYTHEM()}"></td>
           <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
             <div class="flex flex-col items-center gap-2">
-              <a th:if="${donhang.getTinhTrang() == 'Chờ xác nhận'}"
-                th:href="@{/admin/donhang/edit?id={id}(id=${donhang.getMaDonHang()})}"
-                class="block w-max p-2 rounded bg-purple-500 text-white">Sửa đơn</a>
-
               <button class="p-2 rounded bg-blue-500 text-white" th:if="${donhang.getTinhTrang() == 'Chờ xác nhận'}"
                 th:data-id="${donhang.getMaDonHang()}" th:data-action="xacnhan" onclick="confirmAction(this);">
                 Xác nhận

@@ -40,6 +40,7 @@ public class KinhMatServiceImpl implements KinhMatService {
     if (kinhMat.getMaKinhMat() == null) {
       kinhMat.setKichhoat(1);
       kinhMat.setSoluongdatmua(0);
+      kinhMat.setSoLuong(0);
     }
 
     return kinhMatRepository.save(kinhMat);

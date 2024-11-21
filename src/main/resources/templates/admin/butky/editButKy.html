@@ -57,12 +57,9 @@
           th:field="*{giatien}" />
       </div>
       <div style="clear: both; display: block; height: 10px"></div>
-      <div>
-        <label class="block font-medium" th:for="soluong">Số lượng</label>
-        <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number"
-          th:field="*{soluong}" />
-      </div>
-      <div style="clear: both; display: block; height: 10px"></div>
+
+      <input type="hidden" th:field="*{soluong}" />
+
       <div>
         <label class="block font-medium" th:for="tragop">Trả góp</label>
         <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number"

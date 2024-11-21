@@ -35,7 +35,7 @@ function getBgColor(type) {
 }
 
 function getRandomStr(length) {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const characters = 'abcdefghijklmnopqrstuvwxyz';
   let result = '';
 
   for (let i = 0; i < length; i++) {

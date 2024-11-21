@@ -30,11 +30,8 @@
             th:field="*{tenPhuKien}" placeholder="Tên sản phẩm" />
         </div>
         <div style="clear: both; display: block; height: 10px"></div>
-        <div>
-          <label class="block font-medium" th:for="soLuong">Số lượng</label>
-          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number"
-            th:field="*{soLuong}" placeholder="Số lượng" />
-        </div>
+        <input type="hidden" th:field="*{soLuong}" value="0" />
+
         <div style="clear: both; display: block; height: 10px"></div>
         <div>
           <label class="block font-medium" th:for="giaTien">Giá tiền</label>
