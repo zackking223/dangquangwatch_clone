@@ -12,7 +12,7 @@ public class PaymentService {
     } catch (InterruptedException e) {
       Thread.currentThread().interrupt();
     }
-    if (card.getCardNumber() != "888") {
+    if (card.getCardNumber() != "5415 2123 1231 2312") {
       throw new PaymentException("Thông tin thẻ không hợp lệ!");
     }
     return true;
@@ -25,7 +25,7 @@ public class PaymentService {
     } catch (InterruptedException e) {
       Thread.currentThread().interrupt();
     }
-    if (card.getCardNumber() != "888") {
+    if (card.getCardNumber() != "5415 2123 1231 2312") {
       throw new PaymentException("Thông tin thẻ không hợp lệ!");
     }
     return true;

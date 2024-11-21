@@ -17,6 +17,7 @@ import edu.it10.dangquangwatch.spring.AppCustomException.ErrorEnum;
 import edu.it10.dangquangwatch.spring.entity.DonHang;
 import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
 import edu.it10.dangquangwatch.spring.entity.enumeration.OrderStatus;
+import edu.it10.dangquangwatch.spring.entity.request.CheckoutRequest;
 import edu.it10.dangquangwatch.spring.entity.response.ApiResponse;
 import edu.it10.dangquangwatch.spring.entity.response.ObjectResponse;
 import edu.it10.dangquangwatch.spring.payment.CardInfo;
@@ -27,6 +28,8 @@ import edu.it10.dangquangwatch.spring.service.DonHangService;
 import edu.it10.dangquangwatch.spring.service.TaiKhoanService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -147,10 +150,13 @@ public class ProfileController {
 
   @PostMapping("/checkout")
   public ResponseEntity<ApiResponse> placeOrder(
-      @RequestBody DonHang donHang,
-      @RequestBody Optional<CardInfo> cardInfo) {
-    if (cardInfo.isPresent()) {
-      CardInfo info = cardInfo.get();
+      @Valid @RequestBody CheckoutRequest request) {
+    
+    DonHang donHang = request.getDonHang();
+
+    if (request.getCardInfo() != null) {
+      CardInfo info = request.getCardInfo();
+
       ApiResponse response = null;
       if (info instanceof GlobalCardInfo) {
         response = donHangService.checkOutDonHang(donHang, (GlobalCardInfo)info);

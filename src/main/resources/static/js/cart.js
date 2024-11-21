@@ -699,8 +699,9 @@ thanhToanOption.addEventListener("change", (ev) => {
 
 
 const checkout = async () => {
-  document.getElementById("checkout-btn").style.visibility = "hidden";
+  document.getElementById("checkout-btn").style.display = "none";
   document.getElementById("hidden-checkout-btn").classList.remove("hidden");
+  document.getElementById("hidden-checkout-btn").classList.add("flex");
 
   let cart = getCart();
 
@@ -712,16 +713,17 @@ const checkout = async () => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: {
-      donHang: JSON.stringify(cart),
+    body: JSON.stringify({
+      donHang: cart,
       cardInfo: CardInfo.getInfo()
-    }
+    })
   });
 
   const data = await response.json();
 
   if (data.status) {
     resetCart();
+    location.reload(); 
   } else {
     showNotification({
       title: "Lỗi đặt hàng",

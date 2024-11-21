@@ -166,7 +166,7 @@ public class PhuKienController {
       throw new ControllerException("Không tìm thấy sản phẩm", ErrorEnum.INDEX, "/admin/phukien/");
     }
 
-    var errorMessage = session.getAttribute(ErrorEnum.EXPORT.name()).toString();
+    var errorMessage = session.getAttribute(ErrorEnum.EXPORT.name());
 
     if (errorMessage != null) {
       session.removeAttribute(ErrorEnum.EXPORT.name());
