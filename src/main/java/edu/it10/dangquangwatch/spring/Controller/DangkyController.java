@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import edu.it10.dangquangwatch.spring.AppCustomException.ErrorEnum;
 import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
 import edu.it10.dangquangwatch.spring.helper.PasswordHelper;
+import edu.it10.dangquangwatch.spring.service.OtpService;
 import edu.it10.dangquangwatch.spring.service.TaiKhoanService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,8 @@ import java.util.Optional;
 public class DangkyController {
   @Autowired
   TaiKhoanService taiKhoanService;
+  @Autowired
+  OtpService otpService;
 
   @GetMapping("/register")
   public String redirectToLogin() {
@@ -80,32 +83,6 @@ public class DangkyController {
     return "dangky";
   }
 
-  @GetMapping("/xacthuc")
-  public String verifyAccount(
-      HttpSession session,
-      Model model,
-      @RequestParam("email") Optional<String> email,
-      @RequestParam("otp") Optional<String> otp) {
-
-    if (!email.isPresent()) {
-      session.setAttribute(ErrorEnum.REGISTER_ERROR.name(), "Link xác thực không hợp lệ!");
-      return "redirect:/dangky";
-    }
-
-    if (!otp.isPresent()) {
-      session.setAttribute(ErrorEnum.REGISTER_ERROR.name(), "Link xác thực không hợp lệ!");
-      return "redirect:/dangky";
-    }
-
-    if (taiKhoanService.verifyOtp(otp.get(), email.get())) {
-      model.addAttribute("notification", "Xác thực tài khoản thành công!");
-      return "login";
-    } else {
-      model.addAttribute("errorMessage", "Link xác thực đã hết hạn hoặc không hợp lệ!");
-      return "login";
-    }
-  }
-
   @PostMapping("/dangky")
   public String postDangky(HttpSession session, @RequestParam("username") String username,
       @RequestParam("password") String password, @RequestParam("diachi") String diachi,
@@ -140,6 +117,7 @@ public class DangkyController {
     }
 
     taiKhoanService.dangKyKhachHang(taikhoan, "/dangky");
+    otpService.createVerifyAccountUrl(username);
 
     return "redirect:/login?regsuccess";
   }

@@ -14,6 +14,19 @@
       "name": "cloudinary.cloud_name",
       "type": "java.lang.String",
       "description": "Cloudinary Console cloud name."
+    },
+    {
+      "name": "twilio.phone_number",
+      "type": "java.lang.String",
+      "description": "Twilio phone_number"
+    },
+    {
+      "type": "java.lang.String",
+      "description": "Twilio auth_token"
+    },
+    {
+      "type": "java.lang.String",
+      "description": "Twilio account_sid"
     }
   ]
 }

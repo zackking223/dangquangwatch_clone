@@ -23,14 +23,6 @@
 
   <div
     class="flex flex-col gap-4 items-center absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-screen max-w-[332px]">
-    <div id="error"
-      class="p-2 bg-red-500 max-w-[332px] shadow shadow-black rounded-md text-white hover:cursor-pointer text-center"
-      th:if="${errorMessage}" th:text="${errorMessage}"></div>
-
-    <div id="notification"
-      class="p-2 bg-blue-500 max-w-[332px] shadow shadow-black rounded-md text-white hover:cursor-pointer text-center"
-      th:if="${notification}" th:text="${notification}"></div>
-
     <form method="post" action="/login" class="flex flex-col gap-2 rounded-lg shadow shadow-black bg-white w-full p-4">
       <h1 class="text-2xl font-bold text-center my-2">Đăng nhập</h1>
       <div>
@@ -57,7 +49,7 @@
           </p>
         </div>
       </a>
-      
+
       <a href="/oauth2/authorization/github"
         class="hidden flex-col items-center w-full gap-2 rounded-lg shadow shadow-black bg-white text-black font-bold p-3">
         <div class="flex w-max items-center">
@@ -70,18 +62,28 @@
     </form>
 
   </div>
-  <script>
-    const err = document.getElementById("error");
-    if (err != null) {
-      err.addEventListener("click", () => {
-        err.classList.add("hidden");
-      });
+  <script src="/js/notification.js"></script>
+  <script th:inline="javascript">
+    const errorMessage = /*[[${errorMessage}]]*/ '';
+    if (errorMessage) {
+      showNotification(
+        {
+          title: "Lỗi",
+          message: errorMessage,
+          type: "error"
+        }
+      );
     }
-    const notif = document.getElementById("notification");
-    if (notif != null) {
-      notif.addEventListener("click", () => {
-        notif.classList.add("hidden");
-      });
+
+    const notifMessage = /*[[${notification}]]*/ '';
+    if (notifMessage) {
+      showNotification(
+        {
+          title: "Thông báo",
+          message: notifMessage,
+          type: "info"
+        }
+      );
     }
   </script>
 </body>

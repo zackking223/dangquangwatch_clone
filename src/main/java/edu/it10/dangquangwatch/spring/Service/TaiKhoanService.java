@@ -22,6 +22,8 @@ public interface TaiKhoanService {
   public void updateTaiKhoan(TaiKhoan taiKhoan, String path);
 
   public void doiMatKhau(String newpassword, String username);
+  public void doiMatKhauHashed(String hashedString, String username);
+  public void doiSoDienThoai(String soDienThoai, String username);
 
   public TaiKhoan getTaiKhoan(String username);
 
@@ -30,6 +32,4 @@ public interface TaiKhoanService {
   public void activate(String username);
   public void deactivate(String username);
   public void deleteById(String username);
-
-  public boolean verifyOtp(String password, String email);
 } 

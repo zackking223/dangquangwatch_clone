@@ -53,30 +53,43 @@ public class GlobalExceptionHandler {
   }
 
   @ExceptionHandler(SaveAccountException.class)
-  public String handleSaveAccountException(SaveAccountException ex) {
+  public String handleSaveAccountException(
+    SaveAccountException ex,
+    @RequestHeader(value = "Referer", required = false) String referer,
+    RedirectAttributes redirectAttributes) {
     session.setAttribute(ex.getSessionErrorAttribute(), ex.getMessage());
     session.setAttribute("taikhoan", ex.getTaiKhoan());
-    return ex.getRedirect();
+    redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
+
+    return ex.getRedirect() != null ? ex.getRedirect() : referer;
   }
 
   @ExceptionHandler(DataIntegrityViolationException.class)
   public String handleDataIntegrityViolationException(
       DataIntegrityViolationException ex,
-      @RequestHeader(value = "Referer", required = false) String referer) {
+      @RequestHeader(value = "Referer", required = false) String referer,
+      RedirectAttributes redirectAttributes) {
 
     String errorMessage = "Data integrity violation: " + ex.getMostSpecificCause().getMessage();
     session.setAttribute(ErrorEnum.ADMIN_ERROR.name(), errorMessage);
-
+    redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
+  
     // Redirect về trang gốc nếu header Referer có tồn tại
     return referer != null ? "redirect:" + referer : "redirect:/admin/dongho/";
   }
 
   @ExceptionHandler(ServiceException.class)
-  public String handleServiceException(ServiceException ex) {
+  public String handleServiceException(
+      ServiceException ex,
+      @RequestHeader(value = "Referer", required = false) String referer,
+      RedirectAttributes redirectAttributes) {
     session.setAttribute(
         ex.getSessionErrorAttribute() != null ? ex.getSessionErrorAttribute() : ErrorEnum.ADMIN_ERROR.name(),
         ex.getMessage());
-    return ex.getRedirect();
+
+    String redirect = ex.getRedirect();
+    redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
+    return redirect != null ? redirect : referer;
   }
 
   @ExceptionHandler(ControllerException.class)
@@ -132,7 +145,7 @@ public class GlobalExceptionHandler {
     String userMessage = columnName != null
         ? columnName + " không được để trống."
         : "Dữ liệu không hợp lệ, vui lòng kiểm tra lại.";
-    redirectAttributes.addFlashAttribute("error", userMessage);
+    redirectAttributes.addFlashAttribute("errorMessage", userMessage);
 
     // Redirect về trang trước đó
     String referer = request.getHeader("Referer");
@@ -166,5 +179,24 @@ public class GlobalExceptionHandler {
 
     // Redirect về referer với thông điệp lỗi
     return "redirect:" + (referer != null ? referer : "/"); // Nếu không có referer thì chuyển về trang chủ
+  }
+
+  @ExceptionHandler(OtpException.class)
+  public Object handleOtpException(
+      OtpException ex,
+      HttpServletRequest request,
+      RedirectAttributes redirectAttributes) {
+
+    // Lấy thông báo lỗi từ exception
+    String errorMessage = ex.getMessage();
+    redirectAttributes.addFlashAttribute("errorMessage", errorMessage);
+
+    if (ex.isSendingJson()) {
+      return ResponseEntity
+        .status(HttpStatus.BAD_REQUEST)
+        .body(new ApiResponse(false, ex.getMessage()));
+    }
+
+    return ex.getRedirect() != null ? ex.getRedirect() : "otperror";
   }
 }

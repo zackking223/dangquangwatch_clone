@@ -25,6 +25,10 @@ public class ServiceException extends RuntimeException {
   }
 
   public String getRedirect() {
+    if (getPath() == null) {
+      return null;
+    }
+
     if (redirect != null) {
       return redirect;
     }

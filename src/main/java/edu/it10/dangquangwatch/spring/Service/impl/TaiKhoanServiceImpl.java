@@ -1,12 +1,6 @@
 package edu.it10.dangquangwatch.spring.service.impl;
 
-import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Base64;
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -17,31 +11,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import edu.it10.dangquangwatch.spring.AppCustomException.SaveAccountException;
+import edu.it10.dangquangwatch.spring.AppCustomException.ServiceException;
 import edu.it10.dangquangwatch.spring.AppCustomException.ErrorEnum;
-import edu.it10.dangquangwatch.spring.entity.Otp;
 import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
 import edu.it10.dangquangwatch.spring.helper.DateStringHelper;
-import edu.it10.dangquangwatch.spring.repository.OtpRepository;
 import edu.it10.dangquangwatch.spring.repository.TaiKhoanRepository;
-import edu.it10.dangquangwatch.spring.service.EmailService;
 import edu.it10.dangquangwatch.spring.service.TaiKhoanService;
-import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Service
 public class TaiKhoanServiceImpl implements TaiKhoanService {
-  private static final Logger log = LoggerFactory.getLogger(TaiKhoanServiceImpl.class);
   @Autowired
   private TaiKhoanRepository taiKhoanRepository;
-  @Autowired
-  private OtpRepository otpRepository;
-  @Autowired
-  private EmailService emailService;
-
   private EntityManager entityManager;
   private PasswordEncoder passwordEncoder;
 
@@ -137,37 +120,6 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
     }
 
     entityManager.persist(taiKhoan);
-    if (taiKhoan.getEnabled() == 0) {
-      try {
-        emailService.sendConfirmationEmail(
-            taiKhoan.getHoten(),
-            createAuthUrl(taiKhoan.getUsername()),
-            taiKhoan.getUsername(),
-            getExpiryDate());
-      } catch (MessagingException e) {
-        log.warn("WARNING - Cannot send email to {}", taiKhoan.getUsername());
-      }
-    }
-  }
-
-  String createAuthUrl(String email) {
-    Otp otp = new Otp();
-    String password = Base64.getUrlEncoder().encodeToString(email.getBytes(StandardCharsets.UTF_8));
-    otp.setEmail(email);
-    otp.setPassword(password);
-
-    // Gán expiryDate vào đối tượng Otp
-    otp.setExpiryDate(getExpiryDate());
-    otpRepository.save(otp);
-
-    return "http://localhost:8080/xacthuc?otp=" + password + "&email=" + email;
-  }
-
-  String getExpiryDate() {
-    // Tính ngày hết hạn (7 ngày từ hôm nay)
-    LocalDate expiryDate = LocalDate.now().plusDays(7);
-    String formattedExpiryDate = expiryDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-    return formattedExpiryDate;
   }
 
   @Override
@@ -202,12 +154,28 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 
   @Override
   @Transactional
+  public void doiSoDienThoai(String soDienThoai, String username) {
+    TaiKhoan target = entityManager.find(TaiKhoan.class, username);
+
+    if (numberExisted(soDienThoai)) {
+      String message = "Số điện thoại đã tồn tại!";
+      SaveAccountException exception = new SaveAccountException(message, ErrorEnum.UPDATE_PROFILE_ERROR);
+      exception.setTaiKhoan(target);
+      throw exception;
+    }
+
+    target.setSodienthoai(soDienThoai);
+    entityManager.merge(target);
+  }
+
+  @Override
+  @Transactional
   public void updateTaiKhoan(TaiKhoan taiKhoan, String path) {
     String plainText = taiKhoan.getPassword();
     TaiKhoan original = taiKhoanRepository.findById(taiKhoan.getUsername())
-      .orElseThrow(() -> new RuntimeException("Không thể tìm thấy người dùng với email: " + taiKhoan.getHoten()));
+        .orElseThrow(() -> new RuntimeException("Không thể tìm thấy người dùng với email: " + taiKhoan.getHoten()));
     taiKhoan.setUsername(removeWhitespace(taiKhoan.getUsername()));
-    
+
     if (plainText != null) {
       taiKhoan.setPassword("{bcrypt}" + passwordEncoder.encode(plainText));
     }
@@ -226,7 +194,12 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 
   @Override
   public TaiKhoan getTaiKhoan(String username) {
-    return entityManager.find(TaiKhoan.class, username);
+    var taiKhoan = entityManager.find(TaiKhoan.class, username);
+
+    if (taiKhoan == null) {
+      throw new ServiceException("Không thể tìm thấy người dùng với email: " + username);
+    }
+    return taiKhoan;
   }
 
   @Override
@@ -259,7 +232,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
   @Transactional
   public void deleteById(String username) {
     TaiKhoan target = entityManager.find(TaiKhoan.class, username);
-    
+
     entityManager.remove(target);
   }
 
@@ -310,34 +283,11 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 
   @Override
   @Transactional
-  public boolean verifyOtp(String password, String email) {
-    Optional<Otp> result = otpRepository.findByEmailAndPassword(email, password);
+  public void doiMatKhauHashed(String hashedString, String username) {
+    TaiKhoan taiKhoan = getTaiKhoan(username);
 
-    if (result.isPresent()) {
-      log.info("Tim thay otp");
-      if (result.get().isExpired()) {
-        log.info("OTP da het han");
-        // Xoa OTP het han
-        otpRepository.delete(result.get());
-        // Xoa tai khoan neu OTP da het han
-        taiKhoanRepository.deleteById(email);
-        return false;
-      } else {
-        log.info("Chua het han");
-        Optional<TaiKhoan> taiKhoanOpt = taiKhoanRepository.findById(email);
+    taiKhoan.setPassword("{bcrypt}" + hashedString);
 
-        if (taiKhoanOpt.isPresent()) {
-          log.info("Tim thay tai khoan");
-          TaiKhoan taiKhoan = taiKhoanOpt.get();
-          taiKhoan.setEnabled(1);
-          entityManager.merge(taiKhoan);
-          log.info("Kich hoat tai khoan");
-        }
-        otpRepository.delete(result.get());
-        log.info("Xoa OTP");
-        return true;
-      }
-    }
-    return false;
+    updateTaiKhoan(taiKhoan, "/profile/doithongtin");
   }
 }

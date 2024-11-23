@@ -26,8 +26,11 @@ public class EmailService {
   @Autowired
   private SpringTemplateEngine templateEngine;
 
-  final String confirmEmailTemplate = "email/confirm_email.html";
-  final String confirmEmailSubject = "Xác thực tài khoản | Đăng Quang Watch";
+  final String confirmAccountTemplate = "email/confirm_account.html";
+  final String confirmAccountSubject = "Xác thực tài khoản | Đăng Quang Watch";
+
+  final String confirmPasswordTemplate = "email/confirm_password.html";
+  final String confirmPasswordSubject = "Đổi mật khẩu | Đăng Quang Watch";
 
   final String orderSuccessTemplate = "email/order_success.html";
   final String orderSuccessSubject = "Đặt hàng thành công | Đăng Quang Watch";
@@ -66,7 +69,7 @@ public class EmailService {
   }
 
   @Async
-  public void sendConfirmationEmail(
+  public void sendActivateAccountEmail(
     String username,
     String authUrl,
     String toEmail,
@@ -91,14 +94,53 @@ public class EmailService {
     Context context = new Context();
     context.setVariables(variables);
 
-    messageHelper.setSubject(confirmEmailSubject);
+    messageHelper.setSubject(confirmAccountSubject);
 
     try {
-      String htmlTemplate = templateEngine.process(confirmEmailTemplate, context);
+      String htmlTemplate = templateEngine.process(confirmAccountTemplate, context);
       messageHelper.setText(htmlTemplate, true);
 
       mailSender.send(mimeMessage);
-      log.info(String.format("INFO - Email successfully sent to %s with template %s", toEmail, confirmEmailTemplate));
+      log.info(String.format("INFO - Email successfully sent to %s with template %s", toEmail, confirmAccountTemplate));
+    } catch (MessagingException ex) {
+      log.warn("WARNING - Cannot send email to {}", toEmail);
+    }
+  }
+
+  @Async
+  public void sendChangePasswordEmail(
+    String username,
+    String authUrl,
+    String toEmail,
+    String expiryDate
+  )
+    throws MessagingException {
+    MimeMessage mimeMessage = mailSender.createMimeMessage();
+    MimeMessageHelper messageHelper = new MimeMessageHelper(
+      mimeMessage,
+      MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+      StandardCharsets.UTF_8.name()
+    );
+    
+    messageHelper.setFrom("dangquangwatch@noreply.com");
+    messageHelper.setTo(toEmail);
+
+    Map<String, Object> variables = new HashMap<>();
+    variables.put("username", username);
+    variables.put("authUrl", authUrl);
+    variables.put("expiryDate", expiryDate);
+
+    Context context = new Context();
+    context.setVariables(variables);
+
+    messageHelper.setSubject(confirmPasswordSubject);
+
+    try {
+      String htmlTemplate = templateEngine.process(confirmPasswordTemplate, context);
+      messageHelper.setText(htmlTemplate, true);
+
+      mailSender.send(mimeMessage);
+      log.info(String.format("INFO - Email successfully sent to %s with template %s", toEmail, confirmPasswordTemplate));
     } catch (MessagingException ex) {
       log.warn("WARNING - Cannot send email to {}", toEmail);
     }

@@ -25,6 +25,7 @@ import edu.it10.dangquangwatch.spring.payment.GlobalCardInfo;
 import edu.it10.dangquangwatch.spring.payment.LocalCardInfo;
 import edu.it10.dangquangwatch.spring.service.ChiTietDonHangService;
 import edu.it10.dangquangwatch.spring.service.DonHangService;
+import edu.it10.dangquangwatch.spring.service.OtpService;
 import edu.it10.dangquangwatch.spring.service.TaiKhoanService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -36,6 +37,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/profile")
@@ -46,6 +48,8 @@ public class ProfileController {
   ChiTietDonHangService ctdhService;
   @Autowired
   TaiKhoanService taiKhoanService;
+  @Autowired
+  OtpService otpService;
 
   @GetMapping("/")
   public String index() {
@@ -57,8 +61,8 @@ public class ProfileController {
     var username = session.getAttribute("username");
 
     if (username != null) {
-      TaiKhoan taikhoan = taiKhoanService.getTaiKhoan((String)username);
-  
+      TaiKhoan taikhoan = taiKhoanService.getTaiKhoan((String) username);
+
       model.addAttribute("taikhoan", taikhoan);
       return "giohang";
     } else {
@@ -143,7 +147,7 @@ public class ProfileController {
       @RequestBody DonHang donHang) {
     String username = (String) session.getAttribute("username");
     TaiKhoan user = taiKhoanService.getTaiKhoan(username);
-    
+
     TaiKhoan tempTaiKhoan = new TaiKhoan();
     tempTaiKhoan.setUsername(username);
     tempTaiKhoan.setDiachi(user.getDiachi());
@@ -160,7 +164,7 @@ public class ProfileController {
   @PostMapping("/checkout")
   public ResponseEntity<ApiResponse> placeOrder(
       @Valid @RequestBody CheckoutRequest request) {
-    
+
     DonHang donHang = request.getDonHang();
 
     if (request.getCardInfo() != null) {
@@ -168,9 +172,9 @@ public class ProfileController {
 
       ApiResponse response = null;
       if (info instanceof GlobalCardInfo) {
-        response = donHangService.checkOutDonHang(donHang, (GlobalCardInfo)info);
+        response = donHangService.checkOutDonHang(donHang, (GlobalCardInfo) info);
       } else if (info instanceof LocalCardInfo) {
-        response = donHangService.checkOutDonHang(donHang, (LocalCardInfo)info);
+        response = donHangService.checkOutDonHang(donHang, (LocalCardInfo) info);
       }
 
       return ResponseEntity.ok(response);
@@ -213,7 +217,7 @@ public class ProfileController {
       session.removeAttribute(ErrorEnum.UPDATE_PROFILE_ERROR.name());
     }
 
-    TaiKhoan taikhoan = taiKhoanService.getTaiKhoan((String)username);
+    TaiKhoan taikhoan = taiKhoanService.getTaiKhoan((String) username);
 
     model.addAttribute("taikhoan", taikhoan);
 
@@ -260,8 +264,41 @@ public class ProfileController {
   }
 
   @PostMapping("/doimatkhau")
-  public String doimatkhau(@RequestParam("newpassword") String newpassword, @RequestParam("username") String username) {
-    taiKhoanService.doiMatKhau(newpassword, username);
+  public String doimatkhau(
+      @RequestParam("newpassword") String newpassword,
+      @RequestParam("username") String username,
+      RedirectAttributes redirectAttributes) {
+
+    otpService.createChangePasswordUrl(username, newpassword);
+    // Thêm thông báo vào RedirectAttributes
+    redirectAttributes.addFlashAttribute("notification", "Vui lòng xác thực mật khẩu mới trong email!");
     return "redirect:/profile/doithongtin";
+  }
+
+  @PostMapping("/doisodienthoai")
+  public String doisodienthoai(
+      @RequestParam("newphonenumber") String newphonenumber,
+      @RequestParam("username") String username,
+      RedirectAttributes redirectAttributes) {
+
+    otpService.createVerifyPhoneNumberCode(username, newphonenumber);
+    // Thêm thông báo vào RedirectAttributes
+    redirectAttributes.addFlashAttribute("newphonenumber", newphonenumber);
+    return "redirect:/profile/phoneotp";
+  }
+
+  @GetMapping("/phoneotp")
+  public String phoneotp(HttpSession session, Model model) {
+    var username = session.getAttribute("username");
+
+    if (username == null) {
+      return "redirect:/login";
+    }
+
+    if (!model.containsAttribute("newphonenumber")) {
+      return "redirect:/profile/doithongtin";
+    }
+    model.addAttribute("username", (String) username);
+    return "phoneotp";
   }
 }

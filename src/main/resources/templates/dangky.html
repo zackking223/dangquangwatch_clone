@@ -22,14 +22,6 @@
   </header>
 
   <div class="flex flex-col gap-4 items-center mx-auto mt-4">
-    <div id="error"
-      class="p-2 bg-red-500 max-w-[332px] shadow shadow-black rounded-md text-white hover:cursor-pointer text-center"
-      th:if="${errorMessage}" th:text="${errorMessage}"></div>
-
-    <div id="notification"
-      class="p-2 bg-blue-500 max-w-[332px] shadow shadow-black rounded-md text-white hover:cursor-pointer text-center"
-      th:if="${notification}" th:text="${notification}"></div>
-
     <form method="post" action="/dangky" class="flex flex-col gap-2 rounded-lg shadow shadow-black bg-white p-4">
       <h1 class="text-2xl font-bold text-center my-2">Đăng ký</h1>
       <div>
@@ -49,20 +41,20 @@
             <img src="/svg/visibility_off.svg" alt="Xem mật khẩu" class="w-5 h-5 opacity-10 hover:opacity-100">
           </button>
         </section>
-          <ul class="text-sm text-slate-500 ml-2 my-2">
-            <li class="flex items-center gap-1 pointer-events-none">
-              <input type="checkbox" name="passwordCheck" id="passwordLength" class="block" required>
-              <label id="passwordLengthLabel" for="passwordLength">Độ dài tối thiểu là 8 ký tự.</label>
-            </li>
-            <li class="flex items-center gap-1 pointer-events-none">
-              <input type="checkbox" name="passwordCheck" id="passwordReq1" class="block" required>
-              <label id="passwordReq1Label" for="passwordReq1">Bao gồm cả chữ hoa, chữ thường và số.</label>
-            </li>
-            <li class="flex items-center gap-1 pointer-events-none">
-              <input type="checkbox" name="passwordCheck" id="passwordReq2" class="block" required>
-              <label id="passwordReq2Label" for="passwordReq2">Bao gồm ký tự đặc biệt như: @, #, $,...</label>
-            </li>
-          </ul>
+        <ul class="text-sm text-slate-500 ml-2 my-2">
+          <li class="flex items-center gap-1 pointer-events-none">
+            <input type="checkbox" name="passwordCheck" id="passwordLength" class="block" required>
+            <label id="passwordLengthLabel" for="passwordLength">Độ dài tối thiểu là 8 ký tự.</label>
+          </li>
+          <li class="flex items-center gap-1 pointer-events-none">
+            <input type="checkbox" name="passwordCheck" id="passwordReq1" class="block" required>
+            <label id="passwordReq1Label" for="passwordReq1">Bao gồm cả chữ hoa, chữ thường và số.</label>
+          </li>
+          <li class="flex items-center gap-1 pointer-events-none">
+            <input type="checkbox" name="passwordCheck" id="passwordReq2" class="block" required>
+            <label id="passwordReq2Label" for="passwordReq2">Bao gồm ký tự đặc biệt như: @, #, $,...</label>
+          </li>
+        </ul>
       </div>
       <div>
         <label class="block font-medium" for="hoten">Họ tên:</label>
@@ -109,7 +101,7 @@
     const passwordReq1 = document.getElementById("passwordReq1");
     const passwordReq2 = document.getElementById("passwordReq2");
     const passwordLengthLabel = document.getElementById("passwordLengthLabel");
-    const passwordReq1Label = document.getElementById("passwordReq1Label"); 
+    const passwordReq1Label = document.getElementById("passwordReq1Label");
     const passwordReq2Label = document.getElementById("passwordReq2Label");
 
     password.addEventListener("input", (event) => {
@@ -118,7 +110,7 @@
         passwordLength.checked = false;
         passwordReq1Label.style.color = "#64748b";
         passwordReq1.checked = false;
-        passwordReq2Label.style.color = "#64748b";  
+        passwordReq2Label.style.color = "#64748b";
         passwordReq2.checked = false;
 
         return;
@@ -160,19 +152,6 @@
       visibilityOn.style.display = "block";
       visibilityOff.style.display = "none";
     });
-
-    const err = document.getElementById("error");
-    if (err != null) {
-      err.addEventListener("click", () => {
-        err.classList.add("hidden");
-      });
-    }
-    const notif = document.getElementById("notification");
-    if (notif != null) {
-      notif.addEventListener("click", () => {
-        notif.classList.add("hidden");
-      });
-    }
   </script>
   <script th:inline="javascript">
     const provinceValue = /*[[${province}]]*/ '';
@@ -197,6 +176,30 @@
       }
     }
     fillAddress();
+  </script>
+  <script src="/js/notification.js"></script>
+  <script th:inline="javascript">
+    const errorMessage = /*[[${errorMessage}]]*/ '';
+    if (errorMessage) {
+      showNotification(
+        {
+          title: "Lỗi",
+          message: errorMessage,
+          type: "error"
+        }
+      );
+    }
+
+    const notifMessage = /*[[${notification}]]*/ '';
+    if (notifMessage) {
+      showNotification(
+        {
+          title: "Thông báo",
+          message: notifMessage,
+          type: "info"
+        }
+      );
+    }
   </script>
 </body>
 

@@ -24,13 +24,6 @@
           hàng</a></h1>
     </div>
     <div class="bg-white shadow-md rounded-lg overflow-hidden p-4 min-h-[800px]">
-      <div id="error"
-        class="p-2 bg-red-500 w-full shadow shadow-black rounded-md mb-8 text-white hover:cursor-pointer text-center"
-        th:if="${errorMessage}" th:text="${errorMessage}"></div>
-
-      <div id="notification"
-        class="p-2 bg-blue-500 w-full shadow shadow-black rounded-md mb-8 text-white hover:cursor-pointer text-center"
-        th:if="${notification}" th:text="${notification}"></div>
       <form class="mx-auto w-full" th:object="${taikhoan}" action="/profile/doithongtin" method="post">
         <div>
           <label class="block font-medium" th:for="username">Email</label>
@@ -49,7 +42,7 @@
           <label class="block font-medium" th:for="sodienthoai">Số điện thoại <span class="text-sm text-red-500">(Bắt
               buộc)</span></label>
           <input class="border border-black rounded block p-2 w-full" type="text" th:field="*{sodienthoai}"
-            placeholder="Số điện thoại" onkeypress='validate(event)' required />
+            placeholder="Số điện thoại" readonly />
         </div>
 
         <div style="clear: both; display: block; height: 10px"></div>
@@ -82,15 +75,26 @@
         <input class="p-2 w-max bg-green-500 rounded block mt-4 text-white" type="submit" value="Lưu" />
       </form>
       <div class="w-full h-[1px] bg-black my-4"></div>
-      <form class="mx-auto w-full" action="/profile/doimatkhau" method="post">
-        <input type="text" class="hidden" th:value="${taikhoan.getUsername()}" name="username">
-        <div>
-          <label class="block font-medium" th:for="sodienthoai">Mật khẩu mới</label>
-          <input class="border border-black rounded block p-2 w-full" type="password" name="newpassword"
-            placeholder="Mật khẩu mới" />
-          <input class="p-2 w-max bg-red-500 rounded block mt-4 text-white" type="submit" value="Đổi mật khẩu" />
-        </div>
-      </form>
+      <section class="grid sm:grid-cols-2 grid-cols-1 gap-4">
+        <form class="mx-auto w-full" action="/profile/doisodienthoai" method="post">
+          <input type="text" class="hidden" th:value="${taikhoan.getUsername()}" name="username">
+          <div>
+            <label class="block font-medium" th:for="newphonenumber">Số điện thoại mới</label>
+            <input class="border border-black rounded block p-2 w-full" type="text" name="newphonenumber"
+              placeholder="Số điện thoại" onkeypress='validate(event)' required />
+            <input class="p-2 w-max bg-blue-500 rounded block mt-4 text-white" type="submit" value="Đổi số điện thoại" />
+          </div>
+        </form>
+        <form class="mx-auto w-full" action="/profile/doimatkhau" method="post">
+          <input type="text" class="hidden" th:value="${taikhoan.getUsername()}" name="username">
+          <div>
+            <label class="block font-medium" th:for="matkhaumoi">Mật khẩu mới</label>
+            <input class="border border-black rounded block p-2 w-full" type="password" name="newpassword"
+              placeholder="Mật khẩu mới" />
+            <input class="p-2 w-max bg-red-500 rounded block mt-4 text-white" type="submit" value="Đổi mật khẩu" />
+          </div>
+        </form>
+      </section>
     </div>
   </div>
 
@@ -117,19 +121,6 @@
     }
     fillAddress();
 
-    const err = document.getElementById("error");
-    if (err != null) {
-      err.addEventListener("click", () => {
-        err.classList.add("hidden");
-      });
-    }
-    const notif = document.getElementById("notification");
-    if (notif != null) {
-      notif.addEventListener("click", () => {
-        notif.classList.add("hidden");
-      });
-    }
-
     function validate(evt) {
       if (evt.key == "Backspace" || evt.key == "Del") return true;
 
@@ -148,6 +139,30 @@
         theEvent.returnValue = false;
         if (theEvent.preventDefault) theEvent.preventDefault();
       }
+    }
+  </script>
+  <script src="/js/notification.js"></script>
+  <script th:inline="javascript">
+    const errorMessage = /*[[${errorMessage}]]*/ '';
+    if (errorMessage) {
+      showNotification(
+        {
+          title: "Lỗi",
+          message: errorMessage,
+          type: "error"
+        }
+      );
+    }
+
+    const notifMessage = /*[[${notification}]]*/ '';
+    if (notifMessage) {
+      showNotification(
+        {
+          title: "Thông báo",
+          message: notifMessage,
+          type: "info"
+        }
+      );
     }
   </script>
 </body>

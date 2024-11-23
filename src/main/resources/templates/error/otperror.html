@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác thực tài khoản</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background-color: black;
+            color: #FDBD11;
+            text-align: center;
+            padding: 15px;
+            font-size: 24px;
+        }
+        .content {
+            padding: 20px;
+        }
+        .content p {
+            color: #555;
+        }
+        .footer {
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 10px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            Mã OTP không hợp lệ
+        </div>
+        <div class="content">
+            <p>Lỗi: <span th:text="${errorMessage}"></span></p>
+        </div>
+        <div class="footer">
+          <p>&copy; 2024 DangQuangWatch</span>. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

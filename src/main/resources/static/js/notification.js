@@ -80,6 +80,7 @@ function initContainer() {
     transition: max-height 0.75s ease, margin-bottom 0.4s ease, opacity 0.2s ease;
     animation: ${classPrefix}_flyin-animation 0.25s ease-in forwards;
     margin-bottom: 12px;
+    overflow:hidden;
   }
 
   .${classPrefix}_notification:hover .${classPrefix}_progress {
@@ -141,6 +142,14 @@ function showNotification(data, duration = 8000) {
   if (data.message == null) {
     throw new Error("Notification format is invalid!", data);
   }
+
+  // Thiết lập thời gian cơ bản
+  const baseTime = duration; // Thoi gian toi thieu
+  const timePerCharacter = 50; // 50ms cho mỗi ký tự
+  const maxDisplayTime = 120000; // Giới hạn tối đa: 2 phút
+
+  // Tính toán thời gian hiển thị
+  duration = Math.min(baseTime + data.message.length * timePerCharacter, maxDisplayTime);
 
   const type = getType(data.type ? data.type : "info");
   const container = document.getElementById(classPrefix + "_notification_container");

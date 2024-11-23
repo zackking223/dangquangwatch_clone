@@ -7,9 +7,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import edu.it10.dangquangwatch.spring.entity.enumeration.OtpAction;
 
 @Entity
 @Table(name = "otp")
@@ -27,7 +27,7 @@ public class Otp {
 
   @Column(name = "action")
   private String action;
-  
+
   @Column(name = "payload")
   private String payload;
 
@@ -67,15 +67,36 @@ public class Otp {
     this.expiryDate = expiryDate;
   }
 
-  // Phương thức kiểm tra hạn sử dụng
   public boolean isExpired() {
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng ngày
+    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"); // Định dạng ngày và giờ
     try {
-      Date expiry = dateFormat.parse(expiryDate); // Chuyển đổi chuỗi thành đối tượng Date
-      return new Date().after(expiry); // So sánh với ngày hiện tại
-    } catch (ParseException e) {
+      // Chuyển chuỗi thành LocalDateTime
+      LocalDateTime expiry = LocalDateTime.parse(this.expiryDate, dateTimeFormatter);
+      // So sánh với thời gian hiện tại
+      return LocalDateTime.now().isAfter(expiry);
+    } catch (Exception e) {
       e.printStackTrace();
-      return true; // Nếu có lỗi trong quá trình phân tích, coi như đã hết hạn
+      return true; // Nếu có lỗi, mặc định coi là hết hạn
     }
+  }
+
+  public String getAction() {
+    return action;
+  }
+
+  public void setAction(String action) {
+    this.action = action;
+  }
+
+  public void setAction(OtpAction action) {
+    this.action = action.getValue();
+  }
+
+  public String getPayload() {
+    return payload;
+  }
+
+  public void setPayload(String payload) {
+    this.payload = payload;
   }
 }

@@ -56,3 +56,8 @@ spring.mail.properties.mail.writetimeout=5000
 cloudinary.cloud_name=
 cloudinary.api_key=
 cloudinary.api_secret=
+
+# Twilio Account, for sms sending
+twilio.account_sid=YOUR_ACCOUNT_SID
+twilio.auth_token=YOUR_AUTH_TOKEN
+twilio.phone_number=YOUR_TWILIO_PHONE_NUMBER
