@@ -20,6 +20,7 @@ import edu.it10.dangquangwatch.spring.service.TaiKhoanService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 
 @Service
 public class TaiKhoanServiceImpl implements TaiKhoanService {
@@ -170,7 +171,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 
   @Override
   @Transactional
-  public void updateTaiKhoan(TaiKhoan taiKhoan, String path) {
+  public void updateTaiKhoan(@Valid TaiKhoan taiKhoan, String path) {
     String plainText = taiKhoan.getPassword();
     TaiKhoan original = taiKhoanRepository.findById(taiKhoan.getUsername())
         .orElseThrow(() -> new RuntimeException("Không thể tìm thấy người dùng với email: " + taiKhoan.getHoten()));

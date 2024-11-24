@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class TaiKhoan {
 
   @Column(name = "hoten")
   @NotNull(message = "Họ và tên không được bỏ trống")
+  @NotEmpty(message = "Họ và tên không được bỏ trống")
   private String hoten;
 
   @Column(name = "sodienthoai", unique = true, nullable = true)
@@ -32,6 +34,7 @@ public class TaiKhoan {
 
   @Column(name = "diachi")
   @NotNull(message = "Địa chỉ không được bỏ trống")
+  @NotEmpty(message = "Địa chỉ không được bỏ trống")
   private String diachi;
 
   @Column(name = "loai_tai_khoan")

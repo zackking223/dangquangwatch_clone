@@ -3,6 +3,7 @@ package edu.it10.dangquangwatch.spring.AppCustomException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -25,44 +26,37 @@ public class GlobalExceptionHandler {
   @Autowired
   HttpSession session;
 
-  @ExceptionHandler(RuntimeException.class)
-  public ResponseEntity<ApiResponse> handleRuntimeException(RuntimeException ex) {
-    return ResponseEntity
-        .status(HttpStatus.BAD_REQUEST)
-        .body(new ApiResponse(false, ex.getMessage()));
-  }
-
   @ExceptionHandler(PaymentException.class)
   public ResponseEntity<ApiResponse> handlePaymentException(PaymentException ex) {
     return ResponseEntity
         .status(HttpStatus.BAD_REQUEST)
-        .body(new ApiResponse(false, ex.getMessage()));
+        .body(new ApiResponse(false, "PaymentException: " + ex.getMessage()));
   }
 
   @ExceptionHandler(OrderException.class)
   public ResponseEntity<ApiResponse> handleOrderItemException(OrderException ex) {
     return ResponseEntity
         .status(HttpStatus.BAD_REQUEST)
-        .body(new ApiResponse(false, ex.getMessage()));
+        .body(new ApiResponse(false, "OrderException: " + ex.getMessage()));
   }
 
   @ExceptionHandler(EmptyOrNullListException.class)
   public ResponseEntity<ApiResponse> handleEmptyOrNullListException(EmptyOrNullListException ex) {
     return ResponseEntity
         .status(HttpStatus.BAD_REQUEST)
-        .body(new ApiResponse(false, ex.getMessage()));
+        .body(new ApiResponse(false, "EmptyOrNullListException: " + ex.getMessage()));
   }
 
   @ExceptionHandler(SaveAccountException.class)
   public String handleSaveAccountException(
-    SaveAccountException ex,
-    @RequestHeader(value = "Referer", required = false) String referer,
-    RedirectAttributes redirectAttributes) {
+      SaveAccountException ex,
+      @RequestHeader(value = "Referer", required = false) String referer,
+      RedirectAttributes redirectAttributes) {
     session.setAttribute(ex.getSessionErrorAttribute(), ex.getMessage());
     session.setAttribute("taikhoan", ex.getTaiKhoan());
     redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
 
-    return ex.getRedirect() != null ? ex.getRedirect() : referer;
+    return ex.getRedirect() != null ? ex.getRedirect() : "redirect:" + referer;
   }
 
   @ExceptionHandler(DataIntegrityViolationException.class)
@@ -74,7 +68,7 @@ public class GlobalExceptionHandler {
     String errorMessage = "Data integrity violation: " + ex.getMostSpecificCause().getMessage();
     session.setAttribute(ErrorEnum.ADMIN_ERROR.name(), errorMessage);
     redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
-  
+
     // Redirect về trang gốc nếu header Referer có tồn tại
     return referer != null ? "redirect:" + referer : "redirect:/admin/dongho/";
   }
@@ -90,7 +84,7 @@ public class GlobalExceptionHandler {
 
     String redirect = ex.getRedirect();
     redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
-    return redirect != null ? redirect : referer;
+    return redirect != null ? redirect : "redirect:" + referer;
   }
 
   @ExceptionHandler(ControllerException.class)
@@ -191,13 +185,13 @@ public class GlobalExceptionHandler {
 
     // Lấy thông báo lỗi từ exception
     String errorMessage = ex.getMessage();
-    
+
     if (ex.isSendingJson()) {
       return ResponseEntity
-      .status(HttpStatus.BAD_REQUEST)
-      .body(new ApiResponse(false, ex.getMessage()));
+          .status(HttpStatus.BAD_REQUEST)
+          .body(new ApiResponse(false, "Lỗi otp, " + ex.getMessage()));
     }
-    
+
     if (ex.getRedirect() != null) {
       redirectAttributes.addFlashAttribute("errorMessage", errorMessage);
       return ex.getRedirect();
@@ -205,5 +199,28 @@ public class GlobalExceptionHandler {
       model.addAttribute("errorMessage", errorMessage);
       return "error/otperror";
     }
+  }
+
+  @ExceptionHandler(ConstraintViolationException.class)
+  public String handleValidationExceptions(
+      ConstraintViolationException ex,
+      RedirectAttributes redirectAttributes,
+      HttpServletRequest request) {
+
+    // Tạo thông điệp lỗi từ các vi phạm
+    String errorMessage = ex.getConstraintViolations()
+        .stream()
+        .map(violation -> violation.getMessage()) // Lấy thông điệp lỗi
+        .reduce((a, b) -> a + ", " + b) // Ghép các thông điệp lỗi nếu có nhiều hơn 1
+        .orElse("Lỗi không xác định");
+
+    // Thêm thông điệp lỗi vào redirectAttributes
+    redirectAttributes.addFlashAttribute("errorMessage", errorMessage);
+
+    // Lấy referer (trang trước đó)
+    String referer = request.getHeader("Referer");
+
+    // Redirect về referer với thông điệp lỗi
+    return "redirect:" + (referer != null ? referer : "/"); // Nếu không có referer thì chuyển về trang chủ
   }
 }

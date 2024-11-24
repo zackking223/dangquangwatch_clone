@@ -331,11 +331,6 @@ public class IndexController {
         return "index";
     }
 
-    @GetMapping("/error")
-    public String errorRedirect() {
-        return "redirect:/";
-    }
-
     public Integer convertToNum(String id) {
         if (isNumeric(id)) {
             return Integer.parseInt(id);

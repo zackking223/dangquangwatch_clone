@@ -74,14 +74,15 @@
 
         <input class="p-2 w-max bg-green-500 rounded block mt-4 text-white" type="submit" value="Lưu" />
       </form>
-      
+
       <div class="w-full h-[1px] bg-black my-4"></div>
       <section class="grid sm:grid-cols-2 grid-cols-1 gap-4">
         <form class="mx-auto w-full" action="/profile/doisodienthoai" method="post">
-          <label class="block font-medium" th:for="newphonenumber">Số điện thoại mới</label>
+          <label th:if="${taikhoan.sodienthoai == null}" class="block font-medium" th:for="newphonenumber">Thêm số điện thoại</label>
+          <label th:if="${taikhoan.sodienthoai}" class="block font-medium" th:for="newphonenumber">Số điện thoại mới</label>
           <input class="border border-black rounded block p-2 w-full" type="text" name="newphonenumber"
             placeholder="Số điện thoại" onkeypress='validate(event)' required />
-          <input class="p-2 w-max bg-blue-500 rounded block mt-4 text-white" type="submit" value="Đổi số điện thoại" />
+          <input class="p-2 w-max bg-blue-500 rounded block mt-4 text-white" type="submit" th:value="${taikhoan.sodienthoai != null ? 'Đổi số điện thoại' : 'Thêm số điện thoại'}" />
         </form>
         <form class="mx-auto w-full" action="/profile/doimatkhau" method="post">
           <label class="block font-medium" for="newpassword">Mật khẩu:</label>
