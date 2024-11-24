@@ -30,7 +30,7 @@ public class OtpController {
       throw new OtpException("Link xác thực không hợp lệ!");
     }
 
-    otpService.verifyAccount(otp.get(), email.get());
+    otpService.verifyAccount(email.get(), otp.get());
     redirectAttributes.addAttribute("notification", "Xác thực tài khoản thành công!");
     return "redirect:/login";
   }
@@ -45,7 +45,7 @@ public class OtpController {
       throw new OtpException("Link xác thực không hợp lệ!");
     }
 
-    otpService.changePassword(otp.get(), email.get());
+    otpService.changePassword(email.get(), otp.get());
     redirectAttributes.addAttribute("notification", "Đổi mật khẩu thành công!");
     return "redirect:/profile/doithongtin";
   }

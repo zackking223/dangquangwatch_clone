@@ -246,8 +246,13 @@ public class ProfileController {
 
   @PostMapping("/doithongtin")
   public String updateThongTin(TaiKhoan taiKhoan, HttpSession session) {
-    String taikhoanUsername = (String) session.getAttribute("username");
-    TaiKhoan existingTaiKhoan = taiKhoanService.getTaiKhoan(taikhoanUsername);
+    var taikhoanUsername = session.getAttribute("username");
+
+    if (taikhoanUsername == null) {
+      return "redirect:/login";
+    }
+
+    TaiKhoan existingTaiKhoan = taiKhoanService.getTaiKhoan((String) taikhoanUsername);
 
     if (taiKhoan.getPassword() == null) {
       taiKhoan.setPassword(existingTaiKhoan.getPassword());
@@ -265,11 +270,16 @@ public class ProfileController {
 
   @PostMapping("/doimatkhau")
   public String doimatkhau(
+      HttpSession session,
       @RequestParam("newpassword") String newpassword,
-      @RequestParam("username") String username,
       RedirectAttributes redirectAttributes) {
 
-    otpService.createChangePasswordUrl(username, newpassword);
+    var username = session.getAttribute("username");
+    if (username == null) {
+      return "redirect:/login";
+    }
+    
+    otpService.createChangePasswordUrl((String) username, newpassword);
     // Thêm thông báo vào RedirectAttributes
     redirectAttributes.addFlashAttribute("notification", "Vui lòng xác thực mật khẩu mới trong email!");
     return "redirect:/profile/doithongtin";
@@ -277,28 +287,19 @@ public class ProfileController {
 
   @PostMapping("/doisodienthoai")
   public String doisodienthoai(
+      HttpSession session,
       @RequestParam("newphonenumber") String newphonenumber,
-      @RequestParam("username") String username,
       RedirectAttributes redirectAttributes) {
 
-    otpService.createVerifyPhoneNumberCode(username, newphonenumber);
-    // Thêm thông báo vào RedirectAttributes
-    redirectAttributes.addFlashAttribute("newphonenumber", newphonenumber);
-    return "redirect:/profile/phoneotp";
-  }
-
-  @GetMapping("/phoneotp")
-  public String phoneotp(HttpSession session, Model model) {
     var username = session.getAttribute("username");
 
     if (username == null) {
       return "redirect:/login";
     }
 
-    if (!model.containsAttribute("newphonenumber")) {
-      return "redirect:/profile/doithongtin";
-    }
-    model.addAttribute("username", (String) username);
-    return "phoneotp";
+    otpService.createVerifyPhoneNumberCode((String) username, newphonenumber);
+    // Thêm thông báo vào RedirectAttributes
+    redirectAttributes.addFlashAttribute("newphonenumber", newphonenumber);
+    return "redirect:/profile/doithongtin";
   }
 }

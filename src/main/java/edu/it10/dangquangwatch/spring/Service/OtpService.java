@@ -58,7 +58,7 @@ public class OtpService {
         otpRepository.delete(otp);
         throw new OtpException("Mã OTP đã hết hạn!");
       } else {
-        taiKhoanService.doiMatKhauHashed(email, otp.getPayload());
+        taiKhoanService.doiMatKhauHashed(otp.getPayload(), email);
         otpRepository.delete(otp);
       }
     } else {

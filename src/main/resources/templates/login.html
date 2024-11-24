@@ -32,8 +32,16 @@
       </div>
       <div>
         <label class="block font-medium" for="password">Password:</label>
-        <input class="block p-2 w-full rounded border border-black overflow-hidden" type="password" name="password"
-          placeholder="Mật khẩu" required>
+        <section class="relative max-w-[300px] w-screen">
+          <input class="block relative p-2 w-full rounded border border-black overflow-hidden" type="password"
+            name="password" id="password" placeholder="Mật khẩu" th:value="${password ?: ''}" required>
+          <button id="visibilityOn" type="button" class="absolute top-3 right-3">
+            <img src="/svg/visibility.svg" alt="Xem mật khẩu" class="w-5 h-5 opacity-10 hover:opacity-100">
+          </button>
+          <button id="visibilityOff" type="button" class="absolute top-3 right-3" style="display: none;">
+            <img src="/svg/visibility_off.svg" alt="Xem mật khẩu" class="w-5 h-5 opacity-10 hover:opacity-100">
+          </button>
+        </section>
       </div>
       <div class="flex items-center w-max mx-auto gap-2 my-4">
         <button class="block p-2 w-max bg-green-500 font-bold text-white rounded" type="submit">Đăng nhập</button>
@@ -63,6 +71,23 @@
 
   </div>
   <script src="/js/notification.js"></script>
+  <script>
+    const password = document.getElementById("password");
+    const visibilityOn = document.getElementById("visibilityOn");
+    const visibilityOff = document.getElementById("visibilityOff");
+
+    visibilityOn.addEventListener("click", () => {
+      password.type = "text";
+      visibilityOn.style.display = "none";
+      visibilityOff.style.display = "block";
+    });
+
+    visibilityOff.addEventListener("click", () => {
+      password.type = "password";
+      visibilityOn.style.display = "block";
+      visibilityOff.style.display = "none";
+    });
+  </script>
   <script th:inline="javascript">
     const errorMessage = /*[[${errorMessage}]]*/ '';
     if (errorMessage) {

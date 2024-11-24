@@ -1,6 +1,8 @@
 package edu.it10.dangquangwatch.spring.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,8 @@ import edu.it10.dangquangwatch.spring.entity.response.ApiResponse;
 import edu.it10.dangquangwatch.spring.service.ThongKeService;
 import jakarta.servlet.http.HttpSession;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -27,12 +31,13 @@ public class ThongkeController {
   }
 
   @GetMapping("/admin/thongke/")
-  public String trangThongKe(HttpSession session, Model model, @RequestParam("editcapital") Optional<String> editcapital_opt) {
+  public String trangThongKe(HttpSession session, Model model,
+      @RequestParam("editcapital") Optional<String> editcapital_opt) {
     String role = (String) session.getAttribute("role");
 
     if (!role.equals("ROLE_QUANLY")) {
       return "redirect:/admin/donhang/";
-    }  
+    }
 
     List<ThongKe> thongKes = thongKeService.getAllThongKe();
     ThongKe thongKe = thongKes.getFirst();
@@ -99,5 +104,23 @@ public class ThongkeController {
     ApiResponse response = new ApiResponse(false, "Vui lòng đăng nhập trước");
 
     return ResponseEntity.ok(response);
+  }
+
+  @GetMapping("/admin/thongke/export")
+  public ResponseEntity<byte[]> exportThongKeToExcel() throws IOException {
+    // Lấy danh sách ThongKe từ service
+    List<ThongKe> thongKeList = thongKeService.getAllThongKe();
+
+    // Tạo file Excel
+    ByteArrayInputStream in = thongKeService.exportThongKeToExcel(thongKeList);
+
+    // Cài đặt headers cho response
+    HttpHeaders headers = new HttpHeaders();
+    headers.add("Content-Disposition", "attachment; filename=thongke.xlsx");
+
+    return ResponseEntity.ok()
+        .headers(headers)
+        .contentType(MediaType.APPLICATION_OCTET_STREAM)
+        .body(in.readAllBytes());
   }
 }

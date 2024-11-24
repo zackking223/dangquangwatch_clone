@@ -1,22 +1,20 @@
 package edu.it10.dangquangwatch.spring.service;
 
-import com.twilio.rest.api.v2010.account.Message;
-import com.twilio.type.PhoneNumber;
-
-import edu.it10.dangquangwatch.spring.configuration.TwilioConfig;
+// import com.twilio.rest.api.v2010.account.Message;
+// import com.twilio.type.PhoneNumber;
+// import edu.it10.dangquangwatch.spring.configuration.TwilioConfig;
+// import org.springframework.beans.factory.annotation.Autowired;
 import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
 public class SmsService {
-  @Autowired
-  private TwilioConfig twilioConfig;
+  // @Autowired
+  // private TwilioConfig twilioConfig;
 
   public void sendConfirmNumberSms(String to, String otp) {
-    log.info("Sent: " + to + " with otp: " + otp);
+    log.info("Sent " + to + " with otp: " + otp);
     // try {
     //   Message message = Message.creator(
     //       new PhoneNumber(to), // Số điện thoại nhận

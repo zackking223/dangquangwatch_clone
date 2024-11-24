@@ -174,10 +174,13 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
     String plainText = taiKhoan.getPassword();
     TaiKhoan original = taiKhoanRepository.findById(taiKhoan.getUsername())
         .orElseThrow(() -> new RuntimeException("Không thể tìm thấy người dùng với email: " + taiKhoan.getHoten()));
+
     taiKhoan.setUsername(removeWhitespace(taiKhoan.getUsername()));
 
     if (plainText != null) {
       taiKhoan.setPassword("{bcrypt}" + passwordEncoder.encode(plainText));
+    } else {
+      taiKhoan.setPassword(original.getPassword());
     }
 
     if (!taiKhoan.getSodienthoai().equals(original.getSodienthoai())) {
@@ -273,10 +276,10 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 
   @Override
   @Transactional
-  public void doiMatKhau(String newpassword, String username) {
+  public void doiMatKhau(String plainText, String username) {
     TaiKhoan taiKhoan = getTaiKhoan(username);
 
-    taiKhoan.setPassword("{bcrypt}" + passwordEncoder.encode(newpassword));
+    taiKhoan.setPassword(plainText);
 
     updateTaiKhoan(taiKhoan, "/profile/doithongtin");
   }
@@ -288,6 +291,6 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 
     taiKhoan.setPassword("{bcrypt}" + hashedString);
 
-    updateTaiKhoan(taiKhoan, "/profile/doithongtin");
+    entityManager.merge(taiKhoan);
   }
 }

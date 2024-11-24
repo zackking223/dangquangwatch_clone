@@ -46,6 +46,7 @@ public class ParameterNameMapper {
         PARAMETER_NAME_MAP.put("chatlieu", "Chất liệu");
 
         PARAMETER_NAME_MAP.put("password", "Mật khẩu");
+        PARAMETER_NAME_MAP.put("newpassword", "Mật khẩu mới");
         PARAMETER_NAME_MAP.put("hanhdong", "Hành động");
         PARAMETER_NAME_MAP.put("thoigian", "Thời gian");
         PARAMETER_NAME_MAP.put("nguoithuchien", "Người thực hiện");

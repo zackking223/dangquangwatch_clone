@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -185,18 +186,24 @@ public class GlobalExceptionHandler {
   public Object handleOtpException(
       OtpException ex,
       HttpServletRequest request,
+      Model model,
       RedirectAttributes redirectAttributes) {
 
     // Lấy thông báo lỗi từ exception
     String errorMessage = ex.getMessage();
-    redirectAttributes.addFlashAttribute("errorMessage", errorMessage);
-
+    
     if (ex.isSendingJson()) {
       return ResponseEntity
-        .status(HttpStatus.BAD_REQUEST)
-        .body(new ApiResponse(false, ex.getMessage()));
+      .status(HttpStatus.BAD_REQUEST)
+      .body(new ApiResponse(false, ex.getMessage()));
     }
-
-    return ex.getRedirect() != null ? ex.getRedirect() : "otperror";
+    
+    if (ex.getRedirect() != null) {
+      redirectAttributes.addFlashAttribute("errorMessage", errorMessage);
+      return ex.getRedirect();
+    } else {
+      model.addAttribute("errorMessage", errorMessage);
+      return "error/otperror";
+    }
   }
 }

@@ -23,7 +23,7 @@
       <h1 class="p-2 bg-slate-400 rounded-tl rounded-tr text-xl hover:text-yellow-500"><a href="/profile/giohang">Giỏ
           hàng</a></h1>
     </div>
-    <div class="bg-white shadow-md rounded-lg overflow-hidden p-4 min-h-[800px]">
+    <div class="bg-white shadow-md rounded-lg overflow-hidden p-4 min-h-[800px] relative">
       <form class="mx-auto w-full" th:object="${taikhoan}" action="/profile/doithongtin" method="post">
         <div>
           <label class="block font-medium" th:for="username">Email</label>
@@ -77,22 +77,74 @@
       <div class="w-full h-[1px] bg-black my-4"></div>
       <section class="grid sm:grid-cols-2 grid-cols-1 gap-4">
         <form class="mx-auto w-full" action="/profile/doisodienthoai" method="post">
-          <input type="text" class="hidden" th:value="${taikhoan.getUsername()}" name="username">
-          <div>
-            <label class="block font-medium" th:for="newphonenumber">Số điện thoại mới</label>
-            <input class="border border-black rounded block p-2 w-full" type="text" name="newphonenumber"
-              placeholder="Số điện thoại" onkeypress='validate(event)' required />
-            <input class="p-2 w-max bg-blue-500 rounded block mt-4 text-white" type="submit" value="Đổi số điện thoại" />
-          </div>
+          <label class="block font-medium" th:for="newphonenumber">Số điện thoại mới</label>
+          <input class="border border-black rounded block p-2 w-full" type="text" name="newphonenumber"
+            placeholder="Số điện thoại" onkeypress='validate(event)' required />
+          <input class="p-2 w-max bg-blue-500 rounded block mt-4 text-white" type="submit" value="Đổi số điện thoại" />
         </form>
         <form class="mx-auto w-full" action="/profile/doimatkhau" method="post">
-          <input type="text" class="hidden" th:value="${taikhoan.getUsername()}" name="username">
-          <div>
-            <label class="block font-medium" th:for="matkhaumoi">Mật khẩu mới</label>
-            <input class="border border-black rounded block p-2 w-full" type="password" name="newpassword"
-              placeholder="Mật khẩu mới" />
-            <input class="p-2 w-max bg-red-500 rounded block mt-4 text-white" type="submit" value="Đổi mật khẩu" />
-          </div>
+          <label class="block font-medium" for="newpassword">Mật khẩu:</label>
+          <section class="relative w-full">
+            <input class="block relative p-2 w-full rounded border border-black overflow-hidden" type="password" id="newpassword" name="newpassword" placeholder="P@ssword12345" required>
+            <button id="visibilityOn" type="button" class="absolute top-3 right-3">
+              <img src="/svg/visibility.svg" alt="Xem mật khẩu" class="w-5 h-5 opacity-10 hover:opacity-100">
+            </button>
+            <button id="visibilityOff" type="button" class="absolute top-3 right-3" style="display: none;">
+              <img src="/svg/visibility_off.svg" alt="Xem mật khẩu" class="w-5 h-5 opacity-10 hover:opacity-100">
+            </button>
+          </section>
+          <ul class="text-sm text-slate-500 ml-2 my-2">
+            <li class="flex items-center gap-1 pointer-events-none">
+              <input type="checkbox" name="passwordCheck" id="passwordLength" class="block" required>
+              <label id="passwordLengthLabel" for="passwordLength">Độ dài tối thiểu là 8 ký tự.</label>
+            </li>
+            <li class="flex items-center gap-1 pointer-events-none">
+              <input type="checkbox" name="passwordCheck" id="passwordReq1" class="block" required>
+              <label id="passwordReq1Label" for="passwordReq1">Bao gồm cả chữ hoa, chữ thường và số.</label>
+            </li>
+            <li class="flex items-center gap-1 pointer-events-none">
+              <input type="checkbox" name="passwordCheck" id="passwordReq2" class="block" required>
+              <label id="passwordReq2Label" for="passwordReq2">Bao gồm ký tự đặc biệt như: @, #, $,...</label>
+            </li>
+          </ul>
+          <input class="p-2 w-max bg-red-500 rounded block mt-4 text-white" type="submit" value="Đổi mật khẩu" />
+        </form>
+      </section>
+
+      <section th:if="${newphonenumber}" class="absolute top-0 left-0 w-full h-full z-10">
+        <div class="bg-black w-full h-full absolute top-0 left-0 opacity-50"></div>
+        <form class="sticky top-20 mx-auto w-max p-4 bg-slate-50 rounded-lg my-4" onsubmit="handleSubmit(event)"
+          th:object="${taikhoan}" action="/profile/doithongtin" method="post">
+          <input type="text" class="hidden" th:value="${username}" name="username">
+          <section>
+            <label class="block font-medium">Nhập mã xác thực</label>
+            <div class="flex gap-1">
+              <input id="d1" class="border border-black rounded block p-2 w-7" type="text" maxlength="1" name="d1"
+                placeholder="X" autocomplete="off" onkeypress='validate(event)' required />
+              <input id="d2" class="border border-black rounded block p-2 w-7" type="text" maxlength="1" name="d2"
+                placeholder="X" autocomplete="off" onkeypress='validate(event)' required />
+              <input id="d3" class="border border-black rounded block p-2 w-7" type="text" maxlength="1" name="d3"
+                placeholder="X" autocomplete="off" onkeypress='validate(event)' required />
+              <input id="d4" class="border border-black rounded block p-2 w-7" type="text" maxlength="1" name="d4"
+                placeholder="X" autocomplete="off" onkeypress='validate(event)' required />
+              <input id="d5" class="border border-black rounded block p-2 w-7" type="text" maxlength="1" name="d5"
+                placeholder="X" autocomplete="off" onkeypress='validate(event)' required />
+              <input id="d6" class="border border-black rounded block p-2 w-7" type="text" maxlength="1" name="d6"
+                placeholder="X" autocomplete="off" onkeypress='validate(event)' required />
+            </div>
+            <p>Chúng tôi đã gửi mã xác thực tới <span th:text="${newphonenumber}"></span></p>
+            <section class="flex items-center gap-2">
+              <button id="sendbtn" class="p-2 w-max bg-blue-500 hover:bg-blue-600 rounded block mt-4 text-white">
+                Xác thực
+              </button>
+              <div id="waitbtn" class="p-2 w-max bg-slate-500 rounded block mt-4 text-white cursor-wait"
+                style="display: none;">
+                Xác thực
+              </div>
+              <a href="/profile/doithongtin"
+                class="p-2 w-max bg-red-500 hover:bg-red-600 rounded block mt-4 text-white">Hủy</a>
+            </section>
+          </section>
         </form>
       </section>
     </div>
@@ -141,7 +193,6 @@
       }
     }
   </script>
-  <script src="/js/notification.js"></script>
   <script th:inline="javascript">
     const errorMessage = /*[[${errorMessage}]]*/ '';
     if (errorMessage) {
@@ -164,6 +215,160 @@
         }
       );
     }
+  </script>
+  <script th:if="${newphonenumber}" th:inline="javascript">
+    const username = /*[[${taikhoan.username}]]*/ '';
+    const newphonenumber = /*[[${newphonenumber}]]*/ '';
+    let otp6digit = "";
+    const sendBtn = document.getElementById("sendbtn");
+    const waitBtn = document.getElementById("waitbtn");
+
+    const d1 = document.getElementById("d1");
+    const d2 = document.getElementById("d2");
+    const d3 = document.getElementById("d3");
+    const d4 = document.getElementById("d4");
+    const d5 = document.getElementById("d5");
+    const d6 = document.getElementById("d6");
+
+    d1.addEventListener("input", () => {
+      if (d1.value.length > 0) {
+        otp6digit = d1.value + d2.value + d3.value + d4.value + d5.value + d6.value;
+        d2.focus();
+      }
+    });
+    d2.addEventListener("input", () => {
+      if (d2.value.length > 0) {
+        otp6digit = d1.value + d2.value + d3.value + d4.value + d5.value + d6.value;
+        d3.focus();
+      }
+    });
+    d3.addEventListener("input", () => {
+      if (d3.value.length > 0) {
+        otp6digit = d1.value + d2.value + d3.value + d4.value + d5.value + d6.value;
+        d4.focus();
+      }
+    });
+    d4.addEventListener("input", () => {
+      if (d4.value.length > 0) {
+        otp6digit = d1.value + d2.value + d3.value + d4.value + d5.value + d6.value;
+        d5.focus();
+      }
+    });
+    d5.addEventListener("input", () => {
+      if (d5.value.length > 0) {
+        otp6digit = d1.value + d2.value + d3.value + d4.value + d5.value + d6.value;
+        d6.focus();
+      }
+    });
+    d6.addEventListener("input", () => {
+      if (d6.value.length > 0) {
+        otp6digit = d1.value + d2.value + d3.value + d4.value + d5.value + d6.value;
+        sendBtn.focus();
+      }
+    });
+
+    function handleSubmit(event) {
+      event.preventDefault();
+      sendBtn.style.display = "none";
+      waitBtn.style.display = "block";
+      const form = event.target;
+      const data = new FormData(form);
+
+      fetch(`/otp/vn?e=${username}&n=${newphonenumber}&p=${otp6digit}`, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        method: "GET"
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.status) {
+            showNotification(
+              {
+                title: "Thông báo",
+                message: "Đổi số điện thoại thành công!",
+                type: "success"
+              }
+            );
+            setTimeout(() => {
+              window.location.href = "/profile/doithongtin";
+            }, 3000);
+          } else {
+            sendBtn.style.display = "block";
+            waitBtn.style.display = "none";
+            showNotification(
+              {
+                title: "Lỗi",
+                message: data.message,
+                type: "error"
+              }
+            );
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    }
+  </script>
+  <script>
+    const password = document.getElementById("newpassword");
+    const visibilityOn = document.getElementById("visibilityOn");
+    const visibilityOff = document.getElementById("visibilityOff");
+    const passwordLength = document.getElementById("passwordLength");
+    const passwordReq1 = document.getElementById("passwordReq1");
+    const passwordReq2 = document.getElementById("passwordReq2");
+    const passwordLengthLabel = document.getElementById("passwordLengthLabel");
+    const passwordReq1Label = document.getElementById("passwordReq1Label");
+    const passwordReq2Label = document.getElementById("passwordReq2Label");
+
+    password.addEventListener("input", (event) => {
+      if (event.target.value.length == 0) {
+        passwordLengthLabel.style.color = "#64748b";
+        passwordLength.checked = false;
+        passwordReq1Label.style.color = "#64748b";
+        passwordReq1.checked = false;
+        passwordReq2Label.style.color = "#64748b";
+        passwordReq2.checked = false;
+
+        return;
+      }
+
+      if (event.target.value.length >= 8) {
+        passwordLengthLabel.style.color = "#3b82f6";
+        passwordLength.checked = true;
+      } else {
+        passwordLengthLabel.style.color = "#ef4444";
+        passwordLength.checked = false;
+      }
+
+      if (event.target.value.match(/[a-z]/g) && event.target.value.match(/[A-Z]/g) && event.target.value.match(/[0-9]/g)) {
+        passwordReq1Label.style.color = "#3b82f6";
+        passwordReq1.checked = true;
+      } else {
+        passwordReq1Label.style.color = "#ef4444";
+        passwordReq1.checked = false;
+      }
+
+      if (event.target.value.match(/[@#\$%\^&\*\+\-\_\=\|\:\;\?\<\>\(\)\[\]\{\}\.]/g)) {
+        passwordReq2Label.style.color = "#3b82f6";
+        passwordReq2.checked = true;
+      } else {
+        passwordReq2Label.style.color = "#ef4444";
+        passwordReq2.checked = false;
+      }
+    });
+
+    visibilityOn.addEventListener("click", () => {
+      password.type = "text";
+      visibilityOn.style.display = "none";
+      visibilityOff.style.display = "block";
+    });
+
+    visibilityOff.addEventListener("click", () => {
+      password.type = "password";
+      visibilityOn.style.display = "block";
+      visibilityOff.style.display = "none";
+    });
   </script>
 </body>
 

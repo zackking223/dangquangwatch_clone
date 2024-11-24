@@ -1,9 +1,13 @@
 package edu.it10.dangquangwatch.spring.service.impl;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
-
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -255,5 +259,83 @@ public class ThongKeServiceImpl implements ThongKeService {
         thongKe.setDoanhThu(thongKe.getDoanhThu().add(amount));
 
         thongKeRepository.save(thongKe);
+    }
+
+    @Override
+    public ByteArrayInputStream exportThongKeToExcel(List<ThongKe> thongKeList) throws IOException {
+        String[] columns = {
+                "Mã thống kê", "Đồng hồ", "Bút ký", "Phụ kiện", "Trang sức",
+                "Kính mắt", "Đơn hàng", "Đơn hàng đã hủy", "Đơn hàng đã giao", "Khách hàng",
+                "Lượt truy cập", "Tỉ lệ chuyển đổi", "Doanh thu", "Vốn",
+                "Đơn hàng chờ xác nhận", "Đơn hàng đã xác nhận", "Đơn hàng đang giao", 
+                "Lượt đăng ký mới", "Chi phí", "Lượt xem sản phẩm", 
+                "Lượt thêm giỏ hàng", "Lượt đặt hàng", "Lượt thanh toán", 
+                "Lượt hoàn thành đơn", "Ngày thêm"
+        };
+
+        // Tạo workbook
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("ThongKe");
+
+        // Tạo header row
+        Row headerRow = sheet.createRow(0);
+        for (int i = 0; i < columns.length; i++) {
+            Cell cell = headerRow.createCell(i);
+            cell.setCellValue(columns[i]);
+            cell.setCellStyle(createHeaderCellStyle(workbook));
+        }
+
+        // Ghi dữ liệu
+        int rowIdx = 1;
+        for (ThongKe thongKe : thongKeList) {
+            Row row = sheet.createRow(rowIdx++);
+
+            row.createCell(0).setCellValue(thongKe.getMathongke());
+            row.createCell(1).setCellValue(thongKe.getDongHo());
+            row.createCell(2).setCellValue(thongKe.getButKy());
+            row.createCell(3).setCellValue(thongKe.getPhuKien());
+            row.createCell(4).setCellValue(thongKe.getTrangSuc());
+            row.createCell(5).setCellValue(thongKe.getKinhMat());
+            row.createCell(6).setCellValue(thongKe.getDonHang());
+            row.createCell(7).setCellValue(thongKe.getDonHangDaHuy());
+            row.createCell(8).setCellValue(thongKe.getDonHangDaGiao());
+            row.createCell(9).setCellValue(thongKe.getKhachHang());
+            row.createCell(10).setCellValue(thongKe.getLuotTruyCap());
+            row.createCell(11).setCellValue(thongKe.getTiLeChuyenDoiFormatted());
+            row.createCell(12).setCellValue(thongKe.getDoanhThu().doubleValue());
+            row.createCell(13).setCellValue(thongKe.getVon().doubleValue());
+            row.createCell(14).setCellValue(thongKe.getDonHangChoXacNhan());
+            row.createCell(15).setCellValue(thongKe.getDonHangDaXacNhan());
+            row.createCell(16).setCellValue(thongKe.getDonHangDangGiao());
+            row.createCell(17).setCellValue(thongKe.getLuotDangKyMoi());
+            row.createCell(18).setCellValue(thongKe.getChiPhi().doubleValue());
+            row.createCell(19).setCellValue(thongKe.getLuotXemSanPham());
+            row.createCell(20).setCellValue(thongKe.getLuotThemGioHang());
+            row.createCell(21).setCellValue(thongKe.getLuotDatHang());
+            row.createCell(22).setCellValue(thongKe.getLuotThanhToan());
+            row.createCell(23).setCellValue(thongKe.getLuotHoanThanhDon());
+            row.createCell(24).setCellValue(thongKe.getNGAYTHEM());
+        }
+
+        // Tự động điều chỉnh kích thước các cột
+        for (int i = 0; i < columns.length; i++) {
+            sheet.autoSizeColumn(i);
+        }
+
+        // Ghi dữ liệu ra output stream
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        workbook.write(outputStream);
+        workbook.close();
+
+        return new ByteArrayInputStream(outputStream.toByteArray());
+    }
+
+    private CellStyle createHeaderCellStyle(Workbook workbook) {
+        CellStyle style = workbook.createCellStyle();
+        Font font = workbook.createFont();
+        font.setBold(true);
+        font.setFontHeightInPoints((short) 12);
+        style.setFont(font);
+        return style;
     }
 }
