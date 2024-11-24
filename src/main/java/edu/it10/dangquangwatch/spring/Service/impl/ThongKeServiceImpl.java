@@ -267,69 +267,69 @@ public class ThongKeServiceImpl implements ThongKeService {
                 "Mã thống kê", "Đồng hồ", "Bút ký", "Phụ kiện", "Trang sức",
                 "Kính mắt", "Đơn hàng", "Đơn hàng đã hủy", "Đơn hàng đã giao", "Khách hàng",
                 "Lượt truy cập", "Tỉ lệ chuyển đổi", "Doanh thu", "Vốn",
-                "Đơn hàng chờ xác nhận", "Đơn hàng đã xác nhận", "Đơn hàng đang giao", 
-                "Lượt đăng ký mới", "Chi phí", "Lượt xem sản phẩm", 
-                "Lượt thêm giỏ hàng", "Lượt đặt hàng", "Lượt thanh toán", 
+                "Đơn hàng chờ xác nhận", "Đơn hàng đã xác nhận", "Đơn hàng đang giao",
+                "Lượt đăng ký mới", "Chi phí", "Lượt xem sản phẩm",
+                "Lượt thêm giỏ hàng", "Lượt đặt hàng", "Lượt thanh toán",
                 "Lượt hoàn thành đơn", "Ngày thêm"
         };
-
+    
         // Tạo workbook
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("ThongKe");
-
-        // Tạo header row
-        Row headerRow = sheet.createRow(0);
+    
+        // Ghi tiêu đề vào cột đầu tiên (hàng dọc)
         for (int i = 0; i < columns.length; i++) {
-            Cell cell = headerRow.createCell(i);
+            Row row = sheet.createRow(i); // Tạo từng hàng cho tiêu đề
+            Cell cell = row.createCell(0); // Ghi tiêu đề vào cột 0
             cell.setCellValue(columns[i]);
             cell.setCellStyle(createHeaderCellStyle(workbook));
         }
-
-        // Ghi dữ liệu
-        int rowIdx = 1;
+    
+        // Ghi dữ liệu của từng ThongKe theo từng cột
+        int colIdx = 1; // Bắt đầu từ cột thứ 1 (sau tiêu đề)
         for (ThongKe thongKe : thongKeList) {
-            Row row = sheet.createRow(rowIdx++);
-
-            row.createCell(0).setCellValue(thongKe.getMathongke());
-            row.createCell(1).setCellValue(thongKe.getDongHo());
-            row.createCell(2).setCellValue(thongKe.getButKy());
-            row.createCell(3).setCellValue(thongKe.getPhuKien());
-            row.createCell(4).setCellValue(thongKe.getTrangSuc());
-            row.createCell(5).setCellValue(thongKe.getKinhMat());
-            row.createCell(6).setCellValue(thongKe.getDonHang());
-            row.createCell(7).setCellValue(thongKe.getDonHangDaHuy());
-            row.createCell(8).setCellValue(thongKe.getDonHangDaGiao());
-            row.createCell(9).setCellValue(thongKe.getKhachHang());
-            row.createCell(10).setCellValue(thongKe.getLuotTruyCap());
-            row.createCell(11).setCellValue(thongKe.getTiLeChuyenDoiFormatted());
-            row.createCell(12).setCellValue(thongKe.getDoanhThu().doubleValue());
-            row.createCell(13).setCellValue(thongKe.getVon().doubleValue());
-            row.createCell(14).setCellValue(thongKe.getDonHangChoXacNhan());
-            row.createCell(15).setCellValue(thongKe.getDonHangDaXacNhan());
-            row.createCell(16).setCellValue(thongKe.getDonHangDangGiao());
-            row.createCell(17).setCellValue(thongKe.getLuotDangKyMoi());
-            row.createCell(18).setCellValue(thongKe.getChiPhi().doubleValue());
-            row.createCell(19).setCellValue(thongKe.getLuotXemSanPham());
-            row.createCell(20).setCellValue(thongKe.getLuotThemGioHang());
-            row.createCell(21).setCellValue(thongKe.getLuotDatHang());
-            row.createCell(22).setCellValue(thongKe.getLuotThanhToan());
-            row.createCell(23).setCellValue(thongKe.getLuotHoanThanhDon());
-            row.createCell(24).setCellValue(thongKe.getNGAYTHEM());
+            int rowIdx = 0; // Bắt đầu từ hàng đầu tiên
+            sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getMathongke());
+            sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getDongHo());
+            sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getButKy());
+            sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getPhuKien());
+            sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getTrangSuc());
+            sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getKinhMat());
+            sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getDonHang());
+            sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getDonHangDaHuy());
+            sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getDonHangDaGiao());
+            sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getKhachHang());
+            sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getLuotTruyCap());
+            sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getTiLeChuyenDoiFormatted());
+            sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getDoanhThu().doubleValue());
+            sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getVon().doubleValue());
+            sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getDonHangChoXacNhan());
+            sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getDonHangDaXacNhan());
+            sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getDonHangDangGiao());
+            sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getLuotDangKyMoi());
+            sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getChiPhi().doubleValue());
+            sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getLuotXemSanPham());
+            sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getLuotThemGioHang());
+            sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getLuotDatHang());
+            sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getLuotThanhToan());
+            sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getLuotHoanThanhDon());
+            sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getNGAYTHEM());
+            colIdx++; // Chuyển sang cột tiếp theo
         }
-
-        // Tự động điều chỉnh kích thước các cột
+    
+        // Tự động điều chỉnh kích thước các hàng
         for (int i = 0; i < columns.length; i++) {
-            sheet.autoSizeColumn(i);
+            sheet.autoSizeColumn(0); // Chỉ auto-size cho cột tiêu đề
         }
-
+    
         // Ghi dữ liệu ra output stream
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         workbook.write(outputStream);
         workbook.close();
-
+    
         return new ByteArrayInputStream(outputStream.toByteArray());
     }
-
+    
     private CellStyle createHeaderCellStyle(Workbook workbook) {
         CellStyle style = workbook.createCellStyle();
         Font font = workbook.createFont();

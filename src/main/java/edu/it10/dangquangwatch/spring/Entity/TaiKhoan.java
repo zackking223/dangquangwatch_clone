@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 import java.util.Objects;
@@ -23,12 +24,14 @@ public class TaiKhoan {
   private String password;
 
   @Column(name = "hoten")
+  @NotNull(message = "Họ và tên không được bỏ trống")
   private String hoten;
 
   @Column(name = "sodienthoai", unique = true, nullable = true)
   private String sodienthoai;
 
   @Column(name = "diachi")
+  @NotNull(message = "Địa chỉ không được bỏ trống")
   private String diachi;
 
   @Column(name = "loai_tai_khoan")
@@ -44,7 +47,7 @@ public class TaiKhoan {
   private List<DonHang> donHangList;
 
   public boolean isAdmin() {
-    return loai_tai_khoan.equals("ROLE_QUANTRI");
+    return loai_tai_khoan.equals("ROLE_QUANLY") || loai_tai_khoan.equals("ROLE_NHANVIEN");
   }
 
   public TaiKhoan() {

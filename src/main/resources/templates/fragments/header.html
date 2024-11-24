@@ -1,4 +1,4 @@
-<div class="h-14 mb-4 w-full relative z-20" th:fragment="header">
+<div class="h-14 mb-4 w-full relative z-30" th:fragment="header">
     <header class="fixed z-10 h-14 w-full box-content py-2 bg-black">
         <section class="w-full xl:max-w-[1215px] max-w-[1021px] mx-auto flex items-center sm:pl-3 px-2">
             <a href="/" class="flex-shrink-0">
@@ -7,7 +7,7 @@
             </a>
 
             <form th:action="${searchPath ?: ''}"
-                class="flex items-center h-[38px] w-max max-w-[395px] sm:ml-5 rounded sm:mr-auto ml-auto overflow-hidden">
+                class="lg:flex hidden items-center h-[38px] w-max max-w-[395px] sm:ml-5 rounded sm:mr-auto ml-auto overflow-hidden">
                 <input type="text" name="search" th:value="${search}"
                     class="outline-none hidden sm:block w-[295px] h-full px-2 placeholder:italic placeholder:text-slate-500"
                     placeholder="Nhập từ khóa...">
@@ -22,10 +22,18 @@
                 </button>
             </form>
 
+            <button id="openSearch"
+                class="lg:hidden rounded sm:mr-auto ml-auto sm:p-2 p-1 w-max max-w-[100px] h-full bg-yellow-400 text-black font-medium text-sm flex items-center">
+                <span class="material-symbols-outlined">
+                    search
+                </span>
+            </button>
+
             <ul class="flex sm:gap-4 gap-1 items-center text-sm text-white xl:mx-0 px-2">
                 <li th:if="${session.role == 'ROLE_NHANVIEN' || session.role == 'ROLE_QUANLY'}" class="relative">
                     <a class="flex items-center gap-1" href="/admin/donhang/">
-                        <span class="material-symbols-outlined text-white hover:text-yellow-400 text-[28px] translate-y-[2px]">
+                        <span
+                            class="material-symbols-outlined text-white hover:text-yellow-400 text-[28px] translate-y-[2px]">
                             folder_managed
                         </span>
                     </a>
@@ -42,13 +50,55 @@
                         0</p>
                 </li>
                 <li class="flex flex-col sm:ml-0 ml-2" th:if="${session.hoten}">
-                    <a class="hover:text-yellow-400 text-xs sm:text-base" href="/profile/donhang" th:text="${session.hoten}"></a>
+                    <a class="hover:text-yellow-400 text-xs sm:text-base" href="/profile/donhang"
+                        th:text="${session.hoten}"></a>
                     <a class="hover:text-yellow-400 text-xs sm:text-base underline" href="/logout">Đăng xuất</a>
                 </li>
                 <li th:if="${session?.hoten == null}">
                     <a class="hover:text-yellow-400 text-xs sm:text-base underline" href="/login">Đăng nhập</a>
                 </li>
             </ul>
+            <section id="phonesearch" class="absolute lg:hidden top-0 left-0 w-full h-full z-10" style="display: none;">
+                <div onclick="closeSearch()" class="bg-black w-full h-screen absolute top-0 left-0 opacity-50"></div>
+                <form th:action="${searchPath ?: ''}"
+                class="flex mt-4 relative items-center h-[38px] w-max max-w-[395px] rounded mx-auto overflow-hidden">
+                <input type="text" name="search" th:value="${search}"
+                    class="outline-none block w-[295px] h-full px-2 placeholder:italic placeholder:text-slate-500"
+                    placeholder="Nhập từ khóa...">
+                <button
+                    class="p-1 w-max max-w-[100px] h-full bg-yellow-400 rounded-tr rounded-br text-black font-medium text-sm flex items-center">
+                    <span class="material-symbols-outlined">
+                        search
+                    </span>
+                </button>
+                <button id="closeSearch" type="button"
+                    class="p-1 w-max max-w-[100px] h-full bg-none text-white font-medium text-sm flex items-center">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </button>
+            </form>
+            </section>
         </section>
+
+        <script>
+            const phonesearch = document.getElementById("phonesearch");
+
+            function closeSearch() {
+                phonesearch.style.display = "none";
+            }
+
+            function openSearch() {
+                phonesearch.style.display = "block";
+            }
+
+            document.getElementById("closeSearch").addEventListener("click", function () {
+                closeSearch();
+            });
+
+            document.getElementById("openSearch").addEventListener("click", function () {
+                openSearch();
+            });
+        </script>
     </header>
 </div>
