@@ -177,7 +177,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 
     taiKhoan.setUsername(removeWhitespace(taiKhoan.getUsername()));
 
-    if (plainText != null) {
+    if (plainText != null && !plainText.contains("{bcrypt}")) {
       taiKhoan.setPassword("{bcrypt}" + passwordEncoder.encode(plainText));
     } else {
       taiKhoan.setPassword(original.getPassword());
@@ -279,9 +279,9 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
   public void doiMatKhau(String plainText, String username) {
     TaiKhoan taiKhoan = getTaiKhoan(username);
 
-    taiKhoan.setPassword(plainText);
+    taiKhoan.setPassword("{bcrypt}" + passwordEncoder.encode(plainText));
 
-    updateTaiKhoan(taiKhoan, "/profile/doithongtin");
+    entityManager.merge(taiKhoan);
   }
 
   @Override

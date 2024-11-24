@@ -270,7 +270,7 @@ public class ThongKeServiceImpl implements ThongKeService {
                 "Đơn hàng chờ xác nhận", "Đơn hàng đã xác nhận", "Đơn hàng đang giao",
                 "Lượt đăng ký mới", "Chi phí", "Lượt xem sản phẩm",
                 "Lượt thêm giỏ hàng", "Lượt đặt hàng", "Lượt thanh toán",
-                "Lượt hoàn thành đơn", "Ngày thêm"
+                "Lượt hoàn thành đơn", "Ngày tạo", "Ngày xuất"
         };
     
         // Tạo workbook
@@ -314,6 +314,7 @@ public class ThongKeServiceImpl implements ThongKeService {
             sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getLuotThanhToan());
             sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getLuotHoanThanhDon());
             sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getNGAYTHEM());
+            sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(DateStringHelper.getCurrentDateFormatted());
             colIdx++; // Chuyển sang cột tiếp theo
         }
     

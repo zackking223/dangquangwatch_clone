@@ -251,12 +251,8 @@ public class ProfileController {
     if (taikhoanUsername == null) {
       return "redirect:/login";
     }
-
-    TaiKhoan existingTaiKhoan = taiKhoanService.getTaiKhoan((String) taikhoanUsername);
+    
     taiKhoan.setUsername((String) taikhoanUsername);
-    if (taiKhoan.getPassword() == null) {
-      taiKhoan.setPassword(existingTaiKhoan.getPassword());
-    }
 
     try {
       taiKhoanService.updateTaiKhoan(taiKhoan, "/profile/doithongtin");
