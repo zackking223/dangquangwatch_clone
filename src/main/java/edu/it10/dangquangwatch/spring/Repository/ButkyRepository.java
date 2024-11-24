@@ -2,6 +2,7 @@ package edu.it10.dangquangwatch.spring.repository;
 
 import edu.it10.dangquangwatch.spring.entity.Butky;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -20,6 +21,9 @@ public interface ButkyRepository extends JpaRepository<Butky, Integer> {
 
   @Query("SELECT DISTINCT b FROM Butky b WHERE (UPPER(b.tenbutky) LIKE UPPER(CONCAT('%', :searchStr, '%')) OR UPPER(b.thongtin) LIKE UPPER(CONCAT('%', :searchStr, '%'))) AND b.NGAYTHEM >= :from AND b.NGAYTHEM <= :to AND b.kichhoat = 1 AND b.soluong > 0 ORDER BY b.NGAYTHEM DESC")
   Page<Butky> searchActiveButKy(@Param("searchStr") String searchStr, @Param("from") String from, @Param("to") String to, Pageable pageable);
+
+  @Query("SELECT DISTINCT b FROM Butky b WHERE (UPPER(b.tenbutky) LIKE UPPER(CONCAT('%', :searchStr, '%')) OR UPPER(b.thongtin) LIKE UPPER(CONCAT('%', :searchStr, '%'))) AND b.kichhoat = 1 AND b.soluong > 0 ORDER BY b.NGAYTHEM DESC")
+  List<Butky> search(@Param("searchStr") String searchStr);
 
   Optional<Butky> findByTenbutky(String tenbutky);
 }

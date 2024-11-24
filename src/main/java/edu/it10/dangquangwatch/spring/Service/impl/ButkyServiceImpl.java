@@ -118,4 +118,9 @@ public class ButkyServiceImpl implements ButkyService {
           "/admin/butky/");
     }
   }
+
+  @Override
+  public List<Butky> search(String searchStr) {
+    return butkyRepository.search(searchStr);
+  }
 }

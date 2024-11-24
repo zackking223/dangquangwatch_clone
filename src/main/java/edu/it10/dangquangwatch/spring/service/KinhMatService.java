@@ -12,6 +12,7 @@ public interface KinhMatService {
 
   Page<KinhMat> search(String searchStr, String from, String to, Integer pageNum);
   Page<KinhMat> searchAvaiable(String searchStr, String from, String to, Integer pageNum);
+  List<KinhMat> search(String searchStr);
 
   KinhMat save(KinhMat kinhMat);  
 

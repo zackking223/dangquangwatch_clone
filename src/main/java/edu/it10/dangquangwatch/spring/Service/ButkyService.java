@@ -12,6 +12,7 @@ public interface ButkyService {
   
   Page<Butky> search(String searchStr, String from, String to, Integer pageNum);
   Page<Butky> searchAvaiable(String searchStr, String from, String to, Integer pageNum);
+  List<Butky> search(String searchStr);
 
   Butky save(Butky butky);  
 

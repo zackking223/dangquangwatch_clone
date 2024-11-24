@@ -118,4 +118,9 @@ public class TrangsucServiceImpl implements TrangsucService {
           "/admin/trangsuc/");
     }
   }
+
+  @Override
+  public List<Trangsuc> search(String searchStr) {
+    return trangsucRepository.search(searchStr);
+  }
 }

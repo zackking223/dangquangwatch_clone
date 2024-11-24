@@ -23,4 +23,7 @@ public interface TrangsucRepository extends JpaRepository<Trangsuc, Integer> {
 
   @Query("SELECT DISTINCT b FROM Trangsuc b WHERE (UPPER(b.tentrangsuc) LIKE UPPER(CONCAT('%', :searchStr, '%')) OR UPPER(b.thongtin) LIKE UPPER(CONCAT('%', :searchStr, '%'))) AND b.NGAYTHEM >= :from AND b.NGAYTHEM <= :to AND b.kichhoat = 1 AND b.soluong > 0 ORDER BY b.NGAYTHEM DESC")
   Page<Trangsuc> searchActiveTrangsuc(@Param("searchStr") String searchStr, @Param("from") String from, @Param("to") String to, Pageable pageable);
+
+  @Query("SELECT DISTINCT b FROM Trangsuc b WHERE (UPPER(b.tentrangsuc) LIKE UPPER(CONCAT('%', :searchStr, '%')) OR UPPER(b.thongtin) LIKE UPPER(CONCAT('%', :searchStr, '%'))) AND b.kichhoat = 1 AND b.soluong > 0 ORDER BY b.NGAYTHEM DESC")
+  List<Trangsuc> search(String searchStr);
 }

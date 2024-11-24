@@ -15,6 +15,8 @@ public interface DonghoService {
 
   Page<Dongho> search(String searchStr, Dongho searchData, String from, String to, int pageNum);
 
+  List<Dongho> search(String searchStr);
+
   Dongho save(Dongho dongho);  
 
   void activate(Integer madongho);

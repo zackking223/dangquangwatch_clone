@@ -122,4 +122,9 @@ public class PhuKienServiceImpl implements PhuKienService {
           "/admin/phukien/");
     }
   }
+
+  @Override
+  public List<PhuKien> search(String searchStr) {
+    return phuKienRepository.search(searchStr);
+  }
 }

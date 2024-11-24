@@ -32,7 +32,7 @@ public class KinhMatServiceImpl implements KinhMatService {
 
   @Override
   public Page<KinhMat> searchAvaiable(String searchStr, String from, String to, Integer pageNum) {
-    return kinhMatRepository.searchKinhMatActive(searchStr, from, to, PageRequest.of(pageNum, 10));
+    return kinhMatRepository.searchActiveKinhMat(searchStr, from, to, PageRequest.of(pageNum, 10));
   }
 
   @Override
@@ -119,5 +119,10 @@ public class KinhMatServiceImpl implements KinhMatService {
           ErrorEnum.INDEX,
           "/admin/kinhmat/");
     }
+  }
+
+  @Override
+  public List<KinhMat> search(String searchStr) {
+    return kinhMatRepository.search(searchStr);
   }
 }

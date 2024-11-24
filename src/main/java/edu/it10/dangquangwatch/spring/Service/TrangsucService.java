@@ -14,6 +14,7 @@ public interface TrangsucService {
 
   Page<Trangsuc> search(String searchStr, String from, String to, Integer pageNum);
   Page<Trangsuc> searchAvaiable(String searchStr, String from, String to, Integer pageNum);
+  List<Trangsuc> search(String searchStr);
 
   void activate(Integer matrangsuc);
   void deactivate(Integer matrangsuc);  

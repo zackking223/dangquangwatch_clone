@@ -67,13 +67,13 @@ public class DonghoServiceImpl implements DonghoService {
   @Override
   public Page<Dongho> getAll(String tendongho, String from, String to, int pageNum) {
     Pageable pageable = PageRequest.of(pageNum, 10);
-    return donghoRepository.findByTendonghoContains(tendongho, from, to, pageable);
+    return donghoRepository.searchDongho(tendongho, from, to, pageable);
   }
 
   @Override
   public Page<Dongho> searchAvaiable(String tendongho, String from, String to, int pageNum) {
     Pageable pageable = PageRequest.of(pageNum, 10);
-    return donghoRepository.findByTendonghoContainsAndAvaiable(tendongho, from, to, pageable);
+    return donghoRepository.searchActiveDongho(tendongho, from, to, pageable);
   }
 
   @Override
@@ -125,5 +125,10 @@ public class DonghoServiceImpl implements DonghoService {
           ErrorEnum.INDEX,
           "/admin/dongho/");
     }
+  }
+
+  @Override
+  public List<Dongho> search(String searchStr) {
+    return donghoRepository.search(searchStr);
   }
 }

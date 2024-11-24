@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,8 @@ import edu.it10.dangquangwatch.spring.entity.Dongho;
 import edu.it10.dangquangwatch.spring.entity.KinhMat;
 import edu.it10.dangquangwatch.spring.entity.PhuKien;
 import edu.it10.dangquangwatch.spring.entity.Trangsuc;
+import edu.it10.dangquangwatch.spring.entity.response.ResultItem;
+import edu.it10.dangquangwatch.spring.entity.response.SearchResponse;
 import edu.it10.dangquangwatch.spring.service.DonghoService;
 import edu.it10.dangquangwatch.spring.service.ButkyService;
 import edu.it10.dangquangwatch.spring.service.KinhMatService;
@@ -304,6 +307,69 @@ public class IndexController {
             return "search";
         } else {
             return renderIndex(model);
+        }
+    }
+
+    @GetMapping("/searchall")
+    public ResponseEntity<SearchResponse<ResultItem>> searchAll(@RequestParam("query") Optional<String> query) {
+        if (query.isPresent()) {
+            String searchStr = query.get().trim();
+
+            if (searchStr.isEmpty()) {
+                return ResponseEntity.ok().body(new SearchResponse<ResultItem>(false, "Query string is empty!"));
+            }
+
+            List<ResultItem> itemList = new ArrayList<ResultItem>();
+
+            List<Dongho> donghoList = donghoService.search(searchStr);
+            for (Dongho dongho : donghoList) {
+                ResultItem item = new ResultItem();
+                item.setTenSanPham(dongho.getTendongho());
+                item.setMaSanPham(dongho.getMadongho());
+                item.setLoaiSanPham("dongho");
+                itemList.add(item);
+            }
+            
+            List<PhuKien> phukienList = phuKienService.search(searchStr);
+            for (PhuKien phuKien : phukienList) {
+                ResultItem item = new ResultItem();
+                item.setTenSanPham(phuKien.getTenPhuKien());
+                item.setMaSanPham(phuKien.getMaPhuKien());
+                item.setLoaiSanPham("phukien");
+                itemList.add(item);
+            }
+            
+            List<Butky> butkyList = butkyService.search(searchStr);
+            for (Butky butky : butkyList) {
+                ResultItem item = new ResultItem();
+                item.setTenSanPham(butky.getTenbutky());
+                item.setMaSanPham(butky.getMabutky());
+                item.setLoaiSanPham("butky");
+                itemList.add(item);
+            }
+            
+            List<KinhMat> kinhMatList = kinhMatService.search(searchStr);
+            for (KinhMat kinhMat : kinhMatList) {
+                ResultItem item = new ResultItem();
+                item.setTenSanPham(kinhMat.getTenKinhMat());
+                item.setMaSanPham(kinhMat.getMaKinhMat());
+                item.setLoaiSanPham("kinhmat");
+                itemList.add(item);
+            }
+            
+            List<Trangsuc> trangsucList = trangsucService.search(searchStr);
+            for (Trangsuc trangsuc : trangsucList) {
+                ResultItem item = new ResultItem();
+                item.setTenSanPham(trangsuc.getTentrangsuc());
+                item.setMaSanPham(trangsuc.getMatrangsuc());
+                item.setLoaiSanPham("trangsuc");
+                itemList.add(item);
+            }
+
+            return ResponseEntity.ok().body(new SearchResponse<ResultItem>(itemList.size() > 0, searchStr, itemList));
+            
+        } else {
+            return ResponseEntity.ok().body(new SearchResponse<ResultItem>(false, "No query string provided!"));
         }
     }
 
