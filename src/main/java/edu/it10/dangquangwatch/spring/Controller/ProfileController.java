@@ -253,7 +253,7 @@ public class ProfileController {
     }
 
     TaiKhoan existingTaiKhoan = taiKhoanService.getTaiKhoan((String) taikhoanUsername);
-
+    taiKhoan.setUsername((String) taikhoanUsername);
     if (taiKhoan.getPassword() == null) {
       taiKhoan.setPassword(existingTaiKhoan.getPassword());
     }
