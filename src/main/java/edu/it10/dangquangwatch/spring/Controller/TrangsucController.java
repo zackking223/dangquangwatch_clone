@@ -206,7 +206,7 @@ public class TrangsucController {
         Anhtrangsuc anhtrangsuc = new Anhtrangsuc();
         anhtrangsuc.setFile(file);
         anhtrangsuc.setTrangsuc(trangsuc);
-  
+
         try {
           anhtrangsucService.saveAnhtrangsuc(anhtrangsuc);
         } catch (IOException e) {
@@ -215,12 +215,15 @@ public class TrangsucController {
       }
       trangsucService.save(trangsuc);
     } else {
+      if (files == null || files.size() == 0) {
+        throw new ControllerException("Phải có ảnh sản phẩm!", ErrorEnum.ADD, "/admin/trangsuc/add");
+      }
       Trangsuc data = trangsucService.save(trangsuc);
       for (MultipartFile file : files) {
         Anhtrangsuc anhtrangsuc = new Anhtrangsuc();
         anhtrangsuc.setFile(file);
         anhtrangsuc.setTrangsuc(data);
-  
+
         try {
           anhtrangsucService.saveAnhtrangsuc(anhtrangsuc);
         } catch (IOException e) {
@@ -234,6 +237,9 @@ public class TrangsucController {
   @PostMapping("/uploadimage")
   public String uploadImage(@RequestParam("file") List<MultipartFile> files, @RequestParam("id") Integer matrangsuc,
       Model model) {
+    if (files == null || files.size() == 0) {
+      throw new ControllerException("Phải có ảnh sản phẩm!", ErrorEnum.EDIT, "/admin/trangsuc/edit?id=" + matrangsuc);
+    }
     Optional<Trangsuc> trangsuc = trangsucService.findById(matrangsuc);
 
     trangsuc.ifPresent(dh -> {

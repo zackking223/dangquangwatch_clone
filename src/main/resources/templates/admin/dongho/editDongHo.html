@@ -28,8 +28,9 @@
     <form class="mb-4" action="/admin/dongho/uploadimage" method="post" enctype="multipart/form-data">
       <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="file">Chọn ảnh:</label>
+        <input type="hidden" name="id" th:value="${dongho.madongho}" />
         <input type="file" id="file" name="file" class="border border-black rounded form-input mt-1 block w-full"
-          multiple="multiple" accept="image/*" onchange="previewImages(event)">
+          multiple="multiple" accept="image/*" onchange="previewImages(event)" required>
       </div>
 
       <div id="preview-container" class="mb-4 flex flex-wrap">

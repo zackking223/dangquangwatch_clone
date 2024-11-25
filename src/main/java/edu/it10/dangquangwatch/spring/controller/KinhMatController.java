@@ -214,6 +214,9 @@ public class KinhMatController {
       }
       kinhMatService.save(kinhMat);
     } else {
+      if (files == null || files.size() == 0) {
+        throw new ControllerException("Phải có ảnh sản phẩm!", ErrorEnum.ADD, "/admin/kinhmat/add");
+      }
       KinhMat data = kinhMatService.save(kinhMat);
       for (MultipartFile file : files) {
         Anhkinhmat anhkinhmat = new Anhkinhmat();
@@ -233,6 +236,9 @@ public class KinhMatController {
   @PostMapping("/uploadimage")
   public String uploadImage(@RequestParam("file") List<MultipartFile> files, @RequestParam("id") Integer makinhmat,
       Model model) {
+    if (files == null || files.size() == 0) {
+      throw new ControllerException("Phải có ảnh sản phẩm!", ErrorEnum.EDIT, "/admin/kinhmat/edit?id=" + makinhmat);
+    }
     Optional<KinhMat> kinhmat = kinhMatService.findById(makinhmat);
 
     kinhmat.ifPresent(dh -> {

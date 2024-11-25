@@ -2,7 +2,7 @@ package edu.it10.dangquangwatch.spring.AppCustomException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+import java.lang.IllegalArgumentException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -213,6 +213,25 @@ public class GlobalExceptionHandler {
         .map(violation -> violation.getMessage()) // Lấy thông điệp lỗi
         .reduce((a, b) -> a + ", " + b) // Ghép các thông điệp lỗi nếu có nhiều hơn 1
         .orElse("Lỗi không xác định");
+
+    // Thêm thông điệp lỗi vào redirectAttributes
+    redirectAttributes.addFlashAttribute("errorMessage", errorMessage);
+
+    // Lấy referer (trang trước đó)
+    String referer = request.getHeader("Referer");
+
+    // Redirect về referer với thông điệp lỗi
+    return "redirect:" + (referer != null ? referer : "/"); // Nếu không có referer thì chuyển về trang chủ
+  }
+
+  @ExceptionHandler(IllegalArgumentException.class)
+  public String handleIllegalArgumentException(
+    IllegalArgumentException ex,
+      RedirectAttributes redirectAttributes,
+      HttpServletRequest request) {
+
+    // Tạo thông điệp lỗi từ các vi phạm
+    String errorMessage = ex.getMessage();
 
     // Thêm thông điệp lỗi vào redirectAttributes
     redirectAttributes.addFlashAttribute("errorMessage", errorMessage);

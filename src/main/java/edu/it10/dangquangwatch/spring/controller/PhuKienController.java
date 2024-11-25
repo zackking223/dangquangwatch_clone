@@ -23,8 +23,10 @@ import edu.it10.dangquangwatch.spring.service.AnhphukienService;
 import edu.it10.dangquangwatch.spring.service.LichSuKhoService;
 import edu.it10.dangquangwatch.spring.service.PhuKienService;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
+@Slf4j
 @RequestMapping(path = "/admin/phukien")
 public class PhuKienController {
   @Autowired
@@ -103,6 +105,7 @@ public class PhuKienController {
     phuKienEdit.ifPresent(phuKien -> {
       model.addAttribute("phuKien", phuKien);
       model.addAttribute("images", phuKien.getImages());
+      log.info("DANH SACH: {}", phuKien.getImages());
     });
 
     var errorMessage = session.getAttribute(ErrorEnum.EDIT.name());
@@ -195,7 +198,7 @@ public class PhuKienController {
 
   @PostMapping("/update")
   public String update(PhuKien phuKien) {
-    phuKienService.savePhuKien(phuKien);
+    phuKienService.save(phuKien);
     return "redirect:/admin/phukien/";
   }
 
@@ -213,9 +216,12 @@ public class PhuKienController {
           e.printStackTrace();
         }
       }
-      phuKienService.savePhuKien(phuKien);
+      phuKienService.save(phuKien);
     } else {
-      PhuKien data = phuKienService.savePhuKien(phuKien);
+      if (files == null || files.size() == 0) {
+        throw new ControllerException("Phải có ảnh sản phẩm!", ErrorEnum.ADD, "/admin/phukien/add");
+      }
+      PhuKien data = phuKienService.save(phuKien);
       for (MultipartFile file : files) {
         Anhphukien anhphukien = new Anhphukien();
         anhphukien.setFile(file);
@@ -234,6 +240,9 @@ public class PhuKienController {
   @PostMapping("/uploadimage")
   public String uploadImage(@RequestParam("file") List<MultipartFile> files, @RequestParam("id") Integer maphukien,
       Model model) {
+    if (files == null || files.size() == 0) {
+      throw new ControllerException("Phải có ảnh sản phẩm!", ErrorEnum.EDIT, "/admin/phukien/edit?id=" + maphukien);
+    }
     Optional<PhuKien> phukien = phuKienService.findById(maphukien);
 
     phukien.ifPresent(dh -> {

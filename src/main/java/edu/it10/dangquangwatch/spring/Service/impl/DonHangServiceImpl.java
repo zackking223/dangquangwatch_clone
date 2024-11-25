@@ -268,7 +268,7 @@ public class DonHangServiceImpl implements DonHangService {
             .orElseThrow(() -> new OrderException("Phụ kiện không tồn tại, mã: " + item.getMaSanPham()));
         phuKien.setSoLuong(phuKien.getSoLuong() - item.getSoLuong());
         phuKien.setSoluongdatmua(phuKien.getSoluongdatmua() + item.getSoLuong());
-        phuKienService.savePhuKien(phuKien);
+        phuKienService.save(phuKien);
         break;
       case "kinhmat":
         KinhMat kinhMat = kinhMatService.findById(item.getMaSanPham())
@@ -353,7 +353,7 @@ public class DonHangServiceImpl implements DonHangService {
             .orElseThrow(() -> new OrderException("Phụ kiện không tồn tại, mã: " + item.getMaSanPham()));
         phuKien.setSoLuong(phuKien.getSoLuong() + item.getSoLuong());
         phuKien.setSoluongdatmua(phuKien.getSoluongdatmua() - item.getSoLuong());
-        phuKienService.savePhuKien(phuKien);
+        phuKienService.save(phuKien);
         break;
       case "kinhmat":
         KinhMat kinhMat = kinhMatService.findById(item.getMaSanPham())
@@ -393,7 +393,7 @@ public class DonHangServiceImpl implements DonHangService {
         PhuKien phuKien = phuKienService.findById(item.getMaSanPham())
             .orElseThrow(() -> new OrderException("Phụ kiện không tồn tại, mã: " + item.getMaSanPham()));
         phuKien.setSoluongdatmua(phuKien.getSoluongdatmua() - item.getSoLuong());
-        phuKienService.savePhuKien(phuKien);
+        phuKienService.save(phuKien);
         break;
       case "kinhmat":
         KinhMat kinhMat = kinhMatService.findById(item.getMaSanPham())

@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.text.NumberFormat;
@@ -23,6 +24,7 @@ public class KinhMat {
 
   @Column(name = "tenkinhmat")
   @NotNull(message = "Tên kính mắt không được để trống.")
+  @NotEmpty(message = "Tên kính mắt không được để trống.")
   private String tenKinhMat;
 
   @Column(name = "giatien")
@@ -43,6 +45,7 @@ public class KinhMat {
 
   @Column(name = "tinhnang")
   @NotNull(message = "Tính năng không được để trống.")
+  @NotEmpty(message = "Tính năng không được để trống.")
   private String tinhNang;
 
   @Column(name = "tragop")
@@ -61,6 +64,7 @@ public class KinhMat {
 
   @Column(name = "thongtin")
   @NotNull(message = "Thông tin không được để trống.")
+  @NotEmpty(message = "Thông tin không được để trống.")
   private String thongTin;
 
   @Column(name = "NGAYTHEM")

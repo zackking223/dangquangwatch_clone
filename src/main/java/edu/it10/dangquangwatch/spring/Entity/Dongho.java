@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Objects;
@@ -27,6 +28,7 @@ public class Dongho {
 
   @Column(name = "tendongho")
   @NotNull(message = "Tên đồng hồ không được để trống.")
+  @NotEmpty(message = "Tên đồng hồ không được để trống.")
   private String tendongho;
 
   @Column(name = "giatien")
@@ -51,6 +53,7 @@ public class Dongho {
 
   @Column(name = "bomay")
   @NotNull(message = "Loại bộ máy không được để trống.")
+  @NotEmpty(message = "Loại bộ máy không được để trống.")
   private String bomay;
 
   @Column(name = "NGAYTHEM")
@@ -59,14 +62,17 @@ public class Dongho {
 
   @Column(name = "thongtin")
   @NotNull(message = "Thông tin không được để trống.")
+  @NotEmpty(message = "Thông tin không được để trống.")
   private String thongtin;
 
   @Column(name = "chatlieu")
   @NotNull(message = "Chất liệu không được để trống.")
+  @NotEmpty(message = "Chất liệu không được để trống.")
   private String chatlieu;
 
   @Column(name = "gioitinh")
   @NotNull(message = "Giới tính không được để trống.")
+  @NotEmpty(message = "Giới tính không được để trống.")
   private String gioitinh;
 
   @Column(name = "soluongdatmua")

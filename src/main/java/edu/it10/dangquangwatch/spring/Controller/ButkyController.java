@@ -74,7 +74,7 @@ public class ButkyController {
     model.addAttribute("from", from.isPresent() ? from.get() : "");
     model.addAttribute("to", to.isPresent() ? to.get() : "");
     model.addAttribute("sotrang", data.getTotalPages());
-    
+
     var errorMessage = session.getAttribute(ErrorEnum.INDEX.name());
     if (errorMessage != null) {
       session.removeAttribute(ErrorEnum.INDEX.name());
@@ -202,7 +202,7 @@ public class ButkyController {
         Anhbutky anhbutky = new Anhbutky();
         anhbutky.setFile(file);
         anhbutky.setButky(butky);
-  
+
         try {
           anhbutkyService.saveAnhbutky(anhbutky);
         } catch (IOException e) {
@@ -211,12 +211,15 @@ public class ButkyController {
       }
       butkyService.save(butky);
     } else {
+      if (files == null || files.size() == 0) {
+        throw new ControllerException("Phải có ảnh sản phẩm!", ErrorEnum.ADD, "/admin/butky/add");
+      }
       Butky data = butkyService.save(butky);
       for (MultipartFile file : files) {
         Anhbutky anhbutky = new Anhbutky();
         anhbutky.setFile(file);
         anhbutky.setButky(data);
-  
+
         try {
           anhbutkyService.saveAnhbutky(anhbutky);
         } catch (IOException e) {
@@ -230,8 +233,10 @@ public class ButkyController {
   @PostMapping("/uploadimage")
   public String uploadImage(@RequestParam("file") List<MultipartFile> files, @RequestParam("id") Integer mabutky,
       Model model) {
+    if (files == null || files.size() == 0) {
+      throw new ControllerException("Phải có ảnh sản phẩm!", ErrorEnum.EDIT, "/admin/butky/edit?id=" + mabutky);
+    }
     Optional<Butky> butky = butkyService.findById(mabutky);
-
     butky.ifPresent(dh -> {
       for (MultipartFile file : files) {
         Anhbutky anhbutky = new Anhbutky();

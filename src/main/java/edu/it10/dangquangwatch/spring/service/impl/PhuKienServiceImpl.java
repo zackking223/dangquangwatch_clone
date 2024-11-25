@@ -36,7 +36,7 @@ public class PhuKienServiceImpl implements PhuKienService {
   }
 
   @Override
-  public PhuKien savePhuKien(@Valid PhuKien phuKien) {
+  public PhuKien save(@Valid PhuKien phuKien) {
     if (phuKien.getMaPhuKien() == null) {
       phuKien.setKichhoat(1);
       phuKien.setSoluongdatmua(0);

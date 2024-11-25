@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.text.NumberFormat;
@@ -23,6 +24,7 @@ public class Butky {
 
     @Column(name = "tenbutky")
     @NotNull(message = "Tên bút ký không được để trống.")
+    @NotEmpty(message = "Tên bút ký không được để trống.")
     private String tenbutky;
 
     @Column(name = "giatien")
@@ -30,7 +32,6 @@ public class Butky {
     private Integer giatien;
 
     @Column(name = "soluong")
-    @NotNull(message = "Số lượng không được để trống.")
     private Integer soluong;
 
     @Column(name = "soluongdatmua")
@@ -47,7 +48,8 @@ public class Butky {
     private String NGAYTHEM;
 
     @Column(name = "thongtin")
-    @NotNull(message = "Ngày thêm không được để trống.")
+    @NotNull(message = "Thông tin không được để trống.")
+    @NotEmpty(message = "Thông tin không được để trống.")
     private String thongtin;
 
     @OneToMany(mappedBy = "butky", targetEntity = Anhbutky.class)

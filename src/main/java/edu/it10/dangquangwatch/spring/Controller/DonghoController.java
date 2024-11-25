@@ -76,7 +76,6 @@ public class DonghoController {
       data = donghoService.getAll(searchStr, fromStr, toStr, pageNum);
     }
 
-    
     model.addAttribute("dongho", fieldData);
     model.addAttribute("donghos", data.getContent());
     model.addAttribute("page", pageNum);
@@ -84,7 +83,7 @@ public class DonghoController {
     model.addAttribute("from", from.isPresent() ? from.get() : "");
     model.addAttribute("to", to.isPresent() ? to.get() : "");
     model.addAttribute("sotrang", data.getTotalPages());
-    
+
     var errorMessage = session.getAttribute(ErrorEnum.INDEX.name());
     if (errorMessage != null) {
       session.removeAttribute(ErrorEnum.INDEX.name());
@@ -236,6 +235,9 @@ public class DonghoController {
       }
       donghoService.save(dongho);
     } else {
+      if (files == null || files.size() == 0) {
+        throw new ControllerException("Phải có ảnh sản phẩm!", ErrorEnum.ADD, "/admin/dongho/add");
+      }
       Dongho data = donghoService.save(dongho);
 
       for (MultipartFile file : files) {
@@ -257,6 +259,9 @@ public class DonghoController {
   @PostMapping("/uploadimage")
   public String uploadImage(@RequestParam("file") List<MultipartFile> files, @RequestParam("id") Integer madongho,
       Model model) {
+    if (files == null || files.size() == 0) {
+      throw new ControllerException("Phải có ảnh sản phẩm!", ErrorEnum.EDIT, "/admin/dongho/edit?id=" + madongho);
+    }
     Optional<Dongho> dongho = donghoService.findById(madongho);
 
     dongho.ifPresent(dh -> {

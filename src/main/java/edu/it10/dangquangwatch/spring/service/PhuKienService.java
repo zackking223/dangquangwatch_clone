@@ -14,7 +14,7 @@ public interface PhuKienService {
   Page<PhuKien> searchAvaiable(String searchStr, String from, String to, Integer pageNum);
   List<PhuKien> search(String searchStr);
 
-  PhuKien savePhuKien(PhuKien phuKien);
+  PhuKien save(PhuKien phuKien);
 
   void activate(Integer maPhuKien);
   void deactivate(Integer maPhuKien);
