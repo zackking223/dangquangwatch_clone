@@ -1,4 +1,4 @@
-let notifications = [];
+let myPopUpNotifications = [];
 
 function getType(type) {
   type = type.toLowerCase();
@@ -207,7 +207,7 @@ function showNotification(data, duration = 8000) {
 
   // Append to container
   container.appendChild(notification);
-  notifications.push(notification);
+  myPopUpNotifications.push(notification);
 
   // Hủy timeout
   const hideNotification = () => {
@@ -222,7 +222,7 @@ function showNotification(data, duration = 8000) {
     // Sau khi hiệu ứng hoàn thành, xóa thông báo
     setTimeout(() => {
       notification.remove();
-      notifications.shift(); // Xóa thông báo khỏi mảng
+      myPopUpNotifications.shift(); // Xóa thông báo khỏi mảng
     }, 800);
   };
 

@@ -165,8 +165,8 @@
       stompClient.connect({}, function (frame) {
         // Lắng nghe thông báo từ "/topic/notifications"
         stompClient.subscribe('/topic/notifications', function (message) {
-          const notification = JSON.parse(message.body);
-          showNotification(notification, 10000);
+          const data = JSON.parse(message.body);
+          showNotification(data, 10000);
         });
       });
     </script>
