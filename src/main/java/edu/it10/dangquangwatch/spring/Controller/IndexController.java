@@ -376,23 +376,23 @@ public class IndexController {
     private String renderIndex(Model model) {
         thongKeService.incLuotTruyCap();
         model.addAttribute("sanphambanchay",
-                donghoService.getAll("", "2001-01-01", "3000-01-01", 0).getContent());
+                donghoService.searchAvaiable("", "2001-01-01", "3000-01-01", 0).getContent());
         model.addAttribute("donghoeposswiss",
-                donghoService.getAll("Epos Swiss", "2001-01-01", "3000-01-01", 0).getContent());
+                donghoService.searchAvaiable("Epos Swiss", "2001-01-01", "3000-01-01", 0).getContent());
         model.addAttribute("diamondd",
-                donghoService.getAll("Diamond", "2001-01-01", "3000-01-01", 0).getContent());
+                donghoService.searchAvaiable("Diamond", "2001-01-01", "3000-01-01", 0).getContent());
         model.addAttribute("philippeauguste",
-                donghoService.getAll("Auguste", "2001-01-01", "3000-01-01", 0).getContent());
+                donghoService.searchAvaiable("Auguste", "2001-01-01", "3000-01-01", 0).getContent());
         model.addAttribute("jacqueslemans",
-                donghoService.getAll("Jacques", "2001-01-01", "3000-01-01", 0).getContent());
+                donghoService.searchAvaiable("Jacques", "2001-01-01", "3000-01-01", 0).getContent());
         model.addAttribute("ariesgold",
-                donghoService.getAll("Aries", "2001-01-01", "3000-01-01", 0).getContent());
+                donghoService.searchAvaiable("Aries", "2001-01-01", "3000-01-01", 0).getContent());
         model.addAttribute("atlanticswiss",
-                donghoService.getAll("Atlantic", "2001-01-01", "3000-01-01", 0).getContent());
+                donghoService.searchAvaiable("Atlantic", "2001-01-01", "3000-01-01", 0).getContent());
         model.addAttribute("citizen",
-                donghoService.getAll("Citizen", "2001-01-01", "3000-01-01", 0).getContent());
+                donghoService.searchAvaiable("Citizen", "2001-01-01", "3000-01-01", 0).getContent());
         model.addAttribute("tsarbomba",
-                donghoService.getAll("Tsar", "2001-01-01", "3000-01-01", 0).getContent());
+                donghoService.searchAvaiable("Tsar", "2001-01-01", "3000-01-01", 0).getContent());
 
         return "index";
     }
