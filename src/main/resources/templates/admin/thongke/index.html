@@ -28,8 +28,7 @@
   <div class="p-6 w-full bg-slate-50 shadow-sm rounded-lg md:mx-auto pl-12">
     <section class="flex items-center flex-wrap lg:w-max w-full mx-auto gap-3">
       <h1 class="font-bold text-center my-2">Tổng quan</h1>
-      <select name="month" id="month" th:each="tk : ${thongKes}"
-        class="border border-black rounded block p-2 min-w-[280px]">
+      <select name="month" id="month" class="border border-black rounded block p-2 min-w-[280px]">
         <option th:each="tk : ${thongKes}" th:value="${tk.mathongke}" th:text="${tk.getMaThongKeFormatted()}"
           th:if="${tk.mathongke == thongKe.mathongke}" selected>
         </option>

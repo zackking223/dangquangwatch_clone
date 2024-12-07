@@ -47,6 +47,12 @@ public class ThongKeServiceImpl implements ThongKeService {
             thongKe.setPhuKien(prev.getPhuKien());
             thongKe.setTrangSuc(prev.getTrangSuc());
             thongKe.setButKy(prev.getButKy());
+
+            // thongKe.setDonHangDaGiao(prev.getDonHangDaGiao());
+            // thongKe.setDonHangDaHuy(prev.getDonHangDaHuy());
+            thongKe.setDonHangChoXacNhan(prev.getDonHangChoXacNhan());
+            thongKe.setDonHangDaXacNhan(prev.getDonHangDaXacNhan());
+            thongKe.setDonHangDangGiao(prev.getDonHangDangGiao());
         } else {
             BigDecimal chiPhi = BigDecimal.ZERO;
 
@@ -106,7 +112,57 @@ public class ThongKeServiceImpl implements ThongKeService {
                     """;
             Long khachHangCount = (Long) entityManager.createQuery(queryKhachHang).getSingleResult();
             thongKe.setKhachHang((khachHangCount != null ? khachHangCount : 0L));
+
+            // Query for DaGiao
+            // String queryDaGiao = """
+            // SELECT SUM(d.tinhtrang) AS soluong
+            // FROM donhang d
+            // WHERE d.tinhtrang = 'Đã nhận hàng'
+            // """;
+            // Long daGiaoCount = (Long)
+            // entityManager.createQuery(queryDaGiao).getSingleResult();
+            // thongKe.setDonHangDaGiao(daGiaoCount != null ? daGiaoCount : 0L);
+
+            // Query for DaHuy
+            // String queryDaHuy = """
+            // SELECT SUM(d.tinhtrang) AS soluong
+            // FROM donhang d
+            // WHERE d.tinhtrang = 'Đã hủy'
+            // """;
+            // Long daHuyCount = (Long)
+            // entityManager.createQuery(queryDaHuy).getSingleResult();
+            // thongKe.setDonHangDaHuy(daHuyCount != null ? daHuyCount : 0L);
+
+            // Query for ChoXacNhan
+            String queryChoXacNhan = """
+                    SELECT SUM(d.tinhtrang) AS soluong
+                    FROM donhang d
+                    WHERE d.tinhtrang = 'Chờ xác nhận'
+                    """;
+            Long choXacNhanCount = (Long) entityManager.createQuery(queryChoXacNhan).getSingleResult();
+            thongKe.setDonHangChoXacNhan(choXacNhanCount != null ? choXacNhanCount : 0L);
+
+            // Query for DaXacNhan
+            String queryDaXacNhan = """
+                    SELECT SUM(d.tinhtrang) AS soluong
+                    FROM donhang d
+                    WHERE d.tinhtrang = 'Đã xác nhận'
+                    """;
+            Long daXacNhanCount = (Long) entityManager.createQuery(queryDaXacNhan).getSingleResult();
+            thongKe.setDonHangDaXacNhan(daXacNhanCount != null ? daXacNhanCount : 0L);
+
+            // Query for DangGiao
+            String queryDangGiao = """
+                    SELECT SUM(d.tinhtrang) AS soluong
+                    FROM donhang d
+                    WHERE d.tinhtrang = 'Đang vận chuyển'
+                    """;
+            Long dangGiaoCount = (Long) entityManager.createQuery(queryDangGiao).getSingleResult();
+            thongKe.setDonHangDangGiao(dangGiaoCount != null ? dangGiaoCount : 0L);
         }
+
+        thongKe.setDonHangDaGiao(0L);
+        thongKe.setDonHangDaHuy(0L);
 
         thongKe.setChiPhi(BigDecimal.valueOf(0));
 
@@ -122,11 +178,6 @@ public class ThongKeServiceImpl implements ThongKeService {
         thongKe.setLuotDatHang(0L);
         thongKe.setLuotHoanThanhDon(0L);
         thongKe.setLuotThanhToan(0L);
-
-        thongKe.setDonHangDaGiao(0L);
-        thongKe.setDonHangDaHuy(0L);
-        thongKe.setDonHangDaXacNhan(0L);
-        thongKe.setDonHangDangGiao(0L);
 
         thongKe.setNGAYTHEM(DateStringHelper.getCurrentDateFormatted());
 
@@ -272,11 +323,11 @@ public class ThongKeServiceImpl implements ThongKeService {
                 "Lượt thêm giỏ hàng", "Lượt đặt hàng", "Lượt thanh toán",
                 "Lượt hoàn thành đơn", "Ngày tạo", "Ngày xuất"
         };
-    
+
         // Tạo workbook
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("ThongKe");
-    
+
         // Ghi tiêu đề vào cột đầu tiên (hàng dọc)
         for (int i = 0; i < columns.length; i++) {
             Row row = sheet.createRow(i); // Tạo từng hàng cho tiêu đề
@@ -284,7 +335,7 @@ public class ThongKeServiceImpl implements ThongKeService {
             cell.setCellValue(columns[i]);
             cell.setCellStyle(createHeaderCellStyle(workbook));
         }
-    
+
         // Ghi dữ liệu của từng ThongKe theo từng cột
         int colIdx = 1; // Bắt đầu từ cột thứ 1 (sau tiêu đề)
         for (ThongKe thongKe : thongKeList) {
@@ -317,20 +368,20 @@ public class ThongKeServiceImpl implements ThongKeService {
             sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(DateStringHelper.getCurrentDateFormatted());
             colIdx++; // Chuyển sang cột tiếp theo
         }
-    
+
         // Tự động điều chỉnh kích thước các hàng
         for (int i = 0; i < columns.length; i++) {
             sheet.autoSizeColumn(0); // Chỉ auto-size cho cột tiêu đề
         }
-    
+
         // Ghi dữ liệu ra output stream
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         workbook.write(outputStream);
         workbook.close();
-    
+
         return new ByteArrayInputStream(outputStream.toByteArray());
     }
-    
+
     private CellStyle createHeaderCellStyle(Workbook workbook) {
         CellStyle style = workbook.createCellStyle();
         Font font = workbook.createFont();
