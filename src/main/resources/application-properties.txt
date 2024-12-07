@@ -61,3 +61,9 @@ cloudinary.api_secret=
 twilio.account_sid=YOUR_ACCOUNT_SID
 twilio.auth_token=YOUR_AUTH_TOKEN
 twilio.phone_number=YOUR_TWILIO_PHONE_NUMBER
+
+# VNPay
+vnpay.tmn_code="YOUR_TMN_CODE" # Mã tài khoản TMN của bạn
+vnpay.hash_secret="YOUR_HASH_SECRET" # Chuỗi bí mật hash
+vnpay.vnp_url="https://sandbox.vnpayment.vn/paymentv2/vpcpay.html"
+vnpay.return_url="http://localhost:8080/api/vnpay/return"
