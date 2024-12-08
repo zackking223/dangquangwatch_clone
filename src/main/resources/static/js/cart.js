@@ -658,7 +658,7 @@ thanhToanOption.addEventListener("change", (ev) => {
     paymentContainer.innerHTML = `
       <div class="w-full">
         <button type="button" id="checkout-btn" onclick="checkout()"
-          class="bg-blue-500 hover:bg-yellow-700 text-white font-bold py-2 pl-3 pr-4 rounded flex gap-2 items-center">
+          class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 pl-3 pr-4 rounded flex gap-2 items-center">
           <img src="/svg/danggiao.svg" class="w-5 h-5" alt="order">
           <p>
             Đặt hàng
@@ -675,7 +675,7 @@ thanhToanOption.addEventListener("change", (ev) => {
     `;
 
     CardInfo.clearInfo();
-  } else {
+  } else if (ev.target.value === "card") {
     paymentContainer.innerHTML = `
       <div class="flex items-center gap-4 col-span-2">
         <div>
@@ -698,6 +698,25 @@ thanhToanOption.addEventListener("change", (ev) => {
       </section>
     `;
     setCardForm("global");
+  } else {
+    paymentContainer.innerHTML = `
+      <div class="w-full">
+        <button type="button" id="checkout-btn" onclick="onlinePay()"
+          class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 pl-3 pr-4 rounded flex gap-2 items-center">
+          <img src="/svg/von.svg" class="w-5 h-5" alt="pay">
+          <p>
+            Thanh toán online
+          </p>
+        </button>
+        <button type="button" id="hidden-checkout-btn"
+          class="bg-slate-500 text-white font-bold py-2 pl-3 pr-4 rounded gap-2 items-center cursor-wait hidden">
+          <img src="/svg/von.svg" class="w-5 h-5" alt="pay">
+          <p>
+            Thanh toán online
+          </p>
+        </button>
+      </div>
+    `;
   }
 });
 
@@ -727,6 +746,41 @@ const checkout = async () => {
   if (data.status) {
     resetCart();
     location.reload();
+  } else {
+    document.getElementById("checkout-btn").style.display = "flex";
+    document.getElementById("hidden-checkout-btn").style.display = "none"
+    showNotification({
+      title: "Lỗi đặt hàng",
+      message: data.message,
+      type: "error"
+    });
+  }
+}
+
+const onlinePay = async () => {
+  document.getElementById("checkout-btn").style.display = "none";
+  document.getElementById("hidden-checkout-btn").style.display = "flex"
+
+  let cart = getCart();
+
+  cart.diaChi = document.getElementById("diaChi").value;
+  cart.ghiChu = document.getElementById("ghiChu").value;
+
+  const response = await fetch('/api/vnpay/create-payment', {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      donHang: cart,
+      cardInfo: CardInfo.getInfo()
+    })
+  });
+
+  const data = await response.json();
+
+  if (data.status) {
+    location.href = data.message;
   } else {
     document.getElementById("checkout-btn").style.display = "flex";
     document.getElementById("hidden-checkout-btn").style.display = "none"

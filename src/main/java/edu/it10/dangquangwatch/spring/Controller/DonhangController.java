@@ -150,7 +150,7 @@ public class DonhangController {
     thanhtoan_options.add("Đã nhận hàng");
     Optional<DonHang> donHangEdit = donHangService.findDonHangById(madonHang);
     if (donHangEdit.isPresent()) {
-      if (!donHangEdit.get().getTinhTrang().equals(OrderStatus.PENDING.name())
+      if (!donHangEdit.get().getTinhTrang().equals(OrderStatus.WaitForApproval.name())
           && !donHangEdit.get().getTinhTrang().equals(OrderStatus.APPROVED.name())) {
         return "redirect:/admin/donhang/";
       }
@@ -173,25 +173,25 @@ public class DonhangController {
 
   @GetMapping(value = "/huy")
   public String huy(@RequestParam("madonhang") Integer madonhang) {
-    donHangService.updateStatus(madonhang, OrderStatus.CANCELLED);
+    donHangService.updateStatus(madonhang, OrderStatus.CANCELLED, null);
     return "redirect:/admin/donhang/";
   }
 
   @GetMapping(value = "/xacnhan")
   public String xacnhan(@RequestParam("madonhang") Integer madonhang) {
-    donHangService.updateStatus(madonhang, OrderStatus.APPROVED);
+    donHangService.updateStatus(madonhang, OrderStatus.APPROVED, null);
     return "redirect:/admin/donhang/";
   }
 
   @GetMapping(value = "/vanchuyen")
   public String vanchuyen(@RequestParam("madonhang") Integer madonhang) {
-    donHangService.updateStatus(madonhang, OrderStatus.MOVING);
+    donHangService.updateStatus(madonhang, OrderStatus.MOVING, null);
     return "redirect:/admin/donhang/";
   }
 
   @GetMapping(value = "/danhan")
   public String danhan(@RequestParam("madonhang") Integer madonhang) {
-    donHangService.updateStatus(madonhang, OrderStatus.COMPLETED);
+    donHangService.updateStatus(madonhang, OrderStatus.COMPLETED, null);
     return "redirect:/admin/donhang/";
   }
 

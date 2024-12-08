@@ -13,4 +13,5 @@ public class VNPayConfig {
   private String hashSecret;
   private String vnpUrl;
   private String returnUrl;
+  private String notifyUrl;
 }

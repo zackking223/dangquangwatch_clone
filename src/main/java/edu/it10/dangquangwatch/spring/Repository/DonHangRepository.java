@@ -10,6 +10,21 @@ import edu.it10.dangquangwatch.spring.entity.DonHang;
 import edu.it10.dangquangwatch.spring.repository.custom.DonHangRepositoryCustom;
 
 public interface DonHangRepository extends JpaRepository<DonHang, Integer>, DonHangRepositoryCustom {
-  @Query("SELECT dh FROM DonHang dh JOIN dh.taikhoan tk JOIN dh.items ctdh WHERE tk.username = :username AND UPPER(dh.diaChi) LIKE UPPER(CONCAT('%', :searchStr, '%')) AND UPPER(dh.tinhTrang) LIKE UPPER(CONCAT('%', :tinhtrang, '%')) AND UPPER(dh.thanhToan) LIKE UPPER(CONCAT('%', :thanhtoan, '%')) AND dh.NGAYTHEM >= :from AND dh.NGAYTHEM <= :to AND EXISTS (SELECT 1 FROM ChiTietDonHang ctdh WHERE ctdh.donhang = dh AND UPPER(ctdh.tensanpham) LIKE UPPER(CONCAT('%', :searchStr, '%')) )")
-  Page<DonHang> getMyDonHang(@Param("searchStr") String searchStr, @Param("tinhtrang") String tinhtrang, @Param("thanhtoan") String thanhtoan, @Param("username") String username, @Param("from") String from, @Param("to") String to, Pageable pageable);
+  @Query(value = "SELECT * FROM donhang dh " +
+      "WHERE dh.username = :username " +
+      "AND (UPPER(dh.diachi) LIKE UPPER(CONCAT('%', :searchStr, '%')) " +
+      "     OR EXISTS (SELECT 1 FROM chitietdonhang ctdh " +
+      "                WHERE ctdh.madonhang = dh.madonhang " +
+      "                AND UPPER(ctdh.tensanpham) LIKE UPPER(CONCAT('%', :searchStr, '%')))) " +
+      "AND UPPER(dh.tinhtrang) LIKE UPPER(CONCAT('%', :tinhtrang, '%')) " +
+      "AND UPPER(dh.thanhtoan) LIKE UPPER(CONCAT('%', :thanhtoan, '%')) " +
+      "AND dh.NGAYTHEM >= :fromD " +
+      "AND dh.NGAYTHEM <= :toD", nativeQuery = true)
+  Page<DonHang> getMyDonHang(@Param("searchStr") String searchStr,
+      @Param("tinhtrang") String tinhtrang,
+      @Param("thanhtoan") String thanhtoan,
+      @Param("username") String username,
+      @Param("fromD") String from,
+      @Param("toD") String to,
+      Pageable pageable);
 }

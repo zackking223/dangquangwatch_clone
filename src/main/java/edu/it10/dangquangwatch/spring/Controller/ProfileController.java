@@ -172,14 +172,14 @@ public class ProfileController {
 
       ApiResponse response = null;
       if (info instanceof GlobalCardInfo) {
-        response = donHangService.checkOutDonHang(donHang, (GlobalCardInfo) info);
+        response = donHangService.checkOut(donHang, (GlobalCardInfo) info);
       } else if (info instanceof LocalCardInfo) {
-        response = donHangService.checkOutDonHang(donHang, (LocalCardInfo) info);
+        response = donHangService.checkOut(donHang, (LocalCardInfo) info);
       }
 
       return ResponseEntity.ok(response);
     } else {
-      ApiResponse response = donHangService.checkOutDonHang(donHang);
+      ApiResponse response = donHangService.checkOut(donHang);
 
       return ResponseEntity.ok(response);
     }
@@ -196,7 +196,7 @@ public class ProfileController {
     if (data.isPresent()) {
       DonHang donHang = data.get();
       if (donHang.getTaikhoan().getUsername() == currentUser.getUsername() || currentUser.isAdmin()) {
-        donHangService.updateStatus(madonHang, OrderStatus.CANCELLED);
+        donHangService.updateStatus(madonHang, OrderStatus.CANCELLED, null);
       }
     }
 

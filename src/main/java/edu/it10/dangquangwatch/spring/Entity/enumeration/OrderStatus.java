@@ -3,7 +3,8 @@ package edu.it10.dangquangwatch.spring.entity.enumeration;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum OrderStatus {
-  PENDING("Chờ xác nhận"),
+  WaitForPayment("Chờ thanh toán"),
+  WaitForApproval("Chờ xác nhận"),
   APPROVED("Đã xác nhận"),
   MOVING("Đang vận chuyển"),
   COMPLETED("Đã nhận hàng"),

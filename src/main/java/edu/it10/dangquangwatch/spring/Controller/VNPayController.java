@@ -1,152 +1,165 @@
 package edu.it10.dangquangwatch.spring.controller;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.it10.dangquangwatch.spring.configuration.VNPayConfig;
+import edu.it10.dangquangwatch.spring.entity.DonHang;
+import edu.it10.dangquangwatch.spring.entity.enumeration.OrderPaymentStatus;
+import edu.it10.dangquangwatch.spring.entity.enumeration.OrderStatus;
 import edu.it10.dangquangwatch.spring.entity.request.CheckoutRequest;
+import edu.it10.dangquangwatch.spring.entity.response.ApiResponse;
+import edu.it10.dangquangwatch.spring.helper.VNPayHelper;
+import edu.it10.dangquangwatch.spring.service.DonHangService;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.RequiredArgsConstructor;
 
-@RestController
+@Controller
 @RequestMapping("/api/vnpay")
-@RequiredArgsConstructor
 public class VNPayController {
-  private final VNPayConfig vnpayConfig;
+  @Autowired
+  private VNPayConfig vnpayConfig;
+  @Autowired
+  private DonHangService donHangService;
 
   @PostMapping("/create-payment")
-  public ResponseEntity<String> createPayment(
+  public ResponseEntity<ApiResponse> createPayment(
       @RequestBody CheckoutRequest request,
       HttpServletRequest servletRequest) {
     try {
-      // Lấy địa chỉ IP từ HttpServletRequest
-      String clientIp = getClientIp(servletRequest);
-
-      // Xử lý tạo thanh toán
-      Map<String, String> vnpParams = new HashMap<>();
-      vnpParams.put("vnp_Version", "2.1.0");
-      vnpParams.put("vnp_Command", "pay");
-      vnpParams.put("vnp_TmnCode", vnpayConfig.getTmnCode());
-      // VNPay yêu cầu số tiền phải nhân 100
-      vnpParams.put("vnp_Amount", String.valueOf(request.getDonHang().getTongTien() * 100)); 
-      vnpParams.put("vnp_CurrCode", "VND");
-      vnpParams.put("vnp_TxnRef", String.valueOf(System.currentTimeMillis())); // Mã đơn hàng
-      vnpParams.put("vnp_OrderInfo", request.getDonHang().toString());
-      vnpParams.put("vnp_Locale", "vn");
-      vnpParams.put("vnp_ReturnUrl", vnpayConfig.getReturnUrl());
-      vnpParams.put("vnp_IpAddr", clientIp);
-      vnpParams.put("vnp_CreateDate", new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
+      DonHang donHang = donHangService.save(request.getDonHang(), OrderStatus.WaitForPayment, OrderPaymentStatus.PENDING);
+      Map<String, String> vnpParams = buildVNPayParams(donHang, servletRequest);
 
       // Tạo chữ ký (checksum)
-      String query = buildQuery(vnpParams);
-      String secureHash = hmacSHA512(vnpayConfig.getHashSecret(), query);
+      String query = VNPayHelper.buildQuery(vnpParams);
+      String secureHash = VNPayHelper.hmacSHA512(vnpayConfig.getHashSecret(), query);
       vnpParams.put("vnp_SecureHash", secureHash);
 
       // Tạo URL thanh toán
-      String paymentUrl = vnpayConfig.getVnpUrl() + "?" + buildQuery(vnpParams);
-      return ResponseEntity.ok(paymentUrl);
+      String paymentUrl = vnpayConfig.getVnpUrl() + "?" + VNPayHelper.buildQuery(vnpParams);
+      return ResponseEntity.ok(new ApiResponse(true, paymentUrl));
     } catch (Exception e) {
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .body(new ApiResponse(false, "Error: " + e.getMessage()));
     }
   }
 
-  private String buildQuery(Map<String, String> params) {
-    return params.entrySet().stream()
-        .sorted(Map.Entry.comparingByKey())
-        .map(
-            (Map.Entry<String, String> e) -> e.getKey() + "=" + URLEncoder.encode(e.getValue(), StandardCharsets.UTF_8))
-        .collect(Collectors.joining("&"));
-  }
-
-  private String hmacSHA512(String key, String data) throws NoSuchAlgorithmException, InvalidKeyException {
-    Mac hmac = Mac.getInstance("HmacSHA512");
-    SecretKeySpec secretKey = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "HmacSHA512");
-    hmac.init(secretKey);
-    byte[] hash = hmac.doFinal(data.getBytes(StandardCharsets.UTF_8));
-    return bytesToHex(hash); // Tự viết hàm bytesToHex
-  }
-
-  private String bytesToHex(byte[] bytes) {
-    StringBuilder hexString = new StringBuilder();
-    for (byte b : bytes) {
-      String hex = Integer.toHexString(0xff & b); // Chuyển byte thành giá trị hexa
-      if (hex.length() == 1) {
-        hexString.append('0'); // Thêm số 0 nếu cần
+  @PostMapping("/continue-payment")
+  public ResponseEntity<ApiResponse> continuePayment(
+      @RequestBody Integer id,
+      HttpServletRequest servletRequest) {
+    try {
+      Optional<DonHang> opt = donHangService.findDonHangById(id);
+      if (opt.isEmpty()) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse(false, "Không tìm thấy đơn hàng!"));
       }
-      hexString.append(hex);
+
+      DonHang donHang = opt.get();
+      Map<String, String> vnpParams = buildVNPayParams(donHang, servletRequest);
+
+      // Tạo chữ ký (checksum)
+      String query = VNPayHelper.buildQuery(vnpParams);
+      String secureHash = VNPayHelper.hmacSHA512(vnpayConfig.getHashSecret(), query);
+      vnpParams.put("vnp_SecureHash", secureHash);
+
+      // Tạo URL thanh toán
+      String paymentUrl = vnpayConfig.getVnpUrl() + "?" + VNPayHelper.buildQuery(vnpParams);
+      return ResponseEntity.ok(new ApiResponse(true, paymentUrl));
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .body(new ApiResponse(false, "Error: " + e.getMessage()));
     }
-    return hexString.toString();
   }
 
-  // Hàm lấy địa chỉ IP của client
-  private String getClientIp(HttpServletRequest request) {
-    String ip = request.getHeader("X-Forwarded-For");
-    if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
-      ip = request.getHeader("Proxy-Client-IP");
-    }
-    if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
-      ip = request.getHeader("WL-Proxy-Client-IP");
-    }
-    if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
-      ip = request.getRemoteAddr();
-    }
-    return ip;
+  Map<String, String> buildVNPayParams(DonHang donHang, HttpServletRequest servletRequest) {
+    Map<String, String> vnpParams = new HashMap<>();
+    // Lấy địa chỉ IP từ HttpServletRequest
+    String clientIp = VNPayHelper.getClientIp(servletRequest);
+    // Xử lý tạo thanh toán
+    vnpParams.put("vnp_Amount", String.valueOf(donHang.getTongTien() * 100)); // VNPay yêu cầu số tiền phải nhân 100
+    vnpParams.put("vnp_Command", "pay");
+    vnpParams.put("vnp_CreateDate", VNPayHelper.getFormattedDate(0));
+    vnpParams.put("vnp_CurrCode", "VND");
+    vnpParams.put("vnp_IpAddr", clientIp);
+    vnpParams.put("vnp_Locale", "vn");
+    vnpParams.put("vnp_OrderInfo", "Thanh toan don hang ma: " + donHang.getMaDonHang());
+    vnpParams.put("vnp_OrderType", "400000"); // 400000 - Mua hàng hóa
+    vnpParams.put("vnp_ReturnUrl", vnpayConfig.getReturnUrl());
+    vnpParams.put("vnp_TmnCode", vnpayConfig.getTmnCode());
+    vnpParams.put("vnp_TxnRef", "dqwo_" + donHang.getMaDonHang() + "_" + System.currentTimeMillis());
+    vnpParams.put("vnp_Version", "2.1.0");
+    vnpParams.put("vnp_ExpireDate", VNPayHelper.getFormattedDate(15));
+    // Phải là một domain thật trên mạng
+    // vnpParams.put("vnp_UrlNotify", "https://a-real-domain.com/api/vnpay/notify");
+    return vnpParams;
   }
 
   @GetMapping("/return")
-  public ResponseEntity<String> vnpayReturn(@RequestParam Map<String, String> allParams) {
+  public String vnpayReturn(
+    @RequestParam Map<String, String> params,
+    RedirectAttributes redirectAttributes
+  ) {
     try {
-      // Lấy tất cả các tham số từ VNPay gửi về
-      Map<String, String> vnpParams = new HashMap<>(allParams);
-
       // Lấy chữ ký từ VNPay
-      String vnpSecureHash = vnpParams.remove("vnp_SecureHash");
+      String vnpSecureHash = params.remove("vnp_SecureHash");
 
       // Tạo lại chữ ký từ dữ liệu nhận được
-      String query = buildQuery(vnpParams);
-      String generatedHash = hmacSHA512(vnpayConfig.getHashSecret(), query);
+      String query = VNPayHelper.buildQuery(params);
+      String generatedHash = VNPayHelper.hmacSHA512(vnpayConfig.getHashSecret(), query);
 
       // So sánh chữ ký để đảm bảo tính toàn vẹn
       if (!generatedHash.equals(vnpSecureHash)) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid signature");
+        redirectAttributes.addFlashAttribute("errorMessage", "Chữ ký không hợp lệ!");
+        return "redirect:/error";
       }
 
       // Lấy mã đơn hàng từ `vnp_OrderInfo`
-      String orderInfo = vnpParams.get("vnp_OrderInfo");
+      String orderInfo = params.get("vnp_OrderInfo");
       if (orderInfo == null) {
-          return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Order information not found");
+        redirectAttributes.addFlashAttribute("errorMessage", "Không thấy thông tin đơn hàng!");
+        return "redirect:/error";
       }
 
       // Kiểm tra mã phản hồi (vnp_ResponseCode)
-      String responseCode = vnpParams.get("vnp_ResponseCode");
+      String responseCode = params.get("vnp_ResponseCode");
+      String maDonHang = params.get("vnp_OrderInfo").split(": ")[1];
       if ("00".equals(responseCode)) {
         // Thanh toán thành công
-        return ResponseEntity.ok("Payment successful!");
+        donHangService.updateStatus(Integer.parseInt(maDonHang), OrderStatus.COMPLETED, OrderPaymentStatus.PAID);
+        redirectAttributes.addFlashAttribute("notification", "Thanh toán thành công!");
+        return "redirect:/profile/giohang";
       } else {
         // Thanh toán thất bại
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Payment failed: " + responseCode);
+        donHangService.updateStatus(Integer.parseInt(maDonHang), OrderStatus.WaitForPayment, OrderPaymentStatus.FAILED);
+        redirectAttributes.addFlashAttribute("errorMesssage", "Thanh toán thất bại, mã lỗi: " + responseCode);
+        return "redirect:/profile/giohang";
       }
     } catch (Exception e) {
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
+      redirectAttributes.addFlashAttribute("errorMessage", "Lỗi: " + e.getMessage());
+      return "redirect:/error";
     }
+  }
+
+  @PostMapping("/notify")
+  public ResponseEntity<String> vnpayNotify(@RequestParam Map<String, String> params) {
+    String maDonHang = params.get("vnp_TxnRef");
+    String responseCode = params.get("vnp_ResponseCode");
+    if (!"00".equals(responseCode)) { // Thanh toán thất bại
+      donHangService.updateStatus(Integer.parseInt(maDonHang), OrderStatus.CANCELLED, OrderPaymentStatus.CANCELLED);
+    }
+
+    return ResponseEntity.ok("Notification received");
   }
 }

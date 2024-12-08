@@ -16,9 +16,12 @@
   <div th:replace="~{fragments/productsbar :: productsbar}"></div>
   <div class="w-full xl:max-w-[1215px] max-w-[1021px] mx-auto my-9 min-h-[85vh]">
     <div class="flex gap-2 w-max mx-auto items-end">
-      <h1 class="p-2 bg-slate-400 rounded-tl rounded-tr text-xl hover:text-yellow-500"><a href="/profile/doithongtin">Đổi thông tin</a></h1>
-      <h1 class="p-2 bg-white rounded-tl rounded-tr text-xl text-yellow-500 font-bold underline"><a href="/profile/donhang">Đơn hàng</a></h1>
-      <h1 class="p-2 bg-slate-400 rounded-tl rounded-tr text-xl hover:text-yellow-500"><a href="/profile/giohang">Giỏ hàng</a></h1>
+      <h1 class="p-2 bg-slate-400 rounded-tl rounded-tr text-xl hover:text-yellow-500"><a
+          href="/profile/doithongtin">Đổi thông tin</a></h1>
+      <h1 class="p-2 bg-white rounded-tl rounded-tr text-xl text-yellow-500 font-bold underline"><a
+          href="/profile/donhang">Đơn hàng</a></h1>
+      <h1 class="p-2 bg-slate-400 rounded-tl rounded-tr text-xl hover:text-yellow-500"><a href="/profile/giohang">Giỏ
+          hàng</a></h1>
     </div>
     <div class="bg-white shadow-md rounded-lg overflow-hidden p-4 min-h-[800px]">
       <form action="" class="w-full flex flex-col gap-2 mb-4">
@@ -59,11 +62,21 @@
           </div>
         </section>
         <button class="p-2 w-max bg-blue-500 rounded block text-white flex-shrink-0 h-max">Tìm kiếm</button>
+        <ul th:if="${sotrang > 1}" class="flex items-center flex-wrap w-full gap-2 mt-4">
+          <li>Trang:</li>
+          <li th:each="i:${#numbers.sequence(1,sotrang,1)}">
+            <a th:classappend="${page + 1 == i} ? 'bg-black text-white pointer-events-none' : 'bg-white text-black'"
+              class="p-2 aspect-square border border-b hover:text-blue-500"
+              th:href="@{'?page=' + ${i} + '&search=' + ${search} + '&from=' + ${from} + '&to=' + ${to} + '&tinhtrang=' + ${tinhtrang} + '&thanhtoan=' + ${thanhtoan}}"
+              th:text="${i}"></a>
+          </li>
+        </ul>
       </form>
       <section class="w-full overflow-x-auto">
         <table class="w-max mx-auto">
           <tr>
-            <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Mã đơn hàng
+            <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Mã đơn
+              hàng
             </th>
             <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Tổng tiền
             </th>
@@ -71,9 +84,11 @@
             </th>
             <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Ghi chú
             </th>
-            <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Tình trạng
+            <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Tình
+              trạng
             </th>
-            <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Thanh toán
+            <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Thanh
+              toán
             </th>
             <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Sản phẩm
               mua
@@ -84,7 +99,8 @@
             </th>
           </tr>
           <tr th:if="${donhangs.size() < 1}">
-            <td colspan="9" class="text-center w-full p-2 border border-solid border-black">Bạn chưa có đơn hàng nào</td>
+            <td colspan="9" class="text-center w-full p-2 border border-solid border-black">Bạn chưa có đơn hàng nào
+            </td>
           </tr>
           <tr th:each="donhang : ${donhangs}">
             <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
@@ -97,10 +113,54 @@
             <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
               th:text="${donhang.getGhiChu() ?: ''}">
             </td>
-            <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
-              th:text="${donhang.getTinhTrang()}"></td>
-            <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
-              th:text="${donhang.getThanhToan()}"></td>
+            <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+              <a href="?tinhtrang=Chờ+thanh+toán" class="py-1 px-[6px] rounded-sm bg-red-500 font-medium text-white"
+                th:if="${donhang.getTinhTrang() == 'Chờ thanh toán'}">
+                Chờ thanh toán
+              </a>
+              <a href="?tinhtrang=Chờ+xác+nhận" class="py-1 px-[6px] rounded-sm bg-orange-500 font-medium text-white"
+                th:if="${donhang.getTinhTrang() == 'Chờ xác nhận'}">
+                Chờ xác nhận
+              </a>
+              <a href="?tinhtrang=Đã+xác+nhận" class="py-1 px-[6px] rounded-sm bg-blue-500 font-medium text-white"
+                th:if="${donhang.getTinhTrang() == 'Đã xác nhận'}">
+                Đã xác nhận
+              </a>
+              <a href="?tinhtrang=Đã+hủy" class="py-1 px-[6px] rounded-sm bg-red-500 font-medium text-white"
+                th:if="${donhang.getTinhTrang() == 'Đã hủy'}">
+                Đã hủy
+              </a>
+              <a href="?tinhtrang=Đã+nhận+hàng" class="py-1 px-[6px] rounded-sm bg-green-500 font-medium text-white"
+                th:if="${donhang.getTinhTrang() == 'Đã nhận hàng'}">
+                Đã nhận hàng
+              </a>
+              <a href="?tinhtrang=Đang+vận+chuyển" class="py-1 px-[6px] rounded-sm bg-amber-500 font-medium text-white"
+                th:if="${donhang.getTinhTrang() == 'Đang vận chuyển'}">
+                Đang giao
+              </a>
+            </td>
+            <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+              <a href="?thanhtoan=Chưa+thanh+toán" class="py-1 px-[6px] rounded-sm bg-orange-500 font-medium text-white"
+                th:if="${donhang.getThanhToan() == 'Chưa thanh toán'}">
+                Chưa thanh toán
+              </a>
+              <a href="?thanhtoan=Đã+hủy" class="py-1 px-[6px] rounded-sm bg-red-500 font-medium text-white"
+                th:if="${donhang.getThanhToan() == 'Đã hủy'}">
+                Đã hủy
+              </a>
+              <a href="?thanhtoan=Thất+bại" class="py-1 px-[6px] rounded-sm bg-red-500 font-medium text-white"
+                th:if="${donhang.getThanhToan() == 'Thất bại'}">
+                Thất bại
+              </a>
+              <a href="?thanhtoan=Đã+thanh+toán" class="py-1 px-[6px] rounded-sm bg-green-500 font-medium text-white"
+                th:if="${donhang.getThanhToan() == 'Đã thanh toán'}">
+                Đã thanh toán
+              </a>
+              <a href="?thanhtoan=Khi+nhận+hàng" class="py-1 px-[6px] rounded-sm bg-blue-500 font-medium text-white"
+                th:if="${donhang.getThanhToan() == 'Khi nhận hàng'}">
+                Khi nhận hàng
+              </a>
+            </td>
             <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
               <p class="my-1" th:each="sp : ${donhang.getItems()}"><a target="_blank"
                   class="text-sm rounded-sm p-1 bg-slate-200 hover:text-yellow-400 hover:bg-slate-900"
@@ -110,30 +170,51 @@
             <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
               th:text="${donhang.getNGAYTHEM()}"></td>
             <td class="p-2 border border-solid border-black max-w-[200px] gap-2 overflow-hidden">
-              <form method="post" action="/profile/huydon">
+              <button onclick="pay(this)" th:attr="madonhang=${donhang.getMaDonHang()}"
+                th:if="${donhang.getTinhTrang() == 'Chờ thanh toán' && (donhang.getThanhToan() == 'Chưa thanh toán' || donhang.getThanhToan() == 'Thất bại')}"
+                class="block p-2 rounded bg-purple-500 hover:bg-purple-600 text-white mb-2">Thanh toán</button>
+
+              <form method="post" action="/profile/huydon"
+                th:if="${donhang.getTinhTrang() == 'Chờ xác nhận' || donhang.getTinhTrang() == 'Chờ thanh toán'}">
                 <input type="number" th:value="${donhang.getMaDonHang()}" class="hidden" name="madonhang">
-                <button class="block p-2 rounded bg-orange-500 text-white"
-                  th:if="${donhang.getTinhTrang() == 'Chờ xác nhận'}">Hủy đơn</button>
+                <button class="block p-2 rounded bg-red-500 hover:bg-red-600 text-white">Hủy đơn</button>
               </form>
               <button class="block p-2 rounded bg-slate-500 text-white cursor-not-allowed"
-                th:if="${donhang.getTinhTrang() != 'Chờ xác nhận'}">Hủy đơn</button>
+                th:if="${donhang.getTinhTrang() != 'Chờ xác nhận' && donhang.getTinhTrang() != 'Chờ thanh toán'}">Hủy
+                đơn</button>
             </td>
           </tr>
         </table>
       </section>
-      <ul th:if="${sotrang > 1}" class="flex items-center flex-wrap w-full gap-2 mt-4">
-        <li>Trang:</li>
-        <li th:each="i:${#numbers.sequence(1,sotrang,1)}">
-          <a th:classappend="${page + 1 == i} ? 'bg-black text-white' : 'bg-white text-black'"
-            class="p-2 aspect-square border border-b hover:text-blue-500"
-            th:href="@{'/donhang/?page=' + ${i} + '&search=' + ${search} + '&from=' + ${from} + '&to=' + ${to} + '&tinhtrang=' + ${tinhtrang} + '&thanhtoan=' + ${thanhtoan}}"
-            th:text="${i}"></a>
-        </li>
-      </ul>
     </div>
   </div>
-
   <div th:replace="~{fragments/footer :: footer}"></div>
+  <script>
+    function pay(btn) {
+      const madonhang = btn.getAttribute("madonhang");
+      fetch("/api/vnpay/continue-payment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: madonhang
+      }).then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        if (data.status) {
+          window.location.href = data.message;
+        } else {
+          showNotification(
+            {
+              title: "Lỗi",
+              message: data.message,
+              type: "error"
+            }
+          );
+        }
+      });
+    }
+  </script>
 </body>
 
 </html>

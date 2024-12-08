@@ -86,7 +86,7 @@ public class DonHangServiceImpl implements DonHangService {
     return donHangRepository.findById(madonhang);
   }
 
-  void checkForException(DonHang donHang) {
+  DonHang checkForExceptionAndSetPrice(DonHang donHang) {
     if (donHang.getTaikhoan() == null) {
       throw new OrderException("Không tìm thấy tài khoản");
     }
@@ -107,38 +107,25 @@ public class DonHangServiceImpl implements DonHangService {
       throw new OrderException("Vui lòng địa chỉ cho tài khoản!");
     }
 
-    if (donHang.getItems() == null) {
-      if (donHang.getItems().size() > 0) {
-        for (ChiTietDonHang item : donHang.getItems()) {
-          checkItemQuantity(item);
-        }
+    if (donHang.getItems() != null && !donHang.getItems().isEmpty()) {
+      Integer tongTien = 0;
+      for (ChiTietDonHang item : donHang.getItems()) {
+        Integer giaTien = checkItemQuantityAndPrice(item);
+        item.setGiaTien(giaTien);
+        tongTien += giaTien * item.getSoLuong();
       }
+
+      donHang.setTongTien(tongTien);
     }
+
+    return donHang;
   }
 
   @Override
   public DonHang validate(DonHang donHang, TaiKhoan taiKhoan) {
-    if (taiKhoan == null) {
-      throw new OrderException("Không tìm thấy tài khoản");
-    }
+    donHang = checkForExceptionAndSetPrice(donHang);
 
-    if (donHang.getItems() == null) {
-      throw new OrderException("Phải có ít nhất 1 sản phẩm!");
-    }
-
-    if (donHang.getItems().size() < 1) {
-      throw new OrderException("Phải có ít nhất 1 sản phẩm!");
-    }
-
-    if (taiKhoan.getSodienthoai() == null) {
-      throw new OrderException("Vui lòng thêm số điện thoại cho tài khoản!");
-    }
-
-    if (taiKhoan.getDiachi().equals("Chưa có") || taiKhoan.getDiachi() == null) {
-      throw new OrderException("Vui lòng địa chỉ cho tài khoản!");
-    }
-
-    donHang.setTinhTrang(OrderStatus.PENDING);
+    donHang.setTinhTrang(OrderStatus.WaitForApproval);
 
     if (donHang.getDiaChi() == null || donHang.getDiaChi().isEmpty()) {
       donHang.setDiaChi(taiKhoan.getDiachi());
@@ -154,21 +141,29 @@ public class DonHangServiceImpl implements DonHangService {
 
     donHang.setTaikhoan(taiKhoan);
 
-    if (donHang.getItems() == null) {
-      if (donHang.getItems().size() > 0) {
-        for (ChiTietDonHang item : donHang.getItems()) {
-          checkItemQuantity(item);
-        }
-      }
-    }
-
     return donHang;
   }
 
   @Override
   @Transactional
-  public ApiResponse checkOutDonHang(DonHang donHang) {
-    checkForException(donHang);
+  public DonHang save(DonHang donHang, OrderStatus status, OrderPaymentStatus paymentStatus) {
+    donHang = checkForExceptionAndSetPrice(donHang);
+    donHang.setTinhTrang(status);
+    donHang.setThanhToan(paymentStatus);
+
+    DonHang result = donHangRepository.save(donHang);
+
+    for (ChiTietDonHang item : donHang.getItems()) {
+      saveOrderItem(item, result);
+    }
+
+    return result;
+  }
+
+  @Override
+  @Transactional
+  public ApiResponse checkOut(DonHang donHang) {
+    donHang = checkForExceptionAndSetPrice(donHang);
     donHang.setThanhToan(OrderPaymentStatus.ON_RECIEVED);
 
     DonHang result = donHangRepository.save(donHang);
@@ -178,7 +173,7 @@ public class DonHangServiceImpl implements DonHangService {
     }
 
     try {
-      emailService.sendOrderSuccessEmail(donHangRepository.findById(result.getMaDonHang()).get());
+      emailService.sendOrderSuccessEmail(result);
     } catch (MessagingException e) {
       log.warn("WARNING - Cannot send order confirm to {}", result.getTaikhoan().getUsername());
     }
@@ -196,8 +191,8 @@ public class DonHangServiceImpl implements DonHangService {
 
   @Override
   @Transactional
-  public ApiResponse checkOutDonHang(DonHang donHang, GlobalCardInfo cardInfo) {
-    checkForException(donHang);
+  public ApiResponse checkOut(DonHang donHang, GlobalCardInfo cardInfo) {
+    donHang = checkForExceptionAndSetPrice(donHang);
     paymentService.processPayment(cardInfo);
     donHang.setThanhToan(OrderPaymentStatus.PAID);
     DonHang result = donHangRepository.save(donHang);
@@ -225,8 +220,8 @@ public class DonHangServiceImpl implements DonHangService {
 
   @Override
   @Transactional
-  public ApiResponse checkOutDonHang(DonHang donHang, LocalCardInfo cardInfo) {
-    checkForException(donHang);
+  public ApiResponse checkOut(DonHang donHang, LocalCardInfo cardInfo) {
+    donHang = checkForExceptionAndSetPrice(donHang);
     paymentService.processPayment(cardInfo);
     donHang.setThanhToan(OrderPaymentStatus.PAID);
     DonHang result = donHangRepository.save(donHang);
@@ -297,7 +292,7 @@ public class DonHangServiceImpl implements DonHangService {
     ctdhService.saveCTDH(item);
   }
 
-  void checkItemQuantity(ChiTietDonHang item) {
+  Integer checkItemQuantityAndPrice(ChiTietDonHang item) {
     switch (item.getLoaiSanPham()) {
       case "dongho":
         Dongho dongHo = donghoService.findById(item.getMaSanPham())
@@ -305,35 +300,35 @@ public class DonHangServiceImpl implements DonHangService {
         if (dongHo.getSoluong() < item.getSoLuong()) {
           throw new OrderException("Số lượng mua vượt giới hạn, mã đồng hồ: " + item.getMaSanPham());
         }
-        break;
+        return dongHo.getGiatien();
       case "phukien":
         PhuKien phuKien = phuKienService.findById(item.getMaSanPham())
             .orElseThrow(() -> new OrderException("Phụ kiện không tồn tại, mã: " + item.getMaSanPham()));
         if (phuKien.getSoLuong() < item.getSoLuong()) {
           throw new OrderException("Số lượng mua vượt giới hạn, mã phụ kiện: " + item.getMaSanPham());
         }
-        break;
+        return phuKien.getGiaTien();
       case "kinhmat":
         KinhMat kinhMat = kinhMatService.findById(item.getMaSanPham())
             .orElseThrow(() -> new OrderException("Kính mắt không tồn tại, mã: " + item.getMaSanPham()));
         if (kinhMat.getSoLuong() < item.getSoLuong()) {
           throw new OrderException("Số lượng mua vượt giới hạn, mã kính mắt: " + item.getMaSanPham());
         }
-        break;
+        return kinhMat.getGiaTien();
       case "butky":
         Butky butKy = butKyService.findById(item.getMaSanPham())
             .orElseThrow(() -> new OrderException("Bút ký không tồn tại, mã: " + item.getMaSanPham()));
         if (butKy.getSoluong() < item.getSoLuong()) {
           throw new OrderException("Số lượng mua vượt giới hạn, mã bút ký: " + item.getMaSanPham());
         }
-        break;
+        return butKy.getGiatien();
       case "trangsuc":
         Trangsuc trangSuc = trangSucService.findById(item.getMaSanPham())
             .orElseThrow(() -> new OrderException("Trang sức không tồn tại, mã: " + item.getMaSanPham()));
         if (trangSuc.getSoluong() < item.getSoLuong()) {
           throw new OrderException("Số lượng mua vượt giới hạn, mã trang sức: " + item.getMaSanPham());
         }
-        break;
+        return trangSuc.getGiaTien();
       default:
         throw new OrderException("Loại sản phẩm không tồn tại, mã: " + item.getMaSanPham());
     }
@@ -504,7 +499,7 @@ public class DonHangServiceImpl implements DonHangService {
   }
 
   @Override
-  public void updateStatus(Integer madonhang, OrderStatus status) {
+  public void updateStatus(Integer madonhang, OrderStatus status, OrderPaymentStatus paymentStatus) {
     Optional<DonHang> opt = donHangRepository.findById(madonhang);
     ServiceException exception = new ServiceException();
     exception.setPath("/admin/donhang");
@@ -524,7 +519,10 @@ public class DonHangServiceImpl implements DonHangService {
             clearTempAmount(item);
           }
           thongKeService.incDoanhThu(BigDecimal.valueOf(currentData.getTongTien()));
-        } 
+        }
+        if (paymentStatus != null) {
+          currentData.setThanhToan(paymentStatus);
+        }
         currentData.setTinhTrang(status);
         updateDonHang(currentData);
       }

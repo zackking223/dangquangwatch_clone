@@ -79,7 +79,7 @@
       <ul th:if="${sotrang > 1}" class="flex items-center flex-wrap w-full sm:gap-2 gap-1 my-4">
         <li>Trang:</li>
         <li th:each="i:${#numbers.sequence(1,sotrang,1)}">
-          <a th:classappend="${page + 1 == i} ? 'bg-black text-white' : 'bg-white text-black'"
+          <a th:classappend="${page + 1 == i} ? 'bg-black text-white pointer-events-none' : 'bg-white text-black'"
             class="p-2 aspect-square border border-b hover:text-blue-500"
             th:href="@{'/admin/donhang/?page=' + ${i} + '&email=' + ${email} + '&hoten=' + ${hoten} + '&diachi=' + ${diachi} + '&tensanpham=' + ${tensanpham} + '&tinhtrang=' + ${tinhtrang} + '&thanhtoan=' + ${thanhtoan} + '&tongtien=' + ${tongtien} + '&from=' + ${from} + '&to=' + ${to}}"
             th:text="${i}"></a>
@@ -127,6 +127,10 @@
           <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
             th:text="${donhang.getGhiChu() ?: ''}"></td>
           <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+            <a href="?tinhtrang=Chờ+thanh+toán" class="py-1 px-[6px] rounded-sm bg-red-500 font-medium text-white"
+              th:if="${donhang.getTinhTrang() == 'Chờ thanh toán'}">
+              Chờ thanh toán
+            </a>
             <a href="?tinhtrang=Chờ+xác+nhận" class="py-1 px-[6px] rounded-sm bg-orange-500 font-medium text-white"
               th:if="${donhang.getTinhTrang() == 'Chờ xác nhận'}">
               Chờ xác nhận
@@ -148,8 +152,28 @@
               Đang giao
             </a>
           </td>
-          <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
-            th:text="${donhang.getThanhToan()}"></td>
+          <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+            <a href="?thanhtoan=Chưa+thanh+toán" class="py-1 px-[6px] rounded-sm bg-orange-500 font-medium text-white"
+              th:if="${donhang.getThanhToan() == 'Chưa thanh toán'}">
+              Chưa thanh toán
+            </a>
+            <a href="?thanhtoan=Đã+hủy" class="py-1 px-[6px] rounded-sm bg-red-500 font-medium text-white"
+              th:if="${donhang.getThanhToan() == 'Đã hủy'}">
+              Đã hủy
+            </a>
+            <a href="?thanhtoan=Thất+bại" class="py-1 px-[6px] rounded-sm bg-red-500 font-medium text-white"
+              th:if="${donhang.getThanhToan() == 'Thất bại'}">
+              Thất bại
+            </a>
+            <a href="?thanhtoan=Đã+thanh+toán" class="py-1 px-[6px] rounded-sm bg-green-500 font-medium text-white"
+              th:if="${donhang.getThanhToan() == 'Đã thanh toán'}">
+              Đã thanh toán
+            </a>
+            <a href="?thanhtoan=Khi+nhận+hàng" class="py-1 px-[6px] rounded-sm bg-blue-500 font-medium text-white"
+              th:if="${donhang.getThanhToan() == 'Khi nhận hàng'}">
+              Khi nhận hàng
+            </a>
+          </td>
           <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
             <p class="my-1" th:each="sp : ${donhang.getItems()}"><a target="_blank"
                 class="text-sm rounded-sm p-1 bg-slate-200 hover:text-yellow-400 hover:bg-slate-900"
@@ -178,7 +202,7 @@
                 Hủy đơn
               </button>
               <button class="p-2 rounded bg-red-500 text-white" th:if="${donhang.getTinhTrang() == 'Chờ xác nhận'}"
-                th:data-id="${donhang.getMaDonHang()}"th:data-action="huy" onclick="confirmAction(this);">
+                th:data-id="${donhang.getMaDonHang()}" th:data-action="huy" onclick="confirmAction(this);">
                 Từ chối
               </button>
             </div>
