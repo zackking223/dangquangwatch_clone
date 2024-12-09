@@ -1,13 +1,18 @@
 # Springboot - Đăng Quang Watch clone
 ### Technologies:
 - HTML/CSS/JS.
-- Springboot v3.3.1.
+- Springboot v3.3.2.
   - Spring JPA.
   - Spring Web.
   - Spring Mail.
   - Spring Security.
+  - Lombok.
+  - Thymeleaf.
+  - Validation.
+  - WebSocket.
 - [Live reload with Tailwindcss](https://www.wimdeblauwe.com/blog/2022/08/27/thymeleaf-live-reload-with-spring-boot-and-tailwind-css/).
 - [Cloudinary](https://console.cloudinary.com/).
+- [VNPay Sandbox](https://sandbox.vnpayment.vn/apis/docs/thanh-toan-pay/pay.html).
 
 ### Database:
 - Server type: MariaDB.
@@ -25,14 +30,13 @@
   - Track order.
 - Admin panel:
   - Crud operations.
-    - Watch.
-    - Jewellery.
-    - Accessory.
-    - Order.
-    - Glass.
-    - Pen.
+    - Products.
+    - Accounts.
+    - Orders.
+  - Orders tracking.
   - Track orders.
   - Analytics.
+  - Import & export tracking.
 - Database triggers & procedures.
 
 ### Prequesition:
@@ -40,15 +44,15 @@
 - Have suitable JDK version.
 - Have Maven installed.
 - Have a [Cloudinary](https://console.cloudinary.com/) developer account.
+- Have a [VNPay Merchant](https://sandbox.vnpayment.vn/devreg/) account.
 - Have an SMPT service.
 - Have google auth credentials setup.
 - Have github auth credentials setup.
 - **(optional)** Have docker installed to run mail-dev
-- Config Spring **application.properties**. All configuration are inside: `main/resources/application-properties.txt`
+- Config Spring **application.properties**. All configurations are inside: `main/resources/application-properties.txt`
 - Setup MySQL/MariaDB database from `database.sql`.
 
 ### Run & Build:
-
 1. Start the Spring Boot application with the local profile. `mvn spring-boot:run`.
 2. Run `npm run build && npm run watch` from the command line.
 3. As a final change to the pom.xml, we can add a profile that calls our production NPM scripts. At release time, be sure to enable this Maven profile. `mvn spring-boot:run -P release`.

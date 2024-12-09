@@ -145,16 +145,21 @@ public class ProfileController {
       HttpSession session,
       Model model,
       @RequestBody DonHang donHang) {
-    String username = (String) session.getAttribute("username");
-    TaiKhoan user = taiKhoanService.getTaiKhoan(username);
+    var username = session.getAttribute("username");
+
+    if (username == null) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ObjectResponse<>(false, "Vui lòng đăng nhập tài khoản", null));
+    }
+
+    TaiKhoan user = taiKhoanService.getTaiKhoan((String) username);
 
     TaiKhoan tempTaiKhoan = new TaiKhoan();
-    tempTaiKhoan.setUsername(username);
+    tempTaiKhoan.setUsername((String) username);
     tempTaiKhoan.setDiachi(user.getDiachi());
     tempTaiKhoan.setSodienthoai(user.getSodienthoai());
     tempTaiKhoan.setHoten(user.getHoten());
     tempTaiKhoan.setLoai_tai_khoan(user.getLoai_tai_khoan());
-
+    donHang.setTaikhoan(tempTaiKhoan);
     // Check don hang valid
     donHang = donHangService.validate(donHang, tempTaiKhoan);
 

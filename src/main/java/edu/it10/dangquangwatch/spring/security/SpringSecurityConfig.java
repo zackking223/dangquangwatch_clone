@@ -59,7 +59,7 @@ public class SpringSecurityConfig {
     http
         .authorizeHttpRequests(configurer -> configurer
             .requestMatchers("/admin/**", "/ws/**").hasAnyRole("NHANVIEN", "QUANLY") // Yêu cầu đăng nhập cho các đường dẫn bắt đầu bằng /admin/
-            .requestMatchers("/profile/**").authenticated()
+            .requestMatchers("/profile/**", "/api/vnpay/**").authenticated()
             .anyRequest().permitAll() // Các đường dẫn còn lại không yêu cầu đăng nhập
         )
         .csrf(configurer -> configurer.disable()) // Disable csrf for testing

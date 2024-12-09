@@ -721,73 +721,106 @@ thanhToanOption.addEventListener("change", (ev) => {
 });
 
 
-const checkout = async () => {
-  document.getElementById("checkout-btn").style.display = "none";
-  document.getElementById("hidden-checkout-btn").style.display = "flex"
+const checkout = () => {
+  if (typeof Swal !== "undefined") {
+    Swal.fire({
+      title: 'Đặt hàng?',
+      text: "Hãy chắc chắn bạn đã nhập đúng thông tin.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Thanh toán',
+      cancelButtonText: 'Hủy'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        document.getElementById("checkout-btn").style.display = "none";
+        document.getElementById("hidden-checkout-btn").style.display = "flex"
 
-  let cart = getCart();
+        let cart = getCart();
 
-  cart.diaChi = document.getElementById("diaChi").value;
-  cart.ghiChu = document.getElementById("ghiChu").value;
+        cart.diaChi = document.getElementById("diaChi").value;
+        cart.ghiChu = document.getElementById("ghiChu").value;
 
-  const response = await fetch('/profile/checkout', {
-    method: "POST",
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      donHang: cart,
-      cardInfo: CardInfo.getInfo()
-    })
-  });
+        const response = await fetch('/profile/checkout', {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            donHang: cart,
+            cardInfo: CardInfo.getInfo()
+          })
+        });
 
-  const data = await response.json();
+        const data = await response.json();
 
-  if (data.status) {
-    resetCart();
-    location.reload();
-  } else {
-    document.getElementById("checkout-btn").style.display = "flex";
-    document.getElementById("hidden-checkout-btn").style.display = "none"
-    showNotification({
-      title: "Lỗi đặt hàng",
-      message: data.message,
-      type: "error"
+        if (data.status) {
+          resetCart();
+          location.reload();
+        } else {
+          document.getElementById("checkout-btn").style.display = "flex";
+          document.getElementById("hidden-checkout-btn").style.display = "none"
+          showNotification({
+            title: "Lỗi đặt hàng",
+            message: data.message,
+            type: "error"
+          });
+        }
+      }
     });
   }
 }
 
-const onlinePay = async () => {
-  document.getElementById("checkout-btn").style.display = "none";
-  document.getElementById("hidden-checkout-btn").style.display = "flex"
+const onlinePay = () => {
+  if (typeof Swal !== "undefined") {
+    Swal.fire({
+      title: 'Bạn có chắc chắn muốn thanh toán online?',
+      text: "Bạn sẽ không thể quay lại!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Thanh toán',
+      cancelButtonText: 'Hủy'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        document.getElementById("checkout-btn").style.display = "none";
+        document.getElementById("hidden-checkout-btn").style.display = "flex"
 
-  let cart = getCart();
+        let cart = getCart();
 
-  cart.diaChi = document.getElementById("diaChi").value;
-  cart.ghiChu = document.getElementById("ghiChu").value;
+        cart.diaChi = document.getElementById("diaChi").value;
+        cart.ghiChu = document.getElementById("ghiChu").value;
 
-  const response = await fetch('/api/vnpay/create-payment', {
-    method: "POST",
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      donHang: cart,
-      cardInfo: CardInfo.getInfo()
-    })
-  });
+        const response = await fetch('/api/vnpay/create-payment', {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            donHang: cart,
+            cardInfo: CardInfo.getInfo()
+          })
+        });
 
-  const data = await response.json();
+        const data = await response.json();
 
-  if (data.status) {
-    location.href = data.message;
-  } else {
-    document.getElementById("checkout-btn").style.display = "flex";
-    document.getElementById("hidden-checkout-btn").style.display = "none"
-    showNotification({
-      title: "Lỗi đặt hàng",
-      message: data.message,
-      type: "error"
+        if (data.status) {
+          location.href = data.message;
+        } else {
+          document.getElementById("checkout-btn").style.display = "flex";
+          document.getElementById("hidden-checkout-btn").style.display = "none"
+          showNotification({
+            title: "Lỗi đặt hàng",
+            message: data.message,
+            type: "error"
+          });
+        }
+      }
     });
+
+  } else {
+    throw new Error("Swal is not defined");
   }
 }
