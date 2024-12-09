@@ -137,7 +137,7 @@ public class VNPayController {
       String maDonHang = params.get("vnp_OrderInfo").split(": ")[1];
       if ("00".equals(responseCode)) {
         // Thanh toán thành công
-        donHangService.updateStatus(Integer.parseInt(maDonHang), OrderStatus.COMPLETED, OrderPaymentStatus.PAID);
+        donHangService.updateStatus(Integer.parseInt(maDonHang), OrderStatus.WaitForApproval, OrderPaymentStatus.PAID);
         redirectAttributes.addFlashAttribute("notification", "Thanh toán thành công!");
         return "redirect:/profile/giohang";
       } else {
