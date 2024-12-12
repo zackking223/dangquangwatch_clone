@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 08, 2024 lúc 03:34 PM
+-- Thời gian đã tạo: Th12 12, 2024 lúc 05:31 AM
 -- Phiên bản máy phục vụ: 10.4.22-MariaDB
 -- Phiên bản PHP: 7.4.27
 
@@ -741,16 +741,16 @@ CREATE TABLE `taikhoan` (
 --
 
 INSERT INTO `taikhoan` (`username`, `password`, `sodienthoai`, `diachi`, `hoten`, `loai_tai_khoan`, `enabled`, `NGAYTHEM`) VALUES
-('lam@email.com', '{bcrypt}$2a$10$5aOPxSO8Q2xp8FoT8aByO.BOpIiOm54o9QzC8AEsouP2zRlJsS1sq', NULL, 'Thành phố Hà Nội, Quận Đống Đa, Phường Quang Trung, Nam Dinh', 'Nguyen Trong Lam', 'ROLE_KHACHHANG', 1, '2024-11-12'),
-('minhquan@email.com', '{bcrypt}$2a$10$5aOPxSO8Q2xp8FoT8aByO.BOpIiOm54o9QzC8AEsouP2zRlJsS1sq', '0813385869', 'Thành phố Hà Nội, Huyện Sóc Sơn, Xã Tiên Dược, Số 9', 'Vương Minh Quân', 'ROLE_QUANLY', 1, '2024-06-28'),
-('quangdung@email.com', '{bcrypt}$2a$10$f9qTmzYqO0v.2UopPOHcSOIQFX7vvik6TBenz/rDcUJzajt8.6nY6', '08133859510', 'Thành phố Hà Nội, Quận Đống Đa, Phường Kim Liên, Số 9', 'Vũ Quang Dũng', 'ROLE_KHACHHANG', 1, '2024-06-28'),
-('test1@email.com', '{bcrypt}$2a$10$lf52t/fkdNkYLUszGluA5eYa8Kl/VNAQy78qV95N6Sy4EJ4h98e.i', '0813385856', 'Thành phố Hà Nội, Quận Đống Đa, Phường Kim Liên, Số 9', 'Nguyen Van Test', 'ROLE_KHACHHANG', 1, '2024-10-15'),
-('test2@email.com', '{bcrypt}$2a$10$GTCKzVpgn4yLw8MZp5bZrORlO.89QoITAh5COpqq7CPZ3Owq7GJx2', '0813385951', 'Thành phố Hà Nội, Quận Hoàng Mai, Phường Tân Mai, Số 9', 'Nguyen Thi Test', 'ROLE_KHACHHANG', 1, '2024-10-16'),
-('tuanminh@email.com', '{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q', '0813385899', 'Thành phố Hà Nội, Quận Đống Đa, Phường Kim Liên, Số 9', 'Nguyễn Tuấn Minh', 'ROLE_KHACHHANG', 1, '2024-06-28'),
-('vanbo@email.com', '{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q', '0813381234', 'Thành phố Hà Nội, Quận Đống Đa, Phường Kim Liên, Số 9', 'Nguyễn Văn Bộ', 'ROLE_KHACHHANG', 1, '2024-06-28'),
-('vanthi@email.com', '{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q', '0813389999', 'Thành phố Hà Nội, Quận Đống Đa, Phường Kim Liên, Số 9', 'Đinh Văn Thi', 'ROLE_KHACHHANG', 1, '2024-06-28'),
-('vuongdepzai1262003@gmail.com', '{bcrypt}$2a$10$iU/OZvHLNYexkaE7N9fx6eY27a5S0dY/dsUzXkjGYxxAB6tABe7Ry', '', 'Thành phố Hà Nội, Quận Tây Hồ, Phường Tứ Liên, Số 9', 'CodeNoob223', 'ROLE_KHACHHANG', 1, '2024-07-26'),
-('vuongminhquan1262003@gmail.com', '{bcrypt}$2a$10$DKBrSGWbdMX.G9qWa2GZ5OioqA9.WPXHhq/mdT9hbkYpDaT4BrQ8G', '0813385857', 'Tỉnh Sơn La, Huyện Phù Yên, Xã Mường Cơi, Số 9', 'Quan Minh', 'ROLE_KHACHHANG', 1, '2024-07-25');
+('lam@email.com', '{bcrypt}$2a$10$5aOPxSO8Q2xp8FoT8aByO.BOpIiOm54o9QzC8AEsouP2zRlJsS1sq', NULL, 'Hà Nội, Đống Đa, Kim Liên, Số 9', 'Nguyen Trong Lam', 'ROLE_KHACHHANG', 1, '2024-11-12'),
+('minhquan@email.com', '{bcrypt}$2a$10$5aOPxSO8Q2xp8FoT8aByO.BOpIiOm54o9QzC8AEsouP2zRlJsS1sq', '0813385869', 'Hà Nội, Đống Đa, Kim Liên, Số 9', 'Vương Minh Quân', 'ROLE_QUANLY', 1, '2024-06-28'),
+('quangdung@email.com', '{bcrypt}$2a$10$f9qTmzYqO0v.2UopPOHcSOIQFX7vvik6TBenz/rDcUJzajt8.6nY6', '08133859510', 'Hà Nội, Đống Đa, Kim Liên, Số 9', 'Vũ Quang Dũng', 'ROLE_KHACHHANG', 1, '2024-06-28'),
+('test1@email.com', '{bcrypt}$2a$10$lf52t/fkdNkYLUszGluA5eYa8Kl/VNAQy78qV95N6Sy4EJ4h98e.i', '0813385856', 'Hà Nội, Đống Đa, Kim Liên, Số 9', 'Nguyen Van Test', 'ROLE_KHACHHANG', 1, '2024-10-15'),
+('test2@email.com', '{bcrypt}$2a$10$GTCKzVpgn4yLw8MZp5bZrORlO.89QoITAh5COpqq7CPZ3Owq7GJx2', '0813385951', 'Hà Nội, Đống Đa, Kim Liên, Số 9', 'Nguyen Thi Test', 'ROLE_KHACHHANG', 1, '2024-10-16'),
+('tuanminh@email.com', '{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q', '0813385899', 'Hà Nội, Đống Đa, Kim Liên, Số 9', 'Nguyễn Tuấn Minh', 'ROLE_KHACHHANG', 1, '2024-06-28'),
+('vanbo@email.com', '{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q', '0813381234', 'Hà Nội, Đống Đa, Kim Liên, Số 9', 'Nguyễn Văn Bộ', 'ROLE_KHACHHANG', 1, '2024-06-28'),
+('vanthi@email.com', '{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q', '0813389999', 'Hà Nội, Đống Đa, Kim Liên, Số 9', 'Đinh Văn Thi', 'ROLE_KHACHHANG', 1, '2024-06-28'),
+('vuongdepzai1262003@gmail.com', '{bcrypt}$2a$10$iU/OZvHLNYexkaE7N9fx6eY27a5S0dY/dsUzXkjGYxxAB6tABe7Ry', NULL, 'Hà Nội, Đống Đa, Kim Liên, Số 9', 'CodeNoob223', 'ROLE_KHACHHANG', 1, '2024-07-26'),
+('vuongminhquan1262003@gmail.com', '{bcrypt}$2a$10$DKBrSGWbdMX.G9qWa2GZ5OioqA9.WPXHhq/mdT9hbkYpDaT4BrQ8G', '0813385857', 'Hà Nội, Đống Đa, Kim Liên, Số 9', 'Quan Minh', 'ROLE_KHACHHANG', 1, '2024-07-25');
 
 --
 -- Bẫy `taikhoan`
@@ -819,7 +819,7 @@ CREATE TABLE `thongke` (
 
 INSERT INTO `thongke` (`mathongke`, `dongho`, `butky`, `phukien`, `trangsuc`, `kinhmat`, `donhang`, `donhangdahuy`, `donhangdagiao`, `khachhang`, `luottruycap`, `tilechuyendoi`, `doanhthu`, `von`, `donhangchoxacnhan`, `donhangdaxacnhan`, `donhangdanggiao`, `luotdangkymoi`, `chiphi`, `luotxemsanpham`, `luotthemgiohang`, `luotdathang`, `luotthanhtoan`, `luothoanthanhdon`, `NGAYTHEM`) VALUES
 ('11/2024', 48, 5, 6, 5, 5, 10, 2, 2, 9, 870, 0.258065, 16470000, 1000000000, 3, 2, 1, 12, 2024439520, 263, 22, 10, 2, 2, '2024-06-28'),
-('12/2024', 48, 5, 6, 5, 5, 15, 4, 0, 9, 52, 0.229885, 125600000, 0, 4, 2, 1, 0, 0, 9, 9, 9, 0, 0, '2024-12-07');
+('12/2024', 48, 5, 6, 5, 5, 15, 4, 0, 9, 66, 0.229885, 125600000, 0, 4, 2, 1, 0, 0, 10, 9, 9, 0, 0, '2024-12-07');
 
 -- --------------------------------------------------------
 
