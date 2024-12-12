@@ -653,72 +653,74 @@ function setCardForm(cardType = "global") {
   }
 }
 
-thanhToanOption.addEventListener("change", (ev) => {
-  if (ev.target.value === "1") {
-    paymentContainer.innerHTML = `
-      <div class="w-full">
-        <button type="button" id="checkout-btn" onclick="checkout()"
-          class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 pl-3 pr-4 rounded flex gap-2 items-center">
-          <img src="/svg/danggiao.svg" class="w-5 h-5" alt="order">
-          <p>
-            Đặt hàng
-          </p>
-        </button>
-        <button type="button" id="hidden-checkout-btn"
-          class="bg-slate-500 text-white font-bold py-2 pl-3 pr-4 rounded gap-2 items-center cursor-wait hidden">
-          <img src="/svg/danggiao.svg" class="w-5 h-5" alt="order">
-          <p>
-            Đặt hàng
-          </p>
-        </button>
-      </div>
-    `;
-
-    CardInfo.clearInfo();
-  } else if (ev.target.value === "card") {
-    paymentContainer.innerHTML = `
-      <div class="flex items-center gap-4 col-span-2">
-        <div>
-          <input type="radio" name="cardType" id="globalCardOption" value="global" onchange="setCardForm('global')" checked />
-          <label for="globalCardOption">Thẻ quốc tế</label>
+if (thanhToanOption != null) {
+  thanhToanOption.addEventListener("change", (ev) => {
+    if (ev.target.value === "1") {
+      paymentContainer.innerHTML = `
+        <div class="w-full">
+          <button type="button" id="checkout-btn" onclick="checkout()"
+            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 pl-3 pr-4 rounded flex gap-2 items-center">
+            <img src="/svg/danggiao.svg" class="w-5 h-5" alt="order">
+            <p>
+              Đặt hàng
+            </p>
+          </button>
+          <button type="button" id="hidden-checkout-btn"
+            class="bg-slate-500 text-white font-bold py-2 pl-3 pr-4 rounded gap-2 items-center cursor-wait hidden">
+            <img src="/svg/danggiao.svg" class="w-5 h-5" alt="order">
+            <p>
+              Đặt hàng
+            </p>
+          </button>
         </div>
-        <div>
-          <input type="radio" name="cardType" id="localCardOption" onchange="setCardForm('local')" value="local" />
-          <label for="localCardOption">Thẻ nội địa</label>
+      `;
+  
+      CardInfo.clearInfo();
+    } else if (ev.target.value === "card") {
+      paymentContainer.innerHTML = `
+        <div class="flex items-center gap-4 col-span-2">
+          <div>
+            <input type="radio" name="cardType" id="globalCardOption" value="global" onchange="setCardForm('global')" checked />
+            <label for="globalCardOption">Thẻ quốc tế</label>
+          </div>
+          <div>
+            <input type="radio" name="cardType" id="localCardOption" onchange="setCardForm('local')" value="local" />
+            <label for="localCardOption">Thẻ nội địa</label>
+          </div>
         </div>
-      </div>
-      <section id="cardForm" class="w-full">
-        
-      </section>
-
-      <section id="virCard"
-        class="w-full text-white font-medium flex flex-col"
-        style="background-image: url('/svg/cardbg.svg'); background-repeat: no-repeat; background-size: cover; background-position: center; border-radius: 16px; padding: 32px; gap: 32px; aspect-ratio: 16 / 9;">
-        
-      </section>
-    `;
-    setCardForm("global");
-  } else {
-    paymentContainer.innerHTML = `
-      <div class="w-full">
-        <button type="button" id="checkout-btn" onclick="onlinePay()"
-          class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 pl-3 pr-4 rounded flex gap-2 items-center">
-          <img src="/svg/von.svg" class="w-5 h-5" alt="pay">
-          <p>
-            Thanh toán online
-          </p>
-        </button>
-        <button type="button" id="hidden-checkout-btn"
-          class="bg-slate-500 text-white font-bold py-2 pl-3 pr-4 rounded gap-2 items-center cursor-wait hidden">
-          <img src="/svg/von.svg" class="w-5 h-5" alt="pay">
-          <p>
-            Thanh toán online
-          </p>
-        </button>
-      </div>
-    `;
-  }
-});
+        <section id="cardForm" class="w-full">
+          
+        </section>
+  
+        <section id="virCard"
+          class="w-full text-white font-medium flex flex-col"
+          style="background-image: url('/svg/cardbg.svg'); background-repeat: no-repeat; background-size: cover; background-position: center; border-radius: 16px; padding: 32px; gap: 32px; aspect-ratio: 16 / 9;">
+          
+        </section>
+      `;
+      setCardForm("global");
+    } else {
+      paymentContainer.innerHTML = `
+        <div class="w-full">
+          <button type="button" id="checkout-btn" onclick="onlinePay()"
+            class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 pl-3 pr-4 rounded flex gap-2 items-center">
+            <img src="/svg/von.svg" class="w-5 h-5" alt="pay">
+            <p>
+              Thanh toán online
+            </p>
+          </button>
+          <button type="button" id="hidden-checkout-btn"
+            class="bg-slate-500 text-white font-bold py-2 pl-3 pr-4 rounded gap-2 items-center cursor-wait hidden">
+            <img src="/svg/von.svg" class="w-5 h-5" alt="pay">
+            <p>
+              Thanh toán online
+            </p>
+          </button>
+        </div>
+      `;
+    }
+  });
+}
 
 
 const checkout = () => {

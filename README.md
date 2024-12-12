@@ -5,7 +5,7 @@
   - Spring JPA.
   - Spring Web.
   - Spring Mail.
-  - Spring Security.
+  - Spring Security & OAuth2.
   - Lombok.
   - Thymeleaf.
   - Validation.
@@ -24,6 +24,7 @@
 - Fully responsive with Tailwindcss.
 - User interface:
   - Login & Regsiter.
+  - Login with Google.
   - View products.
   - Search products.
   - Place order.
@@ -46,8 +47,7 @@
 - Have a [Cloudinary](https://console.cloudinary.com/) developer account.
 - Have a [VNPay Merchant](https://sandbox.vnpayment.vn/devreg/) account.
 - Have an SMPT service.
-- Have google auth credentials setup.
-- Have github auth credentials setup.
+- Have Google and Github auth credentials setup (if you want to login with Google & Github).
 - **(optional)** Have docker installed to run mail-dev
 - Config Spring **application.properties**. All configurations are inside: `main/resources/application-properties.txt`
 - Setup MySQL/MariaDB database from `database.sql`.

@@ -178,10 +178,28 @@
 
       cartContainer.querySelectorAll('.remove-item').forEach(button => {
         button.addEventListener('click', () => {
-          const loaiSanPham = button.getAttribute('data-loai');
-          const maSanPham = button.getAttribute('data-ma');
-          removeItem(loaiSanPham, maSanPham);
-          renderCart();
+          if (typeof Swal !== "undefined") {
+            Swal.fire({
+              title: 'Xóa vật phẩm khỏi giỏ?',
+              text: "Bạn sẽ không thể hoàn tác!",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Xóa',
+              cancelButtonText: 'Hủy'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                const loaiSanPham = button.getAttribute('data-loai');
+                const maSanPham = button.getAttribute('data-ma');
+                removeItem(loaiSanPham, maSanPham);
+                renderCart();
+              }
+            });
+
+          } else {
+            throw new Error("Swal is not defined");
+          }
         });
       });
     }

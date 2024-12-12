@@ -78,16 +78,20 @@
       <div class="w-full h-[1px] bg-black my-4"></div>
       <section class="grid sm:grid-cols-2 grid-cols-1 gap-4">
         <form class="mx-auto w-full" action="/profile/doisodienthoai" method="post">
-          <label th:if="${taikhoan.sodienthoai == null}" class="block font-medium" th:for="newphonenumber">Thêm số điện thoại</label>
-          <label th:if="${taikhoan.sodienthoai}" class="block font-medium" th:for="newphonenumber">Số điện thoại mới</label>
+          <label th:if="${taikhoan.sodienthoai == null}" class="block font-medium" th:for="newphonenumber">Thêm số điện
+            thoại</label>
+          <label th:if="${taikhoan.sodienthoai}" class="block font-medium" th:for="newphonenumber">Số điện thoại
+            mới</label>
           <input class="border border-black rounded block p-2 w-full" type="text" name="newphonenumber"
             placeholder="Số điện thoại" onkeypress='validate(event)' required />
-          <input class="p-2 w-max bg-blue-500 rounded block mt-4 text-white" type="submit" th:value="${taikhoan.sodienthoai != null ? 'Đổi số điện thoại' : 'Thêm số điện thoại'}" />
+          <input class="p-2 w-max bg-blue-500 rounded block mt-4 text-white" type="submit"
+            th:value="${taikhoan.sodienthoai != null ? 'Đổi số điện thoại' : 'Thêm số điện thoại'}" />
         </form>
         <form class="mx-auto w-full" action="/profile/doimatkhau" method="post">
           <label class="block font-medium" for="newpassword">Mật khẩu:</label>
           <section class="relative w-full">
-            <input class="block relative p-2 w-full rounded border border-black overflow-hidden" type="password" id="newpassword" name="newpassword" placeholder="P@ssword12345" required>
+            <input class="block relative p-2 w-full rounded border border-black overflow-hidden" type="password"
+              id="newpassword" name="newpassword" placeholder="P@ssword12345" required>
             <button id="visibilityOn" type="button" class="absolute top-3 right-3">
               <img src="/svg/visibility.svg" alt="Xem mật khẩu" class="w-5 h-5 opacity-10 hover:opacity-100">
             </button>
@@ -160,21 +164,37 @@
     const wardValue = /*[[${ward}]]*/ '';
     const extraAddressValue = /*[[${extra}]]*/ '';
 
-    function fillAddress() {
-      const province = document.getElementById("provinceSelect");
-      const district = document.getElementById("districtSelect");
-      const ward = document.getElementById("wardSelect");
-      const extraAddress = document.getElementById("extraAddress");
+    async function fillUserAddress() {
+      await fillProvince();
 
-      province.value = provinceValue;
-      populateDistricts()
-      district.value = districtValue;
-      populateWards()
-      ward.value = wardValue;
-      extraAddress.value = extraAddressValue;
+      if (provinceValue && districtValue && wardValue) { 
+        const province = document.getElementById("provinceSelect");
+        const district = document.getElementById("districtSelect");
+        const ward = document.getElementById("wardSelect");
+        const extraAddress = document.getElementById("extraAddress");
+  
+        Array.from(province.options).forEach(option => {
+          if (option.text === provinceValue) {
+            option.selected = true;
+          }
+        });
+        await populateDistricts();
+        Array.from(district.options).forEach(option => {
+          if (option.text === districtValue) {
+            option.selected = true;
+          }
+        });
+        await populateWards();
+        Array.from(ward.options).forEach(option => {
+          if (option.text === wardValue) {
+            option.selected = true;
+          }
+        });
+        extraAddress.value = extraAddressValue;
+      }
     }
-    fillAddress();
-    updateAddress()
+    fillUserAddress();
+    updateAddress();
 
     function validate(evt) {
       if (evt.key == "Backspace" || evt.key == "Del") return true;

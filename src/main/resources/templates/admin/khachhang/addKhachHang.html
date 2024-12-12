@@ -82,11 +82,6 @@
     </div>
     <script src="/js/address.js"></script>
     <script>
-        const err = document.getElementById("error");
-        err.addEventListener("click", () => {
-            err.classList.add("hidden");
-        })
-
         function validate(evt) {
             if (evt.key == "Backspace" || evt.key == "Del") return true;
 
@@ -113,23 +108,37 @@
         const wardValue = /*[[${ward}]]*/ '';
         const extraAddressValue = /*[[${extra}]]*/ '';
 
-        function fillAddress() {
+        async function fillUserAddress() {
+            await fillProvince();
+
             if (provinceValue && districtValue && wardValue) {
                 const province = document.getElementById("provinceSelect");
                 const district = document.getElementById("districtSelect");
                 const ward = document.getElementById("wardSelect");
                 const extraAddress = document.getElementById("extraAddress");
 
-                province.value = provinceValue;
-                populateDistricts();
-                district.value = districtValue;
-                populateWards();
-                ward.value = wardValue;
+                Array.from(province.options).forEach(option => {
+                    if (option.text === provinceValue) {
+                        option.selected = true;
+                    }
+                });
+                await populateDistricts();
+                Array.from(district.options).forEach(option => {
+                    if (option.text === districtValue) {
+                        option.selected = true;
+                    }
+                });
+                await populateWards();
+                Array.from(ward.options).forEach(option => {
+                    if (option.text === wardValue) {
+                        option.selected = true;
+                    }
+                });
                 extraAddress.value = extraAddressValue;
-                updateAddress();
             }
         }
-        fillAddress();
+        fillUserAddress();
+        updateAddress();
     </script>
     <script th:inline="javascript">
         const errorMessage = /*[[${errorMessage}]]*/ '';
