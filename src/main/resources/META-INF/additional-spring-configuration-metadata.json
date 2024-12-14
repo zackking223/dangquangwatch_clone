@@ -1,30 +1,57 @@
 {"properties": [
   {
-    "name": "cloudinary.api_secret",
+    "name": "cloudinary.cloud_name",
     "type": "java.lang.String",
-    "description": "Cloudinary Console api secret."
+    "description": "A description for 'cloudinary.cloud_name'"
   },
   {
     "name": "cloudinary.api_key",
     "type": "java.lang.String",
-    "description": "Cloudinary Console api key."
+    "description": "A description for 'cloudinary.api_key'"
   },
   {
-    "name": "cloudinary.cloud_name",
+    "name": "cloudinary.api_secret",
     "type": "java.lang.String",
-    "description": "Cloudinary Console cloud name."
+    "description": "A description for 'cloudinary.api_secret'"
+  },
+  {
+    "name": "twilio.account_sid",
+    "type": "java.lang.String",
+    "description": "A description for 'twilio.account_sid'"
+  },
+  {
+    "name": "twilio.auth_token",
+    "type": "java.lang.String",
+    "description": "A description for 'twilio.auth_token'"
   },
   {
     "name": "twilio.phone_number",
     "type": "java.lang.String",
-    "description": "Twilio phone_number"
+    "description": "A description for 'twilio.phone_number'"
   },
   {
+    "name": "vnpay.tmn_code",
     "type": "java.lang.String",
-    "description": "Twilio auth_token"
+    "description": "A description for 'vnpay.tmn_code'"
   },
   {
+    "name": "vnpay.hash_secret",
     "type": "java.lang.String",
-    "description": "Twilio account_sid"
+    "description": "A description for 'vnpay.hash_secret'"
+  },
+  {
+    "name": "vnpay.vnp_url",
+    "type": "java.lang.String",
+    "description": "A description for 'vnpay.vnp_url'"
+  },
+  {
+    "name": "vnpay.return_url",
+    "type": "java.lang.String",
+    "description": "A description for 'vnpay.return_url'"
+  },
+  {
+    "name": "vnpay.notify_url",
+    "type": "java.lang.String",
+    "description": "A description for 'vnpay.notify_url'"
   }
 ]}
