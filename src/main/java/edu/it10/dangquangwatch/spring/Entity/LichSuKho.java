@@ -20,7 +20,7 @@ public class LichSuKho {
   @Column(name = "hanhdong")
   private String hanhDong;
 
-  @Column(name = "thongtin")
+  @Column(name = "thongtin", columnDefinition = "TEXT")
   private String thongTin;
 
   @Column(name = "thoigian")

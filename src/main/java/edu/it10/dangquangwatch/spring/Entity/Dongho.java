@@ -60,8 +60,7 @@ public class Dongho {
   @NotNull(message = "Ngày thêm không được để trống.")
   private String NGAYTHEM;
 
-  @Column(name = "thongtin")
-  @NotNull(message = "Thông tin không được để trống.")
+  @Column(name = "thongtin", columnDefinition = "TEXT")
   @NotEmpty(message = "Thông tin không được để trống.")
   private String thongtin;
 

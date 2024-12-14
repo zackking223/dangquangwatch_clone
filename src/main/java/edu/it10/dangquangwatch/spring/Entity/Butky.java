@@ -47,8 +47,7 @@ public class Butky {
     @Column(name = "NGAYTHEM")
     private String NGAYTHEM;
 
-    @Column(name = "thongtin")
-    @NotNull(message = "Thông tin không được để trống.")
+    @Column(name = "thongtin", columnDefinition = "TEXT")
     @NotEmpty(message = "Thông tin không được để trống.")
     private String thongtin;
 
