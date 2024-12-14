@@ -6,7 +6,6 @@
 -- Thời gian đã tạo: Th12 12, 2024 lúc 05:31 AM
 -- Phiên bản máy phục vụ: 10.4.22-MariaDB
 -- Phiên bản PHP: 7.4.27
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -244,7 +243,7 @@ CREATE TABLE `butky` (
   `soluong` int(11) NOT NULL,
   `soluongdatmua` int(11) DEFAULT 0,
   `kichhoat` tinyint(1) NOT NULL DEFAULT 1,
-  `NGAYTHEM` date NOT NULL DEFAULT current_timestamp()
+  `NGAYTHEM` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -291,7 +290,7 @@ CREATE TABLE `chitietdonhang` (
   `masanpham` int(11) NOT NULL,
   `tensanpham` varchar(255) NOT NULL,
   `anhsanpham` varchar(255) NOT NULL,
-  `NGAYTHEM` date NOT NULL DEFAULT current_timestamp()
+  `NGAYTHEM` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -364,8 +363,8 @@ CREATE TABLE `dongho` (
   `duongkinh` tinyint(255) NOT NULL DEFAULT 40,
   `chongnuoc` tinyint(100) NOT NULL DEFAULT 10,
   `bomay` varchar(255) NOT NULL DEFAULT 'Cơ tự động',
-  `NGAYTHEM` date NOT NULL DEFAULT current_timestamp(),
-  `thongtin` text NOT NULL DEFAULT 'Đẹp lắm, mua đi.',
+  `NGAYTHEM` date NOT NULL,
+  `thongtin` text NOT NULL,
   `gioitinh` varchar(255) NOT NULL DEFAULT 'Nam',
   `chatlieu` varchar(255) NOT NULL DEFAULT 'Kính sapphire'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -458,7 +457,7 @@ CREATE TABLE `donhang` (
   `ghichu` varchar(255) DEFAULT 'Không có ghi chú',
   `tinhtrang` enum('Chờ xác nhận','Đã xác nhận','Đang vận chuyển','Đã nhận hàng','Đã hủy','Chờ thanh toán') NOT NULL,
   `thanhtoan` enum('Đã hủy','Đã thanh toán','Khi nhận hàng','Chưa thanh toán','Thất bại') NOT NULL,
-  `NGAYTHEM` date NOT NULL DEFAULT current_timestamp()
+  `NGAYTHEM` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -588,7 +587,7 @@ CREATE TABLE `kinhmat` (
   `soluong` int(11) NOT NULL,
   `soluongdatmua` int(11) DEFAULT 0,
   `kichhoat` tinyint(1) NOT NULL DEFAULT 1,
-  `NGAYTHEM` date NOT NULL DEFAULT current_timestamp(),
+  `NGAYTHEM` date NOT NULL,
   `thongtin` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -631,7 +630,7 @@ CREATE TABLE `lichsuhethong` (
   `malichsu` int(11) NOT NULL,
   `hanhdong` enum('Xuất hàng','Nhập hàng','Thêm','Sửa','Xóa','Vô hiệu hóa','Kích hoạt','Đặt đơn hàng','Hủy đơn hàng','Giao đơn hàng','Xác nhận đơn') NOT NULL,
   `thongtin` text NOT NULL,
-  `thoigian` datetime NOT NULL DEFAULT current_timestamp(),
+  `thoigian` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `nguoithuchien` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -645,7 +644,7 @@ CREATE TABLE `lichsukho` (
   `malichsu` int(11) NOT NULL,
   `hanhdong` enum('Xuất hàng','Nhập hàng') NOT NULL,
   `thongtin` text NOT NULL,
-  `thoigian` datetime NOT NULL DEFAULT current_timestamp(),
+  `thoigian` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `nguoithuchien` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -668,7 +667,7 @@ CREATE TABLE `otp` (
   `email` varchar(255) NOT NULL,
   `action` enum('change_password','verify_phone','verify_account') NOT NULL,
   `payload` text NOT NULL,
-  `expiry_date` datetime DEFAULT current_timestamp()
+  `expiry_date` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -686,7 +685,7 @@ CREATE TABLE `phukien` (
   `kichhoat` tinyint(1) NOT NULL DEFAULT 1,
   `thongtin` text NOT NULL,
   `tragop` int(100) NOT NULL DEFAULT 0,
-  `NGAYTHEM` date NOT NULL DEFAULT current_timestamp()
+  `NGAYTHEM` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -733,7 +732,7 @@ CREATE TABLE `taikhoan` (
   `hoten` varchar(255) DEFAULT 'Chưa có',
   `loai_tai_khoan` enum('ROLE_KHACHHANG','ROLE_NHANVIEN','ROLE_QUANLY','ROLE_QUANTRI') NOT NULL DEFAULT 'ROLE_KHACHHANG',
   `enabled` tinyint(10) NOT NULL DEFAULT 1,
-  `NGAYTHEM` date DEFAULT current_timestamp()
+  `NGAYTHEM` date
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -810,7 +809,7 @@ CREATE TABLE `thongke` (
   `luotdathang` int(11) NOT NULL DEFAULT 0,
   `luotthanhtoan` int(11) NOT NULL DEFAULT 0,
   `luothoanthanhdon` int(11) NOT NULL DEFAULT 0,
-  `NGAYTHEM` date DEFAULT current_timestamp()
+  `NGAYTHEM` date
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -835,7 +834,7 @@ CREATE TABLE `trangsuc` (
   `giatien` int(11) NOT NULL,
   `tragop` int(100) NOT NULL DEFAULT 0,
   `thongtin` text NOT NULL,
-  `NGAYTHEM` date NOT NULL DEFAULT current_timestamp(),
+  `NGAYTHEM` date NOT NULL,
   `tentrangsuc` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
