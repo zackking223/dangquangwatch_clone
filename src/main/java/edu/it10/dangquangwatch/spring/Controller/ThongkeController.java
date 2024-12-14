@@ -40,7 +40,7 @@ public class ThongkeController {
     }
 
     List<ThongKe> thongKes = thongKeService.getAllThongKe();
-    ThongKe thongKe = thongKes.getFirst();
+    ThongKe thongKe = thongKes.get(0);
     boolean editcapital = editcapital_opt.isPresent();
 
     Float newTiLe = thongKe.tinhTile();

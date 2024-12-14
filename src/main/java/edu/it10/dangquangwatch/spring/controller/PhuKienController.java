@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -23,10 +25,8 @@ import edu.it10.dangquangwatch.spring.service.AnhphukienService;
 import edu.it10.dangquangwatch.spring.service.LichSuKhoService;
 import edu.it10.dangquangwatch.spring.service.PhuKienService;
 import jakarta.servlet.http.HttpSession;
-import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@Slf4j
 @RequestMapping(path = "/admin/phukien")
 public class PhuKienController {
   @Autowired
@@ -35,6 +35,7 @@ public class PhuKienController {
   private AnhphukienService anhphukienService;
   @Autowired
   LichSuKhoService lichSuKhoService;
+  private static final Logger log = LoggerFactory.getLogger(PhuKienController.class);
 
   @GetMapping("/")
   public String index(

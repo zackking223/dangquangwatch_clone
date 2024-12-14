@@ -4,15 +4,16 @@ package edu.it10.dangquangwatch.spring.service;
 // import com.twilio.type.PhoneNumber;
 // import edu.it10.dangquangwatch.spring.configuration.TwilioConfig;
 // import org.springframework.beans.factory.annotation.Autowired;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-@Slf4j
 @Service
 public class SmsService {
   // @Autowired
   // private TwilioConfig twilioConfig;
-
+  // Khai báo biến log thủ công
+  private static final Logger log = LoggerFactory.getLogger(SmsService.class);
   public void sendConfirmNumberSms(String to, String otp) {
     log.info("Sent " + to + " with otp: " + otp);
     // try {

@@ -63,7 +63,7 @@ public class SpringSecurityConfig {
             .anyRequest().permitAll() // Các đường dẫn còn lại không yêu cầu đăng nhập
         )
         .csrf(configurer -> configurer.disable()) // Disable csrf for testing
-        .cors(cors -> cors.configurationSource(_ -> {
+        .cors(cors -> cors.configurationSource(httpServletRequest -> {
           CorsConfiguration config = new CorsConfiguration();
           config.setAllowedOrigins(List.of("http://localhost:3000")); // Chỉ cho phép frontend
           config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
