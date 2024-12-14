@@ -15,7 +15,7 @@
 	<name>dangquangwatch</name>
 	<description>Bán đồng hồ cho Đăng Quang</description>
 	<properties>
-		<java.version>22</java.version>
+		<java.version>17</java.version>
 		<start-class>edu.it10.dangquangwatch.DangQuangWatchApplication</start-class>
 		<!-- Maven plugins -->
 		<frontend-maven-plugin.version>1.10.0</frontend-maven-plugin.version>
