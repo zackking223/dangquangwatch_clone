@@ -56,7 +56,6 @@
 1. Start the Spring Boot application with the local profile. `mvn spring-boot:run`.
 2. Run `npm run build && npm run watch` from the command line.
 3. As a final change to the pom.xml, we can add a profile that calls our production NPM scripts. At release time, be sure to enable this Maven profile. `mvn spring-boot:run -P release`.
-4. **(optional)** run mail-dev: `docker compose up -d` (If you don't have a SMPT service).
 
 ### Notes:
 - Product page is not very polished.
@@ -92,14 +91,8 @@
 - Order successful email:
 ![Order email](screenshots/email_order.png "Screenshot")
 
-### Deploy maven with docker:
-1. Build docker image: `docker build -t dangquangwatch .`
-2. Run docker image: `docker run -p 8080:8080 dangquangwatch`
-3. Access the application: `http://localhost:8080`
-
-### Deploy maven with heroku:
-1. Build docker image: `docker build -t dangquangwatch .`
-2. Run docker image: `docker run -p 8080:8080 dangquangwatch`
-3. Access the application: `http://localhost:8080`
-4. Deploy to heroku: `heroku container:push web`
-5. Access the application: `https://dangquangwatch.herokuapp.com`
+### Containerize with docker:
+1. Build target: `mvn clean package`
+2. Build static files: `npm run build`
+3. Containerize: `docker-compose up --build`
+4. Access the application: `http://localhost:8080`
