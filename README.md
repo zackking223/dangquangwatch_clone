@@ -92,7 +92,7 @@
 ![Order email](screenshots/email_order.png "Screenshot")
 
 ### Containerize with docker:
-1. Build target: `mvn clean package`
+1. Build target: `mvn verify -DskipTests`
 2. Build static files: `npm run build`
-3. Containerize: `docker-compose up --build`
+3. Containerize: `docker compose up --build`
 4. Access the application: `http://localhost:8080`
