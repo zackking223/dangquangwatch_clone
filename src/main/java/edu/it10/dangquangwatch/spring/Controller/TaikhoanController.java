@@ -65,7 +65,7 @@ public class TaikhoanController {
     model.addAttribute("to", to.isPresent() ? to.get() : "");
     model.addAttribute("taikhoans", data.getContent());
 
-    return "/admin/quantrivien/index";
+    return "admin/quantrivien/index";
   }
 
   @GetMapping(value = "/add")
@@ -82,7 +82,7 @@ public class TaikhoanController {
       session.removeAttribute(ErrorEnum.ADMIN_ACCOUNTS_ERROR.name());
     }
     model.addAttribute("taikhoan", new TaiKhoan());
-    return "/admin/quantrivien/addQuanTriVien";
+    return "admin/quantrivien/addQuanTriVien";
   }
 
   @GetMapping(value = "/edit")
@@ -95,7 +95,7 @@ public class TaikhoanController {
     TaiKhoan taikhoanEdit = taikhoanService.getTaiKhoan(username);
     if (taikhoanEdit != null) {
       model.addAttribute("taikhoan", taikhoanEdit);
-      return "/admin/quantrivien/editQuanTriVien";
+      return "admin/quantrivien/editQuanTriVien";
     } else {
       return "redirect:/admin/accounts/";
     }

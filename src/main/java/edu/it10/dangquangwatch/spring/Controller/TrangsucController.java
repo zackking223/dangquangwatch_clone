@@ -81,7 +81,7 @@ public class TrangsucController {
       model.addAttribute("errorMessage", errorMessage);
     }
 
-    return "/admin/trangsuc/index";
+    return "admin/trangsuc/index";
   }
 
   @GetMapping(value = "/add")
@@ -94,7 +94,7 @@ public class TrangsucController {
       model.addAttribute("errorMessage", errorMessage);
     }
 
-    return "/admin/trangsuc/addTrangsuc";
+    return "admin/trangsuc/addTrangsuc";
   }
 
   @GetMapping(value = "/edit")
@@ -111,7 +111,7 @@ public class TrangsucController {
       model.addAttribute("errorMessage", errorMessage);
     }
 
-    return "/admin/trangsuc/editTrangsuc";
+    return "admin/trangsuc/editTrangsuc";
   }
 
   @GetMapping("/nhap")

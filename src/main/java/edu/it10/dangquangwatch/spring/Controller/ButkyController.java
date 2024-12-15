@@ -81,7 +81,7 @@ public class ButkyController {
       model.addAttribute("errorMessage", errorMessage);
     }
 
-    return "/admin/butky/index";
+    return "admin/butky/index";
   }
 
   @GetMapping(value = "/add")
@@ -92,7 +92,7 @@ public class ButkyController {
       session.removeAttribute(ErrorEnum.ADD.name());
       model.addAttribute("errorMessage", errorMessage);
     }
-    return "/admin/butky/addButky";
+    return "admin/butky/addButky";
   }
 
   @GetMapping(value = "/edit")
@@ -107,7 +107,7 @@ public class ButkyController {
       session.removeAttribute(ErrorEnum.EDIT.name());
       model.addAttribute("errorMessage", errorMessage);
     }
-    return "/admin/butky/editButky";
+    return "admin/butky/editButky";
   }
 
   @GetMapping("/nhap")
