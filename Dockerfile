@@ -1,6 +1,6 @@
 FROM openjdk:17-jdk-slim
 
-# Copy file JAR
+# Sao chép file JAR
 COPY target/dangquangwatch-0.0.1-SNAPSHOT.jar app.jar
 
 # Mở cổng
