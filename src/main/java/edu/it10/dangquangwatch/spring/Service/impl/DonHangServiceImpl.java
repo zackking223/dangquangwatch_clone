@@ -520,10 +520,17 @@ public class DonHangServiceImpl implements DonHangService {
           }
           thongKeService.incDoanhThu(BigDecimal.valueOf(currentData.getTongTien()));
         }
+        currentData.setTinhTrang(status);
         if (paymentStatus != null) {
           currentData.setThanhToan(paymentStatus);
+          if (paymentStatus.equals(OrderPaymentStatus.PAID)) {
+            try {
+              emailService.sendOrderSuccessEmail(donHangRepository.findById(currentData.getMaDonHang()).get());
+            } catch (MessagingException e) {
+              log.warn("WARNING - Cannot send order confirm to {}", currentData.getTaikhoan().getUsername());
+            }
+          }
         }
-        currentData.setTinhTrang(status);
         updateDonHang(currentData);
       }
 
