@@ -211,6 +211,12 @@
               type: "error"
             }
           );
+
+          if (data.message === "Không tìm thấy đơn hàng!") {
+            setTimeout(() => {
+              window.location.href = "/profile/donhang";
+            }, 3000);
+          }
         }
       });
     }
