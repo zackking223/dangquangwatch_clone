@@ -180,7 +180,7 @@ public class VNPayController {
       } else {
         // Thanh toán thất bại
         donHangService.updateStatus(Integer.parseInt(maDonHang), OrderStatus.WaitForPayment, OrderPaymentStatus.FAILED);
-        redirectAttributes.addFlashAttribute("errorMesssage", "Thanh toán thất bại, mã lỗi: " + responseCode);
+        redirectAttributes.addFlashAttribute("errorMessage", "Thanh toán thất bại, mã lỗi: " + responseCode);
         return "redirect:/profile/giohang";
       }
     } catch (Exception e) {
