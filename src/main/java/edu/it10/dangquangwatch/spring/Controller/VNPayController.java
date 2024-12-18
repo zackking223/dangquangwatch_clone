@@ -17,13 +17,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.it10.dangquangwatch.spring.configuration.VNPayConfig;
 import edu.it10.dangquangwatch.spring.entity.DonHang;
+import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
 import edu.it10.dangquangwatch.spring.entity.enumeration.OrderPaymentStatus;
 import edu.it10.dangquangwatch.spring.entity.enumeration.OrderStatus;
 import edu.it10.dangquangwatch.spring.entity.request.CheckoutRequest;
 import edu.it10.dangquangwatch.spring.entity.response.ApiResponse;
 import edu.it10.dangquangwatch.spring.helper.VNPayHelper;
 import edu.it10.dangquangwatch.spring.service.DonHangService;
+import edu.it10.dangquangwatch.spring.service.TaiKhoanService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/api/vnpay")
@@ -32,12 +35,30 @@ public class VNPayController {
   private VNPayConfig vnpayConfig;
   @Autowired
   private DonHangService donHangService;
+  @Autowired
+  private TaiKhoanService taiKhoanService;
 
   @PostMapping("/create-payment")
   public ResponseEntity<ApiResponse> createPayment(
       @RequestBody CheckoutRequest request,
       HttpServletRequest servletRequest) {
     try {
+      HttpSession session = servletRequest.getSession();
+      var username = session.getAttribute("username");
+
+      if (username == null) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+            .body(new ApiResponse(false, "Bạn chưa đăng nhập!"));
+      }
+
+      TaiKhoan taiKhoan = taiKhoanService.getTaiKhoan((String)username);
+
+      if (taiKhoan == null) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+            .body(new ApiResponse(false, "Bạn chưa đăng nhập!"));
+      }
+
+      request.getDonHang().setTaikhoan(taiKhoan);
       DonHang donHang = donHangService.save(request.getDonHang(), OrderStatus.WaitForPayment, OrderPaymentStatus.PENDING);
       Map<String, String> vnpParams = buildVNPayParams(donHang, servletRequest);
 
@@ -60,6 +81,14 @@ public class VNPayController {
       @RequestBody Integer id,
       HttpServletRequest servletRequest) {
     try {
+      HttpSession session = servletRequest.getSession();
+      var username = session.getAttribute("username");
+
+      if (username == null) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+            .body(new ApiResponse(false, "Bạn chưa đăng nhập!"));
+      }
+
       Optional<DonHang> opt = donHangService.findDonHangById(id);
       if (opt.isEmpty()) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -109,9 +138,17 @@ public class VNPayController {
   @GetMapping("/return")
   public String vnpayReturn(
     @RequestParam Map<String, String> params,
-    RedirectAttributes redirectAttributes
+    RedirectAttributes redirectAttributes,
+    HttpSession session
   ) {
     try {
+      var username = session.getAttribute("username");
+
+      if (username == null) {
+        redirectAttributes.addAttribute("errorMessage", "Bạn chưa đăng nhập!");
+        return "redirect:/error";
+      }
+
       // Lấy chữ ký từ VNPay
       String vnpSecureHash = params.remove("vnp_SecureHash");
 
@@ -150,16 +187,5 @@ public class VNPayController {
       redirectAttributes.addFlashAttribute("errorMessage", "Lỗi: " + e.getMessage());
       return "redirect:/error";
     }
-  }
-
-  @PostMapping("/notify")
-  public ResponseEntity<String> vnpayNotify(@RequestParam Map<String, String> params) {
-    String maDonHang = params.get("vnp_TxnRef");
-    String responseCode = params.get("vnp_ResponseCode");
-    if (!"00".equals(responseCode)) { // Thanh toán thất bại
-      donHangService.updateStatus(Integer.parseInt(maDonHang), OrderStatus.CANCELLED, OrderPaymentStatus.CANCELLED);
-    }
-
-    return ResponseEntity.ok("Notification received");
   }
 }
