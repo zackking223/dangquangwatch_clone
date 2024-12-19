@@ -117,6 +117,14 @@ public class DonghoServiceImpl implements DonghoService {
 
     if (opt.isPresent()) {
       Dongho dongho = opt.get();
+
+      if (dongho.getSoluong() < amount || dongho.getSoluong() == 0) {
+        throw new ServiceException(
+            "Số lượng xuất quá số lượng của sản phẩm",
+            ErrorEnum.EXPORT,
+            "/admin/dongho/xuat?id=" + id);
+      }
+
       dongho.setSoluong(dongho.getSoluong() - amount);
       save(dongho);
     } else {

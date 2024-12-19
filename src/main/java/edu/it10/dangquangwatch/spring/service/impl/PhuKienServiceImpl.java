@@ -113,6 +113,14 @@ public class PhuKienServiceImpl implements PhuKienService {
 
     if (opt.isPresent()) {
       PhuKien phuKien = opt.get();
+
+      if (phuKien.getSoLuong() < amount || phuKien.getSoLuong() == 0) {
+        throw new ServiceException(
+            "Số lượng xuất quá số lượng của sản phẩm",
+            ErrorEnum.EXPORT,
+            "/admin/phukien/xuat?id=" + id);
+      }
+
       phuKien.setSoLuong(phuKien.getSoLuong() - amount);
       phuKienRepository.save(phuKien);
     } else {

@@ -111,6 +111,14 @@ public class KinhMatServiceImpl implements KinhMatService {
 
     if (opt.isPresent()) {
       KinhMat kinhMat = opt.get();
+      
+      if (kinhMat.getSoLuong() < amount || kinhMat.getSoLuong() == 0) {
+        throw new ServiceException(
+            "Số lượng xuất quá số lượng của sản phẩm",
+            ErrorEnum.EXPORT,
+            "/admin/kinhmat/xuat?id=" + id);
+      }
+
       kinhMat.setSoLuong(kinhMat.getSoLuong() - amount);
       save(kinhMat);
     } else {

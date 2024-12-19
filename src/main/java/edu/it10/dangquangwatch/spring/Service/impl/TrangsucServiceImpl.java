@@ -109,6 +109,14 @@ public class TrangsucServiceImpl implements TrangsucService {
 
     if (opt.isPresent()) {
       Trangsuc trangsuc = opt.get();
+
+      if (trangsuc.getSoluong() < amount || trangsuc.getSoluong() == 0) {
+        throw new ServiceException(
+            "Số lượng xuất quá số lượng của sản phẩm",
+            ErrorEnum.EXPORT,
+            "/admin/trangsuc/xuat?id=" + id);
+      }
+
       trangsuc.setSoluong(trangsuc.getSoluong() - amount);
       save(trangsuc);
     } else {

@@ -109,6 +109,14 @@ public class ButkyServiceImpl implements ButkyService {
 
     if (opt.isPresent()) {
       Butky butky = opt.get();
+
+      if (butky.getSoluong() < amount || butky.getSoluong() == 0) {
+        throw new ServiceException(
+            "Số lượng xuất quá số lượng của sản phẩm",
+            ErrorEnum.EXPORT,
+            "/admin/butky/xuat?id=" + id);
+      }
+      
       butky.setSoluong(butky.getSoluong() - amount);
       save(butky);
     } else {
