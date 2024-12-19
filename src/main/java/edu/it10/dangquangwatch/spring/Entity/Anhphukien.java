@@ -141,8 +141,8 @@ public class Anhphukien {
                 " maanh='" + getMaanh() + "'" +
                 ", url='" + getUrl() + "'" +
                 ", tenanh='" + getTenanh() + "'" +
-                ", phukien='" + getPhukien() + "'" +
-                ", file='" + getFile() + "'" +
+                ", phukien='" + getPhukien().getMaPhuKien() + "'" +
+                ", file='" + getFile().getName() + "'" +
                 "}";
     }
 
