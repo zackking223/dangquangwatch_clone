@@ -4,6 +4,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.lang.IllegalArgumentException;
 import jakarta.validation.ConstraintViolationException;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -12,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import edu.it10.dangquangwatch.spring.entity.response.ApiResponse;
@@ -21,6 +22,7 @@ import edu.it10.dangquangwatch.spring.payment.PaymentException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
+@Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
   @Autowired
@@ -50,25 +52,25 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(SaveAccountException.class)
   public String handleSaveAccountException(
       SaveAccountException ex,
-      @RequestHeader(value = "Referer", required = false) String referer,
+      HttpServletRequest request,
       RedirectAttributes redirectAttributes) {
     session.setAttribute(ex.getSessionErrorAttribute(), ex.getMessage());
     session.setAttribute("taikhoan", ex.getTaiKhoan());
     redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
-
+    String referer = request.getHeader("Referer");
     return ex.getRedirect() != null ? ex.getRedirect() : "redirect:" + referer;
   }
 
   @ExceptionHandler(DataIntegrityViolationException.class)
   public String handleDataIntegrityViolationException(
       DataIntegrityViolationException ex,
-      @RequestHeader(value = "Referer", required = false) String referer,
+      HttpServletRequest request,
       RedirectAttributes redirectAttributes) {
 
     String errorMessage = "Data integrity violation: " + ex.getMostSpecificCause().getMessage();
     session.setAttribute(ErrorEnum.ADMIN_ERROR.name(), errorMessage);
     redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
-
+    String referer = request.getHeader("Referer");
     // Redirect về trang gốc nếu header Referer có tồn tại
     return referer != null ? "redirect:" + referer : "redirect:/admin/dongho/";
   }
@@ -76,21 +78,22 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(ServiceException.class)
   public String handleServiceException(
       ServiceException ex,
-      @RequestHeader(value = "Referer", required = false) String referer,
+      HttpServletRequest request,
       RedirectAttributes redirectAttributes) {
     session.setAttribute(
         ex.getSessionErrorAttribute() != null ? ex.getSessionErrorAttribute() : ErrorEnum.ADMIN_ERROR.name(),
         ex.getMessage());
-
+    String referer = request.getHeader("Referer");
     String redirect = ex.getRedirect();
     redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
-    return redirect != null ? redirect : "redirect:" + referer;
+    return redirect != null ? redirect : (referer != null ? "redirect:" + referer : "redirect:/default-page");
   }
 
   @ExceptionHandler(ControllerException.class)
   public String handleControllerException(ControllerException ex) {
     session.setAttribute(ex.getSessionErrorAttribute() != null ? ex.getSessionErrorAttribute() : ErrorEnum.INDEX.name(),
         ex.getMessage());
+    log.error("REDIRECT ERROR: " + ex.getRedirect());
     return ex.getRedirect();
   }
 
@@ -226,7 +229,7 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(IllegalArgumentException.class)
   public String handleIllegalArgumentException(
-    IllegalArgumentException ex,
+      IllegalArgumentException ex,
       RedirectAttributes redirectAttributes,
       HttpServletRequest request) {
 
