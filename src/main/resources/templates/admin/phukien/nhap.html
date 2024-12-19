@@ -14,7 +14,7 @@
   <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
     <h1 class="font-bold text-center my-2">Nhập kho</h1>
 
-    <form th:object="${phuKien}" th:action="@{/admin/phuKien/nhap}" action="#" method="post">
+    <form th:object="${phuKien}" th:action="@{/admin/phukien/nhap}" action="#" method="post">
       <input type="hidden" th:value="${phuKien.maPhuKien}" name="id" />
       <p class="block font-medium text-lg" th:text="${'Mã: ' + phuKien.maPhuKien + ' - ' + phuKien.tenPhuKien}"></p>
       <div style="clear: both; display: block; height: 10px"></div>
@@ -33,7 +33,7 @@
       <div style="clear: both; display: block; height: 10px"></div>
 
       <div>
-        <label class="block font-medium" th:for="thongtin">Thông tin nhập</label>
+        <label class="block font-medium" th:for="thongTinNhap">Thông tin nhập</label>
         <textarea class="border border-black rounded p-2 w-[80vw] min-w-[280px]" rows="5"
           placeholder="Đặt vào dãy A, kệ thứ 2"
           name="thongTinNhap" required></textarea>

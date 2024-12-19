@@ -14,7 +14,7 @@
   <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
     <h1 class="font-bold text-center my-2">Nhập kho</h1>
 
-    <form th:object="${kinhMat}" th:action="@{/admin/kinhMat/nhap}" action="#" method="post">
+    <form th:object="${kinhMat}" th:action="@{/admin/kinhmat/nhap}" action="#" method="post">
       <input type="hidden" th:value="${kinhMat.maKinhMat}" name="id" />
       <p class="block font-medium text-lg" th:text="${'Mã: ' + kinhMat.maKinhMat + ' - ' + kinhMat.tenKinhMat}"></p>
       <div style="clear: both; display: block; height: 10px"></div>
