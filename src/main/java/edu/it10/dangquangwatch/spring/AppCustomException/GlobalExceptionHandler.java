@@ -32,21 +32,21 @@ public class GlobalExceptionHandler {
   public ResponseEntity<ApiResponse> handlePaymentException(PaymentException ex) {
     return ResponseEntity
         .status(HttpStatus.BAD_REQUEST)
-        .body(new ApiResponse(false, "PaymentException: " + ex.getMessage()));
+        .body(new ApiResponse(false, "Lỗi thanh toán: " + ex.getMessage()));
   }
 
   @ExceptionHandler(OrderException.class)
   public ResponseEntity<ApiResponse> handleOrderItemException(OrderException ex) {
     return ResponseEntity
         .status(HttpStatus.BAD_REQUEST)
-        .body(new ApiResponse(false, "OrderException: " + ex.getMessage()));
+        .body(new ApiResponse(false, "Lỗi đặt hàng: " + ex.getMessage()));
   }
 
   @ExceptionHandler(EmptyOrNullListException.class)
   public ResponseEntity<ApiResponse> handleEmptyOrNullListException(EmptyOrNullListException ex) {
     return ResponseEntity
         .status(HttpStatus.BAD_REQUEST)
-        .body(new ApiResponse(false, "EmptyOrNullListException: " + ex.getMessage()));
+        .body(new ApiResponse(false, "Danh sách bị trống: " + ex.getMessage()));
   }
 
   @ExceptionHandler(SaveAccountException.class)
