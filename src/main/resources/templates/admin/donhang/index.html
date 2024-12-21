@@ -201,7 +201,7 @@
                 th:data-id="${donhang.getMaDonHang()}" th:data-action="huy" onclick="confirmAction(this);">
                 Hủy đơn
               </button>
-              <button class="p-2 rounded bg-red-500 text-white" th:if="${donhang.getTinhTrang() == 'Chờ xác nhận'}"
+              <button class="p-2 rounded bg-red-500 text-white" th:if="${donhang.getTinhTrang() == 'Chờ xác nhận' && donhang.getThanhToan() != 'Đã thanh toán'}"
                 th:data-id="${donhang.getMaDonHang()}" th:data-action="huy" onclick="confirmAction(this);">
                 Từ chối
               </button>

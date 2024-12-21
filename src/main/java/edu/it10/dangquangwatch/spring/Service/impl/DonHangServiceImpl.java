@@ -511,6 +511,11 @@ public class DonHangServiceImpl implements DonHangService {
         throw exception;
       } else {
         if (status.equals(OrderStatus.CANCELLED)) {
+          if (currentData.getThanhToan().equals(OrderPaymentStatus.PAID.getValue())) {
+            exception.setMessage("Không được từ chối đơn hàng đã thanh toán, mã đơn: " + madonhang);
+            throw exception;
+          }
+
           for (ChiTietDonHang item : currentData.getItems()) {
             reSupply(item);
           }
