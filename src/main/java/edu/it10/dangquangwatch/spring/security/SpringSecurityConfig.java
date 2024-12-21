@@ -100,18 +100,18 @@ public class SpringSecurityConfig {
     return http.build();
   }
 
-  @Bean
-  public OAuth2UserService<OAuth2UserRequest, OAuth2User> oauth2UserService() {
+    @Bean
+    OAuth2UserService<OAuth2UserRequest, OAuth2User> oauth2UserService() {
     return new DefaultOAuth2UserService();
   }
 
-  @Bean
-  public AuthenticationSuccessHandler successHandler() {
+    @Bean
+    AuthenticationSuccessHandler successHandler() {
     return new CustomAuthenticationSuccessHandler();
   }
 
-  @Bean
-  public AccessDeniedHandler deniedHandler() {
+    @Bean
+    AccessDeniedHandler deniedHandler() {
     return new CustomAccessDeniedHandler();
   }
 
