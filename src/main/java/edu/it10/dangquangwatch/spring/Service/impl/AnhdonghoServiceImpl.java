@@ -11,11 +11,12 @@ import org.springframework.stereotype.Service;
 import edu.it10.dangquangwatch.spring.entity.Anhdongho;
 import edu.it10.dangquangwatch.spring.repository.AnhdonghoRepository;
 import edu.it10.dangquangwatch.spring.service.AnhdonghoService;
+import edu.it10.dangquangwatch.spring.service.ImageUploadService;
 
 @Service
 public class AnhdonghoServiceImpl implements AnhdonghoService {
   @Autowired AnhdonghoRepository anhdonghoRepository;
-  @Autowired ImageUploadServiceImpl imageUploadService;
+  @Autowired ImageUploadService imageUploadService;
 
   @Override
   public List<Anhdongho> getAllAnhdongho() {
