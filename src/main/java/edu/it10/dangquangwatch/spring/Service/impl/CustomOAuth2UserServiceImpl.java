@@ -28,7 +28,7 @@ public class CustomOAuth2UserServiceImpl extends DefaultOAuth2UserService implem
   @Autowired
   private TaiKhoanService taiKhoanService;
 
-  private static final String EMAIL_API_URL = "https://api.github.com/user/emails";
+  private static final String GITHUB_EMAIL_API_URL = "https://api.github.com/user/emails";
 
   @Override
   public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -52,7 +52,7 @@ public class CustomOAuth2UserServiceImpl extends DefaultOAuth2UserService implem
       // Gửi yêu cầu GET đến GitHub API để lấy email
       HttpEntity<String> entity = new HttpEntity<>(headers);
       ResponseEntity<List<Map<String, Object>>> response = restTemplate.exchange(
-          EMAIL_API_URL, HttpMethod.GET, entity, new ParameterizedTypeReference<List<Map<String, Object>>>() {
+          GITHUB_EMAIL_API_URL, HttpMethod.GET, entity, new ParameterizedTypeReference<List<Map<String, Object>>>() {
           });
 
       // Lấy email từ phản hồi
