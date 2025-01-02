@@ -204,7 +204,7 @@ public class ButkyController {
         anhbutky.setButky(butky);
 
         try {
-          anhbutkyService.saveAnhbutky(anhbutky);
+          anhbutkyService.save(anhbutky);
         } catch (IOException e) {
           e.printStackTrace();
         }
@@ -221,7 +221,7 @@ public class ButkyController {
         anhbutky.setButky(data);
 
         try {
-          anhbutkyService.saveAnhbutky(anhbutky);
+          anhbutkyService.save(anhbutky);
         } catch (IOException e) {
           e.printStackTrace();
         }
@@ -244,7 +244,7 @@ public class ButkyController {
         anhbutky.setButky(dh);
 
         try {
-          anhbutkyService.saveAnhbutky(anhbutky);
+          anhbutkyService.save(anhbutky);
         } catch (IOException e) {
           e.printStackTrace();
         }
@@ -268,7 +268,7 @@ public class ButkyController {
 
   @PostMapping("/deleteimage")
   public String deleteImage(@RequestParam("id") Integer maanh) throws IOException {
-    anhbutkyService.deleteAnhbutky(maanh);
+    anhbutkyService.delete(maanh);
     return "redirect:/admin/butky/";
   }
 }

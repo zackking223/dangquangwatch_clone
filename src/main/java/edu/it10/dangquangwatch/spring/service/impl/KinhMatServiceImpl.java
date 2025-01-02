@@ -133,4 +133,9 @@ public class KinhMatServiceImpl implements KinhMatService {
   public List<KinhMat> search(String searchStr) {
     return kinhMatRepository.search(searchStr);
   }
+
+  @Override
+  public Optional<KinhMat> findByIdWithLock(Integer maKinhMat) {
+    return kinhMatRepository.findByIdWithLock(maKinhMat);
+  }
 }

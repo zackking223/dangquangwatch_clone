@@ -23,6 +23,7 @@ public interface DonghoService {
   void deactivate(Integer madongho);  
 
   Optional<Dongho> findById(Integer madongho);
+  Optional<Dongho> findByIdWithLock(Integer madongho);
   
   void incAmount(Integer amount, Integer id);
   void decAmount(Integer amount, Integer id);

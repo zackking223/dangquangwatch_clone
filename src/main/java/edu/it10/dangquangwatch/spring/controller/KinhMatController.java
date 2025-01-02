@@ -207,7 +207,7 @@ public class KinhMatController {
         anhkinhmat.setKinhmat(kinhMat);
 
         try {
-          anhkinhmatService.saveAnhkinhmat(anhkinhmat);
+          anhkinhmatService.save(anhkinhmat);
         } catch (IOException e) {
           e.printStackTrace();
         }
@@ -224,7 +224,7 @@ public class KinhMatController {
         anhkinhmat.setKinhmat(data);
 
         try {
-          anhkinhmatService.saveAnhkinhmat(anhkinhmat);
+          anhkinhmatService.save(anhkinhmat);
         } catch (IOException e) {
           e.printStackTrace();
         }
@@ -248,7 +248,7 @@ public class KinhMatController {
         anhkinhmat.setKinhmat(dh);
 
         try {
-          anhkinhmatService.saveAnhkinhmat(anhkinhmat);
+          anhkinhmatService.save(anhkinhmat);
         } catch (IOException e) {
           e.printStackTrace();
         }
@@ -272,7 +272,7 @@ public class KinhMatController {
 
   @PostMapping("/deleteimage")
   public String deleteImage(@RequestParam("id") Integer maanh) throws IOException {
-    anhkinhmatService.deleteAnhkinhmat(maanh);
+    anhkinhmatService.delete(maanh);
     return "redirect:/admin/kinhmat/";
   }
 }

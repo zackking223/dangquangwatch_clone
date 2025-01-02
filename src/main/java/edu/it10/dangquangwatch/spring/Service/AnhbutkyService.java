@@ -7,11 +7,11 @@ import java.util.Optional;
 import edu.it10.dangquangwatch.spring.entity.Anhbutky;
 
 public interface AnhbutkyService {
-  List<Anhbutky> getAllAnhbutky();
+  List<Anhbutky> getAll();
 
-  void saveAnhbutky(Anhbutky anhbutky) throws IOException;
+  void save(Anhbutky anhbutky) throws IOException;
 
-  void deleteAnhbutky(Integer maanh) throws IOException;
+  void delete(Integer maanh) throws IOException;
 
-  Optional<Anhbutky> findAnhbutkyById(Integer maanh);
+  Optional<Anhbutky> findById(Integer maanh);
 }

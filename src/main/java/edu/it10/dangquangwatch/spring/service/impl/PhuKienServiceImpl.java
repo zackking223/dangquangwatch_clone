@@ -135,4 +135,9 @@ public class PhuKienServiceImpl implements PhuKienService {
   public List<PhuKien> search(String searchStr) {
     return phuKienRepository.search(searchStr);
   }
+
+  @Override
+  public Optional<PhuKien> findByIdWithLock(Integer maPhuKien) {
+    return phuKienRepository.findByIdWithLock(maPhuKien);
+  }
 }

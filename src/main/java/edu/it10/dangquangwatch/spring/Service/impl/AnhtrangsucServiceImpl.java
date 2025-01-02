@@ -21,12 +21,12 @@ public class AnhtrangsucServiceImpl implements AnhtrangsucService {
   ImageUploadService imageUploadService;
 
   @Override
-  public List<Anhtrangsuc> getAllAnhtrangsuc() {
+  public List<Anhtrangsuc> getAll() {
     return anhtrangsucRepository.findAll();
   }
 
   @Override
-  public void saveAnhtrangsuc(Anhtrangsuc anhtrangsuc) throws IOException {
+  public void save(Anhtrangsuc anhtrangsuc) throws IOException {
     Map<String, String> uploadResult = imageUploadService.uploadImage(anhtrangsuc.getFile());
 
     anhtrangsuc.setTenanh(uploadResult.get("public_id"));
@@ -36,7 +36,7 @@ public class AnhtrangsucServiceImpl implements AnhtrangsucService {
   }
 
   @Override
-  public void deleteAnhtrangsuc(Integer maanh) throws IOException {
+  public void delete(Integer maanh) throws IOException {
     Optional<Anhtrangsuc> data = anhtrangsucRepository.findById(maanh);
 
     if (data.isPresent()) {
@@ -49,7 +49,7 @@ public class AnhtrangsucServiceImpl implements AnhtrangsucService {
   }
 
   @Override
-  public Optional<Anhtrangsuc> findAnhtrangsucById(Integer maanh) {
+  public Optional<Anhtrangsuc> findById(Integer maanh) {
     return anhtrangsucRepository.findById(maanh);
   }
 

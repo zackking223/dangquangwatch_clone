@@ -139,4 +139,9 @@ public class DonghoServiceImpl implements DonghoService {
   public List<Dongho> search(String searchStr) {
     return donghoRepository.search(searchStr);
   }
+
+  @Override
+  public Optional<Dongho> findByIdWithLock(Integer id) {
+    return donghoRepository.findByIdWithLock(id);
+  }
 }

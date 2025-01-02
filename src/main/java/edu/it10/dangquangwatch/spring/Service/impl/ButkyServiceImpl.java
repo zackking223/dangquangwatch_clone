@@ -131,4 +131,9 @@ public class ButkyServiceImpl implements ButkyService {
   public List<Butky> search(String searchStr) {
     return butkyRepository.search(searchStr);
   }
+
+  @Override
+  public Optional<Butky> findByIdWithLock(Integer mabutky) {
+    return butkyRepository.findByIdWithLock(mabutky);
+  }
 }

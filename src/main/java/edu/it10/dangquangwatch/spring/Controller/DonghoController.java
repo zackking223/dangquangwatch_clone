@@ -228,7 +228,7 @@ public class DonghoController {
         anhdongho.setDongho(dongho);
 
         try {
-          anhdonghoService.saveAnhdongho(anhdongho);
+          anhdonghoService.save(anhdongho);
         } catch (IOException e) {
           e.printStackTrace();
         }
@@ -246,7 +246,7 @@ public class DonghoController {
         anhdongho.setDongho(data);
 
         try {
-          anhdonghoService.saveAnhdongho(anhdongho);
+          anhdonghoService.save(anhdongho);
         } catch (IOException e) {
           e.printStackTrace();
         }
@@ -271,7 +271,7 @@ public class DonghoController {
         anhdongho.setDongho(dh);
 
         try {
-          anhdonghoService.saveAnhdongho(anhdongho);
+          anhdonghoService.save(anhdongho);
         } catch (IOException e) {
           e.printStackTrace();
         }
@@ -295,7 +295,7 @@ public class DonghoController {
 
   @PostMapping("/deleteimage")
   public String deleteImage(@RequestParam("id") Integer maanh) throws IOException {
-    anhdonghoService.deleteAnhdongho(maanh);
+    anhdonghoService.delete(maanh);
     return "redirect:/admin/dongho/";
   }
 }

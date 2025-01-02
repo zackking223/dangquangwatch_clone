@@ -212,7 +212,7 @@ public class PhuKienController {
         anhphukien.setPhukien(phuKien);
 
         try {
-          anhphukienService.saveAnhphukien(anhphukien);
+          anhphukienService.save(anhphukien);
         } catch (IOException e) {
           e.printStackTrace();
         }
@@ -229,7 +229,7 @@ public class PhuKienController {
         anhphukien.setPhukien(data);
 
         try {
-          anhphukienService.saveAnhphukien(anhphukien);
+          anhphukienService.save(anhphukien);
         } catch (IOException e) {
           e.printStackTrace();
         }
@@ -253,7 +253,7 @@ public class PhuKienController {
         anhphukien.setPhukien(dh);
 
         try {
-          anhphukienService.saveAnhphukien(anhphukien);
+          anhphukienService.save(anhphukien);
         } catch (IOException e) {
           e.printStackTrace();
         }
@@ -277,7 +277,7 @@ public class PhuKienController {
 
   @PostMapping("/deleteimage")
   public String deleteImage(@RequestParam("id") Integer maanh) throws IOException {
-    anhphukienService.deleteAnhphukien(maanh);
+    anhphukienService.delete(maanh);
     return "redirect:/admin/phukien/";
   }
 }

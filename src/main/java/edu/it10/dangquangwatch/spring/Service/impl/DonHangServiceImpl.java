@@ -247,40 +247,41 @@ public class DonHangServiceImpl implements DonHangService {
     return new ApiResponse(true, "Đặt hàng thành công!");
   }
 
+  @Transactional
   void saveOrderItem(ChiTietDonHang item, DonHang result) {
     item.setDonhang(result);
     item.setNGAYTHEM(result.getNGAYTHEM());
     switch (item.getLoaiSanPham()) {
       case "dongho":
-        Dongho dongHo = donghoService.findById(item.getMaSanPham())
+        Dongho dongHo = donghoService.findByIdWithLock(item.getMaSanPham())
             .orElseThrow(() -> new OrderException("Đồng hồ không tồn tại, mã: " + item.getMaSanPham()));
         dongHo.setSoluong(dongHo.getSoluong() - item.getSoLuong());
         dongHo.setSoluongdatmua(dongHo.getSoluongdatmua() + item.getSoLuong());
         donghoService.save(dongHo);
         break;
       case "phukien":
-        PhuKien phuKien = phuKienService.findById(item.getMaSanPham())
+        PhuKien phuKien = phuKienService.findByIdWithLock(item.getMaSanPham())
             .orElseThrow(() -> new OrderException("Phụ kiện không tồn tại, mã: " + item.getMaSanPham()));
         phuKien.setSoLuong(phuKien.getSoLuong() - item.getSoLuong());
         phuKien.setSoluongdatmua(phuKien.getSoluongdatmua() + item.getSoLuong());
         phuKienService.save(phuKien);
         break;
       case "kinhmat":
-        KinhMat kinhMat = kinhMatService.findById(item.getMaSanPham())
+        KinhMat kinhMat = kinhMatService.findByIdWithLock(item.getMaSanPham())
             .orElseThrow(() -> new OrderException("Kính mắt không tồn tại, mã: " + item.getMaSanPham()));
         kinhMat.setSoLuong(kinhMat.getSoLuong() - item.getSoLuong());
         kinhMat.setSoluongdatmua(kinhMat.getSoluongdatmua() + item.getSoLuong());
         kinhMatService.save(kinhMat);
         break;
       case "butky":
-        Butky butKy = butKyService.findById(item.getMaSanPham())
+        Butky butKy = butKyService.findByIdWithLock(item.getMaSanPham())
             .orElseThrow(() -> new OrderException("Bút ký không tồn tại, mã: " + item.getMaSanPham()));
         butKy.setSoluong(butKy.getSoluong() - item.getSoLuong());
         butKy.setSoluongdatmua(butKy.getSoluongdatmua() + item.getSoLuong());
         butKyService.save(butKy);
         break;
       case "trangsuc":
-        Trangsuc trangSuc = trangSucService.findById(item.getMaSanPham())
+        Trangsuc trangSuc = trangSucService.findByIdWithLock(item.getMaSanPham())
             .orElseThrow(() -> new OrderException("Trang sức không tồn tại, mã: " + item.getMaSanPham()));
         trangSuc.setSoluong(trangSuc.getSoluong() - item.getSoLuong());
         trangSuc.setSoluongdatmua(trangSuc.getSoluongdatmua() + item.getSoLuong());
@@ -334,38 +335,39 @@ public class DonHangServiceImpl implements DonHangService {
     }
   }
 
+  @Transactional
   void reSupply(ChiTietDonHang item) {
     switch (item.getLoaiSanPham()) {
       case "dongho":
-        Dongho dongHo = donghoService.findById(item.getMaSanPham())
+        Dongho dongHo = donghoService.findByIdWithLock(item.getMaSanPham())
             .orElseThrow(() -> new OrderException("Đồng hồ không tồn tại, mã: " + item.getMaSanPham()));
         dongHo.setSoluong(dongHo.getSoluong() + item.getSoLuong());
         dongHo.setSoluongdatmua(dongHo.getSoluongdatmua() - item.getSoLuong());
         donghoService.save(dongHo);
         break;
       case "phukien":
-        PhuKien phuKien = phuKienService.findById(item.getMaSanPham())
+        PhuKien phuKien = phuKienService.findByIdWithLock(item.getMaSanPham())
             .orElseThrow(() -> new OrderException("Phụ kiện không tồn tại, mã: " + item.getMaSanPham()));
         phuKien.setSoLuong(phuKien.getSoLuong() + item.getSoLuong());
         phuKien.setSoluongdatmua(phuKien.getSoluongdatmua() - item.getSoLuong());
         phuKienService.save(phuKien);
         break;
       case "kinhmat":
-        KinhMat kinhMat = kinhMatService.findById(item.getMaSanPham())
+        KinhMat kinhMat = kinhMatService.findByIdWithLock(item.getMaSanPham())
             .orElseThrow(() -> new OrderException("Kính mắt không tồn tại, mã: " + item.getMaSanPham()));
         kinhMat.setSoLuong(kinhMat.getSoLuong() + item.getSoLuong());
         kinhMat.setSoluongdatmua(kinhMat.getSoluongdatmua() - item.getSoLuong());
         kinhMatService.save(kinhMat);
         break;
       case "butky":
-        Butky butKy = butKyService.findById(item.getMaSanPham())
+        Butky butKy = butKyService.findByIdWithLock(item.getMaSanPham())
             .orElseThrow(() -> new OrderException("Bút ký không tồn tại, mã: " + item.getMaSanPham()));
         butKy.setSoluong(butKy.getSoluong() + item.getSoLuong());
         butKy.setSoluongdatmua(butKy.getSoluongdatmua() - item.getSoLuong());
         butKyService.save(butKy);
         break;
       case "trangsuc":
-        Trangsuc trangSuc = trangSucService.findById(item.getMaSanPham())
+        Trangsuc trangSuc = trangSucService.findByIdWithLock(item.getMaSanPham())
             .orElseThrow(() -> new OrderException("Trang sức không tồn tại, mã: " + item.getMaSanPham()));
         trangSuc.setSoluong(trangSuc.getSoluong() + item.getSoLuong());
         trangSuc.setSoluongdatmua(trangSuc.getSoluongdatmua() - item.getSoLuong());

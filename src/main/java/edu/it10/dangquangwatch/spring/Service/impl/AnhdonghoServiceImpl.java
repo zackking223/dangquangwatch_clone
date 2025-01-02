@@ -19,12 +19,12 @@ public class AnhdonghoServiceImpl implements AnhdonghoService {
   @Autowired ImageUploadService imageUploadService;
 
   @Override
-  public List<Anhdongho> getAllAnhdongho() {
+  public List<Anhdongho> getAll() {
     return anhdonghoRepository.findAll();
   }
 
   @Override
-  public void saveAnhdongho(Anhdongho anhdongho) throws IOException {
+  public void save(Anhdongho anhdongho) throws IOException {
     Map<String, String> uploadResult = imageUploadService.uploadImage(anhdongho.getFile());
     
     anhdongho.setTenanh(uploadResult.get("public_id"));
@@ -34,7 +34,7 @@ public class AnhdonghoServiceImpl implements AnhdonghoService {
   }
 
   @Override
-  public void deleteAnhdongho(Integer maanh) throws IOException {
+  public void delete(Integer maanh) throws IOException {
     Optional<Anhdongho> data = anhdonghoRepository.findById(maanh);
 
     if (data.isPresent()) {
@@ -47,7 +47,7 @@ public class AnhdonghoServiceImpl implements AnhdonghoService {
   }
 
   @Override
-  public Optional<Anhdongho> findAnhdonghoById(Integer maanh) {
+  public Optional<Anhdongho> findById(Integer maanh) {
     return anhdonghoRepository.findById(maanh);
   }
   

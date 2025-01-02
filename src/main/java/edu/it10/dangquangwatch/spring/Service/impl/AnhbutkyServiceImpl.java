@@ -21,12 +21,12 @@ public class AnhbutkyServiceImpl implements AnhbutkyService {
   ImageUploadService imageUploadService;
 
   @Override
-  public List<Anhbutky> getAllAnhbutky() {
+  public List<Anhbutky> getAll() {
     return anhbutkyRepository.findAll();
   }
 
   @Override
-  public void saveAnhbutky(Anhbutky anhbutky) throws IOException {
+  public void save(Anhbutky anhbutky) throws IOException {
     Map<String, String> uploadResult = imageUploadService.uploadImage(anhbutky.getFile());
 
     anhbutky.setTenanh(uploadResult.get("public_id"));
@@ -36,7 +36,7 @@ public class AnhbutkyServiceImpl implements AnhbutkyService {
   }
 
   @Override
-  public void deleteAnhbutky(Integer maanh) throws IOException {
+  public void delete(Integer maanh) throws IOException {
     Optional<Anhbutky> data = anhbutkyRepository.findById(maanh);
 
     if (data.isPresent()) {
@@ -49,7 +49,7 @@ public class AnhbutkyServiceImpl implements AnhbutkyService {
   }
 
   @Override
-  public Optional<Anhbutky> findAnhbutkyById(Integer maanh) {
+  public Optional<Anhbutky> findById(Integer maanh) {
     return anhbutkyRepository.findById(maanh);
   }
 

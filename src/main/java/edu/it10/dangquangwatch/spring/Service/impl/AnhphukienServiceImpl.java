@@ -21,12 +21,12 @@ public class AnhphukienServiceImpl implements AnhphukienService {
   ImageUploadService imageUploadService;
 
   @Override
-  public List<Anhphukien> getAllAnhphukien() {
+  public List<Anhphukien> getAll() {
     return anhphukienRepository.findAll();
   }
 
   @Override
-  public void saveAnhphukien(Anhphukien anhphukien) throws IOException {
+  public void save(Anhphukien anhphukien) throws IOException {
     Map<String, String> uploadResult = imageUploadService.uploadImage(anhphukien.getFile());
 
     anhphukien.setTenanh(uploadResult.get("public_id"));
@@ -36,7 +36,7 @@ public class AnhphukienServiceImpl implements AnhphukienService {
   }
 
   @Override
-  public void deleteAnhphukien(Integer maanh) throws IOException {
+  public void delete(Integer maanh) throws IOException {
     Optional<Anhphukien> data = anhphukienRepository.findById(maanh);
 
     if (data.isPresent()) {
@@ -49,7 +49,7 @@ public class AnhphukienServiceImpl implements AnhphukienService {
   }
 
   @Override
-  public Optional<Anhphukien> findAnhphukienById(Integer maanh) {
+  public Optional<Anhphukien> findById(Integer maanh) {
     return anhphukienRepository.findById(maanh);
   }
 

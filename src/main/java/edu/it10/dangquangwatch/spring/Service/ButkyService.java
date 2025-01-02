@@ -20,6 +20,7 @@ public interface ButkyService {
   void deactivate(Integer mabutky);  
 
   Optional<Butky> findById(Integer mabutky);  
+  Optional<Butky> findByIdWithLock(Integer mabutky);  
 
   void incAmount(Integer amount, Integer id);
   void decAmount(Integer amount, Integer id);

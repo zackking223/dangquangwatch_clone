@@ -7,11 +7,11 @@ import java.util.Optional;
 import edu.it10.dangquangwatch.spring.entity.Anhtrangsuc;
 
 public interface AnhtrangsucService {
-  List<Anhtrangsuc> getAllAnhtrangsuc();
+  List<Anhtrangsuc> getAll();
 
-  void saveAnhtrangsuc(Anhtrangsuc anhtrAnhtrangsuc) throws IOException;
+  void save(Anhtrangsuc anhtrAnhtrangsuc) throws IOException;
 
-  void deleteAnhtrangsuc(Integer maanh) throws IOException;
+  void delete(Integer maanh) throws IOException;
 
-  Optional<Anhtrangsuc> findAnhtrangsucById(Integer maanh);
+  Optional<Anhtrangsuc> findById(Integer maanh);
 }

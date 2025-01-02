@@ -21,12 +21,12 @@ public class AnhkinhmatServiceImpl implements AnhkinhmatService {
   ImageUploadService imageUploadService;
 
   @Override
-  public List<Anhkinhmat> getAllAnhkinhmat() {
+  public List<Anhkinhmat> getAll() {
     return anhkinhmatRepository.findAll();
   }
 
   @Override
-  public void saveAnhkinhmat(Anhkinhmat anhkinhmat) throws IOException {
+  public void save(Anhkinhmat anhkinhmat) throws IOException {
     Map<String, String> uploadResult = imageUploadService.uploadImage(anhkinhmat.getFile());
 
     anhkinhmat.setTenanh(uploadResult.get("public_id"));
@@ -36,7 +36,7 @@ public class AnhkinhmatServiceImpl implements AnhkinhmatService {
   }
 
   @Override
-  public void deleteAnhkinhmat(Integer maanh) throws IOException {
+  public void delete(Integer maanh) throws IOException {
     Optional<Anhkinhmat> data = anhkinhmatRepository.findById(maanh);
 
     if (data.isPresent()) {
@@ -49,7 +49,7 @@ public class AnhkinhmatServiceImpl implements AnhkinhmatService {
   }
 
   @Override
-  public Optional<Anhkinhmat> findAnhkinhmatById(Integer maanh) {
+  public Optional<Anhkinhmat> findById(Integer maanh) {
     return anhkinhmatRepository.findById(maanh);
   }
 

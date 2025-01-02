@@ -20,6 +20,7 @@ public interface TrangsucService {
   void deactivate(Integer matrangsuc);  
 
   Optional<Trangsuc> findById(Integer matrangsuc);
+  Optional<Trangsuc> findByIdWithLock(Integer matrangsuc);
   
   void incAmount(Integer amount, Integer id);
   void decAmount(Integer amount, Integer id);

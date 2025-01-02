@@ -20,6 +20,7 @@ public interface KinhMatService {
   void deactivate(Integer maKinhMat);  
 
   Optional<KinhMat> findById(Integer maKinhMat);
+  Optional<KinhMat> findByIdWithLock(Integer maKinhMat);
 
   void incAmount(Integer amount, Integer id);
   void decAmount(Integer amount, Integer id);

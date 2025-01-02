@@ -208,7 +208,7 @@ public class TrangsucController {
         anhtrangsuc.setTrangsuc(trangsuc);
 
         try {
-          anhtrangsucService.saveAnhtrangsuc(anhtrangsuc);
+          anhtrangsucService.save(anhtrangsuc);
         } catch (IOException e) {
           e.printStackTrace();
         }
@@ -225,7 +225,7 @@ public class TrangsucController {
         anhtrangsuc.setTrangsuc(data);
 
         try {
-          anhtrangsucService.saveAnhtrangsuc(anhtrangsuc);
+          anhtrangsucService.save(anhtrangsuc);
         } catch (IOException e) {
           e.printStackTrace();
         }
@@ -249,7 +249,7 @@ public class TrangsucController {
         anhtrangsuc.setTrangsuc(dh);
 
         try {
-          anhtrangsucService.saveAnhtrangsuc(anhtrangsuc);
+          anhtrangsucService.save(anhtrangsuc);
         } catch (IOException e) {
           e.printStackTrace();
         }
@@ -273,7 +273,7 @@ public class TrangsucController {
 
   @PostMapping("/deleteimage")
   public String deleteImage(@RequestParam("id") Integer maanh) throws IOException {
-    anhtrangsucService.deleteAnhtrangsuc(maanh);
+    anhtrangsucService.delete(maanh);
     return "redirect:/admin/trangsuc/";
   }
 }

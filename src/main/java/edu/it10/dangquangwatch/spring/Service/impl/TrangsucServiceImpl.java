@@ -131,4 +131,9 @@ public class TrangsucServiceImpl implements TrangsucService {
   public List<Trangsuc> search(String searchStr) {
     return trangsucRepository.search(searchStr);
   }
+
+  @Override
+  public Optional<Trangsuc> findByIdWithLock(Integer matrangsuc) {
+    return trangsucRepository.findByIdWithLock(matrangsuc);
+  }
 }

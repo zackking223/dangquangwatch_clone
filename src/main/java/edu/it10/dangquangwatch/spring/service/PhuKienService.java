@@ -20,6 +20,7 @@ public interface PhuKienService {
   void deactivate(Integer maPhuKien);
 
   Optional<PhuKien> findById(Integer maPhuKien);
+  Optional<PhuKien> findByIdWithLock(Integer maPhuKien);
 
   void incAmount(Integer amount, Integer id);
   void decAmount(Integer amount, Integer id);
