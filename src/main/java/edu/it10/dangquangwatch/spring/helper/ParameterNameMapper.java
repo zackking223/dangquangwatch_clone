@@ -17,14 +17,12 @@ public class ParameterNameMapper {
         PARAMETER_NAME_MAP.put("tenkinhmat", "Tên kính mắt");
         PARAMETER_NAME_MAP.put("tentrangsuc", "Tên trang sức");
         PARAMETER_NAME_MAP.put("tenphukien", "Tên phụ kiện");
-        PARAMETER_NAME_MAP.put("tenkinhmat", "Tên kính mắt");
 
         PARAMETER_NAME_MAP.put("madonhang", "Mã đơn hàng");
         PARAMETER_NAME_MAP.put("madongho", "Mã đồng hồ");
         PARAMETER_NAME_MAP.put("makinhmat", "Mã kính mắt");
         PARAMETER_NAME_MAP.put("matrangsuc", "Mã trang sức");
         PARAMETER_NAME_MAP.put("maphukien", "Mã phụ kiện");
-        PARAMETER_NAME_MAP.put("makinhmat", "Mã kính mắt");
 
         PARAMETER_NAME_MAP.put("username", "Email");
         PARAMETER_NAME_MAP.put("hoten", "Họ tên");

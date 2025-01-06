@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import edu.it10.dangquangwatch.spring.service.taikhoan.TaiKhoanManager;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -24,19 +24,21 @@ import edu.it10.dangquangwatch.spring.entity.request.CheckoutRequest;
 import edu.it10.dangquangwatch.spring.entity.response.ApiResponse;
 import edu.it10.dangquangwatch.spring.helper.VNPayHelper;
 import edu.it10.dangquangwatch.spring.service.DonHangService;
-import edu.it10.dangquangwatch.spring.service.TaiKhoanService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/api/vnpay")
 public class VNPayController {
-  @Autowired
-  private VNPayConfig vnpayConfig;
-  @Autowired
-  private DonHangService donHangService;
-  @Autowired
-  private TaiKhoanService taiKhoanService;
+  private final VNPayConfig vnpayConfig;
+  private final DonHangService donHangService;
+  private final TaiKhoanManager taiKhoanManager;
+
+  public VNPayController(VNPayConfig vnpayConfig, DonHangService donHangService, TaiKhoanManager taiKhoanManager) {
+    this.vnpayConfig = vnpayConfig;
+    this.donHangService = donHangService;
+    this.taiKhoanManager = taiKhoanManager;
+  }
 
   @PostMapping("/create-payment")
   public ResponseEntity<ApiResponse> createPayment(
@@ -51,7 +53,7 @@ public class VNPayController {
             .body(new ApiResponse(false, "Bạn chưa đăng nhập!"));
       }
 
-      TaiKhoan taiKhoan = taiKhoanService.getTaiKhoan((String)username);
+      TaiKhoan taiKhoan = taiKhoanManager.getTaiKhoan((String)username);
 
       if (taiKhoan == null) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)

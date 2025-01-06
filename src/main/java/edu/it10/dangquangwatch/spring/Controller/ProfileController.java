@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import edu.it10.dangquangwatch.spring.service.taikhoan.TaiKhoanManager;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +26,6 @@ import edu.it10.dangquangwatch.spring.payment.LocalCardInfo;
 import edu.it10.dangquangwatch.spring.service.ChiTietDonHangService;
 import edu.it10.dangquangwatch.spring.service.DonHangService;
 import edu.it10.dangquangwatch.spring.service.OtpService;
-import edu.it10.dangquangwatch.spring.service.TaiKhoanService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -42,14 +41,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/profile")
 public class ProfileController {
-  @Autowired
-  DonHangService donHangService;
-  @Autowired
-  ChiTietDonHangService ctdhService;
-  @Autowired
-  TaiKhoanService taiKhoanService;
-  @Autowired
-  OtpService otpService;
+  private final DonHangService donHangService;
+  private final TaiKhoanManager taiKhoanManager;
+  private final OtpService otpService;
+
+  public ProfileController(DonHangService donHangService, TaiKhoanManager taiKhoanManager, OtpService otpService) {
+    this.donHangService = donHangService;
+    this.taiKhoanManager = taiKhoanManager;
+    this.otpService = otpService;
+  }
 
   @GetMapping("/")
   public String index() {
@@ -61,7 +61,7 @@ public class ProfileController {
     var username = session.getAttribute("username");
 
     if (username != null) {
-      TaiKhoan taikhoan = taiKhoanService.getTaiKhoan((String) username);
+      TaiKhoan taikhoan = taiKhoanManager.getTaiKhoan((String) username);
 
       model.addAttribute("taikhoan", taikhoan);
       return "giohang";
@@ -151,7 +151,7 @@ public class ProfileController {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ObjectResponse<>(false, "Vui lòng đăng nhập tài khoản", null));
     }
 
-    TaiKhoan user = taiKhoanService.getTaiKhoan((String) username);
+    TaiKhoan user = taiKhoanManager.getTaiKhoan((String) username);
 
     TaiKhoan tempTaiKhoan = new TaiKhoan();
     tempTaiKhoan.setUsername((String) username);
@@ -196,7 +196,7 @@ public class ProfileController {
     String currentUserId = (String) session.getAttribute("username");
 
     Optional<DonHang> data = donHangService.findDonHangById(madonHang);
-    TaiKhoan currentUser = taiKhoanService.getTaiKhoan(currentUserId);
+    TaiKhoan currentUser = taiKhoanManager.getTaiKhoan(currentUserId);
 
     if (data.isPresent()) {
       DonHang donHang = data.get();
@@ -222,7 +222,7 @@ public class ProfileController {
       session.removeAttribute(ErrorEnum.UPDATE_PROFILE_ERROR.name());
     }
 
-    TaiKhoan taikhoan = taiKhoanService.getTaiKhoan((String) username);
+    TaiKhoan taikhoan = taiKhoanManager.getTaiKhoan((String) username);
 
     model.addAttribute("taikhoan", taikhoan);
 
@@ -260,7 +260,7 @@ public class ProfileController {
     taiKhoan.setUsername((String) taikhoanUsername);
 
     try {
-      taiKhoanService.updateTaiKhoan(taiKhoan, "/profile/doithongtin");
+      taiKhoanManager.updateTaiKhoan(taiKhoan, "/profile/doithongtin");
     } catch (SaveAccountException e) {
       e.printStackTrace();
       session.setAttribute(ErrorEnum.UPDATE_PROFILE_ERROR.name(), e.getMessage());

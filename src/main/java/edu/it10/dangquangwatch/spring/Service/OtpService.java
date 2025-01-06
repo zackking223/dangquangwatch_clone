@@ -7,6 +7,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.Optional;
 
+import edu.it10.dangquangwatch.spring.service.taikhoan.TaiKhoanManager;
+import edu.it10.dangquangwatch.spring.service.taikhoan.TaiKhoanPasswordManager;
+import edu.it10.dangquangwatch.spring.service.taikhoan.TaiKhoanPhoneManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,16 +24,30 @@ import edu.it10.dangquangwatch.spring.repository.OtpRepository;
 
 @Service
 public class OtpService {
-  @Autowired
-  private OtpRepository otpRepository;
-  @Autowired
-  private TaiKhoanService taiKhoanService;
-  @Autowired
-  private EmailService emailService;
-  @Autowired
-  private SmsService smsService;
+  private final OtpRepository otpRepository;
+  private final TaiKhoanManager taiKhoanManager;
+  private final TaiKhoanPasswordManager taiKhoanPasswordManager;
+  private final TaiKhoanPhoneManager taiKhoanPhoneManager;
+  private final EmailService emailService;
+  private final SmsService smsService;
 
-  private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+  private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+  @Autowired
+  public OtpService(
+          OtpRepository otpRepository,
+          TaiKhoanManager taiKhoanManager,
+          TaiKhoanPasswordManager taiKhoanPasswordManager,
+          TaiKhoanPhoneManager taiKhoanPhoneManager,
+          EmailService emailService,
+          SmsService smsService) {
+    this.otpRepository = otpRepository;
+    this.taiKhoanManager = taiKhoanManager;
+      this.taiKhoanPasswordManager = taiKhoanPasswordManager;
+      this.taiKhoanPhoneManager = taiKhoanPhoneManager;
+      this.emailService = emailService;
+    this.smsService = smsService;
+  }
 
   public void verifyAccount(String email, String password) {
     Optional<Otp> otpOptional = otpRepository.findByEmailAndPasswordAndAction(email, password,
@@ -41,7 +58,7 @@ public class OtpService {
         otpRepository.delete(otp);
         throw new OtpException("Mã OTP đã hết hạn!");
       } else {
-        taiKhoanService.activate(email);
+        taiKhoanManager.activate(email);
         otpRepository.delete(otp);
       }
     } else {
@@ -58,7 +75,7 @@ public class OtpService {
         otpRepository.delete(otp);
         throw new OtpException("Mã OTP đã hết hạn!");
       } else {
-        taiKhoanService.doiMatKhauHashed(otp.getPayload(), email);
+        taiKhoanPasswordManager.doiMatKhauHashed(otp.getPayload(), email, "/profile/doithongtin");
         otpRepository.delete(otp);
       }
     } else {
@@ -79,7 +96,7 @@ public class OtpService {
         otpRepository.delete(otp);
         throw new OtpException("Mã OTP đã hết hạn!", "/profile/phoneotp", true);
       } else {
-        taiKhoanService.doiSoDienThoai(payload, email);
+        taiKhoanPhoneManager.doiSoDienThoai(payload, email, "/profile/phoneotp");
         otpRepository.delete(otp);
       }
     } else {
@@ -89,7 +106,7 @@ public class OtpService {
 
   public void createVerifyAccountUrl(String email) {
     Otp otp = new Otp();
-    TaiKhoan taiKhoan = taiKhoanService.getTaiKhoan(email);
+    TaiKhoan taiKhoan = taiKhoanManager.getTaiKhoan(email);
     String password = Base64.getUrlEncoder().encodeToString(email.getBytes(StandardCharsets.UTF_8));
     otp.setEmail(email);
     otp.setPassword(password);
@@ -113,7 +130,7 @@ public class OtpService {
 
   public void createChangePasswordUrl(String email, String plainText) {
     Otp otp = new Otp();
-    TaiKhoan taiKhoan = taiKhoanService.getTaiKhoan(email);
+    TaiKhoan taiKhoan = taiKhoanManager.getTaiKhoan(email);
     String password = Base64.getUrlEncoder().encodeToString(email.getBytes(StandardCharsets.UTF_8));
     otp.setEmail(email);
     otp.setPassword(password);
@@ -154,14 +171,12 @@ public class OtpService {
   public String getExpiryDateTime(int days) {
     // Tính ngày và giờ hết hạn (7 ngày từ bây giờ)
     LocalDateTime expiryDateTime = LocalDateTime.now().plusDays(days);
-    String formattedExpiryDateTime = expiryDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-    return formattedExpiryDateTime;
+      return expiryDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
   }
 
   public String getExpiryDateTimeInMinutes(int minutes) {
     // Tính thời gian hết hạn (N phút từ bây giờ)
     LocalDateTime expiryDateTime = LocalDateTime.now().plusMinutes(minutes);
-    String formattedExpiryDateTime = expiryDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-    return formattedExpiryDateTime;
+      return expiryDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
   }
 }
