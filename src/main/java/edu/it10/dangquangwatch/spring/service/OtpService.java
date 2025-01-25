@@ -10,7 +10,6 @@ import java.util.Optional;
 import edu.it10.dangquangwatch.spring.service.taikhoan.TaiKhoanManager;
 import edu.it10.dangquangwatch.spring.service.taikhoan.TaiKhoanPasswordManager;
 import edu.it10.dangquangwatch.spring.service.taikhoan.TaiKhoanPhoneManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -33,7 +32,6 @@ public class OtpService {
 
   private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-  @Autowired
   public OtpService(
           OtpRepository otpRepository,
           TaiKhoanManager taiKhoanManager,

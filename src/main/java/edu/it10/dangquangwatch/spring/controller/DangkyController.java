@@ -1,7 +1,6 @@
 package edu.it10.dangquangwatch.spring.controller;
 
 import edu.it10.dangquangwatch.spring.service.taikhoan.TaiKhoanManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
@@ -21,9 +20,8 @@ import java.util.Optional;
 @Controller
 public class DangkyController {
     private final TaiKhoanManager taikhoanManager;
-    final OtpService otpService;
+    private final OtpService otpService;
 
-    @Autowired
     public DangkyController(TaiKhoanManager taikhoanManager, OtpService otpService) {
         this.taikhoanManager = taikhoanManager;
         this.otpService = otpService;

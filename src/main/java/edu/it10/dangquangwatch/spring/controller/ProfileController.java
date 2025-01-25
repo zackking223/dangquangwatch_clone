@@ -23,7 +23,6 @@ import edu.it10.dangquangwatch.spring.entity.response.ObjectResponse;
 import edu.it10.dangquangwatch.spring.payment.CardInfo;
 import edu.it10.dangquangwatch.spring.payment.GlobalCardInfo;
 import edu.it10.dangquangwatch.spring.payment.LocalCardInfo;
-import edu.it10.dangquangwatch.spring.service.ChiTietDonHangService;
 import edu.it10.dangquangwatch.spring.service.DonHangService;
 import edu.it10.dangquangwatch.spring.service.OtpService;
 import jakarta.servlet.http.HttpServletRequest;

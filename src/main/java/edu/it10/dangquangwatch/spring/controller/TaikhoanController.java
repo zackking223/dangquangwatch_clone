@@ -7,7 +7,6 @@ import edu.it10.dangquangwatch.spring.service.taikhoan.TaiKhoanManager;
 import edu.it10.dangquangwatch.spring.service.taikhoan.TaiKhoanSearchManager;
 import jakarta.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +23,6 @@ public class TaikhoanController {
     private final TaiKhoanManager taikhoanManager;
     private final TaiKhoanSearchManager taiKhoanSearchManager;
 
-    @Autowired
     public TaikhoanController(TaiKhoanManager taikhoanManager, TaiKhoanSearchManager taiKhoanSearchManager) {
         this.taikhoanManager = taikhoanManager;
         this.taiKhoanSearchManager = taiKhoanSearchManager;

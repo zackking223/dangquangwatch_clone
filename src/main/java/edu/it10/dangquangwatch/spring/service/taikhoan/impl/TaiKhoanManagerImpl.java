@@ -9,7 +9,6 @@ import edu.it10.dangquangwatch.spring.repository.TaiKhoanRepository;
 import edu.it10.dangquangwatch.spring.service.taikhoan.TaiKhoanManager;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,6 @@ public class TaiKhoanManagerImpl implements TaiKhoanManager {
     private final EntityManager entityManager;
     private final PasswordEncoder passwordEncoder;
 
-    @Autowired
     public TaiKhoanManagerImpl(
             TaiKhoanRepository taiKhoanRepository,
             EntityManager entityManager) {

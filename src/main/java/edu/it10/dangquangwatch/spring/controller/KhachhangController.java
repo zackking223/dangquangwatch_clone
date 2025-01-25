@@ -6,7 +6,6 @@ import edu.it10.dangquangwatch.spring.service.taikhoan.TaiKhoanManager;
 import edu.it10.dangquangwatch.spring.service.taikhoan.TaiKhoanSearchManager;
 import jakarta.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.WebAttributes;
@@ -25,7 +24,6 @@ public class KhachhangController {
     private final TaiKhoanSearchManager searchManager;
     private final TaiKhoanManager taikhoanManager;
 
-    @Autowired
     public KhachhangController(TaiKhoanSearchManager searchManager, TaiKhoanManager taikhoanManager) {
         this.searchManager = searchManager;
         this.taikhoanManager = taikhoanManager;
