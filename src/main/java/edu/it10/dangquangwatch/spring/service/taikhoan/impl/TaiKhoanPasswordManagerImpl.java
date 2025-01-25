@@ -3,14 +3,12 @@ package edu.it10.dangquangwatch.spring.service.taikhoan.impl;
 import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
 import edu.it10.dangquangwatch.spring.service.taikhoan.TaiKhoanManager;
 import edu.it10.dangquangwatch.spring.service.taikhoan.TaiKhoanPasswordManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TaiKhoanPasswordManagerImpl implements TaiKhoanPasswordManager {
     private final TaiKhoanManager taiKhoanManager;
 
-    @Autowired
     public TaiKhoanPasswordManagerImpl(TaiKhoanManager taiKhoanManager) {
         this.taiKhoanManager = taiKhoanManager;
     }

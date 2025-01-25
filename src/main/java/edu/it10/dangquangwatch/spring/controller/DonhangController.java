@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 
 import edu.it10.dangquangwatch.spring.service.taikhoan.TaiKhoanManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,14 +22,12 @@ import edu.it10.dangquangwatch.spring.service.DonHangService;
 @Controller
 @RequestMapping("/admin/donhang")
 public class DonhangController {
-    final DonHangService donHangService;
-    final TaiKhoanManager taikhoanManager;
-    final ChiTietDonHangService ctdhService;
-
+    private final DonHangService donHangService;
+    private final TaiKhoanManager taikhoanManager;
+    
     public DonhangController(DonHangService donHangService, TaiKhoanManager taikhoanManager, ChiTietDonHangService ctdhService) {
         this.donHangService = donHangService;
         this.taikhoanManager = taikhoanManager;
-        this.ctdhService = ctdhService;
     }
 
     @GetMapping("/")

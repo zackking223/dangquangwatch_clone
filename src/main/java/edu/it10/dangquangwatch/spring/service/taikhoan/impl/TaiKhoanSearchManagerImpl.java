@@ -4,7 +4,6 @@ import edu.it10.dangquangwatch.spring.entity.TaiKhoan;
 import edu.it10.dangquangwatch.spring.service.taikhoan.TaiKhoanSearchManager;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -16,7 +15,6 @@ import java.util.List;
 public class TaiKhoanSearchManagerImpl implements TaiKhoanSearchManager {
     private final EntityManager entityManager;
 
-    @Autowired
     public TaiKhoanSearchManagerImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
