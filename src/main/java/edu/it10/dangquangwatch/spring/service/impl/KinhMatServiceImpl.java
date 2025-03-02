@@ -138,4 +138,9 @@ public class KinhMatServiceImpl implements KinhMatService {
   public Optional<KinhMat> findByIdWithLock(Integer maKinhMat) {
     return kinhMatRepository.findByIdWithLock(maKinhMat);
   }
+
+  @Override
+  public void delete(Integer id) {
+    kinhMatRepository.deleteById(id);
+  }
 }

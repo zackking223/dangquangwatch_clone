@@ -27,4 +27,6 @@ public interface DonghoService {
   
   void incAmount(Integer amount, Integer id);
   void decAmount(Integer amount, Integer id);
+
+  void delete(Integer id);
 }

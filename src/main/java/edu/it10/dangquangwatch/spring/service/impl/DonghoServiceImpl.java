@@ -144,4 +144,9 @@ public class DonghoServiceImpl implements DonghoService {
   public Optional<Dongho> findByIdWithLock(Integer id) {
     return donghoRepository.findByIdWithLock(id);
   }
+
+  @Override
+  public void delete(Integer id) {
+    donghoRepository.deleteById(id);
+  }
 }

@@ -136,4 +136,9 @@ public class ButkyServiceImpl implements ButkyService {
   public Optional<Butky> findByIdWithLock(Integer mabutky) {
     return butkyRepository.findByIdWithLock(mabutky);
   }
+
+  @Override
+  public void delete(Integer id) {
+    butkyRepository.deleteById(id);
+  }
 }

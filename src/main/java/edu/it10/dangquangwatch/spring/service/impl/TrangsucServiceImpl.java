@@ -136,4 +136,9 @@ public class TrangsucServiceImpl implements TrangsucService {
   public Optional<Trangsuc> findByIdWithLock(Integer matrangsuc) {
     return trangsucRepository.findByIdWithLock(matrangsuc);
   }
+
+  @Override
+  public void delete(Integer id) {
+    trangsucRepository.deleteById(id);
+  }
 }

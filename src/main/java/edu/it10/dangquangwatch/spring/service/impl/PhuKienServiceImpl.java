@@ -140,4 +140,9 @@ public class PhuKienServiceImpl implements PhuKienService {
   public Optional<PhuKien> findByIdWithLock(Integer maPhuKien) {
     return phuKienRepository.findByIdWithLock(maPhuKien);
   }
+
+  @Override
+  public void delete(Integer id) {
+    phuKienRepository.deleteById(id);
+  }
 }
