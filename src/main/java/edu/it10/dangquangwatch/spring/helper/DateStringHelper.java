@@ -6,6 +6,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class DateStringHelper {
+  /**
+   * @return String: MM/YYYY
+   */
   public static String getPreviousMonthYear() {
     // Lấy ngày hiện tại và trừ 1 tháng
     LocalDate previousMonth = LocalDate.now().minusMonths(1);
@@ -13,7 +16,10 @@ public class DateStringHelper {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yyyy");
     return previousMonth.format(formatter);
   }
-
+  
+  /**
+   * @return String: MM/YYYY
+   */
   public static String getCurrentMonthYear() {
     // Lấy ngày hiện tại
     LocalDate today = LocalDate.now();
@@ -22,6 +28,9 @@ public class DateStringHelper {
     return today.format(formatter);
   }
 
+  /**
+   * @return String: yyyy-MM-dd
+   */
   public static String getCurrentDateFormatted() {
     // Lấy ngày hiện tại
     LocalDate today = LocalDate.now();
@@ -34,6 +43,9 @@ public class DateStringHelper {
     return formattedDate;
   }
 
+  /**
+   * @return String: yyyy-MM-dd
+   */
   public static String getCurrentDateFormatted(Date date) {
     // Lấy ngày hiện tại
     LocalDate today = LocalDate.ofInstant(date.toInstant(), ZoneId.systemDefault());
@@ -46,6 +58,9 @@ public class DateStringHelper {
     return formattedDate;
   }
 
+  /**
+   * @return String: yyyy-MM-dd
+   */
   public static String getCurrentDateFormatted(LocalDate date) {
     // Định dạng ngày theo yyyy-MM-dd
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
