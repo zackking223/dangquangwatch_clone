@@ -30,7 +30,7 @@ public class LoginController {
       if (ex != null) {
         switch (ex.getMessage()) {
           case "User is disabled":
-            errorMessage = "Vui lòng xác thực email!";
+            errorMessage = "Tài khoản chưa được kích hoạt hoặc đã bị vô hiệu hóa!";
             break;
           case "Bad credentials":
             errorMessage = "Sai email hoặc mật khẩu!";
