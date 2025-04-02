@@ -5,6 +5,7 @@ import edu.it10.dangquangwatch.spring.AppCustomException.ErrorEnum;
 import edu.it10.dangquangwatch.spring.entity.Anhtrangsuc;
 import edu.it10.dangquangwatch.spring.entity.Trangsuc;
 import edu.it10.dangquangwatch.spring.service.AnhtrangsucService;
+import edu.it10.dangquangwatch.spring.service.LichSuHeThongService;
 import edu.it10.dangquangwatch.spring.service.LichSuKhoService;
 import edu.it10.dangquangwatch.spring.service.TrangsucService;
 import jakarta.servlet.http.HttpSession;
@@ -33,6 +34,8 @@ public class TrangsucController {
   private AnhtrangsucService anhtrangsucService;
   @Autowired
   private LichSuKhoService lichSuKhoService;
+  @Autowired
+  private LichSuHeThongService lichSuHeThongService;
 
   @GetMapping("/")
   public String index(
@@ -274,6 +277,14 @@ public class TrangsucController {
   @PostMapping("/deleteimage")
   public String deleteImage(@RequestParam("id") Integer maanh) throws IOException {
     anhtrangsucService.delete(maanh);
+    return "redirect:/admin/trangsuc/";
+  }
+
+  @PostMapping("/delete")
+  public String delete(HttpSession session, @RequestParam Integer id, @RequestParam String thongTin) {
+    String username = (String) session.getAttribute("username");
+    lichSuHeThongService.AddDeleteProductHistory(thongTin, username);
+    trangsucService.delete(id);
     return "redirect:/admin/trangsuc/";
   }
 }

@@ -5,6 +5,7 @@ import edu.it10.dangquangwatch.spring.AppCustomException.ServiceException;
 import edu.it10.dangquangwatch.spring.entity.Trangsuc;
 import edu.it10.dangquangwatch.spring.repository.TrangsucRepository;
 import edu.it10.dangquangwatch.spring.service.TrangsucService;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,6 +139,7 @@ public class TrangsucServiceImpl implements TrangsucService {
   }
 
   @Override
+  @Transactional
   public void delete(Integer id) {
     trangsucRepository.deleteById(id);
   }

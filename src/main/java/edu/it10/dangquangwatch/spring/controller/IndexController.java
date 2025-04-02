@@ -80,7 +80,7 @@ public class IndexController {
             model.addAttribute("phukien", phukien);
             model.addAttribute("title", phukien.getTenPhuKien());
             model.addAttribute("search", searchStr);
-            model.addAttribute("searchPath", "/dongho");
+            model.addAttribute("searchPath", "/phukien");
         });
 
         return "phukien";
@@ -100,7 +100,7 @@ public class IndexController {
             model.addAttribute("butky", butky);
             model.addAttribute("title", butky.getTenbutky());
             model.addAttribute("search", searchStr);
-            model.addAttribute("searchPath", "/dongho");
+            model.addAttribute("searchPath", "/butky");
         });
 
         return "butky";
@@ -120,7 +120,7 @@ public class IndexController {
             model.addAttribute("kinhmat", kinhmat);
             model.addAttribute("title", kinhmat.getTenKinhMat());
             model.addAttribute("search", searchStr);
-            model.addAttribute("searchPath", "/dongho");
+            model.addAttribute("searchPath", "/kinhmat");
         });
 
         return "kinhmat";
@@ -140,7 +140,7 @@ public class IndexController {
             model.addAttribute("trangsuc", trangsuc);
             model.addAttribute("title", trangsuc.getTentrangsuc());
             model.addAttribute("search", searchStr);
-            model.addAttribute("searchPath", "/dongho");
+            model.addAttribute("searchPath", "/trangsuc");
         });
 
         return "trangsuc";

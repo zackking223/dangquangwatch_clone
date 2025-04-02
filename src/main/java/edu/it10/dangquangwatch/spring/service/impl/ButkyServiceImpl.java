@@ -5,6 +5,7 @@ import edu.it10.dangquangwatch.spring.AppCustomException.ServiceException;
 import edu.it10.dangquangwatch.spring.entity.Butky;
 import edu.it10.dangquangwatch.spring.repository.ButkyRepository;
 import edu.it10.dangquangwatch.spring.service.ButkyService;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,6 +139,7 @@ public class ButkyServiceImpl implements ButkyService {
   }
 
   @Override
+  @Transactional
   public void delete(Integer id) {
     butkyRepository.deleteById(id);
   }

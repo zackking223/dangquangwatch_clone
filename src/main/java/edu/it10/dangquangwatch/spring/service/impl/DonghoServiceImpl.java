@@ -5,6 +5,7 @@ import edu.it10.dangquangwatch.spring.AppCustomException.ServiceException;
 import edu.it10.dangquangwatch.spring.entity.Dongho;
 import edu.it10.dangquangwatch.spring.repository.DonghoRepository;
 import edu.it10.dangquangwatch.spring.service.DonghoService;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -146,6 +147,7 @@ public class DonghoServiceImpl implements DonghoService {
   }
 
   @Override
+  @Transactional
   public void delete(Integer id) {
     donghoRepository.deleteById(id);
   }

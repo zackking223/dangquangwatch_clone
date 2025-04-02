@@ -13,6 +13,7 @@ import edu.it10.dangquangwatch.spring.AppCustomException.ServiceException;
 import edu.it10.dangquangwatch.spring.entity.KinhMat;
 import edu.it10.dangquangwatch.spring.repository.KinhMatRepository;
 import edu.it10.dangquangwatch.spring.service.KinhMatService;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @Service
@@ -140,6 +141,7 @@ public class KinhMatServiceImpl implements KinhMatService {
   }
 
   @Override
+  @Transactional
   public void delete(Integer id) {
     kinhMatRepository.deleteById(id);
   }

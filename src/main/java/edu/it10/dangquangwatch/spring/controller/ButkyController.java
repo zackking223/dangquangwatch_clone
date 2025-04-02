@@ -6,6 +6,7 @@ import edu.it10.dangquangwatch.spring.entity.Anhbutky;
 import edu.it10.dangquangwatch.spring.entity.Butky;
 import edu.it10.dangquangwatch.spring.service.AnhbutkyService;
 import edu.it10.dangquangwatch.spring.service.ButkyService;
+import edu.it10.dangquangwatch.spring.service.LichSuHeThongService;
 import edu.it10.dangquangwatch.spring.service.LichSuKhoService;
 import jakarta.servlet.http.HttpSession;
 
@@ -33,6 +34,8 @@ public class ButkyController {
   private AnhbutkyService anhbutkyService;
   @Autowired
   private LichSuKhoService lichSuKhoService;
+  @Autowired
+  private LichSuHeThongService lichSuHeThongService;
 
   @GetMapping("/")
   public String index(
@@ -269,6 +272,14 @@ public class ButkyController {
   @PostMapping("/deleteimage")
   public String deleteImage(@RequestParam("id") Integer maanh) throws IOException {
     anhbutkyService.delete(maanh);
+    return "redirect:/admin/butky/";
+  }
+
+  @PostMapping("/delete")
+  public String delete(HttpSession session, @RequestParam Integer id, @RequestParam String thongTin) {
+    String username = (String) session.getAttribute("username");
+    lichSuHeThongService.AddDeleteProductHistory(thongTin, username);
+    butkyService.delete(id);
     return "redirect:/admin/butky/";
   }
 }

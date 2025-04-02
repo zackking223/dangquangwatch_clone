@@ -6,6 +6,7 @@ import edu.it10.dangquangwatch.spring.entity.Anhdongho;
 import edu.it10.dangquangwatch.spring.entity.Dongho;
 import edu.it10.dangquangwatch.spring.service.AnhdonghoService;
 import edu.it10.dangquangwatch.spring.service.DonghoService;
+import edu.it10.dangquangwatch.spring.service.LichSuHeThongService;
 import edu.it10.dangquangwatch.spring.service.LichSuKhoService;
 import jakarta.servlet.http.HttpSession;
 
@@ -35,6 +36,8 @@ public class DonghoController {
   private AnhdonghoService anhdonghoService;
   @Autowired
   private LichSuKhoService lichSuKhoService;
+  @Autowired
+  private LichSuHeThongService lichSuHeThongService;
 
   @GetMapping("/")
   public String index(
@@ -296,6 +299,14 @@ public class DonghoController {
   @PostMapping("/deleteimage")
   public String deleteImage(@RequestParam("id") Integer maanh) throws IOException {
     anhdonghoService.delete(maanh);
+    return "redirect:/admin/dongho/";
+  }
+
+  @PostMapping("/delete")
+  public String delete(HttpSession session, @RequestParam Integer id, @RequestParam String thongTin) {
+    String username = (String) session.getAttribute("username");
+    lichSuHeThongService.AddDeleteProductHistory(thongTin, username);
+    donghoService.delete(id);
     return "redirect:/admin/dongho/";
   }
 }

@@ -21,6 +21,7 @@ import edu.it10.dangquangwatch.spring.entity.Anhkinhmat;
 import edu.it10.dangquangwatch.spring.entity.KinhMat;
 import edu.it10.dangquangwatch.spring.service.AnhkinhmatService;
 import edu.it10.dangquangwatch.spring.service.KinhMatService;
+import edu.it10.dangquangwatch.spring.service.LichSuHeThongService;
 import edu.it10.dangquangwatch.spring.service.LichSuKhoService;
 import jakarta.servlet.http.HttpSession;
 
@@ -33,6 +34,8 @@ public class KinhMatController {
   private AnhkinhmatService anhkinhmatService;
   @Autowired
   private LichSuKhoService lichSuKhoService;
+  @Autowired
+  private LichSuHeThongService lichSuHeThongService;
 
   @GetMapping("/")
   public String index(
@@ -273,6 +276,14 @@ public class KinhMatController {
   @PostMapping("/deleteimage")
   public String deleteImage(@RequestParam("id") Integer maanh) throws IOException {
     anhkinhmatService.delete(maanh);
+    return "redirect:/admin/kinhmat/";
+  }
+
+  @PostMapping("/delete")
+  public String delete(HttpSession session, @RequestParam Integer id, @RequestParam String thongTin) {
+    String username = (String) session.getAttribute("username");
+    lichSuHeThongService.AddDeleteProductHistory(thongTin, username);
+    kinhMatService.delete(id);
     return "redirect:/admin/kinhmat/";
   }
 }

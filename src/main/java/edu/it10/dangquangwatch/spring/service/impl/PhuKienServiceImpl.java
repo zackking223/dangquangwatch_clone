@@ -13,6 +13,7 @@ import edu.it10.dangquangwatch.spring.AppCustomException.ServiceException;
 import edu.it10.dangquangwatch.spring.entity.PhuKien;
 import edu.it10.dangquangwatch.spring.repository.PhuKienRepository;
 import edu.it10.dangquangwatch.spring.service.PhuKienService;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @Service
@@ -142,6 +143,7 @@ public class PhuKienServiceImpl implements PhuKienService {
   }
 
   @Override
+  @Transactional
   public void delete(Integer id) {
     phuKienRepository.deleteById(id);
   }
