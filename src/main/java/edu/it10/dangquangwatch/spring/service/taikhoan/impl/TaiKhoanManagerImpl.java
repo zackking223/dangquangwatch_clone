@@ -130,6 +130,7 @@ public class TaiKhoanManagerImpl implements TaiKhoanManager {
     }
 
     @Override
+    @Transactional
     public void deleteById(String username) {
         TaiKhoan target = entityManager.find(TaiKhoan.class, username);
         entityManager.remove(target);
@@ -145,6 +146,7 @@ public class TaiKhoanManagerImpl implements TaiKhoanManager {
     }
 
     @Override
+    @Transactional
     public void activate(String username) {
         TaiKhoan target = entityManager.find(TaiKhoan.class, username);
         target.setEnabled(1);
@@ -152,6 +154,7 @@ public class TaiKhoanManagerImpl implements TaiKhoanManager {
     }
 
     @Override
+    @Transactional
     public void deactivate(String username) {
         TaiKhoan target = entityManager.find(TaiKhoan.class, username);
         target.setEnabled(0);
