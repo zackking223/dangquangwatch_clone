@@ -59,47 +59,47 @@ public class ThongKeServiceImpl implements ThongKeService {
             // Query for DongHo
             String queryDongHo = """
                     SELECT SUM(d.soluong * d.giatien) AS tongGiaTien, COUNT(d.soluong) AS tongSoLuong
-                    FROM dongho d
+                    FROM Dongho d
                     """;
             Object[] dongHoResult = (Object[]) entityManager.createQuery(queryDongHo).getSingleResult();
-            chiPhi = chiPhi.add(dongHoResult[0] != null ? (BigDecimal) dongHoResult[0] : BigDecimal.ZERO);
+            chiPhi = chiPhi.add(dongHoResult[0] != null ? BigDecimal.valueOf((Long)dongHoResult[0]) : BigDecimal.ZERO);
             thongKe.setDongHo(dongHoResult[1] != null ? ((Number) dongHoResult[1]).longValue() : 0L);
 
             // Query for TrangSuc
             String queryTrangSuc = """
                     SELECT SUM(t.soluong * t.giatien) AS tongGiaTien, COUNT(t.soluong) AS tongSoLuong
-                    FROM trangsuc t
+                    FROM Trangsuc t
                     """;
             Object[] trangSucResult = (Object[]) entityManager.createQuery(queryTrangSuc).getSingleResult();
             chiPhi = chiPhi
-                    .add(trangSucResult[0] != null ? (BigDecimal) trangSucResult[0] : BigDecimal.ZERO);
+                    .add(trangSucResult[0] != null ? BigDecimal.valueOf((Long)trangSucResult[0]) : BigDecimal.ZERO);
             thongKe.setTrangSuc(trangSucResult[1] != null ? ((Number) trangSucResult[1]).longValue() : 0L);
 
             // Query for ButKy
             String queryButKy = """
                     SELECT SUM(b.soluong * b.giatien) AS tongGiaTien, COUNT(b.soluong) AS tongSoLuong
-                    FROM butky b
+                    FROM Butky b
                     """;
             Object[] butKyResult = (Object[]) entityManager.createQuery(queryButKy).getSingleResult();
-            chiPhi = chiPhi.add(butKyResult[0] != null ? (BigDecimal) butKyResult[0] : BigDecimal.ZERO);
+            chiPhi = chiPhi.add(butKyResult[0] != null ? BigDecimal.valueOf((Long)butKyResult[0]) : BigDecimal.ZERO);
             thongKe.setButKy(butKyResult[1] != null ? ((Number) butKyResult[1]).longValue() : 0L);
 
             // Query for PhuKien
             String queryPhuKien = """
-                    SELECT SUM(p.soluong * p.giatien) AS tongGiaTien, COUNT(p.soluong) AS tongSoLuong
-                    FROM phukien p
+                    SELECT SUM(p.soLuong * p.giaTien) AS tongGiaTien, COUNT(p.soLuong) AS tongSoLuong
+                    FROM PhuKien p
                     """;
             Object[] phuKienResult = (Object[]) entityManager.createQuery(queryPhuKien).getSingleResult();
-            chiPhi = chiPhi.add(phuKienResult[0] != null ? (BigDecimal) phuKienResult[0] : BigDecimal.ZERO);
+            chiPhi = chiPhi.add(phuKienResult[0] != null ? BigDecimal.valueOf((Long)phuKienResult[0]) : BigDecimal.ZERO);
             thongKe.setPhuKien(phuKienResult[1] != null ? ((Number) phuKienResult[1]).longValue() : 0L);
 
             // Query for KinhMat
             String queryKinhMat = """
-                    SELECT SUM(k.soluong * k.giatien) AS tongGiaTien, COUNT(k.soluong) AS tongSoLuong
-                    FROM kinhmat k
+                    SELECT SUM(k.soLuong * k.giaTien) AS tongGiaTien, COUNT(k.soLuong) AS tongSoLuong
+                    FROM KinhMat k
                     """;
             Object[] kinhMatResult = (Object[]) entityManager.createQuery(queryKinhMat).getSingleResult();
-            chiPhi = chiPhi.add(kinhMatResult[0] != null ? (BigDecimal) kinhMatResult[0] : BigDecimal.ZERO);
+            chiPhi = chiPhi.add(kinhMatResult[0] != null ? BigDecimal.valueOf((Long)kinhMatResult[0]) : BigDecimal.ZERO);
             thongKe.setKinhMat(kinhMatResult[1] != null ? ((Number) kinhMatResult[1]).longValue() : 0L);
 
             thongKe.setChiPhi(chiPhi);
@@ -107,7 +107,7 @@ public class ThongKeServiceImpl implements ThongKeService {
             // Query for KhachHang
             String queryKhachHang = """
                     SELECT COUNT(tk.username) AS tongSoLuong
-                    FROM taikhoan tk
+                    FROM TaiKhoan tk
                     WHERE tk.loai_tai_khoan = 'ROLE_KHACHHANG'
                     """;
             Long khachHangCount = (Long) entityManager.createQuery(queryKhachHang).getSingleResult();
@@ -135,27 +135,27 @@ public class ThongKeServiceImpl implements ThongKeService {
 
             // Query for ChoXacNhan
             String queryChoXacNhan = """
-                    SELECT SUM(d.tinhtrang) AS soluong
-                    FROM donhang d
-                    WHERE d.tinhtrang = 'Chờ xác nhận'
+                    SELECT COUNT(d.tinhTrang) AS soluong
+                    FROM DonHang d
+                    WHERE d.tinhTrang = 'Chờ xác nhận'
                     """;
             Long choXacNhanCount = (Long) entityManager.createQuery(queryChoXacNhan).getSingleResult();
             thongKe.setDonHangChoXacNhan(choXacNhanCount != null ? choXacNhanCount : 0L);
 
             // Query for DaXacNhan
             String queryDaXacNhan = """
-                    SELECT SUM(d.tinhtrang) AS soluong
-                    FROM donhang d
-                    WHERE d.tinhtrang = 'Đã xác nhận'
+                    SELECT COUNT(d.tinhTrang) AS soluong
+                    FROM DonHang d
+                    WHERE d.tinhTrang = 'Đã xác nhận'
                     """;
             Long daXacNhanCount = (Long) entityManager.createQuery(queryDaXacNhan).getSingleResult();
             thongKe.setDonHangDaXacNhan(daXacNhanCount != null ? daXacNhanCount : 0L);
 
             // Query for DangGiao
             String queryDangGiao = """
-                    SELECT SUM(d.tinhtrang) AS soluong
-                    FROM donhang d
-                    WHERE d.tinhtrang = 'Đang vận chuyển'
+                    SELECT COUNT(d.tinhTrang) AS soluong
+                    FROM DonHang d
+                    WHERE d.tinhTrang = 'Đang vận chuyển'
                     """;
             Long dangGiaoCount = (Long) entityManager.createQuery(queryDangGiao).getSingleResult();
             thongKe.setDonHangDangGiao(dangGiaoCount != null ? dangGiaoCount : 0L);
