@@ -329,7 +329,7 @@ public class DonHangServiceImpl implements DonHangService {
         if (trangSuc.getSoluong() < item.getSoLuong()) {
           throw new OrderException("Số lượng mua vượt giới hạn, mã trang sức: " + item.getMaSanPham());
         }
-        return trangSuc.getGiaTien();
+        return trangSuc.getGiatien();
       default:
         throw new OrderException("Loại sản phẩm không tồn tại, mã: " + item.getMaSanPham());
     }
