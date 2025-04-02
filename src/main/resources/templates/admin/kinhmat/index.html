@@ -96,10 +96,15 @@
                             class="block w-max text-center my-1 p-2 rounded bg-purple-500 text-white">Nhập</a>
                         <a th:href="@{/admin/kinhmat/xuat?id={id}(id=${kinhMat.getMaKinhMat()})}"
                             class="block w-max text-center my-1 p-2 rounded bg-orange-500 text-white">Xuất</a>
-                        <button th:if="${kinhMat.kichhoat == 1}" class="block w-max text-center my-1 p-2 rounded bg-red-500 text-white"
+                        <button th:if="${kinhMat.kichhoat == 1}"
+                            class="block w-max text-center my-1 p-2 rounded bg-amber-500 text-white"
                             th:data-id="${kinhMat.getMaKinhMat()}" onclick="confirmDeactivate(this);">Tắt</button>
-                        <button th:if="${kinhMat.kichhoat == 0}" class="block w-max text-center my-1 p-2 rounded bg-blue-500 text-white"
+                        <button th:if="${kinhMat.kichhoat == 0}"
+                            class="block w-max text-center my-1 p-2 rounded bg-blue-500 text-white"
                             th:data-id="${kinhMat.getMaKinhMat()}" onclick="confirmActivate(this);">Bật</button>
+                        <button
+                            class="block w-max text-center my-1 p-2 rounded bg-red-500 text-white"
+                            th:data-id="${kinhMat.getMaKinhMat()}" onclick="confirmDelete(this);">Xóa</button>
                     </td>
                 </tr>
             </table>
@@ -141,6 +146,25 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     window.location.href = `/admin/kinhmat/activate?id=${id}`;
+                }
+            });
+        }
+
+        function confirmDelete(element) {
+            const id = element.getAttribute('data-id'); // Lấy giá trị từ data-attribute
+
+            Swal.fire({
+                title: 'Bạn có chắc chắn muốn XÓA?',
+                text: "Sản phẩm sẽ bị XÓA vĩnh viễn!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Vâng, xóa nó!',
+                cancelButtonText: 'Hủy'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = `/admin/kinhmat/delete?id=${id}`;
                 }
             });
         }

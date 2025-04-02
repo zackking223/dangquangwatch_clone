@@ -124,7 +124,7 @@
         <p class="font-bold text-red-600" th:text="@{${trangsuc.getGiaTienFormatted()} + 'đ'}"></p>
         <div class="flex gap-2 ">
           <button th:data-tsp="${trangsuc.getTentrangsuc()}" th:data-msp="${trangsuc.getMatrangsuc()}"
-            th:data-gt="${trangsuc.getGiaTien()}" th:data-asp="${trangsuc.getFirstImageUrl()}"
+            th:data-gt="${trangsuc.getGiatien()}" th:data-asp="${trangsuc.getFirstImageUrl()}"
             onclick="addItem(this.getAttribute('data-tsp'),parseInt(this.getAttribute('data-msp')), 'trangsuc',parseInt(this.getAttribute('data-gt')), this.getAttribute('data-asp')); redirectToCart()"
             class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded flex gap-2 items-center">
             <img src="/svg/tocheckout.svg" class="w-5 h-5" alt="tocheckout">
@@ -133,7 +133,7 @@
             </p>
           </button>
           <button th:data-tsp="${trangsuc.getTentrangsuc()}" th:data-msp="${trangsuc.getMatrangsuc()}"
-            th:data-gt="${trangsuc.getGiaTien()}" th:data-asp="${trangsuc.getFirstImageUrl()}"
+            th:data-gt="${trangsuc.getGiatien()}" th:data-asp="${trangsuc.getFirstImageUrl()}"
             onclick="addItem(this.getAttribute('data-tsp'),parseInt(this.getAttribute('data-msp')), 'trangsuc',parseInt(this.getAttribute('data-gt')), this.getAttribute('data-asp'));"
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex gap-2 items-center">
             <img src="/svg/addtocart.svg" class="w-5 h-5" alt="addtocart">
