@@ -182,6 +182,11 @@
     </section>
 
     <script th:inline="javascript">
+      const monthSelect = document.getElementById("month");
+      monthSelect.addEventListener("change", (e) => {
+        location.replace("/admin/thongke/?time=" + e.target.value)
+      })
+
       const doanhSoChartContainer = document.getElementById('financialChart').getContext('2d');
       const financialChart = new Chart(doanhSoChartContainer, {
         type: 'bar',
