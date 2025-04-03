@@ -6,30 +6,8 @@
                 <img src="/images/LogoMobile.png" alt="Đăng Quang Watch" class="xl:hidden w-[60px] h-14">
             </a>
 
-            <form th:action="${searchPath ?: ''}"
-                class="lg:flex relative hidden items-center h-[38px] w-max max-w-[395px] sm:ml-5 sm:mr-auto ml-auto overflow-visible">
-                <input id="searchInput" type="text" name="search" th:value="${search}" autocomplete="off"
-                    class="outline-none hidden rounded-tl rounded-bl sm:block w-[295px] h-full px-2 placeholder:italic placeholder:text-slate-500"
-                    placeholder="Nhập từ khóa...">
-                <button
-                    class="xl:pl-[7px] sm:p-2 p-1 w-max max-w-[100px] h-full bg-yellow-400 text-black font-medium text-sm flex items-center rounded-tr rounded-br">
-                    <span class="material-symbols-outlined">
-                        search
-                    </span>
-                    <p class="hidden xl:block">
-                        Tìm kiếm
-                    </p>
-                </button>
-                <ul id="searchOutput" class="absolute top-[38px] right-0 w-full h-max max-h-[380px] overflow-y-auto">
-                    <li th:if="${nope}"
-                        class="h-[38px] w-full bg-slate-50 hover:bg-slate-100 cursor-pointer p-2 overflow-hidden">
-                        <a href="/">Đồng hồ Epos Swiss E-4314.133.20.89.10 Diamond</a>
-                    </li>
-                </ul>
-            </form>
-
             <button id="openSearch"
-                class="lg:hidden rounded sm:mr-auto ml-auto sm:p-2 p-1 w-max max-w-[100px] h-full bg-yellow-400 text-black font-medium text-sm flex items-center">
+                class="rounded ml-auto sm:p-2 p-1 w-max max-w-[100px] h-full bg-yellow-400 text-black font-medium text-sm flex items-center">
                 <span class="material-symbols-outlined">
                     search
                 </span>
@@ -109,65 +87,6 @@
                 openSearch();
             });
         </script>
-
-        <script>
-            const searchInput = document.getElementById('searchInput');
-            const searchOutput = document.getElementById('searchOutput');
-            let typingTimer; // Biến lưu trữ timeout
-            const debounceTime = 500; // Thời gian chờ (ms)
-
-            // Hàm gửi yêu cầu GET và xử lý kết quả
-            const fetchSearchResults = async (query) => {
-                try {
-                    const response = await fetch(`/searchall?query=${encodeURIComponent(query)}`);
-                    // if (!response.ok) {
-                    //     throw new Error('Lỗi khi gửi yêu cầu tìm kiếm');
-                    // }
-                    const data = await response.json();
-                    console.log(data);
-
-                    if (data.status) {
-                        searchOutput.innerHTML = ''; // Xóa nội dung cũ
-                        data.searchResults.forEach(item => {
-                            const li = document.createElement('li');
-                            li.className = 'h-[38px] w-full bg-slate-50 hover:bg-slate-100 cursor-pointer p-2 overflow-hidden';
-                            const a = document.createElement('a');
-                            a.href = "/" + item.loaiSanPham + "/" + item.maSanPham;
-                            a.textContent = item.tenSanPham;
-                            li.appendChild(a);
-                            searchOutput.appendChild(li);
-                        });
-                    } else {
-                        searchOutput.innerHTML = `<li class="h-[38px] w-full bg-slate-50 p-2 text-gray-500">Không có kết quả</li>`;
-                    }
-                } catch (error) {
-                    console.error('Lỗi:', error);
-                }
-            };
-
-            // Xử lý sự kiện gõ phím
-            searchInput.addEventListener('input', () => {
-                clearTimeout(typingTimer);
-                typingTimer = setTimeout(() => {
-                    const query = searchInput.value.trim();
-                    if (query) {
-                        fetchSearchResults(query); // Gửi yêu cầu tìm kiếm
-                    } else {
-                        searchOutput.innerHTML = '';
-                    }
-                }, debounceTime);
-            });
-
-            searchInput.addEventListener('click', (event) => {
-                searchOutput.style.display = 'block';
-            });
-            searchInput.addEventListener('blur', (event) => {
-                setTimeout(() => {
-                    searchOutput.style.display = 'none';
-                }, 100);
-            });
-        </script>
-
         <script>
             const searchPhoneInput = document.getElementById('searchPhoneInput');
             const searchPhoneOutput = document.getElementById('searchPhoneOutput');
@@ -182,7 +101,7 @@
                     //     throw new Error('Lỗi khi gửi yêu cầu tìm kiếm');
                     // }
                     const data = await response.json();
-                    console.log(data);
+                    //console.log(data);
 
                     if (data.status) {
                         searchPhoneOutput.innerHTML = ''; // Xóa nội dung cũ
@@ -190,8 +109,8 @@
                             const li = document.createElement('li');
                             li.className = 'h-[38px] w-full bg-slate-50 hover:bg-slate-100 cursor-pointer p-2 overflow-hidden';
                             const a = document.createElement('a');
-                            a.href = "/" + item.loaiSanPham + "/" + item.maSanPham;
-                            a.textContent = item.tenSanPham;
+                            a.href = "/sanpham/" + item.id;
+                            a.textContent = item.ten;
                             li.appendChild(a);
                             searchPhoneOutput.appendChild(li);
                         });

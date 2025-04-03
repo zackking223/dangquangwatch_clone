@@ -1,11 +1,11 @@
 package edu.it10.dangquangwatch.spring;
 
-import edu.it10.dangquangwatch.spring.helper.ParameterNameMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import edu.it10.dangquangwatch.spring.helper.PasswordHelper;
+import edu.it10.vuquangdung.spring.helper.ParameterNameMapper;
+import edu.it10.vuquangdung.spring.helper.PasswordHelper;
 
 @SpringBootTest
 class DangQuangWatchApplicationTests {

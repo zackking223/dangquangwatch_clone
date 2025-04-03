@@ -5,14 +5,14 @@
   </section>
 
   <section class="grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 w-full gap-2">
-    <div class="w-full bg-white rounded overflow-hidden" th:each="dongho : ${sanphambanchay}">
-      <img th:src="${dongho.getFirstImageUrl()}"
-        class="w-full aspect-square" alt="anhdongho">
+    <div class="w-full bg-white rounded overflow-hidden" th:each="sanPham : ${sanPhams}">
+      <img th:src="${sanPham.getFirstImageUrl()}"
+        class="w-full aspect-[4/5]" alt="anhsanpham">
       <div class="p-2 flex flex-col gap-2">
-        <a class="hover:text-yellow-400 text-sm" th:href="@{'/dongho/' + ${dongho.getMadongho()}}" 
-          th:text="@{${dongho.getTendongho()} + ' - Đồng hồ ' + ${dongho.getGioitinh()} + ' -  Size mặt ' + ${dongho.getDuongkinh()} + 'mm - ' + ${dongho.getChatlieu()} + ' - ' + ${dongho.getBomay()} + ' - Chịu nước ' + ${dongho.getChongnuoc()} + ' ATM'}">
+        <a class="hover:text-yellow-400 text-sm" th:href="@{'/sanpham/' + ${sanPham.getId()}}" 
+          th:text="${sanPham.getTen()}">
         </a>
-        <p class="font-bold text-red-600" th:text="@{${dongho.getGiatienFormatted()} + 'đ'}"></p>
+        <p class="font-bold text-red-600" th:text="@{${sanPham.getFirstBienThe().getGiatienFormatted()} + 'đ'}"></p>
       </div>
     </div>
   </section>

@@ -13,7 +13,6 @@
 
 <body class="bg-slate-200 overflow-x-hidden">
   <div th:replace="~{fragments/header :: header}"></div>
-  <div th:replace="~{fragments/productsbar :: productsbar}"></div>
 
   <div class="w-full xl:max-w-[1215px] max-w-[1021px] mx-auto my-9 min-h-[85vh]">
     <div class="flex gap-2 w-max mx-auto items-end">
@@ -105,15 +104,15 @@
         <div class="flex items-center justify-between border-b p-4">
             <img src="${item.anhsanpham}" alt="${item.tensanpham}" class="w-16 h-16 object-cover">
             <div class="flex-1 ml-4">
-                <a href="/${item.loaiSanPham}/${item.maSanPham}" class="text-lg font-semibold">${item.tensanpham}</a>
+                <a href="/bienthe/${item.maSanPham}" class="text-lg font-semibold">${item.tensanpham}</a>
                 <p class="text-gray-600">Loại: ${item.loaiSanPham}</p>
                 <p class="text-gray-600">Mã: ${item.maSanPham}</p>
                 <p class="text-gray-600">Giá: ${formatCurrencyVND(item.giaTien)}</p>
             </div>
-            <div class="flex items-center">
-                <button class="reduce-item rounded-sm bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 mr-2" data-loai="${item.loaiSanPham}" data-ma="${item.maSanPham}">-</button>
+            <div class="flex items-center overflow-hidden border rounded">
+                <button class="reduce-item bg-neutral-500 hover:bg-neutral-600 text-white px-2 py-1 mr-2" data-loai="${item.loaiSanPham}" data-ma="${item.maSanPham}">-</button>
                 <span id="${item.maSanPham}-${item.loaiSanPham}">${item.soLuong}</span>
-                <button class="add-item rounded-sm bg-green-500 hover:bg-green-600 text-white px-2 py-1 ml-2" data-loai="${item.loaiSanPham}" data-ma="${item.maSanPham}">+</button>
+                <button class="add-item bg-neutral-500 hover:bg-neutral-600 text-white px-2 py-1 ml-2" data-loai="${item.loaiSanPham}" data-ma="${item.maSanPham}">+</button>
             </div>
             <button class="remove-item rounded-sm bg-red-500 hover:bg-red-600 text-white px-2 py-1 ml-4" data-loai="${item.loaiSanPham}" data-ma="${item.maSanPham}">Xóa</button>
         </div>

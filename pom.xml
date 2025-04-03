@@ -9,14 +9,14 @@
 		<version>3.3.2</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>edu.it10.dangquangwatch</groupId>
-	<artifactId>dangquangwatch</artifactId>
+	<groupId>edu.it10.vuquangdung</groupId>
+	<artifactId>vuquangdung</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>dangquangwatch</name>
-	<description>Bán đồng hồ cho Đăng Quang</description>
+	<name>shopquanao</name>
+	<description>Shop bán quần áo VQD</description>
 	<properties>
 		<java.version>17</java.version>
-		<start-class>edu.it10.dangquangwatch.DangQuangWatchApplication</start-class>
+		<start-class>edu.it10.vuquangdung.ShopQuanAoVQDApplication</start-class>
 		<!-- Maven plugins -->
 		<frontend-maven-plugin.version>1.10.0</frontend-maven-plugin.version>
 		<frontend-maven-plugin.nodeVersion>v16.13.1</frontend-maven-plugin.nodeVersion>
@@ -148,7 +148,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>edu.it10.dangquangwatch.spring.DangQuangWatchApplication</mainClass>
+					<mainClass>edu.it10.vuquangdung.spring.ShopQuanAoVQDApplication</mainClass>
 				</configuration>
 			</plugin>
 			<plugin>

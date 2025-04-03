@@ -98,12 +98,14 @@ const removeItem = (loaiSanPham, maSanPham) => {
 }
 
 const increaseItem = (loaiSanPham, maSanPham) => {
+  console.log("INCREASE");
   let cart = getCart();
   let product = findProduct(cart, loaiSanPham, maSanPham);
   if (product) {
     cart.items = cart.items.filter(item => {
       if (item.loaiSanPham == product.loaiSanPham && item.maSanPham == product.maSanPham) {
         item.soLuong += 1;
+        console.log(item);
         document.getElementById(`${item.maSanPham}-${item.loaiSanPham}`).textContent = item.soLuong;
         return item;
       } else {
@@ -119,11 +121,12 @@ const increaseItem = (loaiSanPham, maSanPham) => {
 const reduceItem = (loaiSanPham, maSanPham) => {
   let cart = getCart();
   let product = findProduct(cart, loaiSanPham, maSanPham);
-
+  console.log("REDUCE");
   if (product) {
     if (product.soLuong > 1) {
       cart.items = cart.items.filter(item => {
         if (item.loaiSanPham == product.loaiSanPham && item.maSanPham == product.maSanPham) {
+          console.log(item);
           item.soLuong -= 1;
           document.getElementById(`${item.maSanPham}-${item.loaiSanPham}`).textContent = item.soLuong;
           return item;
@@ -140,14 +143,14 @@ const reduceItem = (loaiSanPham, maSanPham) => {
   }
 }
 
-const addItem = (tensanpham, maSanPham, loaiSanPham, giaTien, anhsanpham) => {
+const addItem = (tenSanPham, maSanPham, loaiSanPham, giaTien, anhSanPham, soLuong) => {
   let cart = getCart();
   let product = findProduct(cart, loaiSanPham, maSanPham);
 
   if (product) {
     cart.items = cart.items.filter(item => {
       if (item.tensanpham == product.tensanpham) {
-        item.soLuong += 1;
+        item.soLuong += soLuong;
         return item;
       } else {
         return item;
@@ -155,17 +158,17 @@ const addItem = (tensanpham, maSanPham, loaiSanPham, giaTien, anhsanpham) => {
     })
   } else {
     cart.items.push({
-      tensanpham,
+      tensanpham: tenSanPham,
       maSanPham,
       loaiSanPham,
-      soLuong: 1,
+      soLuong: soLuong,
       giaTien,
-      anhsanpham,
+      anhsanpham: anhSanPham,
       NGAYTHEM: getCurrentDateFormatted()
     });
   }
 
-  cart.tongTien += parseFloat(giaTien);
+  cart.tongTien += parseFloat(giaTien) * parseFloat(soLuong);
   saveCart(cart);
 }
 
@@ -674,7 +677,7 @@ if (thanhToanOption != null) {
           </button>
         </div>
       `;
-  
+
       CardInfo.clearInfo();
     } else if (ev.target.value === "card") {
       paymentContainer.innerHTML = `
