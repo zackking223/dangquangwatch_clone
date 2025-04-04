@@ -53,4 +53,18 @@ public class AnhSanPhamServiceImpl implements AnhSanPhamService {
     public Optional<AnhSanPham> findById(Integer id) {
         return anhSanPhamRepository.findById(id);
     }
+
+    @Override
+    public void deleteBySanPham(SanPham sanPham) throws IOException {
+        List<AnhSanPham> anhSanPhamList = anhSanPhamRepository.findBySanPham(sanPham);
+
+        for (AnhSanPham anh : anhSanPhamList) {
+            delete(anh.getId());
+        }
+    }
+
+    @Override
+    public Long countByMauSacAndSanPham(String mauSacId, SanPham sanPham) {
+        return anhSanPhamRepository.countByMauSacAndSanPham(mauSacId, sanPham);
+    }
 }

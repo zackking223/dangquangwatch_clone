@@ -41,7 +41,7 @@ public class ThongKeServiceImpl implements ThongKeService {
             thongKe.setDonHang(prev.getDonHang());
             thongKe.setKhachHang(prev.getKhachHang());
             thongKe.setChiPhi(prev.getChiPhi());
-            thongKe.setSanpham(prev.getSanpham());
+            thongKe.setSanPham(prev.getSanPham());
 
             // thongKe.setDonHangDaGiao(prev.getDonHangDaGiao());
             // thongKe.setDonHangDaHuy(prev.getDonHangDaHuy());
@@ -58,7 +58,7 @@ public class ThongKeServiceImpl implements ThongKeService {
                     """;
             Object[] sanPhamResult = (Object[]) entityManager.createQuery(querySanPham).getSingleResult();
             chiPhi = chiPhi.add(sanPhamResult[0] != null ? BigDecimal.valueOf((Long)sanPhamResult[0]) : BigDecimal.ZERO);
-            thongKe.setSanpham(sanPhamResult[1] != null ? ((Number) sanPhamResult[1]).longValue() : 0L);
+            thongKe.setSanPham(sanPhamResult[1] != null ? ((Number) sanPhamResult[1]).longValue() : 0L);
 
             thongKe.setChiPhi(chiPhi);
 
@@ -286,7 +286,7 @@ public class ThongKeServiceImpl implements ThongKeService {
         for (ThongKe thongKe : thongKeList) {
             int rowIdx = 0; // Bắt đầu từ hàng đầu tiên
             sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getMathongke());
-            sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getSanpham());
+            sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getSanPham());
             sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getDonHang());
             sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getDonHangDaHuy());
             sheet.getRow(rowIdx++).createCell(colIdx).setCellValue(thongKe.getDonHangDaGiao());

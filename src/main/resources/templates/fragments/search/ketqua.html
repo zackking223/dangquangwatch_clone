@@ -1,153 +1,180 @@
 <div class="w-full mb-4" th:fragment="ketqua">
-  <section class="w-full bg-white flex items-center h-[65px] border-b-[3px] border-b-red-600 rounded-t-sm mb-2">
-    <h1 class="text-2xl w-max mx-auto font-bold" th:text="@{'KẾT QUẢ TÌM KIẾM \'' + ${search} + '\''}"></h1>
+  <section class="w-full bg-white flex items-center h-[65px] border-b-[3px] border-b-neutral-600 rounded-t-sm mb-2">
+    <h1 class="text-2xl w-max mx-auto font-bold">Cửa hàng</h1>
   </section>
 
-  <section class="grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 w-full gap-2">
-    <div class="w-full max-w-[363px] bg-white rounded overflow-hidden" th:each="dongho : ${donghos}" th:if="${dongho.kichhoat == 1}">
-      <img th:src="${dongho.getFirstImageUrl()}" class="w-full aspect-square" alt="anhdongho" />
-      <div class="p-2 flex flex-col gap-2">
-        <a class="hover:text-yellow-400 text-sm" th:href="@{'/dongho/' + ${dongho.getMadongho()}}"
-          th:text="@{${dongho.getTendongho()} + ' - Đồng hồ ' + ${dongho.getGioitinh()} + ' -  Size mặt ' + ${dongho.getDuongkinh()} + 'mm - ' + ${dongho.getChatlieu()} + ' - ' + ${dongho.getBomay()} + ' - Chịu nước ' + ${dongho.getChongnuoc()} + ' ATM'}">
-        </a>
-        <p class="font-bold text-red-600" th:text="@{${dongho.getGiatienFormatted()} + 'đ'}"></p>
-
+  <div class="flex sm:flex-row flex-col gap-2">
+    <form action="/shop" class="relative flex flex-col gap-2 items-center lg:w-1/5 sm:w-2/5 w-full">
+      <div class="flex items-center w-full">
+        <input type="text" name="search" th:value="${search}" autocomplete="off"
+          class="outline-none flex-1 min-w-0 block p-2 placeholder:italic placeholder:text-slate-500 rounded-tl rounded-bl"
+          placeholder="Nhập từ khóa...">
+        <button
+          class="p-2 w-max flex-shrink-0 bg-slate-400 rounded-tr rounded-br text-black font-medium text-sm flex items-center">
+          <img src="/svg/search.svg" alt="search">
+        </button>
+      </div>
+      <div class="w-full">
+        <label class="block font-medium" for="kichThuoc">Kích thước</label>
+        <select class="block p-2 w-full border border-black rounded" name="kichThuoc" id="kichThuoc">
+          <option value="">Chưa chọn</option>
+          <option th:each="kt : ${kichThuocList}" th:value="${kt}" th:text="${kt}" th:selected="${kt == kichThuoc}">
+          </option>
+        </select>
+      </div>
+      <div class="w-full">
+        <label class="block font-medium" for="mauSac">Màu sắc</label>
+        <select class="block p-2 w-full border border-black rounded" name="mauSac" id="mauSac">
+          <option value="">Chưa chọn</option>
+          <option th:each="ms : ${mauSacList}" th:data-ten="${ms.ten}" th:value="${ms.mauSacId}" th:text="${ms.ten + ' - ' + ms.mauSacId}"
+            th:selected="${ms.mauSacId == mauSac}">
+          </option>
+        </select>
+      </div>
+      <div class="w-full">
+        <label class="block font-medium" for="loai">Loại</label>
+        <select class="block p-2 w-full border border-black rounded" name="loai" id="loai">
+          <option value="">Chưa chọn</option>
+          <option th:each="l : ${loaiList}" th:value="${l}" th:text="${l}" th:selected="${l == loai}">
+          </option>
+        </select>
+      </div>
+      <div class="w-full mb-4">
+        <label class="block font-medium mb-2">Giá tiền</label>
+        <div id="giaTienSlider" class="mb-2"></div>
         <div class="flex gap-2">
-          <button th:data-tsp="${dongho.getTendongho()}" th:data-msp="${dongho.getMadongho()}"
-            th:data-gt="${dongho.getGiatien()}" th:data-asp="${dongho.getFirstImageUrl()}"
-            onclick="addItem(this.getAttribute('data-tsp'),parseInt(this.getAttribute('data-msp')), 'dongho',parseInt(this.getAttribute('data-gt')), this.getAttribute('data-asp')); redirectToCart()"
-            class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded flex gap-2 items-center">
-            <img src="/svg/tocheckout.svg" class="w-5 h-5" alt="tocheckout">
-            <p class="text-xs sm:text-base">
-              Mua ngay
-            </p>
-          </button>
-          <button th:data-tsp="${dongho.getTendongho()}" th:data-msp="${dongho.getMadongho()}"
-            th:data-gt="${dongho.getGiatien()}" th:data-asp="${dongho.getFirstImageUrl()}"
-            onclick="addItem(this.getAttribute('data-tsp'),parseInt(this.getAttribute('data-msp')), 'dongho',parseInt(this.getAttribute('data-gt')), this.getAttribute('data-asp'));"
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex gap-2 items-center">
-            <img src="/svg/addtocart.svg" class="w-5 h-5" alt="addtocart">
-          </button>
+          <input type="number" id="giaTienFrom" name="giaTienFrom" class="flex-1 min-w-0 border rounded p-1" />
+          <input type="number" id="giaTienTo" name="giaTienTo" class="flex-1 min-w-0 border rounded p-1" />
         </div>
       </div>
-    </div>
-
-    <div class="w-full max-w-[363px] bg-white rounded overflow-hidden" th:each="kinhmat : ${kinhmats}" th:if="${kinhmat.kichhoat == 1}">
-      <img th:src="${kinhmat.getFirstImageUrl()}" class="w-full aspect-square" alt="anhkinhmat" />
-      <div class="p-2 flex flex-col gap-2">
-        <a class="hover:text-yellow-400 text-sm" th:href="@{'/kinhmat/' + ${kinhmat.getMaKinhMat()}}"
-          th:text="${kinhmat.getTenKinhMat()}">
-        </a>
-        <p class="font-bold text-red-600" th:text="@{${kinhmat.getGiaTienFormatted()} + 'đ'}"></p>
-
-        <div class="flex gap-2">
-          <button th:data-tsp="${kinhmat.getTenKinhMat()}" th:data-msp="${kinhmat.getMaKinhMat()}"
-            th:data-gt="${kinhmat.getGiaTien()}" th:data-asp="${kinhmat.getFirstImageUrl()}"
-            onclick="addItem(this.getAttribute('data-tsp'),parseInt(this.getAttribute('data-msp')), 'kinhmat',parseInt(this.getAttribute('data-gt')), this.getAttribute('data-asp')); redirectToCart()"
-            class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded flex gap-2 items-center">
-            <img src="/svg/tocheckout.svg" class="w-5 h-5" alt="tocheckout">
-            <p class="text-xs sm:text-base">
-              Mua ngay
-            </p>
-          </button>
-          <button th:data-tsp="${kinhmat.getTenKinhMat()}" th:data-msp="${kinhmat.getMaKinhMat()}"
-            th:data-gt="${kinhmat.getGiaTien()}" th:data-asp="${kinhmat.getFirstImageUrl()}"
-            onclick="addItem(this.getAttribute('data-tsp'),parseInt(this.getAttribute('data-msp')), 'kinhmat',parseInt(this.getAttribute('data-gt')), this.getAttribute('data-asp'));"
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex gap-2 items-center">
-            <img src="/svg/addtocart.svg" class="w-5 h-5" alt="addtocart">
-          </button>
+    </form>
+    <section class="grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 w-full gap-2 flex-shrink-0">
+      <div class="w-full bg-white rounded overflow-hidden" th:each="sanPham : ${sanPhamList}">
+        <img th:src="${sanPham.getFirstImageUrl()}" class="w-full aspect-[4/5]" alt="anhsanpham">
+        <div class="p-2 flex flex-col gap-2">
+          <a class="hover:text-yellow-400 text-sm" th:href="@{'/sanpham/' + ${sanPham.getId()}}"
+            th:text="${sanPham.getTen()}">
+          </a>
+          <p class="font-bold text-red-600" th:text="@{${sanPham.getFirstBienThe().getGiaTienFormatted()} + 'đ'}"></p>
         </div>
       </div>
-    </div>
-
-    <div class="w-full max-w-[363px] bg-white rounded overflow-hidden" th:each="phukien : ${phukiens}" th:if="${phukien.kichhoat == 1}">
-      <img th:src="${phukien.getFirstImageUrl()}" class="w-full aspect-square" alt="anhphukien" />
-      <div class="p-2 flex flex-col gap-2">
-        <a class="hover:text-yellow-400 text-sm" th:href="@{'/phukien/' + ${phukien.getMaPhuKien()}}"
-          th:text="${phukien.getTenPhuKien()}">
-        </a>
-        <p class="font-bold text-red-600" th:text="@{${phukien.getGiaTienFormatted()} + 'đ'}"></p>
-
-        <div class="flex gap-2">
-          <button th:data-tsp="${phukien.getTenPhuKien()}" th:data-msp="${phukien.getMaPhuKien()}"
-            th:data-gt="${phukien.getGiaTien()}" th:data-asp="${phukien.getFirstImageUrl()}"
-            onclick="addItem(this.getAttribute('data-tsp'),parseInt(this.getAttribute('data-msp')), 'phukien',parseInt(this.getAttribute('data-gt')), this.getAttribute('data-asp')); redirectToCart()"
-            class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded flex gap-2 items-center">
-            <img src="/svg/tocheckout.svg" class="w-5 h-5" alt="tocheckout">
-            <p class="text-xs sm:text-base">
-              Mua ngay
-            </p>
-          </button>
-          <button th:data-tsp="${phukien.getTenPhuKien()}" th:data-msp="${phukien.getMaPhuKien()}"
-            th:data-gt="${phukien.getGiaTien()}" th:data-asp="${phukien.getFirstImageUrl()}"
-            onclick="addItem(this.getAttribute('data-tsp'),parseInt(this.getAttribute('data-msp')), 'phukien',parseInt(this.getAttribute('data-gt')), this.getAttribute('data-asp'));"
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex gap-2 items-center">
-            <img src="/svg/addtocart.svg" class="w-5 h-5" alt="addtocart">
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="w-full max-w-[363px] bg-white rounded overflow-hidden" th:each="butky : ${butkys}" th:if="${butky.kichhoat == 1}">
-      <img th:src="${butky.getFirstImageUrl()}" class="w-full aspect-square" alt="anhbutky" />
-      <div class="p-2 flex flex-col gap-2">
-        <a class="hover:text-yellow-400 text-sm" th:href="@{'/butky/' + ${butky.getMabutky()}}"
-          th:text="@{${butky.getTenbutky()}}">
-        </a>
-        <p class="font-bold text-red-600" th:text="@{${butky.getGiatienFormatted()} + 'đ'}"></p>
-        <div class="flex gap-2">
-          <button th:data-tsp="${butky.getTenbutky()}" th:data-msp="${butky.getMabutky()}"
-            th:data-gt="${butky.getGiatien()}" th:data-asp="${butky.getFirstImageUrl()}"
-            onclick="addItem(this.getAttribute('data-tsp'),parseInt(this.getAttribute('data-msp')), 'butky',parseInt(this.getAttribute('data-gt')), this.getAttribute('data-asp')); redirectToCart()"
-            class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded flex gap-2 items-center">
-            <img src="/svg/tocheckout.svg" class="w-5 h-5" alt="tocheckout">
-            <p class="text-xs sm:text-base">
-              Mua ngay
-            </p>
-          </button>
-          <button th:data-tsp="${butky.getTenbutky()}" th:data-msp="${butky.getMabutky()}"
-            th:data-gt="${butky.getGiatien()}" th:data-asp="${butky.getFirstImageUrl()}"
-            onclick="addItem(this.getAttribute('data-tsp'),parseInt(this.getAttribute('data-msp')), 'butky',parseInt(this.getAttribute('data-gt')), this.getAttribute('data-asp'));"
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex gap-2 items-center">
-            <img src="/svg/addtocart.svg" class="w-5 h-5" alt="addtocart">
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="w-full max-w-[363px] bg-white rounded overflow-hidden" th:each="trangsuc : ${trangsucs}" th:if="${trangsuc.kichhoat == 1}">
-      <img th:src="${trangsuc.getFirstImageUrl()}" class="w-full aspect-square" alt="anhtrangsuc" />
-      <div class="p-2 flex flex-col gap-2">
-        <a class="hover:text-yellow-400 text-sm" th:href="@{'/trangsuc/' + ${trangsuc.getMatrangsuc()}}"
-          th:text="@{${trangsuc.getTentrangsuc()}}">
-        </a>
-        <p class="font-bold text-red-600" th:text="@{${trangsuc.getGiaTienFormatted()} + 'đ'}"></p>
-        <div class="flex gap-2 ">
-          <button th:data-tsp="${trangsuc.getTentrangsuc()}" th:data-msp="${trangsuc.getMatrangsuc()}"
-            th:data-gt="${trangsuc.getGiaTien()}" th:data-asp="${trangsuc.getFirstImageUrl()}"
-            onclick="addItem(this.getAttribute('data-tsp'),parseInt(this.getAttribute('data-msp')), 'trangsuc',parseInt(this.getAttribute('data-gt')), this.getAttribute('data-asp')); redirectToCart()"
-            class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded flex gap-2 items-center">
-            <img src="/svg/tocheckout.svg" class="w-5 h-5" alt="tocheckout">
-            <p class="text-xs sm:text-base">
-              Mua ngay
-            </p>
-          </button>
-          <button th:data-tsp="${trangsuc.getTentrangsuc()}" th:data-msp="${trangsuc.getMatrangsuc()}"
-            th:data-gt="${trangsuc.getGiaTien()}" th:data-asp="${trangsuc.getFirstImageUrl()}"
-            onclick="addItem(this.getAttribute('data-tsp'),parseInt(this.getAttribute('data-msp')), 'trangsuc',parseInt(this.getAttribute('data-gt')), this.getAttribute('data-asp'));"
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex gap-2 items-center">
-            <img src="/svg/addtocart.svg" class="w-5 h-5" alt="addtocart">
-          </button>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
+  </div>
   <ul th:if="${sotrang > 1}" class="flex items-center flex-wrap w-full gap-2 mt-4">
     <li>Trang:</li>
     <li th:each="i:${#numbers.sequence(1,sotrang,1)}">
       <a th:classappend="${page + 1 == i} ? 'bg-black text-white pointer-events-none' : 'bg-white text-black'"
         class="p-2 aspect-square border border-b hover:text-blue-500"
-        th:href="@{'/?page=' + ${i} + '&search=' + ${search}}" th:text="${i}"></a>
+        th:href="@{'/shop?page=' + ${i} + '&search=' + ${search} + '&kichThuoc=' + ${kichThuoc} + '&mauSac=' + ${mauSac} + '&loai=' + ${loai} + '&giaTienFrom=' + ${giaTienFrom} + '&giaTienTo=' + ${giaTienTo}}"
+        th:text="${i}"></a>
     </li>
   </ul>
+  <link href="https://cdn.jsdelivr.net/npm/tom-select@1.7.0/dist/css/tom-select.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/tom-select@1.7.0/dist/js/tom-select.complete.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.0/nouislider.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.0/nouislider.min.js"></script>
+  <script th:inline="javascript">
+    const kichThuocList = /*[[${kichThuocList}]]*/[];
+    const mauSacList = /*[[${mauSacList}]]*/[];
+    const loaiList = /*[[${loaiList}]]*/[];
+    let mauSacSelect = null;
+    let loaiSelect = null;
+    let kichThuocSelect = null;
+
+    function initKichThuocSelect() {
+      const select = document.getElementById("kichThuoc");
+      if (kichThuocSelect) {
+        kichThuocSelect.destroy();
+      }
+
+      kichThuocSelect = new TomSelect(select, {
+        placeholder: 'Chọn kích thước',
+        maxItems: 1,  // Giới hạn chỉ chọn một kích thước
+        closeAfterSelect: true
+      });
+
+      select.style.display = "none";
+    }
+
+    function initLoaiSelect() {
+      const select = document.getElementById("loai");
+      if (loaiSelect) {
+        loaiSelect.destroy();
+      }
+
+      loaiSelect = new TomSelect(select, {
+        placeholder: 'Chọn kích thước',
+        maxItems: 1,  // Giới hạn chỉ chọn một kích thước
+        closeAfterSelect: true
+      });
+      select.style.display = "none";
+    }
+
+    function initMauSacSelect() {
+      const select = document.getElementById("mauSac");
+      if (mauSacSelect) {
+        mauSacSelect.destroy();
+      }
+      // Khởi tạo Tom Select
+      mauSacSelect = new TomSelect(select, {
+        placeholder: 'Chọn màu',
+        maxItems: 1,
+        render: {
+          item: function (data, escape) {
+            const color = data.color || data.value;
+            return `<div class="option" style="display: flex; align-items: center;">
+                              <span style="width: 14px; height: 14px; background: ${color}; border-radius: 3px; margin-right: 6px; border: 1px solid #ccc;"></span>
+                              ${data.ten}
+                          </div>`;
+          },
+          option: function (data, escape) {
+            const color = data.color || data.value;
+            return `<div class="option" style="display: flex; align-items: center;">
+                              <span style="width: 14px; height: 14px; background: ${color}; border-radius: 3px; margin-right: 6px; border: 1px solid #ccc;"></span>
+                              ${data.ten}
+                          </div>`;
+          }
+        }
+      });
+      select.style.display = "none";
+    }
+
+    initKichThuocSelect();
+    initLoaiSelect();
+    initMauSacSelect();
+  </script>
+  <script>
+    const slider = document.getElementById('giaTienSlider');
+    const fromInput = document.getElementById('giaTienFrom');
+    const toInput = document.getElementById('giaTienTo');
+
+    noUiSlider.create(slider, {
+      start: [100000, 500000], // Giá trị mặc định
+      connect: true,
+      step: 10000,
+      range: {
+        min: 0,
+        max: 1000000
+      },
+      format: {
+        to: value => Math.round(value),
+        from: value => Number(value)
+      }
+    });
+
+    // Cập nhật input khi slider thay đổi
+    slider.noUiSlider.on('update', (values, handle) => {
+      const val = Math.round(values[handle]);
+      if (handle === 0) fromInput.value = val;
+      else toInput.value = val;
+    });
+
+    // Cập nhật slider khi input thay đổi
+    fromInput.addEventListener('change', () => {
+      slider.noUiSlider.set([fromInput.value, null]);
+    });
+    toInput.addEventListener('change', () => {
+      slider.noUiSlider.set([null, toInput.value]);
+    });
+  </script>
 </div>

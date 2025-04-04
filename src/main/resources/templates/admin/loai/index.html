@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+
+<head>
+    <link rel="icon" type="image/png" href="/images/LogoMobile.png">
+    <title>Loại sản phẩm</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}" />
+</head>
+
+<body>
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+    <div class="p-4 w-full md:mx-auto pl-11">
+        <h1 class="font-bold text-center my-2">Quản lý loại sản phẩm</h1>
+        <form class="w-full max-w-sm mx-auto flex flex-col gap-2 my-2">
+            <section class="relative">
+                <label class="block font-medium" for="search">Tìm kiếm loại sản phẩm</label>
+                <input class="p-2 rounded block w-full outline-none border border-black" type="text" id="search"
+                    name="search" th:value="${search}" placeholder="Tìm kiếm">
+            </section>
+            <section class="flex gap-1 items-center">
+                <button class="p-2 w-max bg-blue-500 rounded block text-white flex-shrink-0">Tìm kiếm</button>
+                <a href="/admin/loai/add" class="p-2 w-max bg-green-500 rounded block text-white">Thêm mới</a>
+            </section>
+            <ul th:if="${sotrang > 1}" class="flex items-center flex-wrap w-full sm:gap-2 gap-1 my-4">
+                <li>Trang:</li>
+                <li th:each="i:${#numbers.sequence(1,sotrang,1)}">
+                    <a th:classappend="${page + 1 == i} ? 'bg-black text-white pointer-events-none' : 'bg-white text-black'"
+                        class="p-2 aspect-square border border-b hover:text-blue-500"
+                        th:href="@{'/admin/loai/?search=' + ${search} + '&page=' + ${i}}" th:text="${i}"></a>
+                </li>
+            </ul>
+        </form>
+        <section class="w-full overflow-x-auto">
+            <table class="w-full mx-auto">
+                <tr>
+                    <th class="bg-black text-left text-white p-2">
+                        Kích thước
+                    </th>
+                    <th class="bg-black text-left text-white p-2">
+                        Tùy chọn
+                    </th>
+                </tr>
+                <tr th:each="loai : ${loaiList}" class="odd:bg-slate-300 even:bg-slate-200">
+                    <td class="p-2 overflow-hidden w-4/5" th:text="${loai.getLoaiId()}">
+                    </td>
+                    <td class="p-2 overflow-hidden">
+                        <section class="flex items-center gap-2">
+                            <button class="block w-max text-center my-1 p-2 rounded bg-red-500 text-white"
+                                th:data-id="${loai.getLoaiId()}" onclick="confirmDelete(this);">
+                                <img src="/svg/delete.svg" alt="delete" class="w-4 h-4 rounded">
+                            </button>
+                        </section>
+                    </td>
+                </tr>
+            </table>
+        </section>
+    </div>
+
+    <script src="/js/sweetalert.min.js"></script>
+    <script>
+        function confirmDelete(element) {
+            const id = element.getAttribute('data-id'); // Lấy giá trị từ data-attribute
+
+            Swal.fire({
+                title: 'Bạn có chắc chắn muốn xóa?',
+                text: "Loại sản phẩm sẽ bị xóa!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Xóa',
+                cancelButtonText: 'Hủy'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const encodedColor = encodeURIComponent(id);
+                    window.location.href = `/admin/loai/delete?id=${encodedColor}`;
+                }
+            });
+        }
+    </script>
+    <script th:inline="javascript">
+        const errorMessage = /*[[${errorMessage}]]*/ '';
+        if (errorMessage) {
+            showNotification(
+                {
+                    title: "Lỗi",
+                    message: errorMessage,
+                    type: "error"
+                }
+            );
+        }
+    </script>
+</body>
+
+</html>

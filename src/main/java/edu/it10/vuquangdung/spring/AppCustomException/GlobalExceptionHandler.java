@@ -26,7 +26,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Slf4j
-@ControllerAdvice
+// @ControllerAdvice
 public class GlobalExceptionHandler {
   @Autowired
   HttpSession session;
@@ -89,7 +89,7 @@ public class GlobalExceptionHandler {
     String referer = request.getHeader("Referer");
     String redirect = ex.getRedirect();
     redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
-    return redirect != null ? redirect : (referer != null ? "redirect:" + referer : "redirect:/default-page");
+    return redirect != null ? redirect : (referer != null ? "redirect:" + referer : "redirect:/");
   }
 
   @ExceptionHandler(ControllerException.class)

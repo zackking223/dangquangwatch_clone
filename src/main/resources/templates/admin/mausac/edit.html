@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/images/LogoMobile.png">
+    <title>Sửa màu sắc</title>
+    <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}" />
+</head>
+
+<body>
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+    <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
+        <h1 class="font-bold text-center my-2">Sửa màu sắc</h1>
+        <div class="col-md-auto">
+            <form th:object="${mauSac}" th:action="@{/admin/mausac/save}" action="#" method="post">
+                <section class="grid sm:grid-cols-2 gap-2 grid-cols-1">
+                    <div class="relative">
+                        <label class="block font-medium" th:for="mauSacId">Mã màu</label>
+                        <input id="mauSacId" class="border border-black rounded block p-2 w-full min-w-[280px]"
+                            type="text" th:field="*{mauSacId}" placeholder="#00000" required readonly />
+                        <div th:style="'background: ' + (${mauSac.getMauSacId().startsWith('#') ? mauSac.getMauSacId() : '#' + mauSac.getMauSacId()})"
+                            class="w-6 h-6 border border-black absolute top-8 right-2">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block font-medium" th:for="ten">Tên màu</label>
+                        <input class="border border-black rounded block p-2 w-full min-w-[280px]" type="text"
+                            th:field="*{ten}" placeholder="Đen, đỏ, ...." required />
+                    </div>
+                </section>
+                <div style="clear: both; display: block; height: 10px"></div>
+                <input class="p-2 w-max bg-green-500 rounded block mt-4 text-white" type="submit" value="Sửa" />
+            </form>
+        </div>
+    </div>
+    <script th:inline="javascript">
+        const errorMessage = /*[[${errorMessage}]]*/ '';
+        if (errorMessage) {
+            showNotification(
+                {
+                    title: "Lỗi",
+                    message: errorMessage,
+                    type: "error"
+                }
+            );
+        }
+    </script>
+</body>
+
+</html>

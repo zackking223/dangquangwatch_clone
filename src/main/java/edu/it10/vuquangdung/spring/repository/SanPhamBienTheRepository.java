@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import edu.it10.vuquangdung.spring.entity.KichThuoc;
+import edu.it10.vuquangdung.spring.entity.MauSac;
 import edu.it10.vuquangdung.spring.entity.SanPham;
 import edu.it10.vuquangdung.spring.entity.SanPhamBienThe;
 
@@ -25,4 +27,9 @@ public interface SanPhamBienTheRepository extends JpaRepository<SanPhamBienThe, 
 
     @Query("SELECT s from SanPhamBienThe s WHERE s.id = :id")
     Optional<SanPhamBienThe> findByIdWithLock(@Param("id") Integer id);
+
+    Optional<SanPhamBienThe> findBySanPhamAndKichThuocAndMauSac(SanPham sanPham, KichThuoc kichThuoc, MauSac mauSac);
+
+    @Query("SELECT COUNT(s) from SanPhamBienThe s WHERE s.mauSac.mauSacId = :mauSacId AND s.sanPham = :sanPham")
+    Long countByMauSacAndSanPham(@Param("mauSacId") String mauSacId, @Param("sanPham") SanPham sanPham);
 }

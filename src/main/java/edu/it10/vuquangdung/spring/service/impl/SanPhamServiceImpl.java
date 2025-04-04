@@ -6,10 +6,12 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import edu.it10.vuquangdung.spring.entity.SanPham;
 import edu.it10.vuquangdung.spring.repository.SanPhamRepository;
+import edu.it10.vuquangdung.spring.repository.custom.SanPhamRepositoryCustom;
 import edu.it10.vuquangdung.spring.service.SanPhamService;
 import jakarta.transaction.Transactional;
 
@@ -17,6 +19,8 @@ import jakarta.transaction.Transactional;
 public class SanPhamServiceImpl implements SanPhamService {
     @Autowired
     SanPhamRepository sanPhamRepository;
+    @Autowired
+    SanPhamRepositoryCustom sanPhamRepositoryCustom;
 
     @Override
     public List<SanPham> getAll() {
@@ -79,5 +83,11 @@ public class SanPhamServiceImpl implements SanPhamService {
     @Override
     public void delete(Integer id) {
         sanPhamRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<SanPham> search(String searchStr, String kichThuoc, String mauSac, String loai, Integer giaTienFrom, Integer giaTienTo,
+            String from, String to, Pageable pageable) {
+        return sanPhamRepositoryCustom.search(searchStr, kichThuoc, mauSac, loai, giaTienFrom, giaTienTo, from, to, pageable);
     }
 }

@@ -28,7 +28,7 @@
         }
 
         .thumbnail.selected {
-            border-color: #eab308;
+            border-color: oklch(52% 0.105 223.128);
         }
     </style>
 </head>
@@ -52,9 +52,9 @@
                         </div>
                     </div>
                     <button id="prevBtn"
-                        class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-yellow-500 text-white p-2 opacity-20 hover:opacity-100 transition-all duration-75">⮜</button>
+                        class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-500 text-white p-2 opacity-20 hover:opacity-100 transition-all duration-75">⮜</button>
                     <button id="nextBtn"
-                        class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-yellow-500 text-white p-2 opacity-20 hover:opacity-100 transition-all duration-75">⮞</button>
+                        class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-500 text-white p-2 opacity-20 hover:opacity-100 transition-all duration-75">⮞</button>
                     <div id="thumbnails" class="absolute bottom-0 left-0 right-0 flex justify-center gap-1">
 
                         <!-- Lặp qua từng ảnh -->
@@ -112,9 +112,9 @@
                 </div>
             </div>
             <div class="my-8">
-                <h1 class="p-2 text-xl bg-yellow-500 text-white w-max">Thông tin</h1>
-                <div class="w-full h-1 bg-yellow-500 mb-2"></div>
-                <p class="" th:text="${sanPham.getThongtin()}"></p>
+                <h1 class="p-2 text-xl bg-gray-500 text-white w-max">Thông tin</h1>
+                <div class="w-full h-1 bg-gray-500 mb-2"></div>
+                <p class="" th:text="${sanPham.getThongTin()}"></p>
             </div>
         </div>
 
@@ -127,7 +127,7 @@
         const priceContainer = document.getElementById("priceContainer");
         const amountInput = document.getElementById("amountInput");
         const sanPhamData = /*[[${sanPham}]]*/ '';
-        console.log(sanPhamData);
+
         const bienTheList = sanPhamData.bienTheList;
         const imageList = sanPhamData.images;
         let maxAmount = null;
@@ -363,7 +363,6 @@
         let currentIndex = 0;
         const slider = document.getElementById('slider');
         const thumbnails = document.querySelectorAll('.thumbnail');
-        let autoSlideInterval = setInterval(nextSlide, 3000);
 
         function updateSlider() {
             slider.style.transform = `translateX(-${currentIndex * 100}%)`;
@@ -393,8 +392,6 @@
         });
 
         const container = document.getElementById('slider-container');
-        container.addEventListener('mouseover', () => clearInterval(autoSlideInterval));
-        container.addEventListener('mouseout', () => autoSlideInterval = setInterval(nextSlide, 3000));
 
         updateSlider();
     </script>

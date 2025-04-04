@@ -31,16 +31,28 @@ public class ThongkeController {
   }
 
   @GetMapping("/admin/thongke/")
-  public String trangThongKe(HttpSession session, Model model,
-      @RequestParam("editcapital") Optional<String> editcapital_opt) {
+  public String trangThongKe(
+      HttpSession session,
+      Model model,
+      @RequestParam("editcapital") Optional<String> editcapital_opt,
+      @RequestParam("time") Optional<String> time) {
     String role = (String) session.getAttribute("role");
 
     if (!role.equals("ROLE_QUANLY")) {
       return "redirect:/admin/donhang/";
     }
 
+    ThongKe thongKe;
+
     List<ThongKe> thongKes = thongKeService.getAllThongKe();
-    ThongKe thongKe = thongKes.get(0);
+    if (time.isPresent() && !time.get().isEmpty()) {
+      thongKe = thongKes.stream()
+          .filter(tk -> tk.getMathongke().equals(time.get()))
+          .findFirst()
+          .orElse(thongKeService.getCurrent());
+    } else {
+      thongKe = thongKes.get(0);
+    }
     boolean editcapital = editcapital_opt.isPresent();
 
     Float newTiLe = thongKe.tinhTile();

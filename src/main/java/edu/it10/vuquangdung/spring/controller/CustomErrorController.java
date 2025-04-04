@@ -8,7 +8,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-@Controller
+// @Controller
 public class CustomErrorController implements ErrorController {
 
   @RequestMapping("/error")

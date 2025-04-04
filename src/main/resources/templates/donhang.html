@@ -13,17 +13,9 @@
 
 <body class="bg-slate-200 overflow-x-hidden">
   <div th:replace="~{fragments/header :: header}"></div>
-  <div th:replace="~{fragments/productsbar :: productsbar}"></div>
   <div class="w-full xl:max-w-[1215px] max-w-[1021px] mx-auto my-9 min-h-[85vh]">
-    <div class="flex gap-2 w-max mx-auto items-end">
-      <h1 class="p-2 bg-slate-400 rounded-tl rounded-tr text-xl hover:text-yellow-500"><a
-          href="/profile/doithongtin">Đổi thông tin</a></h1>
-      <h1 class="p-2 bg-white rounded-tl rounded-tr text-xl text-yellow-500 font-bold underline"><a
-          href="/profile/donhang">Đơn hàng</a></h1>
-      <h1 class="p-2 bg-slate-400 rounded-tl rounded-tr text-xl hover:text-yellow-500"><a href="/profile/giohang">Giỏ
-          hàng</a></h1>
-    </div>
     <div class="bg-white shadow-md rounded-lg overflow-hidden p-4 min-h-[800px]">
+      <h1 class="font-bold mb-4 text-center">Tra cứu đơn hàng</h1>
       <form action="" class="w-full flex flex-col gap-2 mb-4">
         <section class="w-full grid md:grid-cols-3 gap-2 mx-auto">
           <div>
@@ -73,47 +65,47 @@
         </ul>
       </form>
       <section class="w-full overflow-x-auto">
-        <table class="w-max mx-auto">
+        <table class="sm:w-full w-max mx-auto">
           <tr>
-            <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Mã đơn
+            <th class="bg-black text-white p-2 max-w-[200px] overflow-hidden">Mã đơn
               hàng
             </th>
-            <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Tổng tiền
+            <th class="bg-black text-white p-2 max-w-[200px] overflow-hidden">Tổng tiền
             </th>
-            <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Địa chỉ
+            <th class="bg-black text-white p-2 max-w-[200px] overflow-hidden">Địa chỉ
             </th>
-            <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Ghi chú
+            <th class="bg-black text-white p-2 max-w-[200px] overflow-hidden">Ghi chú
             </th>
-            <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Tình
+            <th class="bg-black text-white p-2 max-w-[200px] overflow-hidden">Tình
               trạng
             </th>
-            <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Thanh
+            <th class="bg-black text-white p-2 max-w-[200px] overflow-hidden">Thanh
               toán
             </th>
-            <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Sản phẩm
+            <th class="bg-black text-white p-2 max-w-[200px] overflow-hidden">Sản phẩm
               mua
             </th>
-            <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Ngày thêm
+            <th class="bg-black text-white p-2 max-w-[200px] overflow-hidden">Ngày thêm
             </th>
-            <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">Tùy chỉnh
+            <th class="bg-black text-white p-2 max-w-[200px] overflow-hidden">Tùy chỉnh
             </th>
           </tr>
           <tr th:if="${donhangs.size() < 1}">
-            <td colspan="9" class="text-center w-full p-2 border border-solid border-black">Bạn chưa có đơn hàng nào
+            <td colspan="9" class="text-center w-full p-2 bg-slate-300">Bạn chưa có đơn hàng nào
             </td>
           </tr>
-          <tr th:each="donhang : ${donhangs}">
-            <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+          <tr th:each="donhang : ${donhangs}" class="odd:bg-slate-300 even:bg-slate-200">
+            <td class="p-2 max-w-[200px] overflow-hidden"
               th:text="${donhang.getMaDonHang()}"></td>
-            <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+            <td class="p-2 max-w-[200px] overflow-hidden"
               th:text="${donhang.getTongTienFormatted()}"></td>
-            <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+            <td class="p-2 max-w-[200px] overflow-hidden"
               th:text="${donhang.getDiaChi()}">
             </td>
-            <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+            <td class="p-2 max-w-[200px] overflow-hidden"
               th:text="${donhang.getGhiChu() ?: ''}">
             </td>
-            <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+            <td class="p-2 max-w-[200px] overflow-hidden">
               <a href="?tinhtrang=Chờ+thanh+toán" class="py-1 px-[6px] rounded-sm bg-red-500 font-medium text-white"
                 th:if="${donhang.getTinhTrang() == 'Chờ thanh toán'}">
                 Chờ thanh toán
@@ -139,7 +131,7 @@
                 Đang giao
               </a>
             </td>
-            <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+            <td class="p-2 max-w-[200px] overflow-hidden">
               <a href="?thanhtoan=Chưa+thanh+toán" class="py-1 px-[6px] rounded-sm bg-orange-500 font-medium text-white"
                 th:if="${donhang.getThanhToan() == 'Chưa thanh toán'}">
                 Chưa thanh toán
@@ -161,15 +153,15 @@
                 Khi nhận hàng
               </a>
             </td>
-            <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+            <td class="p-2 max-w-[200px] overflow-hidden">
               <p class="my-1" th:each="sp : ${donhang.getItems()}"><a target="_blank"
-                  class="text-sm rounded-sm p-1 bg-slate-200 hover:text-yellow-400 hover:bg-slate-900"
+                  class="text-sm rounded-sm p-1 bg-slate-200 hover:text-gray-400 hover:bg-slate-900"
                   th:href="${sp.getLink()}" th:text="${sp.getTensanpham()}"></a> x <span
                   th:text="${sp.getSoLuong()}"></span></p>
             </td>
-            <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+            <td class="p-2 max-w-[200px] overflow-hidden"
               th:text="${donhang.getNGAYTHEM()}"></td>
-            <td class="p-2 border border-solid border-black max-w-[200px] gap-2 overflow-hidden">
+            <td class="p-2 max-w-[200px] gap-2 overflow-hidden">
               <button onclick="pay(this)" th:attr="madonhang=${donhang.getMaDonHang()}"
                 th:if="${donhang.getTinhTrang() == 'Chờ thanh toán' && (donhang.getThanhToan() == 'Chưa thanh toán' || donhang.getThanhToan() == 'Thất bại')}"
                 class="block p-2 rounded bg-purple-500 hover:bg-purple-600 text-white mb-2">Thanh toán</button>

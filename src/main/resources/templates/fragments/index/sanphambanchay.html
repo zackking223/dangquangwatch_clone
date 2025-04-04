@@ -1,7 +1,7 @@
 <!-- SAN PHAM BAN CHAY -->
 <div class="w-full" th:fragment="sanphambanchay">
   <section class="w-full bg-white flex items-center h-[65px] border-b-[3px] border-b-red-600 rounded-t-sm mb-2">
-    <h1 class="text-2xl w-max mx-auto font-bold">SẢN PHẨM BÁN CHẠY</h1>
+    <h1 class="text-2xl w-max mx-auto font-bold">SẢN PHẨM MỚI</h1>
   </section>
 
   <section class="grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 w-full gap-2">
@@ -12,7 +12,7 @@
         <a class="hover:text-yellow-400 text-sm" th:href="@{'/sanpham/' + ${sanPham.getId()}}" 
           th:text="${sanPham.getTen()}">
         </a>
-        <p class="font-bold text-red-600" th:text="@{${sanPham.getFirstBienThe().getGiatienFormatted()} + 'đ'}"></p>
+        <p class="font-bold text-red-600" th:text="@{${sanPham.getFirstBienThe().getGiaTienFormatted()} + 'đ'}"></p>
       </div>
     </div>
   </section>

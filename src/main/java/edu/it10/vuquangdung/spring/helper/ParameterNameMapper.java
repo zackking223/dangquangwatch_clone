@@ -13,6 +13,9 @@ public class ParameterNameMapper {
         PARAMETER_NAME_MAP.put("giatien", "Giá tiền");
         PARAMETER_NAME_MAP.put("soluongdatmua", "Số lượng đặt mua");
 
+        PARAMETER_NAME_MAP.put("ten", "Tên");
+        PARAMETER_NAME_MAP.put("thuonghieu", "Thương hiệu");
+        PARAMETER_NAME_MAP.put("bienthe", "Biến thể");
         PARAMETER_NAME_MAP.put("tendongho", "Tên đồng hồ");
         PARAMETER_NAME_MAP.put("tenkinhmat", "Tên kính mắt");
         PARAMETER_NAME_MAP.put("tentrangsuc", "Tên trang sức");

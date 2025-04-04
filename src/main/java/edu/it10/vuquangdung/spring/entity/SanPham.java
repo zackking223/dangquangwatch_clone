@@ -31,20 +31,19 @@ public class SanPham {
     @NotEmpty(message = "Loại sản phẩm không được để trống.")
     private String loai;
 
-    @Column(name = "thuongHieu")
+    @Column(name = "thuonghieu")
     @NotNull(message = "Loại sản phẩm không được để trống.")
     @NotEmpty(message = "Loại sản phẩm không được để trống.")
     private String thuongHieu;
 
-    @Column(name = "ngayThem")
-    @NotNull(message = "Ngày thêm không được để trống.")
+    @Column(name = "ngaythem")
     private String ngayThem;
 
-    @Column(name = "thongTin", columnDefinition = "TEXT")
+    @Column(name = "thongtin", columnDefinition = "TEXT")
     @NotEmpty(message = "Thông tin không được để trống.")
     private String thongTin;
 
-    @Column(name = "kichHoat")
+    @Column(name = "kichhoat")
     private Integer kichHoat;
 
     @OneToMany(mappedBy = "sanPham", targetEntity = SanPhamBienThe.class)

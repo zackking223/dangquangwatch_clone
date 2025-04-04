@@ -88,31 +88,11 @@
     </section>
 
     <h1 class="font-bold text-center mb-2 mt-4">Số lượng</h1>
-    <section class="grid my-3 gap-2 sm:grid-cols-3 grid-cols-2">
+    <section class="grid my-3 gap-2 grid-cols-2">
       <div class="w-full shadow shadow-black rounded-lg p-4 bg-blue-500 text-white">
-        <h1 class="font-bold text-2xl flex items-center gap-2">Đồng hồ <img class="w-7" src="/svg/watch.svg"
-            alt="watch"></h1>
-        <div class="p-2" th:text="${thongKe.getDongHo()}"></div>
-      </div>
-      <div class="w-full shadow shadow-black rounded-lg p-4 bg-green-500 text-white">
-        <h1 class="font-bold text-2xl flex items-center gap-2">Bút ký <img class="w-6 h-6" src="/svg/ink_pen.svg"
-            alt="ink_pen"></h1>
-        <div class="p-2" th:text="${thongKe.getButKy()}"></div>
-      </div>
-      <div class="w-full shadow shadow-black rounded-lg p-4 bg-amber-500 text-white">
-        <h1 class="font-bold text-2xl flex items-center gap-2">Phụ kiện <img class="w-6 h-6" src="/svg/accessories.svg"
-            alt="accessories"></h1>
-        <div class="p-2" th:text="${thongKe.getPhuKien()}"></div>
-      </div>
-      <div class="w-full shadow shadow-black rounded-lg p-4 bg-red-500 text-white">
-        <h1 class="font-bold text-2xl flex items-center gap-2">Trang sức <img class="w-6 h-6" src="/svg/diamond.svg"
-            alt="diamond"></h1>
-        <div class="p-2" th:text="${thongKe.getTrangSuc()}"></div>
-      </div>
-      <div class="w-full shadow shadow-black rounded-lg p-4 bg-purple-500 text-white">
-        <h1 class="font-bold text-2xl flex items-center gap-2">Kính mắt <img class="w-6 h-6" src="/svg/glasses.svg"
-            alt="glasses"></h1>
-        <div class="p-2" th:text="${thongKe.getKinhMat()}"></div>
+        <h1 class="font-bold text-2xl flex items-center gap-2">Sản phẩm <img class="w-7" src="/svg/sanpham.svg"
+            alt="sanpham"></h1>
+        <div class="p-2" th:text="${thongKe.getSanPham()}"></div>
       </div>
       <div class="w-full shadow shadow-black rounded-lg p-4 bg-teal-500 text-white">
         <h1 class="font-bold text-2xl flex items-center gap-2">Tổng đơn hàng <img class="w-6 h-6" src="/svg/order.svg"
@@ -182,6 +162,11 @@
     </section>
 
     <script th:inline="javascript">
+      const monthSelect = document.getElementById("month");
+      monthSelect.addEventListener("change", (e) => {
+        location.replace("/admin/thongke/?time=" + e.target.value)
+      })
+      
       const doanhSoChartContainer = document.getElementById('financialChart').getContext('2d');
       const financialChart = new Chart(doanhSoChartContainer, {
         type: 'bar',

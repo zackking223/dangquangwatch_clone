@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,16 +18,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import edu.it10.vuquangdung.spring.AppCustomException.ControllerException;
 import edu.it10.vuquangdung.spring.AppCustomException.ErrorEnum;
 import edu.it10.vuquangdung.spring.entity.AnhSanPham;
+import edu.it10.vuquangdung.spring.entity.KichThuoc; 
 import edu.it10.vuquangdung.spring.entity.MauSac;
 import edu.it10.vuquangdung.spring.entity.SanPham;
 import edu.it10.vuquangdung.spring.entity.SanPhamBienThe;
+import edu.it10.vuquangdung.spring.entity.request.EditBienTheRequest;
 import edu.it10.vuquangdung.spring.entity.response.ApiResponse;
-import edu.it10.vuquangdung.spring.request.AddAnhSanPhamRequest;
-import edu.it10.vuquangdung.spring.request.AddBienTheRequest;
-import edu.it10.vuquangdung.spring.request.AddSanPhamRequest;
 import edu.it10.vuquangdung.spring.service.AnhSanPhamService;
 import edu.it10.vuquangdung.spring.service.KichThuocService;
 import edu.it10.vuquangdung.spring.service.LoaiService;
@@ -63,8 +67,8 @@ public class SanPhamController {
             @RequestParam Optional<String> from,
             @RequestParam Optional<String> to,
             Model model) {
-        String fromStr = "2001-01-01";
-        String toStr = "3000-01-01";
+        String fromStr = null;
+        String toStr = null;
         String kichThuocStr = "";
         String mauSacStr = "";
         String loaiStr = "";
@@ -113,7 +117,8 @@ public class SanPhamController {
         List<MauSac> mauSacList = mauSacService.getAll();
         List<String> loaiList = loaiService.getAllId();
 
-        Page<SanPham> data = sanPhamService.search(searchStr, fromStr, toStr, pageNum);
+        Page<SanPham> data = sanPhamService.search(searchStr, kichThuocStr, mauSacStr, loaiStr, giaTienNum, 0, fromStr,
+                toStr, PageRequest.of(pageNum, 10));
 
         model.addAttribute("sanPhamList", data.getContent());
         model.addAttribute("page", pageNum);
@@ -141,6 +146,9 @@ public class SanPhamController {
     @GetMapping("/add")
     public String add(HttpSession session, Model model) {
         model.addAttribute("sanpham", new SanPham());
+        model.addAttribute("loaiList", loaiService.getAllId());
+        model.addAttribute("kichThuocList", kichThuocService.getAllId());
+        model.addAttribute("mauSacList", mauSacService.getAll());
         var errorMessage = session.getAttribute(ErrorEnum.ADD.name());
         if (errorMessage != null) {
             session.removeAttribute(ErrorEnum.ADD.name());
@@ -158,8 +166,12 @@ public class SanPhamController {
         }
         Optional<SanPham> opt = sanPhamService.findById(id);
         if (opt.isPresent()) {
-            model.addAttribute("sanpham", opt.get());
-            model.addAttribute("bienthes", opt.get().getBienTheList());
+            model.addAttribute("sanPham", opt.get());
+            model.addAttribute("bienTheList", opt.get().getBienTheList());
+            model.addAttribute("uploadedImages", opt.get().getImages());
+            model.addAttribute("loaiList", loaiService.getAllId());
+            model.addAttribute("kichThuocList", kichThuocService.getAllId());
+            model.addAttribute("mauSacList", mauSacService.getAll());
             return "admin/sanpham/edit";
         } else {
             throw new ControllerException("Không tìm thấy sản phẩm", ErrorEnum.INDEX, "/admin/sanpham/");
@@ -168,60 +180,183 @@ public class SanPhamController {
 
     @PostMapping("/add")
     @Transactional
-    public ResponseEntity<ApiResponse> addSanPham(@RequestBody AddSanPhamRequest request) throws IOException {
-        SanPham sanPham = request.getSanPham();
-        List<SanPhamBienThe> bienThes = request.getBienThes();
-        List<MultipartFile> files = request.getFiles();
+    public ResponseEntity<ApiResponse> addSanPham(
+            @RequestParam("sanPham") String sanPhamJson, // Nhận đối tượng sanPham dưới dạng JSON
+            @RequestParam("bienTheList") String bienTheListJson, // Nhận đối tượng bienTheList dưới dạng JSON
+            @RequestParam List<MultipartFile> images, // Nhận các tệp hình ảnh
+            @RequestParam List<String> mauSacIds // Nhận danh sách mauSacId
+    ) throws IOException {
+        try {
+            // Chuyển đổi JSON thành đối tượng Java
+            ObjectMapper objectMapper = new ObjectMapper();
+            SanPham sanPham = objectMapper.readValue(sanPhamJson, SanPham.class);
+            List<SanPhamBienThe> bienTheList = objectMapper.readValue(bienTheListJson,
+                    new TypeReference<List<SanPhamBienThe>>() {
+                    });
 
-        // Kiểm tra số lượng biến thể và file có khớp không
-        if (bienThes == null || bienThes.isEmpty()) {
-            throw new ControllerException("Phải có ít nhất 1 biến thể!", ErrorEnum.ADD, "/admin/sanpham/add");
-        }
-
-        if (files == null || files.isEmpty()) {
-            return ResponseEntity.badRequest().body(new ApiResponse(true, "Sản phẩm phải có ít nhất 1 hình ảnh!"));
-        }
-
-        // Bước 1: Lưu sản phẩm
-        sanPham = sanPhamService.save(sanPham);
-
-        // Bước 2: Lưu danh sách biến thể
-        for (SanPhamBienThe bienThe : bienThes) {
-            bienThe.setSanPham(sanPham);
-            bienThe = sanPhamBienTheService.save(bienThe);
-        }
-
-        // Bước 3: Lưu danh sách ảnh cho sản phẩm
-        for (MultipartFile file : files) {
-            if (!file.isEmpty()) {
-                AnhSanPham anh = new AnhSanPham();
-                anh.setSanPham(sanPham);
-                anh.setFile(file);
-                anhSanPhamService.save(anh);
+            // Kiểm tra số lượng biến thể
+            if (bienTheList == null || bienTheList.isEmpty()) {
+                return ResponseEntity.badRequest().body(new ApiResponse(false, "Phải có ít nhất 1 biến thể!"));
             }
-        }
 
-        return ResponseEntity.ok().body(new ApiResponse(true, "Thêm thành công!"));
+            if (images == null || images.isEmpty()) {
+                return ResponseEntity.badRequest().body(new ApiResponse(false, "Sản phẩm phải có ít nhất 1 hình ảnh!"));
+            }
+
+            // Bước 1: Lưu sản phẩm
+            sanPham.setKichHoat(1); // Đảm bảo sản phẩm được kích hoạt
+            sanPham = sanPhamService.save(sanPham);
+
+            // Bước 2: Lưu danh sách biến thể
+            for (SanPhamBienThe bienThe : bienTheList) {
+                bienThe.setSanPham(sanPham);
+                bienThe.setSoLuongDatMua(0);
+                bienThe.setKichHoat(1);
+                sanPhamBienTheService.save(bienThe);
+            }
+
+            // Bước 3: Lưu danh sách ảnh cho sản phẩm
+            for (int i = 0; i < images.size(); i++) {
+                MultipartFile imageFile = images.get(i);
+                String mauSacId = mauSacIds.get(i); // Lấy mauSacId tương ứng với mỗi ảnh
+
+                if (imageFile != null && !mauSacId.isEmpty()) {
+                    AnhSanPham anhSanPham = new AnhSanPham();
+                    anhSanPham.setSanPham(sanPham);
+                    anhSanPham.setMauSacId(mauSacId);
+                    anhSanPham.setFile(imageFile); // Lưu tệp tin ảnh
+
+                    // Lưu ảnh vào cơ sở dữ liệu
+                    anhSanPhamService.save(anhSanPham);
+                } else {
+                    return ResponseEntity.badRequest()
+                            .body(new ApiResponse(false, "MauSacId và File không được để trống!"));
+                }
+            }
+
+            return ResponseEntity.ok().body(new ApiResponse(true, "Thêm thành công! Mã: " + sanPham.getId()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse(false, "Có lỗi xảy ra: " + e.getMessage()));
+        }
     }
 
     @PostMapping("/editsanpham")
     @Transactional
-    public String editSanPham(@RequestBody SanPham sanPham) {
-        sanPhamService.save(sanPham); // Cập nhật SanPham
-        return "redirect:/admin/sanpham/edit?id=" + sanPham.getId();
+    public ResponseEntity<ApiResponse> editSanPham(@RequestBody SanPham sanPham) {
+        if (sanPham.getId() == null) {
+            return ResponseEntity.badRequest().body(new ApiResponse(false, "Thiếu mã sản phẩm!"));
+        } else {
+            sanPhamService.save(sanPham); // Cập nhật SanPham
+            return ResponseEntity.ok().body(new ApiResponse(true, "Sửa thành công!"));
+        }
     }
 
     @PostMapping("/addbienthe")
     @Transactional
-    public ResponseEntity<ApiResponse> addBienThe(@RequestBody AddBienTheRequest request) throws IOException {
+    public ResponseEntity<ApiResponse> addBienThe(
+            @RequestParam Integer sanPhamId, // Nhận đối tượng sanPham dưới dạng JSON
+            @RequestParam("bienTheList") String bienTheListJson, // Nhận đối tượng bienTheList dưới dạng JSON
+            @RequestParam List<MultipartFile> images, // Nhận các tệp hình ảnh
+            @RequestParam List<String> mauSacIds // Nhận danh sách mauSacId
+    )
+            throws IOException {
+        // Chuyển đổi JSON thành đối tượng Java
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<SanPhamBienThe> bienTheList = objectMapper.readValue(bienTheListJson,
+                new TypeReference<List<SanPhamBienThe>>() {
+                });
+        // Kiểm tra số lượng biến thể
+        if (bienTheList == null || bienTheList.isEmpty()) {
+            return ResponseEntity.badRequest().body(new ApiResponse(false, "Phải có ít nhất 1 biến thể!"));
+        }
+        if (images == null || images.isEmpty()) {
+            return ResponseEntity.badRequest().body(new ApiResponse(false, "Sản phẩm phải có ít nhất 1 hình ảnh!"));
+        }
+
+        if (sanPhamId == null) {
+            return ResponseEntity.badRequest().body(new ApiResponse(false, "Thiếu mã sản phẩm!"));
+        }
+        Optional<SanPham> sp_opt = sanPhamService.findById(sanPhamId);
+        if (!sp_opt.isPresent()) {
+            return ResponseEntity.badRequest().body(new ApiResponse(false, "Sản phẩm không tồn tại!"));
+        }
+        for (SanPhamBienThe bienThe : bienTheList) {
+            String mauSacId = bienThe.getMauSac().getMauSacId();
+            if (mauSacId == null) {
+                return ResponseEntity.badRequest().body(new ApiResponse(false, "Thiếu mã màu sắc!"));
+            }
+            Optional<MauSac> ms_opt = mauSacService.findById(mauSacId);
+            if (!ms_opt.isPresent()) {
+                return ResponseEntity.badRequest().body(new ApiResponse(false, "Màu không tồn tại!"));
+            }
+            String kichThuocId = bienThe.getKichThuoc().getKichThuocId();
+            if (kichThuocId == null) {
+                return ResponseEntity.badRequest().body(new ApiResponse(false, "Thiếu kích thước!"));
+            }
+            Optional<KichThuoc> kt_opt = kichThuocService.findById(kichThuocId);
+            if (!kt_opt.isPresent()) {
+                return ResponseEntity.badRequest().body(new ApiResponse(false, "Kích thước không tồn tại!"));
+            }
+            Optional<SanPhamBienThe> exist_opt = sanPhamBienTheService.findBySanPhamAndKichThuocAndMauSac(sp_opt.get(),
+                    kt_opt.get(), ms_opt.get());
+
+            if (exist_opt.isPresent()) {
+                SanPhamBienThe exist = exist_opt.get();
+                exist.setSoLuong(exist.getSoLuong() + bienThe.getSoLuong());
+                if (bienThe.getGiaTien() != null)
+                    exist.setGiaTien(bienThe.getGiaTien());
+                exist.setSanPham(sp_opt.get());
+                sanPhamBienTheService.save(exist);
+                return ResponseEntity.ok().body(new ApiResponse(true, "Thêm biến thể thành công!"));
+            } else {
+                bienThe.setSanPham(sp_opt.get());
+                bienThe.setKichHoat(1);
+                bienThe.setSoLuongDatMua(0);
+                bienThe = sanPhamBienTheService.save(bienThe);
+            }
+        }
+        // Bước 3: Lưu danh sách ảnh cho sản phẩm
+        for (int i = 0; i < images.size(); i++) {
+            MultipartFile imageFile = images.get(i);
+            String mauSacId = mauSacIds.get(i); // Lấy mauSacId tương ứng với mỗi ảnh
+
+            if (imageFile != null && !mauSacId.isEmpty()) {
+                AnhSanPham anhSanPham = new AnhSanPham();
+                anhSanPham.setSanPham(sp_opt.get());
+                anhSanPham.setMauSacId(mauSacId);
+                anhSanPham.setFile(imageFile); // Lưu tệp tin ảnh
+
+                // Lưu ảnh vào cơ sở dữ liệu
+                anhSanPhamService.save(anhSanPham);
+            } else {
+                return ResponseEntity.badRequest()
+                        .body(new ApiResponse(false, "MauSacId và File không được để trống!"));
+            }
+        }
+        return ResponseEntity.ok().body(new ApiResponse(true, "Thêm biến thể thành công!"));
+    }
+
+    @PostMapping("/editbienthe")
+    @Transactional
+    public ResponseEntity<ApiResponse> editBienThe(@RequestBody EditBienTheRequest request) throws IOException {
         SanPhamBienThe bienThe = request.getBienThe();
         Integer sanPhamId = request.getSanPhamId();
 
-        Optional<SanPham> opt = sanPhamService.findById(sanPhamId);
-
+        if (bienThe.getId() == null) {
+            return ResponseEntity.badRequest().body(new ApiResponse(false, "Thiếu mã biến thể!"));
+        }
+        if (sanPhamId == null) {
+            return ResponseEntity.badRequest().body(new ApiResponse(false, "Thiếu mã sản phẩm!"));
+        }
+        Optional<SanPham> sp_opt = sanPhamService.findById(sanPhamId);
+        if (!sp_opt.isPresent()) {
+            return ResponseEntity.badRequest().body(new ApiResponse(false, "Sản phẩm không tồn tại!"));
+        }
+        bienThe.setSanPham(sp_opt.get());
+        Optional<SanPhamBienThe> opt = sanPhamBienTheService.findById(bienThe.getId());
         if (opt.isPresent()) {
-            bienThe.setSanPham(opt.get());
-            bienThe = sanPhamBienTheService.save(bienThe);
+            sanPhamBienTheService.save(bienThe);
             return ResponseEntity.ok().body(new ApiResponse(true, "Thêm biến thể thành công!"));
         } else {
             return ResponseEntity.badRequest().body(new ApiResponse(false, "Sản phẩm không tồn tại!"));
@@ -230,45 +365,65 @@ public class SanPhamController {
 
     @PostMapping("/addanh")
     @Transactional
-    public ResponseEntity<ApiResponse> addAnh(@RequestBody AddAnhSanPhamRequest request) throws IOException {
-        Integer sanPhamId = request.getSanPhamId();
-        List<MultipartFile> files = request.getFiles();
-
+    public ResponseEntity<ApiResponse> addAnh(
+        @RequestParam Integer sanPhamId, 
+        @RequestParam String mauSacId, 
+        @RequestParam List<MultipartFile> files
+    ) throws IOException {
         Optional<SanPham> opt = sanPhamService.findById(sanPhamId);
 
         if (opt.isPresent()) {
             for (MultipartFile file : files) {
                 AnhSanPham anh = new AnhSanPham();
+                anh.setMauSacId(mauSacId);
                 anh.setSanPham(opt.get());
                 anh.setFile(file);
                 anhSanPhamService.save(anh);
             }
-
             return ResponseEntity.ok().body(new ApiResponse(true, "Thêm ảnh thành công!"));
         } else {
             return ResponseEntity.badRequest().body(new ApiResponse(false, "Biến thể không tồn tại!"));
         }
     }
 
-    @GetMapping("/deleteanh")
+    @PostMapping("/deleteanh")
     @Transactional
     public ResponseEntity<ApiResponse> deleteAnh(@RequestParam("id") Integer anhId) throws IOException {
         Optional<AnhSanPham> opt = anhSanPhamService.findById(anhId);
         if (opt.isPresent()) {
-            anhSanPhamService.delete(anhId);
-            return ResponseEntity.ok().body(new ApiResponse(true, "Thêm ảnh thành công!"));
+            AnhSanPham anhSanPham = opt.get();
+            Long count = anhSanPhamService.countByMauSacAndSanPham(anhSanPham.getMauSacId(), anhSanPham.getSanPham());
+
+            if (count > 1) {
+                anhSanPhamService.delete(anhId);
+                return ResponseEntity.ok().body(new ApiResponse(true, "Xóa ảnh thành công!"));
+            } else {
+                return ResponseEntity.badRequest().body(new ApiResponse(false, "Mỗi biến thể cần ít nhất 1 ảnh!"));
+            }
         } else {
             return ResponseEntity.badRequest().body(new ApiResponse(false, "Ảnh không tồn tại!"));
         }
     }
 
-    @GetMapping("/deletebienthe")
+    @PostMapping("/deletebienthe")
     @Transactional
-    public ResponseEntity<ApiResponse> deleteBienThe(@RequestParam("id") Integer bienTheId) throws IOException {
+    public ResponseEntity<ApiResponse> deleteBienThe(
+        @RequestParam("id") Integer bienTheId
+    ) throws IOException {
         Optional<SanPhamBienThe> opt = sanPhamBienTheService.findById(bienTheId);
-
+        
         if (opt.isPresent()) {
-            sanPhamBienTheService.delete(bienTheId);
+            SanPhamBienThe bienThe = opt.get();
+            SanPham sanPham = opt.get().getSanPham();
+            Long count = sanPhamBienTheService.countByMauSacAndSanPham(bienThe.getMauSac().getMauSacId(), sanPham);
+            // Vi con co 1 bien the nen se xoa het anh roi xoa san pham di
+            if (count == 1) {
+                anhSanPhamService.deleteBySanPham(sanPham);
+                sanPhamBienTheService.delete(bienTheId);
+                sanPhamService.delete(sanPham.getId());
+            } else {
+                sanPhamBienTheService.delete(bienTheId);
+            }
             return ResponseEntity.ok().body(new ApiResponse(true, "Thêm ảnh thành công!"));
         } else {
             return ResponseEntity.badRequest().body(new ApiResponse(false, "Biến thể không tồn tại!"));
@@ -311,14 +466,16 @@ public class SanPhamController {
 
     @GetMapping("/activatesanphambienthe")
     @Transactional
-    public ResponseEntity<ApiResponse> activateSanPhamBienThe(@RequestParam("id") Integer bienTheId) throws IOException {
+    public ResponseEntity<ApiResponse> activateSanPhamBienThe(@RequestParam("id") Integer bienTheId)
+            throws IOException {
         sanPhamBienTheService.activate(bienTheId);
         return ResponseEntity.ok().body(new ApiResponse(true, "bật sản phẩm thành công!"));
     }
 
     @GetMapping("/deactivatesanphambienthe")
     @Transactional
-    public ResponseEntity<ApiResponse> deactivateSanPhamBienThe(@RequestParam("id") Integer bienTheId) throws IOException {
+    public ResponseEntity<ApiResponse> deactivateSanPhamBienThe(@RequestParam("id") Integer bienTheId)
+            throws IOException {
         sanPhamBienTheService.deactivate(bienTheId);
         return ResponseEntity.ok().body(new ApiResponse(true, "bật sản phẩm thành công!"));
     }

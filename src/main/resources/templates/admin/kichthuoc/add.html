@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/images/LogoMobile.png">
+    <title>Thêm kích thước</title>
+    <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}" />
+</head>
+
+<body>
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+    <div class="p-4 w-max bg-slate-50 shadow-lg rounded-lg mx-auto">
+        <h1 class="font-bold text-center my-2">Thêm kích thước</h1>
+        <div class="col-md-auto">
+            <form th:object="${kichThuoc}" th:action="@{/admin/kichthuoc/save}" action="#" method="post">
+                <div class="relative">
+                    <label class="block font-medium" th:for="kichThuocId">Kích thước</label>
+                    <input id="kichThuocId" class="border border-black rounded block p-2 w-full min-w-[280px]"
+                        type="text" th:field="*{kichThuocId}" placeholder="XL, XXL,..." required/>
+                </div>
+                <div style="clear: both; display: block; height: 10px"></div>
+                <section class="flex items-center gap-2">
+                    <input class="p-2 w-max bg-green-500 rounded block text-white" type="submit" value="Thêm" />
+                    <a href="/admin/kichthuoc/" class="p-2 w-max bg-slate-500 rounded block text-white">Hủy</a>
+                </section>
+            </form>
+        </div>
+    </div>
+    <script th:inline="javascript">
+        const errorMessage = /*[[${errorMessage}]]*/ '';
+        if (errorMessage) {
+            showNotification(
+                {
+                    title: "Lỗi",
+                    message: errorMessage,
+                    type: "error"
+                }
+            );
+        }
+    </script>
+</body>
+
+</html>

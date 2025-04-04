@@ -15,15 +15,8 @@
   <div th:replace="~{fragments/header :: header}"></div>
 
   <div class="w-full xl:max-w-[1215px] max-w-[1021px] mx-auto my-9 min-h-[85vh]">
-    <div class="flex gap-2 w-max mx-auto items-end">
-      <h1 class="p-2 bg-slate-400 rounded-tl rounded-tr text-xl hover:text-yellow-500"><a
-          href="/profile/doithongtin">Đổi thông tin</a></h1>
-      <h1 class="p-2 bg-slate-400 rounded-tl rounded-tr text-xl hover:text-yellow-500"><a href="/profile/donhang">Đơn
-          hàng</a></h1>
-      <h1 class="p-2 bg-white rounded-tl rounded-tr text-xl text-yellow-500 font-bold underline"><a
-          href="/profile/giohang">Giỏ hàng</a></h1>
-    </div>
     <div class="bg-white shadow-md rounded-lg overflow-hidden p-4 min-h-[800px]">
+      <h1 class="font-bold mb-4 text-center">Giỏ hàng</h1>
       <section id="cart-container" class="w-full">
         <!-- DANH SACH DON HANG -->
       </section>
@@ -139,7 +132,7 @@
             <button
                 id="dathang-btn"
                 onclick="kiemtradonhang()"
-                class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 pl-3 pr-4 rounded flex gap-2 items-center">
+                class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 pl-3 pr-4 rounded flex gap-2 items-center">
                 <img src="/svg/tocheckout.svg" class="w-5 h-5" alt="tocheckout">
                 <p>
                     Tới thanh toán

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import edu.it10.vuquangdung.spring.AppCustomException.ErrorEnum;
 import edu.it10.vuquangdung.spring.AppCustomException.ServiceException;
+import edu.it10.vuquangdung.spring.entity.KichThuoc;
+import edu.it10.vuquangdung.spring.entity.MauSac;
 import edu.it10.vuquangdung.spring.entity.SanPham;
 import edu.it10.vuquangdung.spring.entity.SanPhamBienThe;
 import edu.it10.vuquangdung.spring.repository.SanPhamBienTheRepository;
@@ -125,5 +127,16 @@ public class SanPhamBienTheServiceImpl implements SanPhamBienTheService {
     @Transactional
     public void delete(Integer id) {
         sanPhamBienTheRepository.deleteById(id);
+    }
+
+    @Override
+    public Optional<SanPhamBienThe> findBySanPhamAndKichThuocAndMauSac(SanPham sanPham, KichThuoc kichThuoc,
+            MauSac mauSac) {
+        return sanPhamBienTheRepository.findBySanPhamAndKichThuocAndMauSac(sanPham, kichThuoc, mauSac);
+    }
+
+    @Override
+    public Long countByMauSacAndSanPham(String mauSacId, SanPham sanPham) {
+        return sanPhamBienTheRepository.countByMauSacAndSanPham(mauSacId, sanPham);
     }
 }

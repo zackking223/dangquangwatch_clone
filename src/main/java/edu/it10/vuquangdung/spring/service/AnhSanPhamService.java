@@ -11,5 +11,7 @@ public interface AnhSanPhamService {
     List<AnhSanPham> getAll(SanPham sanPham);
     void save(AnhSanPham anhSanPham) throws IOException;
     void delete(Integer id) throws IOException;
+    void deleteBySanPham(SanPham sanPham) throws IOException;
     Optional<AnhSanPham> findById(Integer id);
+    Long countByMauSacAndSanPham(String mauSacId, SanPham sanPham);
 }

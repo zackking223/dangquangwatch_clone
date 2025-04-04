@@ -21,48 +21,44 @@
           </div>
         </a>
       </button>
-      <a id="sidebar_dongho" href="/admin/dongho/"
-        class="flex items-center gap-3 w-full px-[9px] py-1 h-8 hover:bg-yellow-600 rounded whitespace-nowrap overflow-hidden">
-        <img class="flex-shrink-0 w-6 translate-x-[-6px] max-w-none" style="display: hidden;" src="/svg/watch.svg"
+      <a id="sidebar_sanpham" href="/admin/sanpham/"
+        class="flex items-center gap-3 w-full px-[9px] py-1 h-8 hover:bg-gray-600 rounded whitespace-nowrap overflow-hidden">
+        <img class="flex-shrink-0 w-6 translate-x-[-6px] max-w-none" style="display: hidden;" src="/svg/sanpham.svg"
           alt="watch">
         <p class="text-center" style="width: calc(100% - 32px);">
-          Đồng hồ
+          Sản phẩm
         </p>
       </a>
-      <a id="sidebar_kinhmat" href="/admin/kinhmat/"
-        class="flex items-center gap-3 w-full px-[9px] py-1 h-8 hover:bg-yellow-600 rounded whitespace-nowrap overflow-hidden">
-        <img class="flex-shrink-0 w-6 translate-x-[-6px] max-w-none" style="display: hidden;" src="/svg/glasses.svg"
-          alt="glasses">
+
+      <a id="sidebar_mausac" href="/admin/mausac/"
+        class="flex items-center gap-3 w-full px-[9px] py-1 h-8 hover:bg-gray-600 rounded whitespace-nowrap overflow-hidden">
+        <img class="flex-shrink-0 w-6 translate-x-[-6px] max-w-none" style="display: hidden;" src="/svg/mausac.svg"
+          alt="mausac">
         <p class="text-center" style="width: calc(100% - 32px);">
-          Kính mắt
+          Màu sắc
         </p>
       </a>
-      <a id="sidebar_phukien" href="/admin/phukien/"
-        class="flex items-center gap-3 w-full px-[9px] py-1 h-8 hover:bg-yellow-600 rounded whitespace-nowrap overflow-hidden">
-        <img id="xmark" class="flex-shrink-0 w-6 translate-x-[-6px] max-w-none" style="display: hidden;"
-          src="/svg/accessories.svg" alt="accessories">
+
+      <a id="sidebar_kichthuoc" href="/admin/kichthuoc/"
+        class="flex items-center gap-3 w-full px-[9px] py-1 h-8 hover:bg-gray-600 rounded whitespace-nowrap overflow-hidden">
+        <img class="flex-shrink-0 w-6 translate-x-[-6px] max-w-none" style="display: hidden;" src="/svg/kichthuoc.svg"
+          alt="kichthuoc">
         <p class="text-center" style="width: calc(100% - 32px);">
-          Phụ kiện
+          Kích thước
         </p>
       </a>
-      <a id="sidebar_trangsuc" href="/admin/trangsuc/"
-        class="flex items-center gap-3 w-full px-[9px] py-1 h-8 hover:bg-yellow-600 rounded whitespace-nowrap overflow-hidden">
-        <img class="flex-shrink-0 w-6 translate-x-[-6px] max-w-none" style="display: hidden;" src="/svg/diamond.svg"
-          alt="diamond">
+
+      <a id="sidebar_loai" href="/admin/loai/"
+        class="flex items-center gap-3 w-full px-[9px] py-1 h-8 hover:bg-gray-600 rounded whitespace-nowrap overflow-hidden">
+        <img class="flex-shrink-0 w-6 translate-x-[-6px] max-w-none" style="display: hidden;" src="/svg/loai.svg"
+          alt="loai">
         <p class="text-center" style="width: calc(100% - 32px);">
-          Trang sức
+          Loại sản phẩm
         </p>
       </a>
-      <a id="sidebar_butky" href="/admin/butky/"
-        class="flex items-center gap-3 w-full px-[9px] py-1 h-8 hover:bg-yellow-600 rounded whitespace-nowrap overflow-hidden">
-        <img class="flex-shrink-0 w-6 translate-x-[-6px] max-w-none" style="display: hidden;" src="/svg/ink_pen.svg"
-          alt="ink_pen">
-        <p class="text-center" style="width: calc(100% - 32px);">
-          Bút ký
-        </p>
-      </a>
+
       <a id="sidebar_donhang" href="/admin/donhang/"
-        class="flex items-center gap-3 w-full px-[9px] py-1 h-8 hover:bg-yellow-600 rounded whitespace-nowrap overflow-hidden">
+        class="flex items-center gap-3 w-full px-[9px] py-1 h-8 hover:bg-gray-600 rounded whitespace-nowrap overflow-hidden">
         <img class="flex-shrink-0 w-6 translate-x-[-6px] max-w-none" style="display: hidden;" src="/svg/order.svg"
           alt="order">
         <p class="text-center" style="width: calc(100% - 32px);">
@@ -70,7 +66,7 @@
         </p>
       </a>
       <a th:if="${session.role == 'ROLE_QUANLY'}" id="sidebar_thongke" href="/admin/thongke/"
-        class="flex items-center gap-3 w-full px-[9px] py-1 h-8 hover:bg-yellow-600 rounded whitespace-nowrap overflow-hidden">
+        class="flex items-center gap-3 w-full px-[9px] py-1 h-8 hover:bg-gray-600 rounded whitespace-nowrap overflow-hidden">
         <img class="flex-shrink-0 w-6 translate-x-[-6px] max-w-none" style="display: hidden;" src="/svg/chart.svg"
           alt="chart">
         <p class="text-center" style="width: calc(100% - 32px);">
@@ -78,7 +74,7 @@
         </p>
       </a>
       <a id="sidebar_khachhang" href="/admin/khachhang/"
-        class="flex items-center gap-3 w-full px-[9px] py-1 h-8 hover:bg-yellow-600 rounded whitespace-nowrap overflow-hidden">
+        class="flex items-center gap-3 w-full px-[9px] py-1 h-8 hover:bg-gray-600 rounded whitespace-nowrap overflow-hidden">
         <img class="flex-shrink-0 w-[30px] translate-x-[-8px] max-w-none" style="display: hidden;"
           src="/svg/khachhang.svg" alt="khachhang">
         <p class="text-center" style="width: calc(100% - 32px);">
@@ -86,23 +82,15 @@
         </p>
       </a>
       <a th:if="${session.role == 'ROLE_QUANLY'}" id="sidebar_accounts" href="/admin/accounts/"
-        class="flex items-center gap-3 w-full px-[9px] py-1 h-8 hover:bg-yellow-600 rounded whitespace-nowrap overflow-hidden">
+        class="flex items-center gap-3 w-full px-[9px] py-1 h-8 hover:bg-gray-600 rounded whitespace-nowrap overflow-hidden">
         <img class="flex-shrink-0 w-[30px] translate-x-[-8px] max-w-none" style="display: hidden;"
           src="/svg/nhanvien.svg" alt="nhanvien">
         <p class="text-center" style="width: calc(100% - 32px);">
           Nhân viên
         </p>
       </a>
-      <a id="sidebar_lichsukho" href="/admin/lichsukho/"
-        class="flex items-center gap-3 w-full px-[9px] py-1 h-8 hover:bg-yellow-600 rounded whitespace-nowrap overflow-hidden">
-        <img class="flex-shrink-0 w-[28px] translate-x-[-8px] max-w-none" style="display: hidden;"
-          src="/svg/inventory.svg" alt="inventory">
-        <p class="text-center" style="width: calc(100% - 32px);">
-          Lịch sử kho
-        </p>
-      </a>
       <a id="sidebar_returnhome" href="/"
-        class="flex items-center gap-3 w-full px-[9px] py-1 h-8 hover:bg-yellow-600 rounded whitespace-nowrap overflow-hidden">
+        class="flex items-center gap-3 w-full px-[9px] py-1 h-8 hover:bg-gray-600 rounded whitespace-nowrap overflow-hidden">
         <img class="flex-shrink-0 w-[30px] translate-x-[-8px] max-w-none" style="display: hidden;"
           src="/svg/cuahang.svg" alt="cuahang">
         <p class="text-center" style="width: calc(100% - 32px);">
@@ -129,17 +117,16 @@
 
       function glowButton(btnId) {
         const btn = document.getElementById("sidebar_" + btnId);
-        btn.style.backgroundColor = "#eab308";
+        btn.style.backgroundColor = "oklch(52% 0.105 223.128)";
       }
 
       function updateSidebar() {
         const path = location.pathname.split("/", 3)[2].toLowerCase();
         switch (path) {
-          case "dongho":
-          case "kinhmat":
-          case "phukien":
-          case "trangsuc":
-          case "butky":
+          case "sanpham":
+          case "kichthuoc":
+          case "mausac":
+          case "loai":
           case "donhang":
           case "thongke":
           case "khachhang":

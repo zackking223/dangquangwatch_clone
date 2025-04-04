@@ -105,7 +105,7 @@ public class SanPhamBienThe {
     }
 
     public Integer getKichHoat() {
-        return kichHoat;
+        return kichHoat != null ? kichHoat : 1;
     }
 
     public void setKichHoat(Integer kichhoat) {

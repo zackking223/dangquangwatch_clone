@@ -44,7 +44,7 @@ public class AnhSanPham {
     }
 
     public boolean isCloud() {
-        return url.contains("http://res.cloudinary.com");
+        return url.contains("https://res.cloudinary.com") || url.contains("http://res.cloudinary.com");
     }
 
     public Integer getId() {

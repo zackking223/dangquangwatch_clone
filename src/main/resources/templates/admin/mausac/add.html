@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/images/LogoMobile.png">
+    <title>Thêm màu sắc</title>
+    <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}" />
+</head>
+
+<body>
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+    <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
+        <h1 class="font-bold text-center my-2">Thêm màu sắc</h1>
+        <div class="col-md-auto">
+            <form th:object="${mauSac}" th:action="@{/admin/mausac/save}" action="#" method="post">
+                <section class="grid sm:grid-cols-2 gap-2 grid-cols-1">
+                    <div class="relative">
+                        <label class="block font-medium" th:for="mauSacId">Mã màu</label>
+                        <input id="mauSacId" class="border border-black rounded block p-2 w-full min-w-[280px]"
+                            type="text" th:field="*{mauSacId}" placeholder="#00000" required />
+                        <input class="absolute top-8 right-2" type="color" id="colorPicker" th:value="*{mauSacId}">
+                    </div>
+                    <div>
+                        <label class="block font-medium" th:for="ten">Tên màu</label>
+                        <input class="border border-black rounded block p-2 w-full min-w-[280px]" type="text"
+                            th:field="*{ten}" placeholder="Đen, đỏ, ...." required />
+                    </div>
+                </section>
+                <div style="clear: both; display: block; height: 10px"></div>
+                <section class="flex items-center gap-2">
+                    <input class="p-2 w-max bg-green-500 rounded block text-white" type="submit" value="Thêm" />
+                    <a href="/admin/mausac/" class="p-2 w-max bg-slate-500 rounded block text-white">Hủy</a>
+                </section>
+            </form>
+        </div>
+    </div>
+    <script>
+        const mauSacId = document.getElementById("mauSacId");
+        const colorPicker = document.getElementById("colorPicker");
+
+        mauSacId.addEventListener("input", (e) => {
+            let value = e.target.value.toUpperCase();
+            // Chỉ cho phép nhập # + hex (3 hoặc 6 ký tự)
+            if (!/^#([0-9A-F]{0,6})?$/.test(value)) {
+                e.target.value = value.slice(0, -1); // Xóa ký tự cuối nếu không hợp lệ
+                return;
+            }
+            colorPicker.value = value.length === 7 ? value : "#000000"; // Cập nhật color picker khi hợp lệ
+        });
+        colorPicker.addEventListener("input", (e) => {
+            mauSacId.value = e.target.value.toUpperCase();
+        });
+    </script>
+    <script th:inline="javascript">
+        const errorMessage = /*[[${errorMessage}]]*/ '';
+        if (errorMessage) {
+            showNotification(
+                {
+                    title: "Lỗi",
+                    message: errorMessage,
+                    type: "error"
+                }
+            );
+        }
+    </script>
+</body>
+
+</html>

@@ -1,4 +1,4 @@
-# Springboot - Đăng Quang Watch clone
+# Springboot - Shop quần áo VQD
 ### Technologies:
 - HTML/CSS/JS.
 - Springboot v3.3.2.
@@ -18,7 +18,7 @@
 - Server type: MariaDB.
 - Server version: 10.4.22-MariaDB - mariadb.org.
 - Server charset: UTF-8 Unicode (utf8mb4).
-- SQL file: `database.sql`
+- SQL file: `shop_quan_ao.sql`
 
 ### Features:
 - Fully responsive with Tailwindcss.

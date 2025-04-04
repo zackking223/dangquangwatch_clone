@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Component;
 
 import edu.it10.vuquangdung.spring.entity.DonHang;
 import edu.it10.vuquangdung.spring.repository.custom.DonHangRepositoryCustom;
@@ -13,6 +14,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 
+@Component
 public class DonHangRepositoryCustomImpl implements DonHangRepositoryCustom {
   @PersistenceContext
   private EntityManager entityManager;

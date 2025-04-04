@@ -11,7 +11,7 @@
 
 <body>
     <div th:replace="~{fragments/sidebar :: sidebar}"></div>
-    <div class="p-4 w-full bg-slate-50 shadow-sm rounded-lg md:mx-auto pl-11">
+    <div class="p-4 w-full md:mx-auto pl-11">
         <h1 class="font-bold text-center my-2">Quản lý sản phẩm</h1>
         <form action="" class="w-full flex flex-col gap-2 my-2">
             <section>
@@ -48,8 +48,8 @@
                 </div>
                 <div>
                     <label class="block font-medium" for="giaTien">Giá tiền</label>
-                    <input class="p-2 rounded block w-full outline-none border border-black" type="number" name="giaTien"
-                        th:value="${giaTien}" placeholder="0">
+                    <input class="p-2 rounded block w-full outline-none border border-black" type="number"
+                        name="giaTien" th:value="${giaTien}" placeholder="0">
                 </div>
             </section>
             <section class="grid sm:grid-cols-2 grid-cols-1 gap-2">
@@ -79,56 +79,57 @@
             </ul>
         </form>
         <section class="w-full overflow-x-auto">
-            <table class="w-max mx-auto">
+            <table class="sm:w-full w-max mx-auto">
                 <tr>
-                    <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+                    <th class="bg-black text-white p-2">
                         Mã sản phẩm
                     </th>
-                    <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+                    <th class="bg-black text-white p-2">
                         Tên sản phẩm
                     </th>
-                    <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+                    <th class="bg-black text-white p-2">
                         Loại
                     </th>
-                    <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+                    <th class="bg-black text-white p-2">
                         Thương hiệu
                     </th>
-                    <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+                    <th class="bg-black text-white p-2">
                         Thông tin
                     </th>
-                    <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+                    <th class="bg-black text-white p-2">
                         Ngày thêm
                     </th>
-                    <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+                    <th class="bg-black text-white p-2">
                         Tùy chọn
                     </th>
                 </tr>
-                <tr th:each="sanPham : ${sanPhams}">
-                    <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+                <tr th:each="sanPham : ${sanPhamList}" class="odd:bg-slate-300 even:bg-slate-200">
+                    <td class="p-2"
                         th:text="${sanPham.getId()}"></td>
-                    <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
-                        <a th:href="${'/sanpham/' + sanPham.getId()}" th:text="${sanPham.getTen()}"
-                            class="hover:text-yellow-500" target="_blank"></a>
+                    <td class="p-2 max-w-[400px] overflow-hidden">
+                        <section class="flex flex-col gap-2">
+                            <img th:src="${sanPham.getFirstImageUrl()}" class="w-20 aspect-4/5" alt="Ảnh sản phẩm">
+                            <a th:href="${'/sanpham/' + sanPham.getId()}" th:text="${sanPham.getTen()}"
+                                class="hover:text-yellow-500" target="_blank"></a>
+                        </section>
                     </td>
-                    <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
+                    <td class="p-2 max-w-[200px] overflow-hidden"
                         th:text="${sanPham.getLoai()}"></td>
-                    <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
+                    <td class="p-2 max-w-[200px] overflow-hidden">
                         <p th:text="${sanPham.getThuongHieu()}"></p>
-                    <td class=" max-h-[200px] p-2 border border-solid border-black max-w-[200px] overflow-hidden">
-                        <p class=" max-h-[200px] overflow-hidden" th:text="${sanPham.getThongtin()}"></p>
+                    <td class=" max-h-[200px] p-2 max-w-[200px] overflow-hidden">
+                        <p class=" max-h-[200px] overflow-hidden" th:text="${sanPham.getThongTin()}"></p>
                     </td>
-                    <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden"
-                        th:text="${sanPham.getNGAYTHEM()}"></td>
-                    <td class="p-2 border border-solid border-black max-w-[200px] overflow-hidden">
-                        <a class="block w-max text-center my-1 p-2 rounded bg-green-500 text-white"
+                    <td class="p-2 max-w-[200px] overflow-hidden"
+                        th:text="${sanPham.getNgayThem()}"></td>
+                    <td class="p-2 max-w-[200px] overflow-hidden">
+                        <a class="block w-max text-center my-1 p-2 rounded bg-blue-500 text-white"
                             th:href="@{/admin/sanpham/edit?id={id}(id=${sanPham.getId()})}">Sửa</a>
-                        <a th:href="@{/admin/sanpham/nhap?id={id}(id=${sanPham.getId()})}"
-                            class="block w-max text-center my-1 p-2 rounded bg-purple-500 text-white">Nhập</a>
-                        <a th:href="@{/admin/sanpham/xuat?id={id}(id=${sanPham.getId()})}"
-                            class="block w-max text-center my-1 p-2 rounded bg-orange-500 text-white">Xuất</a>
                         <button th:if="${sanPham.kichHoat == 1}"
-                            class="block w-max text-center my-1 p-2 rounded bg-red-500 text-white"
+                            class="block w-max text-center my-1 p-2 rounded bg-orange-500 text-white"
                             th:data-id="${sanPham.getId()}" onclick="confirmDeactivate(this);">Tắt</button>
+                        <button class="block w-max text-center my-1 p-2 rounded bg-red-500 text-white"
+                            th:data-id="${sanPham.getId()}" onclick="confirmDelete(this);">Xóa</button>
                         <button th:if="${sanPham.kichHoat == 0}"
                             class="block w-max text-center my-1 p-2 rounded bg-blue-500 text-white"
                             th:data-id="${sanPham.getId()}" onclick="confirmActivate(this);">Bật</button>
@@ -140,6 +141,39 @@
 
     <script src="/js/sweetalert.min.js"></script>
     <script>
+        async function post(path, sanPhamId) {
+            try {
+                const request = await fetch(path + "?id=" + sanPhamId, {
+                    method: "POST",
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                const response = await request.json();
+
+                if (response.status) {
+                    location.reload();
+                } else {
+                    showNotification(
+                        {
+                            title: "Lỗi",
+                            message: response.message,
+                            type: "error"
+                        }
+                    );
+                }
+            } catch (e) {
+                console.error(e);
+                showNotification(
+                    {
+                        title: "Lỗi",
+                        message: "Gặp lỗi khi thực hiện hành động!",
+                        type: "error"
+                    }
+                );
+            }
+        }
+
         function confirmDeactivate(element) {
             const id = element.getAttribute('data-id'); // Lấy giá trị từ data-attribute
 
@@ -150,11 +184,11 @@
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Vâng, tắt nó!',
+                confirmButtonText: 'Tắt',
                 cancelButtonText: 'Hủy'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = `/admin/sanpham/deactivate?id=${id}`;
+                    post("/admin/sanpham/deactivatesanpham", id);
                 }
             });
         }
@@ -169,11 +203,30 @@
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Vâng, bật nó!',
+                confirmButtonText: 'Bật',
                 cancelButtonText: 'Hủy'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = `/admin/sanpham/activate?id=${id}`;
+                    post("/admin/sanpham/activatesanpham", id);
+                }
+            });
+        }
+
+        function confirmDelete(element) {
+            const id = element.getAttribute('data-id'); // Lấy giá trị từ data-attribute
+
+            Swal.fire({
+                title: 'Bạn có chắc chắn muốn xóa?',
+                text: "Sản phẩm sẽ bị xóa!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Xóa',
+                cancelButtonText: 'Hủy'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    post("/admin/sanpham/deletesanpham",id);
                 }
             });
         }

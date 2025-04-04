@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/images/LogoMobile.png">
+    <title>Sửa sản phẩm</title>
+    <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}" />
+</head>
+
+<body>
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+    <div class="p-4 w-max mx-auto">
+        <h1 class="font-bold text-center my-2">Sửa sản phẩm</h1>
+        <div class="col-md-auto">
+            <form id="formSanPham" th:object="${sanPham}" method="post" enctype="multipart/form-data">
+                <div>
+                    <label class="block font-medium" th:for="ten">Tên sản phẩm</label>
+                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
+                        th:field="*{ten}" placeholder="Tên sản phẩm" required />
+                </div>
+                <div style="clear: both; display: block; height: 10px"></div>
+                <section class="grid sm:grid-cols-2 grid-cols-1 gap-2">
+                    <div>
+                        <label class="block font-medium" th:for="loai">Loại sản phẩm</label>
+                        <select class="border border-black rounded block p-2 w-full" name="loai" id="loai" required>
+                            <option value="">Chưa chọn</option>
+                            <option th:each="l : ${loaiList}" th:value="${l}" th:text="${l}"
+                                th:selected="${l == sanPham.loai}">
+                            </option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-medium" th:for="thuongHieu">Thương hiệu</label>
+                        <input class="border border-black rounded block p-2 w-full" type="text" th:field="*{thuongHieu}"
+                            placeholder="Thương hiệu" required />
+                    </div>
+                </section>
+                <div style="clear: both; display: block; height: 10px"></div>
+                <div>
+                    <label class="block font-medium" th:for="thongTin">Thông tin</label>
+                    <textarea class="border border-black rounded w-[80vw] min-w-[280px] p-2" rows="5" required
+                        th:field="*{thongTin}" placeholder="Thông tin sản phẩm"></textarea>
+                </div>
+
+                <input class="hidden" type="date" id="ngayThem" name="ngayThem" />
+
+                <div style="clear: both; display: block; height: 10px"></div>
+                <section class="flex items-center gap-2 mb-4">
+                    <h2 class="font-bold">Danh sách biến thể</h2>
+                    <button onclick="openModal()" type="button"
+                        class="p-2 w-max bg-neutral-500 hover:bg-blue-600 text-xs rounded block text-white">Thêm biến
+                        thể</button>
+                </section>
+                <ul id="bienTheContainer" class="border border-black rounded w-full p-2 h-max gap-2">
+                </ul>
+                <input id="submitInput" class="p-2 w-max bg-green-500 rounded block mt-4 text-white" type="submit"
+                    value="Sửa" />
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 justify-center items-center z-[300]">
+        <div class="bg-white p-4 rounded w-[90vw]">
+            <h2 class="text-lg font-semibold">Thêm biến thể</h2>
+
+            <!-- Chọn màu sắc -->
+            <label class="block mt-2">Màu sắc:</label>
+            <select id="mauSacSelect" class="border p-1 w-full"></select>
+
+            <!-- Chọn kích thước -->
+            <label class="block mt-2">Kích thước:</label>
+            <select id="kichThuocSelect" class="border p-1 w-full"></select>
+            <div id="kichThuocContainer" class="flex flex-col gap-2 mt-2"></div>
+
+            <!-- Upload hình ảnh -->
+            <label class="block mt-2">Hình ảnh:</label>
+            <input type="file" id="imageUpload" multiple class="border p-1 w-full">
+
+            <section class="w-full overflow-x-auto">
+                <div id="imagePreview" class="flex gap-2 mt-2 w-max"></div>
+            </section>
+
+            <!-- Nút lưu và đóng -->
+            <div class="flex justify-end gap-2 mt-4">
+                <button onclick="closeModal()" class="p-2 bg-gray-400 text-white rounded">Hủy</button>
+                <button id="saveBtn" onclick="saveBienThe()" class="p-2 bg-blue-600 text-white rounded">Lưu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal sửa biến thể -->
+    <div id="editModal" class="hidden fixed inset-0 bg-black bg-opacity-50 justify-center items-center z-[300]">
+        <div class="bg-white p-4 rounded w-[90vw]">
+            <h2 class="text-lg font-semibold">Sửa biến thể</h2>
+
+            <!-- Chọn số lượng -->
+            <label class="block mt-2">Số lượng:</label>
+            <input id="editSoLuong" type="number" class="border p-1 w-full" />
+
+            <!-- Chọn giá tiền -->
+            <label class="block mt-2">Giá tiền:</label>
+            <input id="editGiaTien" type="number" class="border p-1 w-full" />
+
+            <!-- Số lượng đặt mua -->
+            <label class="block mt-2">Số lượng đặt mua:</label>
+            <input id="soLuongDatMuaInput" type="number" class="border p-1 w-full" readonly />
+
+            <!-- Nút lưu và đóng -->
+            <div class="flex justify-end gap-2 mt-4">
+                <button onclick="closeEditModal()" class="p-2 bg-gray-400 text-white rounded">Hủy</button>
+                <button id="saveEditBtn" onclick="saveEditModal()"
+                    class="p-2 bg-blue-600 text-white rounded">Lưu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal xem ảnh -->
+    <div id="imageModal" class="hidden fixed inset-0 bg-black bg-opacity-50 justify-center items-center z-[300]">
+        <div class="relative flex flex-col items-center gap-2">
+            <button onclick="closeImageModal()"
+                class="absolute right-5 top-5 p-2 bg-red-500 text-white rounded">Đóng</button>
+            <img id="imageDisplay"
+                src="https://res.cloudinary.com/dtgopjlto/image/upload/v1743653763/shop_quan_ao/zzjr8jtrliosonjzalzd.jpg"
+                alt="Ảnh sản phẩm" class="sm:max-w-lg max-w-xs">
+        </div>
+    </div>
+
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@1.7.0/dist/css/tom-select.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@1.7.0/dist/js/tom-select.complete.min.js"></script>
+    <script src="/js/sweetalert.min.js"></script>
+    <script th:inline="javascript">
+        const sanPhamData = /*[[${sanPham}]]*/null;
+        const submitInput = document.getElementById("submitInput");
+        const editSoLuongInput = document.getElementById("editSoLuong");
+        const editGiaTienInput = document.getElementById("editGiaTien");
+        const saveEditBtn = document.getElementById("saveEditBtn");
+        const saveBtn = document.getElementById("saveBtn");
+        const soLuongDatMuaInput = document.getElementById("soLuongDatMuaInput");
+        const kichThuocList = /*[[${kichThuocList}]]*/[];
+        const mauSacList = /*[[${mauSacList}]]*/[];
+        let bienTheList = /*[[${bienTheList}]]*/[];
+        let uploadedImages = /*[[${uploadedImages}]]*/[];;
+        let tempImages = [];
+        let selectedBienThe = null;
+        let selectedMauSac = null; // Tạm thời
+        let selectedKichThuoc = new Set(); // Tạm thời
+        // Khai báo mauSacSelect để lưu đối tượng Tom Select
+        let mauSacSelect = null; // Khai báo mauSacSelect trước
+        let kichThuocSelect = null;
+
+        function initKichThuocSelect() {
+            const select = document.getElementById("kichThuocSelect");
+            select.innerHTML = '<option value="">Chọn kích thước</option>';
+
+            kichThuocList.forEach(kichThuocId => {
+                const option = document.createElement("option");
+                option.value = kichThuocId;
+                option.textContent = kichThuocId;
+                select.appendChild(option);
+            });
+
+            if (kichThuocSelect) {
+                kichThuocSelect.destroy();
+            }
+
+            // Khởi tạo lại Tom Select
+            kichThuocSelect = new TomSelect(select, {
+                placeholder: 'Chọn kích thước',
+                maxItems: 1,  // Giới hạn chỉ chọn một kích thước
+                closeAfterSelect: true,
+                onChange: (value) => {
+                    // value sẽ là mảng khi maxItems > 1, nên lấy giá trị đầu tiên của mảng nếu chọn nhiều
+                    const selectedValue = Array.isArray(value) ? value[0] : value;
+                    // Kiểm tra nếu kích thước đã được chọn rồi
+                    if (!(typeof selectedValue === 'string') || selectedValue.trim() === '' || selectedKichThuoc.has(selectedValue)) return;  // Nếu đã chọn thì không cho chọn lại
+
+                    selectedKichThuoc.add(selectedValue);
+
+                    // Tạo wrapper cho phần thông tin đã chọn
+                    const wrapper = document.createElement("div");
+                    wrapper.classList.add("flex", "items-center", "gap-2", "border", "p-2", "rounded");
+
+                    const label = document.createElement("span");
+                    label.textContent = selectedValue;
+                    label.classList.add("font-semibold", "w-12");
+
+                    const soLuongInput = document.createElement("input");
+                    soLuongInput.type = "number";
+                    soLuongInput.placeholder = "Số lượng";
+                    soLuongInput.min = 1;
+                    soLuongInput.classList.add("border", "rounded", "p-1", "w-24");
+                    soLuongInput.id = `soLuong-${selectedValue}`;
+
+                    const giaTienInput = document.createElement("input");
+                    giaTienInput.type = "number";
+                    giaTienInput.placeholder = "Giá tiền";
+                    giaTienInput.min = 1;
+                    giaTienInput.classList.add("border", "rounded", "p-1", "w-24");
+                    giaTienInput.id = `giaTien-${selectedValue}`;
+
+                    const removeBtn = document.createElement("button");
+                    removeBtn.textContent = "X";
+                    removeBtn.classList.add("bg-red-500", "text-white", "rounded", "px-2");
+                    removeBtn.onclick = () => {
+                        selectedKichThuoc.delete(selectedValue);
+                        wrapper.remove();
+
+                        // Thêm lại option vào select
+                        kichThuocSelect.addOption({ value: selectedValue, text: selectedValue });
+                    };
+
+                    wrapper.appendChild(label);
+                    wrapper.appendChild(soLuongInput);
+                    wrapper.appendChild(giaTienInput);
+                    wrapper.appendChild(removeBtn);
+
+                    document.getElementById("kichThuocContainer").appendChild(wrapper);
+
+                    // Xóa option khỏi select
+                    kichThuocSelect.removeOption(selectedValue);
+                }
+            });
+        }
+
+        // Mở modal
+        function openModal() {
+            document.getElementById("modal").classList.remove("hidden");
+            document.getElementById("modal").classList.add("flex");
+            renderMauSacOptions();
+            initKichThuocSelect();
+        }
+
+        // Mở editModal
+        function openEditModal(mauSacId, kichThuocId) {
+            document.getElementById("editModal").classList.remove("hidden");
+            document.getElementById("editModal").classList.add("flex");
+            const result = bienTheList.find(b => b.mauSac.mauSacId === mauSacId && b.kichThuoc.kichThuocId === kichThuocId);
+            editSoLuong.value = result.soLuong;
+            editGiaTienInput.value = result.giaTien;
+            soLuongDatMuaInput.value = result.soLuongDatMua;
+            selectedBienThe = result;
+        }
+
+        // Mở modal
+        function openImageModal(imageUrl) {
+            document.getElementById("imageModal").classList.remove("hidden");
+            document.getElementById("imageModal").classList.add("flex");
+            document.getElementById("imageDisplay").setAttribute("src", imageUrl);
+        }
+
+        // Đóng modal
+        function closeModal() {
+            document.getElementById("modal").classList.remove("flex");
+            document.getElementById("modal").classList.add("hidden");
+            resetModal();
+        }
+
+        // Reset modal sau khi đóng
+        function resetModal() {
+            selectedMauSac = null;
+            selectedKichThuoc.clear();
+            tempImages = [];
+            document.getElementById("mauSacSelect").value = "";
+            document.getElementById("kichThuocContainer").innerHTML = "";
+            document.getElementById("imagePreview").innerHTML = "";
+        }
+
+        // Hiển thị màu sắc option
+        function renderMauSacOptions() {
+            const select = document.getElementById("mauSacSelect");
+            select.innerHTML = '<option value="">Chọn màu</option>';
+
+            mauSacList.forEach(mauSac => {
+                const option = document.createElement("option");
+                option.value = mauSac.mauSacId;
+                option.textContent = mauSac.ten;
+                option.setAttribute("data-color", mauSac.mauSacId); // Dùng cho custom template
+                option.setAttribute("data-ten", mauSac.ten); // Dùng cho custom template
+                select.appendChild(option);
+            });
+
+            if (mauSacSelect) {
+                mauSacSelect.destroy();
+            }
+
+            // Khởi tạo Tom Select
+            mauSacSelect = new TomSelect(select, {
+                placeholder: 'Chọn màu',
+                maxItems: 1,  // Chỉ chọn một màu
+                closeAfterSelect: true,
+                onChange: (value) => {
+                    selectedMauSac = value;
+                    initKichThuocSelect();
+                },
+                render: {
+                    item: function (data, escape) {
+                        const color = data.color || data.value;
+                        return `<div class="option" style="display: flex; align-items: center;">
+                            <span style="width: 14px; height: 14px; background: ${color}; border-radius: 3px; margin-right: 6px; border: 1px solid #ccc;"></span>
+                            ${data.ten}
+                        </div>`;
+                    },
+                    option: function (data, escape) {
+                        const color = data.color || data.value;
+                        return `<div class="option" style="display: flex; align-items: center;">
+                            <span style="width: 14px; height: 14px; background: ${color}; border-radius: 3px; margin-right: 6px; border: 1px solid #ccc;"></span>
+                            ${data.ten}
+                        </div>`;
+                    }
+                }
+            });
+        }
+
+        // Xử lý upload hình ảnh
+        document.getElementById("imageUpload").addEventListener("change", function (event) {
+            const previewContainer = document.getElementById("imagePreview");
+            previewContainer.innerHTML = "";
+
+            tempImages = [...event.target.files].map(file => ({
+                mauSacId: selectedMauSac,
+                file
+            }));
+
+            tempImages.forEach(imageObj => {
+                const img = document.createElement("img");
+                img.src = URL.createObjectURL(imageObj.file);
+                img.classList.add("w-16", "h-16", "border", "rounded");
+                previewContainer.appendChild(img);
+            });
+        });
+
+        // Lưu biến thể vào danh sách
+        async function saveBienThe() {
+            saveBtn.setAttribute("disabled", "true");
+            if (!selectedMauSac || selectedKichThuoc.size === 0) {
+                showNotification(
+                    {
+                        title: "Lỗi",
+                        message: "Vui lòng chọn màu sắc và ít nhất một kích thước!",
+                        type: "error"
+                    }
+                );
+                return;
+            }
+
+            // Lấy danh sách file ảnh đã upload
+            const imageFiles = document.getElementById("imageUpload").files;
+            let tempUploadImages = [];
+            // Lưu ảnh upload
+            if (imageFiles.length > 0) {
+                Array.from(imageFiles).forEach(file => {
+                    tempUploadImages.push({ mauSacId: selectedMauSac, file });
+                });
+            } else {
+                showNotification(
+                    {
+                        title: "Lỗi",
+                        message: "Vui lòng tải lên ít nhất 1 ảnh!",
+                        type: "error"
+                    }
+                );
+                return;
+            }
+
+            // Duyệt qua từng kích thước đã chọn
+            let tempBienTheList = [];
+            selectedKichThuoc.forEach(kichThuocId => {
+                const soLuong = parseInt(document.getElementById(`soLuong-${kichThuocId}`).value);
+                const giaTien = parseInt(document.getElementById(`giaTien-${kichThuocId}`).value);
+                if (!soLuong || !giaTien) return;
+
+                tempBienTheList.push({
+                    kichThuoc: { kichThuocId },
+                    mauSac: { mauSacId: selectedMauSac },
+                    soLuong,
+                    giaTien
+                });
+            });
+
+            try {
+                let postData = new FormData();
+                postData.append("sanPhamId", JSON.stringify(sanPhamData.id));
+                postData.append("bienTheList", JSON.stringify(tempBienTheList));
+                // Thêm các tệp vào FormData
+                tempUploadImages.forEach((image, index) => {
+                    postData.append("images", image.file);  // Thêm tệp hình ảnh
+                    postData.append("mauSacIds", image.mauSacId);  // Thêm mauSacId tương ứng
+                });
+
+                const request = await fetch("/admin/sanpham/addbienthe", {
+                    method: "POST",  // Đảm bảo phương thức là POST
+                    body: postData
+                });
+
+                const response = await request.json();
+
+                if (response.status) {
+                    location.reload();
+                } else {
+                    saveBtn.setAttribute("disabled", "false");
+                    showNotification(
+                        {
+                            title: "Lỗi",
+                            message: response.message,
+                            type: "error"
+                        }
+                    );
+                }
+            } catch (e) {
+                console.error(e);
+                saveBtn.setAttribute("disabled", "false");
+                showNotification(
+                    {
+                        title: "Lỗi",
+                        message: "Lỗi khi thêm!",
+                        type: "error"
+                    }
+                );
+            }
+        }
+
+        // Upload thêm ảnh
+        async function uploadMoreImages(mauSacId, files) {
+            const formData = new FormData();
+            formData.append("sanPhamId", sanPhamData.id);
+            formData.append("mauSacId", mauSacId);
+            files.forEach(file => formData.append("files", file));
+
+            try {
+                const response = await fetch("/admin/sanpham/addanh", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const result = await response.json();
+                if (result.status) {
+                    location.reload();
+                } else {
+                    showNotification(
+                        {
+                            title: "Lỗi",
+                            message: response.message,
+                            type: "error"
+                        }
+                    );
+                }
+            } catch (error) {
+                console.error("Lỗi khi upload ảnh:", error);
+                showNotification(
+                    {
+                        title: "Lỗi",
+                        message: "Gặp lỗi khi upload ảnh",
+                        type: "error"
+                    }
+                );
+            }
+        }
+
+        // Hiển thị danh sách biến thể đã thêm
+        function renderBienTheList() {
+            const container = document.getElementById("bienTheContainer");
+            container.innerHTML = "";
+
+            // Nhóm biến thể theo màu sắc
+            const grouped = {};
+
+            bienTheList.forEach(bienThe => {
+                const key = bienThe.mauSac.mauSacId;
+                if (!grouped[key]) {
+                    grouped[key] = [];
+                }
+                grouped[key].push(bienThe);
+            });
+
+            // Duyệt từng nhóm màu
+            Object.entries(grouped).forEach(([mauSacId, bienThes]) => {
+                const groupDiv = document.createElement("div");
+                groupDiv.classList.add("border", "rounded", "p-2", "mb-4");
+
+                // Lấy tất cả ảnh của màu này
+                const filteredImages = uploadedImages.filter(img => img.mauSacId === mauSacId);
+                const imageHTML = filteredImages.map(img => {
+                    const url = img.url ? img.url : URL.createObjectURL(img.file);
+                    return `
+                    <div class="relative w-24 h-24">
+                        <button type="button" class="absolute -top-2 -right-2 text-white bg-red-600 text-xs p-1 rounded" onclick="confirmDeleteAnh(${img.id})">
+                            <img src="/svg/delete.svg" alt="Xóa" class="w-4 h-4" />
+                        </button>
+                        <img onclick="openImageModal('${url}')" 
+                        src="${url}" class="object-cover w-full h-full cursor-pointer border rounded" alt="Ảnh sản phẩm">
+                    </div>
+                    `;
+                }).join("");
+                // Tạo phần hiển thị màu và ảnh
+                groupDiv.innerHTML = `
+                    <div class="flex items-center gap-2 mb-2">
+                        <div class="w-6 h-6 border rounded" style="background-color: ${mauSacId};"></div>
+                        <span class="font-semibold">Màu: ${bienThes[0].mauSac.ten} ${mauSacId}</span>
+                    </div>
+                    <div class="flex gap-4 mb-2">
+                        ${imageHTML || "<span class='text-gray-400'>Chưa có ảnh</span>"}
+                    </div>
+                `;
+
+                // Tạo input file multiple
+                const fileInputContainer = document.createElement("div")
+                fileInputContainer.className = "relative w-24 h-24 border rounded flex flex-col items-center pt-4"
+                fileInputContainer.innerHTML = `
+                    <img src="/svg/upload_image.svg" alt="upload" class="w-12 h-12 block" />
+                    <p class="text-xs text-center">Thêm ảnh</p>
+                `;
+                const fileInput = document.createElement("input");
+                fileInput.type = "file";
+                fileInput.multiple = true;
+                fileInput.accept = "image/*";
+                fileInput.className = "absolute cursor-pointer top-0 left-0 w-full h-full opacity-0";
+                fileInput.addEventListener("change", async (event) => {
+                    const files = Array.from(event.target.files);
+                    if (files.length > 0) {
+                        await uploadMoreImages(mauSacId, files);
+                    }
+                });
+                // Append input vào container
+                fileInputContainer.appendChild(fileInput);
+                // Append container vào groupDiv
+                groupDiv.children[1].appendChild(fileInputContainer);
+
+                // Tạo danh sách kích thước
+                bienThes.forEach((bienThe, index) => {
+                    const item = document.createElement("div");
+                    item.classList.add("flex", "gap-2", "items-center", "border-t", "py-1");
+
+                    item.innerHTML = `
+                        <div>
+                            <span class="font-medium">${bienThe.kichThuoc.kichThuocId}</span> -
+                            <span>Số lượng: ${bienThe.soLuong} ${bienThe.soLuongDatMua ? '(Đặt mua: ' + bienThe.soLuongDatMua + ')' : ''}</span> -
+                            <span>Giá: ${bienThe.giaTien}</span>
+                        </div>
+                        <button type="button" onclick="openEditModal('${bienThe.mauSac.mauSacId}','${bienThe.kichThuoc.kichThuocId}')" class="p-1 bg-neutral-500 text-white rounded text-sm ml-auto">Sửa</button>
+                        <button type="button" onclick="confirmRemoveBienThe(${bienThe.id})" class="p-1 bg-red-500 text-white rounded text-sm">Xóa</button>
+                    `;
+
+                    groupDiv.appendChild(item);
+                });
+
+                container.appendChild(groupDiv);
+            });
+        }
+
+        // Xóa biến thể khỏi danh sách
+        async function removeBienThe(bienTheId) {
+            try {
+                const request = await fetch("/admin/sanpham/deletebienthe?id=" + bienTheId, {
+                    method: "POST",
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                const response = await request.json();
+                if (response.status) {
+                    location.reload();
+                } else {
+                    showNotification(
+                        {
+                            title: "Lỗi",
+                            message: response.message,
+                            type: "error"
+                        }
+                    );
+                }
+            } catch (e) {
+                console.error(e);
+                showNotification(
+                    {
+                        title: "Lỗi",
+                        message: "Bị lỗi khi xóa biến thể!",
+                        type: "error"
+                    }
+                );
+            }
+        }
+
+        // Xóa ảnh
+        async function deleteAnh(anhId) {
+            try {
+                const request = await fetch("/admin/sanpham/deleteanh?id=" + anhId, {
+                    method: "POST",
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                const response = await request.json();
+                if (response.status) {
+                    location.reload();
+                } else {
+                    showNotification(
+                        {
+                            title: "Lỗi",
+                            message: response.message,
+                            type: "error"
+                        }
+                    );
+                }
+            } catch (e) {
+                console.error(e);
+                showNotification(
+                    {
+                        title: "Lỗi",
+                        message: "Bị lỗi khi xóa ảnh!",
+                        type: "error"
+                    }
+                );
+            }
+        }
+
+        renderBienTheList();
+    </script>
+    <script>
+        document.getElementById('ngayThem').valueAsDate = new Date();
+
+        function formDataToObject(formData) {
+            const obj = {};
+            formData.forEach((value, key) => {
+                // Kiểm tra nếu có nhiều giá trị cho cùng một key (trong trường hợp có nhiều input cùng tên)
+                if (obj.hasOwnProperty(key)) {
+                    // Nếu đã tồn tại key, tạo một mảng chứa tất cả các giá trị
+                    obj[key] = [].concat(obj[key], value);
+                } else {
+                    obj[key] = value;
+                }
+            });
+            return obj;
+        }
+
+        document.getElementById("formSanPham").addEventListener("submit", async function (event) {
+            submitInput.setAttribute("disabled", "true");
+            event.preventDefault(); // Chặn form submit
+            if (bienTheList.length === 0) {
+                showNotification(
+                    {
+                        title: "Lỗi",
+                        message: "Phải có ít nhất 1 biến thể!",
+                        type: "error"
+                    }
+                );
+                return;
+            }
+            const formData = new FormData(this);
+            const formObj = formDataToObject(formData);
+
+            if (formObj.ten && formObj.ten.trim() === "") {
+                showNotification(
+                    {
+                        title: "Lỗi",
+                        message: "Tên sản phẩm không được trống!",
+                        type: "error"
+                    }
+                );
+                return;
+            }
+
+            if (formObj.loai && formObj.loai.trim() === "") {
+                showNotification(
+                    {
+                        title: "Lỗi",
+                        message: "Loại sản phẩm không được trống!",
+                        type: "error"
+                    }
+                );
+                return;
+            }
+
+            if (formObj.thuongHieu && formObj.thuongHieu.trim() === "") {
+                showNotification(
+                    {
+                        title: "Lỗi",
+                        message: "Thương hiệu không được trống!",
+                        type: "error"
+                    }
+                );
+                return;
+            }
+
+            if (formObj.thongTin && formObj.thongTin.trim() === "") {
+                showNotification(
+                    {
+                        title: "Lỗi",
+                        message: "Thông tin không được trống!",
+                        type: "error"
+                    }
+                );
+                return;
+            }
+            try {
+                const request = await fetch("/admin/sanpham/editsanpham", {
+                    method: "POST",  // Đảm bảo phương thức là POST
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        ...sanPhamData,
+                        ...formObj
+                    })
+                });
+
+                const response = await request.json();
+
+                if (response.status) {
+                    location.reload();
+                } else {
+                    submitInput.setAttribute("disabled", "true");
+                    showNotification(
+                        {
+                            title: "Lỗi",
+                            message: response.message,
+                            type: "error"
+                        }
+                    );
+                }
+            } catch (e) {
+                console.error(e);
+                submitInput.setAttribute("disabled", "false");
+                showNotification(
+                    {
+                        title: "Lỗi",
+                        message: "Lỗi khi sửa thông tin sản phẩm!",
+                        type: "error"
+                    }
+                );
+            }
+        });
+
+        function confirmRemoveBienThe(bienTheId) {
+            Swal.fire({
+                title: 'Bạn có chắc chắn muốn xóa?',
+                text: "Biến thể sẽ bị xóa!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Xóa',
+                cancelButtonText: 'Hủy'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    removeBienThe(bienTheId);
+                }
+            });
+        }
+
+        function confirmDeleteAnh(anhId) {
+            Swal.fire({
+                title: 'Bạn có chắc chắn muốn xóa?',
+                text: "Ảnh sẽ bị xóa!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Xóa',
+                cancelButtonText: 'Hủy'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    deleteAnh(anhId);
+                }
+            });
+        }
+    </script>
+    <!-- EDIT BIEN THE SCRIPTS -->
+    <script>
+        // Reset edit modal sau khi đóng
+        function resetEditModal() {
+            selectedBienThe = null;
+            editSoLuong.value = "";
+            editGiaTienInput.value = "";
+            soLuongDatMuaInput.value = 0;
+        }
+
+        // Save editModal
+        async function saveEditModal() {
+            saveEditBtn.setAttribute("disabled", "true");
+            selectedBienThe.soLuong = parseInt(editSoLuongInput.value);
+            selectedBienThe.giaTien = parseFloat(editGiaTienInput.value);
+
+            if (selectedBienThe.id) {
+                try {
+                    const request = await fetch("/admin/sanpham/editbienthe", {
+                        method: "POST",
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            bienThe: selectedBienThe,
+                            sanPhamId: selectedBienThe.sanPhamId
+                        })
+                    });
+
+                    const response = await request.json();
+
+                    if (response.status) {
+                        location.reload();
+                    } else {
+                        showNotification({
+                            title: "Lỗi",
+                            message: response.message ? response.message : "Sửa biến thể thất bại!",
+                            type: "error"
+                        })
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                    }
+                } catch (ex) {
+                    showNotification({
+                        title: "Lỗi",
+                        message: response.message ? response.message : "Sửa biến thể thất bại!",
+                        type: "error"
+                    })
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
+                }
+            } else {
+                location.reload();
+            }
+            saveEditBtn.setAttribute("disabled", "false");
+            closeEditModal();
+        }
+
+        // Đóng editModal
+        function closeEditModal() {
+            document.getElementById("editModal").classList.remove("flex");
+            document.getElementById("editModal").classList.add("hidden");
+            resetEditModal();
+        }
+
+        // Đóng imageModal
+        function closeImageModal() {
+            document.getElementById("imageModal").classList.remove("flex");
+            document.getElementById("imageModal").classList.add("hidden");
+        }
+    </script>
+    <script th:inline="javascript">
+        const errorMessage = /*[[${errorMessage}]]*/ '';
+        if (errorMessage) {
+            showNotification(
+                {
+                    title: "Lỗi",
+                    message: errorMessage,
+                    type: "error"
+                }
+            );
+        }
+    </script>
+</body>
+
+</html>

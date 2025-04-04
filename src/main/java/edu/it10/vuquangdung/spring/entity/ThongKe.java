@@ -16,7 +16,7 @@ public class ThongKe {
     private String mathongke;
 
     @Column(name = "sanpham")
-    private Long sanpham;
+    private Long sanPham;
 
     @Column(name = "donhang")
     private Long donHang;
@@ -104,12 +104,12 @@ public class ThongKe {
         this.mathongke = mathongke;
     }
 
-    public Long getSanpham() {
-        return sanpham;
+    public Long getSanPham() {
+        return sanPham;
     }
 
-    public void setSanpham(Long sanpham) {
-        this.sanpham = sanpham;
+    public void setSanPham(Long sanpham) {
+        this.sanPham = sanpham;
     }
 
     public Long getDonHang() {

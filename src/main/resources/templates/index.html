@@ -11,18 +11,13 @@
     <link rel="stylesheet" th:href="@{/css/application.css}">
 </head>
 
-<body class="bg-gray-200 overflow-x-hidden">
+<body class="overflow-x-hidden">
     <div th:replace="~{fragments/header :: header}"></div>
     <div th:replace="~{fragments/index/banner :: banner}"></div>
     
     <div class="w-full xl:max-w-[1215px] max-w-[1021px] mx-auto">
-        <div th:replace="~{fragments/index/categories :: categories}"></div>
-
         <div th:replace="~{fragments/index/sanphambanchay :: sanphambanchay}"></div>
-        <div th:replace="~{fragments/index/brands :: brands}"></div>
     </div>
-
-    <div th:replace="~{fragments/index/hotro :: hotro}"></div>
     <div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 
