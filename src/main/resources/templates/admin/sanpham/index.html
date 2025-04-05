@@ -129,7 +129,9 @@
                             class="block w-max text-center my-1 p-2 rounded bg-orange-500 text-white"
                             th:data-id="${sanPham.getId()}" onclick="confirmDeactivate(this);">Tắt</button>
                         <button class="block w-max text-center my-1 p-2 rounded bg-red-500 text-white"
-                            th:data-id="${sanPham.getId()}" onclick="confirmDelete(this);">Xóa</button>
+                            th:data-id="${sanPham.getId()}" onclick="confirmDelete(this);">
+                            <img src="/svg/delete.svg" alt="delete" class="w-6 h-6">
+                        </button>
                         <button th:if="${sanPham.kichHoat == 0}"
                             class="block w-max text-center my-1 p-2 rounded bg-blue-500 text-white"
                             th:data-id="${sanPham.getId()}" onclick="confirmActivate(this);">Bật</button>

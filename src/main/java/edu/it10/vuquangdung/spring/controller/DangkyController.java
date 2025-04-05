@@ -16,8 +16,6 @@ import edu.it10.vuquangdung.spring.helper.PasswordHelper;
 import edu.it10.vuquangdung.spring.service.OtpService;
 import edu.it10.vuquangdung.spring.service.taikhoan.TaiKhoanManager;
 
-import java.util.Optional;
-
 @Controller
 public class DangkyController {
     private final TaiKhoanManager taikhoanManager;
@@ -89,8 +87,7 @@ public class DangkyController {
     @PostMapping("/dangky")
     public String postDangky(HttpSession session, @RequestParam("username") String username,
                              @RequestParam("password") String password, @RequestParam("diachi") String diachi,
-                             @RequestParam("hoten") String hoten,
-                             @RequestParam("agree") Optional<String> agree) {
+                             @RequestParam("hoten") String hoten) {
 
         TaiKhoan taikhoan = new TaiKhoan();
 
@@ -107,11 +104,6 @@ public class DangkyController {
 
         // Can xac thuc tai khoan qua email de duoc enable
         taikhoan.setEnabled(0);
-        if (agree.isEmpty()) {
-            session.setAttribute(ErrorEnum.REGISTER_ERROR.name(), "Bạn phải đồng ý điều khoản!");
-            session.setAttribute("taikhoan", taikhoan);
-            return "redirect:/dangky";
-        }
 
         if (diachi == null || diachi.isEmpty() || diachi.split(", ", 4).length < 4) {
             session.setAttribute(ErrorEnum.REGISTER_ERROR.name(), "Địa chỉ không hợp lệ!");

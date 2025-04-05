@@ -23,11 +23,6 @@
                 <li id="openSearch">
                     <img src="/svg/search.svg" alt="search">
                 </li>
-                <li th:if="${session.role == 'ROLE_NHANVIEN' || session.role == 'ROLE_QUANLY'}">
-                    <a class="flex items-center gap-1" href="/admin/donhang/">
-                        <img src="/svg/admin_panel.svg" alt="admin panel">
-                    </a>
-                </li>
                 <li th:if="${session.role != null}" class="relative">
                     <a class="flex items-center gap-1" href="/profile/donhang">
                         <img src="/svg/myorders.svg" alt="orders">
@@ -42,11 +37,17 @@
                         0</p>
                 </li>
                 <li class="flex flex-col sm:ml-0 ml-2" th:if="${session.hoten}">
-                    <a class="hover:text-slate-500 text-xs sm:text-base" href="/profile/doithongtin"
+                    <a class="hover:text-gray-500 text-xs sm:text-base" href="/profile/doithongtin"
                         th:text="${session.hoten}"></a>
-                    <a href="/logout">
-                        <img src="/svg/logout.svg" alt="logout">
-                    </a>
+                    <section class="flex gap-2">
+                        <a th:if="${session.role == 'ROLE_NHANVIEN' || session.role == 'ROLE_QUANLY'}"
+                            href="/admin/donhang/">
+                            <img src="/svg/admin_panel.svg" alt="admin panel">
+                        </a>
+                        <a href="/logout">
+                            <img src="/svg/logout.svg" alt="logout">
+                        </a>
+                    </section>
                 </li>
                 <li th:if="${session?.hoten == null}">
                     <a href="/login">
@@ -58,10 +59,10 @@
                 <div onclick="closeSearch()" class="bg-black w-full h-screen absolute top-0 left-0 opacity-50"></div>
                 <form action="/shop" class="flex mt-4 relative items-center h-[38px] w-max max-w-[395px] mx-auto">
                     <input id="searchPhoneInput" type="text" name="search" th:value="${search}" autocomplete="off"
-                        class="outline-none block w-[295px] h-full px-2 placeholder:italic placeholder:text-slate-500 rounded-tl rounded-bl"
+                        class="outline-none block w-[295px] h-full px-2 placeholder:italic placeholder:text-gray-500 rounded-tl rounded-bl"
                         placeholder="Nhập từ khóa...">
                     <button
-                        class="p-1 w-max max-w-[100px] h-full bg-slate-500 rounded-tr rounded-br text-black font-medium text-sm flex items-center">
+                        class="p-1 w-max max-w-[100px] h-full bg-gray-300 rounded-tr rounded-br text-black font-medium text-sm flex items-center">
                         <span class="material-symbols-outlined">
                             search
                         </span>
@@ -126,7 +127,7 @@
                         searchPhoneOutput.innerHTML = ''; // Xóa nội dung cũ
                         data.searchResults.forEach(item => {
                             const li = document.createElement('li');
-                            li.className = 'h-[38px] w-full bg-slate-50 hover:bg-slate-100 cursor-pointer p-2 overflow-hidden';
+                            li.className = 'h-[38px] w-full bg-gray-50 hover:bg-gray-100 cursor-pointer p-2 overflow-hidden';
                             const a = document.createElement('a');
                             a.href = "/sanpham/" + item.id;
                             a.textContent = item.ten;
@@ -134,7 +135,7 @@
                             searchPhoneOutput.appendChild(li);
                         });
                     } else {
-                        searchPhoneOutput.innerHTML = `<li class="h-[38px] w-full bg-slate-50 p-2 text-gray-500">Không có kết quả</li>`;
+                        searchPhoneOutput.innerHTML = `<li class="h-[38px] w-full bg-gray-50 p-2 text-gray-500">Không có kết quả</li>`;
                     }
                 } catch (error) {
                     console.error('Lỗi:', error);

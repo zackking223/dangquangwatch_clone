@@ -7,6 +7,13 @@
     <link rel="icon" type="image/png" href="/images/LogoMobile.png">
     <title>Thêm sản phẩm</title>
     <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}" />
+    <style>
+        input[type="submit"]:disabled {
+            opacity: 0.5 !important;
+            cursor: not-allowed !important;
+            background-color: gray !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -49,13 +56,13 @@
                 <section class="flex items-center gap-2 mb-4">
                     <h2 class="font-bold">Danh sách biến thể</h2>
                     <button onclick="openModal()" type="button"
-                        class="p-2 w-max bg-neutral-500 hover:bg-blue-600 text-xs rounded block text-white">Thêm biến
-                        thể</button>
+                        class="p-2 w-max bg-blue-500 hover:bg-blue-600 text-xs rounded block text-white">Thêm biến thể
+                    </button>
                 </section>
                 <ul id="bienTheContainer" class="border border-black rounded w-full p-2 h-max gap-2">
                 </ul>
-                <input id="submitInput" class="p-2 w-max bg-green-500 rounded block mt-4 text-white" type="submit"
-                    value="Thêm" />
+                <input id="submitInput" class="p-2 w-max bg-green-500 hover:bg-green-600 rounded block mt-4 text-white"
+                    type="submit" value="Thêm" />
             </form>
         </div>
     </div>
@@ -414,7 +421,7 @@
 
         document.getElementById("formSanPham").addEventListener("submit", async function (event) {
             event.preventDefault(); // Chặn form submit
-            submitInput.setAttribute("disabled", "true");;
+            submitInput.setAttribute("disabled", "true");
             if (bienTheList.length === 0) {
                 showNotification(
                     {
@@ -423,6 +430,7 @@
                         type: "error"
                     }
                 );
+                submitInput.removeAttribute("disabled");
                 return;
             }
             const formData = new FormData(this);
@@ -436,6 +444,7 @@
                         type: "error"
                     }
                 );
+                submitInput.removeAttribute("disabled");
                 return;
             }
 
@@ -447,6 +456,7 @@
                         type: "error"
                     }
                 );
+                submitInput.removeAttribute("disabled");
                 return;
             }
 
@@ -458,6 +468,7 @@
                         type: "error"
                     }
                 );
+                submitInput.removeAttribute("disabled");
                 return;
             }
 
@@ -469,6 +480,7 @@
                         type: "error"
                     }
                 );
+                submitInput.removeAttribute("disabled");
                 return;
             }
 
@@ -491,7 +503,7 @@
                 if (response.status) {
                     location.replace("/admin/sanpham/edit?id=" + response.message.split(": ")[1]);
                 } else {
-                    submitInput.setAttribute("disabled", "false");
+                    submitInput.removeAttribute("disabled");
                     showNotification(
                         {
                             title: "Lỗi",
@@ -502,7 +514,7 @@
                 }
             } catch (e) {
                 console.error(e);
-                submitInput.setAttribute("disabled", "false");
+                submitInput.removeAttribute("disabled");
                 showNotification(
                     {
                         title: "Lỗi",

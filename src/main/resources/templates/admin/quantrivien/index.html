@@ -78,14 +78,18 @@
                     <td class="p-2 max-w-[250px] overflow-hidden"
                         th:text="${taikhoan.getNGAYTHEM()}"></td>
                     <td class="p-2 max-w-[250px] overflow-hidden">
-                        <a class="p-2 rounded bg-green-500 text-white"
-                            th:href="@{/admin/khachhang/edit?id={id}(id=${taikhoan.getUsername()})}">Sửa</a>
-                        <button th:if="${taikhoan.getEnabled() == 1}" class="p-2 rounded bg-red-500 text-white"
-                            th:data-id="${taikhoan.getUsername()}" onclick="confirmDelete(this);">Xóa</button>
-                        <button th:if="${taikhoan.getEnabled() == 1}" class="p-2 rounded bg-orange-500 text-white"
-                            th:data-id="${taikhoan.getUsername()}" onclick="confirmDeactivate(this);">Tắt</button>
-                        <button th:if="${taikhoan.getEnabled() == 0}" class="p-2 rounded bg-blue-500 text-white"
-                            th:data-id="${taikhoan.getUsername()}" onclick="confirmActivate(this);">Bật</button>
+                        <section class="flex gap-2 items-center">
+                            <a class="p-2 rounded bg-green-500 text-white"
+                                th:href="@{/admin/khachhang/edit?id={id}(id=${taikhoan.getUsername()})}">Sửa</a>
+                            <button th:if="${taikhoan.getEnabled() == 1}" class="p-2 rounded bg-red-500 text-white"
+                                th:data-id="${taikhoan.getUsername()}" onclick="confirmDelete(this);">
+                                <img src="/svg/delete.svg" alt="delete" class="w-6 h-6">
+                            </button>
+                            <button th:if="${taikhoan.getEnabled() == 1}" class="p-2 rounded bg-orange-500 text-white"
+                                th:data-id="${taikhoan.getUsername()}" onclick="confirmDeactivate(this);">Tắt</button>
+                            <button th:if="${taikhoan.getEnabled() == 0}" class="p-2 rounded bg-blue-500 text-white"
+                                th:data-id="${taikhoan.getUsername()}" onclick="confirmActivate(this);">Bật</button>
+                        </section>
                     </td>
                 </tr>
             </table>

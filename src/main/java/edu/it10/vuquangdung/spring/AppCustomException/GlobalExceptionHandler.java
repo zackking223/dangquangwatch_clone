@@ -26,7 +26,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Slf4j
-// @ControllerAdvice
+@ControllerAdvice
 public class GlobalExceptionHandler {
   @Autowired
   HttpSession session;

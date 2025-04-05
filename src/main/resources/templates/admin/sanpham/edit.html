@@ -7,6 +7,18 @@
     <link rel="icon" type="image/png" href="/images/LogoMobile.png">
     <title>Sửa sản phẩm</title>
     <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}" />
+    <style>
+        input[type="submit"]:disabled {
+            opacity: 0.5 !important;
+            cursor: not-allowed !important;
+            background-color: gray !important;
+        }
+        button:disabled {
+            opacity: 0.5 !important;
+            cursor: not-allowed !important;
+            background-color: gray !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -400,7 +412,7 @@
                 if (response.status) {
                     location.reload();
                 } else {
-                    saveBtn.setAttribute("disabled", "false");
+                    saveBtn.removeAttribute("disabled");
                     showNotification(
                         {
                             title: "Lỗi",
@@ -411,7 +423,7 @@
                 }
             } catch (e) {
                 console.error(e);
-                saveBtn.setAttribute("disabled", "false");
+                saveBtn.removeAttribute("disabled");
                 showNotification(
                     {
                         title: "Lỗi",
@@ -648,6 +660,7 @@
                         type: "error"
                     }
                 );
+                submitInput.removeAttribute("disabled");
                 return;
             }
             const formData = new FormData(this);
@@ -661,6 +674,7 @@
                         type: "error"
                     }
                 );
+                submitInput.removeAttribute("disabled");
                 return;
             }
 
@@ -672,6 +686,7 @@
                         type: "error"
                     }
                 );
+                submitInput.removeAttribute("disabled");
                 return;
             }
 
@@ -683,6 +698,7 @@
                         type: "error"
                     }
                 );
+                submitInput.removeAttribute("disabled");
                 return;
             }
 
@@ -694,6 +710,7 @@
                         type: "error"
                     }
                 );
+                submitInput.removeAttribute("disabled");
                 return;
             }
             try {
@@ -725,7 +742,7 @@
                 }
             } catch (e) {
                 console.error(e);
-                submitInput.setAttribute("disabled", "false");
+                submitInput.removeAttribute("disabled");
                 showNotification(
                     {
                         title: "Lỗi",
@@ -827,7 +844,7 @@
             } else {
                 location.reload();
             }
-            saveEditBtn.setAttribute("disabled", "false");
+            saveEditBtn.removeAttribute("disabled");
             closeEditModal();
         }
 
