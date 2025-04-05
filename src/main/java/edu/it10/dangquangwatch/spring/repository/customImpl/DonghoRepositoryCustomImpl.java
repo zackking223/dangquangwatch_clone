@@ -3,6 +3,7 @@ package edu.it10.dangquangwatch.spring.repository.customImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Component;
 
 import edu.it10.dangquangwatch.spring.entity.Dongho;
 import edu.it10.dangquangwatch.spring.repository.custom.DonghoRepositoryCustom;
@@ -13,6 +14,7 @@ import jakarta.persistence.TypedQuery;
 
 import java.util.List;
 
+@Component
 public class DonghoRepositoryCustomImpl implements DonghoRepositoryCustom {
   @PersistenceContext
   EntityManager entityManager;
