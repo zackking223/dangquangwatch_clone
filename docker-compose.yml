@@ -11,7 +11,7 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/dongho_dangquang
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: "password"
+      SPRING_DATASOURCE_PASSWORD: "1262003"
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
     depends_on:
       mysql:
@@ -23,7 +23,7 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: "password"
+      MYSQL_ROOT_PASSWORD: "1262003"
       MYSQL_DATABASE: dongho_dangquang
     volumes:
       - mysql-data:/var/lib/mysql
