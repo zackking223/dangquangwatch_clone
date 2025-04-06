@@ -9,46 +9,44 @@
     <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}" />
 </head>
 
-<body>
+<body class="bg-slate-200">
     <div th:replace="~{fragments/sidebar :: sidebar}"></div>
-    <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
+    <div class="p-4 w-full h-screen pl-16">
         <h1 class="font-bold text-center my-2">Tài khoản mới</h1>
         <div>
             <div id="error" class="p-2 bg-red-500 rounded-md text-white hover:cursor-pointer" th:if="${errorMessage}"
                 th:text="${errorMessage}"></div>
-            <form th:object="${taikhoan}" th:action="@{/admin/accounts/add}" action="#" method="post">
-                <div>
-                    <label class="block font-medium" th:for="username">Username</label>
-                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
-                        th:field="*{username}" placeholder="Username" />
-                </div>
-                <div style="clear: both; display: block; height: 10px"></div>
-                <div>
-                    <label class="block font-medium" th:for="password">Password</label>
-                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="password"
-                        th:field="*{password}" placeholder="Password" />
-                </div>
-                <div style="clear: both; display: block; height: 10px"></div>
-                <div>
-                    <label class="block font-medium" th:for="hoten">Họ tên</label>
-                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
-                        th:field="*{hoten}" placeholder="Họ tên" />
-                </div>
-                <div style="clear: both; display: block; height: 10px"></div>
-
-                <div>
-                    <label class="block font-medium" th:for="loai_tai_khoan">Vai trò</label>
-                    <select name="loai_tai_khoan" id="loai_tai_khoan" class="border border-black rounded block p-2 w-[80vw] min-w-[280px]">
-                        <option value="ROLE_NHANVIEN" selected>Nhân viên</option>
-                        <option value="ROLE_QUANLY">Quản lý</option>
-                    </select>
-                </div>
-                <div style="clear: both; display: block; height: 10px"></div>
-
+            <form th:object="${taikhoan}" th:action="@{/admin/accounts/add}" action="#" method="post"
+                class="w-full mx-auto flex flex-col gap-4 bg-white rounded-md shadow-sm text-sm p-5 mb-6 border border-slate-300">
+                <section class="grid lg:grid-cols-2 grid-cols-1 gap-3">
+                    <div>
+                        <label class="block font-medium mb-1" th:for="username">Username</label>
+                        <input class="block px-3 py-2 w-full border border-slate-300 rounded" type="text"
+                            th:field="*{username}" placeholder="Username" />
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1" th:for="password">Password</label>
+                        <input class="block px-3 py-2 w-full border border-slate-300 rounded" type="password"
+                            th:field="*{password}" placeholder="Password" />
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1" th:for="hoten">Họ tên</label>
+                        <input class="block px-3 py-2 w-full border border-slate-300 rounded" type="text"
+                            th:field="*{hoten}" placeholder="Họ tên" />
+                    </div>
+    
+                    <div>
+                        <label class="block font-medium mb-1" th:for="loai_tai_khoan">Vai trò</label>
+                        <select name="loai_tai_khoan" id="loai_tai_khoan" class="block px-3 py-2 w-full border border-slate-300 rounded">
+                            <option value="ROLE_NHANVIEN" selected>Nhân viên</option>
+                            <option value="ROLE_QUANLY">Quản lý</option>
+                        </select>
+                    </div>
+                </section>
                 <input class="hidden" value="ROLE_QUANTRI" type="text" name="diachi" />
                 <input class="hidden" value="1" type="number" name="enabled" />
 
-                <input class="p-2 w-max bg-green-500 rounded block mt-4 text-white" type="submit" value="Thêm" />
+                <input class="p-2 w-max bg-green-500 rounded block text-white" type="submit" value="Thêm" />
             </form>
         </div>
     </div>

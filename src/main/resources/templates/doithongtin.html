@@ -24,45 +24,43 @@
           hàng</a></h1>
     </div>
     <div class="bg-white shadow-md rounded-lg overflow-hidden p-4 min-h-[800px] relative">
-      <form class="mx-auto w-full" th:object="${taikhoan}" action="/profile/doithongtin" method="post">
-        <div>
-          <label class="block font-medium" th:for="username">Email</label>
-          <input class="border border-black rounded block p-2 w-full" type="email" th:value="${taikhoan.username}"
-            readonly />
-        </div>
-        <div style="clear: both; display: block; height: 10px"></div>
-        <div>
-          <label class="block font-medium" th:for="hoten">Họ tên <span class="text-sm text-red-500">(Bắt
-              buộc)</span></label>
-          <input class="border border-black rounded block p-2 w-full" type="text" th:field="*{hoten}" />
-        </div>
-
-        <div style="clear: both; display: block; height: 10px"></div>
-        <div>
-          <label class="block font-medium" th:for="sodienthoai">Số điện thoại <span class="text-sm text-red-500">(Bắt
-              buộc)</span></label>
-          <input class="border border-black rounded block p-2 w-full" type="text" th:field="*{sodienthoai}"
-            placeholder="Số điện thoại" readonly />
-        </div>
-
-        <div style="clear: both; display: block; height: 10px"></div>
+      <form class="w-full mx-auto flex flex-col gap-4 text-sm mb-6 pt-4" th:object="${taikhoan}" action="/profile/doithongtin" method="post">
+        <section class="grid lg:grid-cols-3 grid-cols-1 gap-3">
+          <div>
+            <label class="block font-medium mb-1" th:for="username">Email</label>
+            <input class="block px-3 py-2 w-full border border-slate-300 rounded" type="email" th:value="${taikhoan.username}"
+              readonly />
+          </div>
+          <div>
+            <label class="block font-medium mb-1" th:for="hoten">Họ tên <span class="text-xs text-red-500">(Bắt
+                buộc)</span></label>
+            <input class="block px-3 py-2 w-full border border-slate-300 rounded" type="text" th:field="*{hoten}" />
+          </div>
+  
+          <div>
+            <label class="block font-medium mb-1" th:for="sodienthoai">Số điện thoại <span class="text-xs text-red-500">(Bắt
+                buộc)</span></label>
+            <input class="block px-3 py-2 w-full border border-slate-300 rounded" type="text" th:field="*{sodienthoai}"
+              placeholder="Số điện thoại" readonly />
+          </div>
+        </section>
 
         <div>
-          <label class="block font-medium" th:for="diachi">Địa chỉ <span class="text-sm text-red-500">(Bắt
+          <label class="block font-medium mb-1" th:for="diachi">Địa chỉ <span class="text-xs text-red-500">(Bắt
               buộc)</span></label>
           <input id="diachi" type="hidden" th:field="*{diachi}" required />
           <div class="flex gap-2">
-            <select id="provinceSelect" class="border border-black rounded block p-2 w-full"
+            <select id="provinceSelect" class="block px-3 py-2 w-full border border-slate-300 rounded" 
               onchange="populateDistricts()">
               <option value="">Chọn tỉnh/thành phố</option>
             </select>
-            <select id="districtSelect" class="border border-black rounded block p-2 w-full" onchange="populateWards()">
+            <select id="districtSelect" class="block px-3 py-2 w-full border border-slate-300 rounded" onchange="populateWards()">
               <option value="">Chọn quận/huyện</option>
             </select>
-            <select id="wardSelect" class="border border-black rounded block p-2 w-full" onchange="updateAddress()">
+            <select id="wardSelect" class="block px-3 py-2 w-full border border-slate-300 rounded" onchange="updateAddress()">
               <option value="">Chọn phường/xã</option>
             </select>
-            <input id="extraAddress" placeholder="Địa chỉ nhà" class="border border-black rounded block p-2 w-full"
+            <input id="extraAddress" placeholder="Địa chỉ nhà" class="block px-3 py-2 w-full border border-slate-300 rounded"
               type="text" oninput="updateAddress()" />
           </div>
         </div>
@@ -72,48 +70,53 @@
         <input class="hidden" value="1" type="number" th:field="*{enabled}" />
         <input class="hidden" type="date" th:field="*{NGAYTHEM}" />
 
-        <input class="p-2 w-max bg-green-500 rounded block mt-4 text-white" type="submit" value="Lưu" />
+        <input class="p-2 w-max bg-green-500 rounded block text-white" type="submit" value="Lưu" />
       </form>
 
-      <div class="w-full h-[1px] bg-black my-4"></div>
+      <div class="w-full h-[1px] bg-slate-300 my-4"></div>
+
       <section class="grid sm:grid-cols-2 grid-cols-1 gap-4">
-        <form class="mx-auto w-full" action="/profile/doisodienthoai" method="post">
-          <label th:if="${taikhoan.sodienthoai == null}" class="block font-medium" th:for="newphonenumber">Thêm số điện
-            thoại</label>
-          <label th:if="${taikhoan.sodienthoai}" class="block font-medium" th:for="newphonenumber">Số điện thoại
-            mới</label>
-          <input class="border border-black rounded block p-2 w-full" type="text" name="newphonenumber"
-            placeholder="Số điện thoại" onkeypress='validate(event)' required />
-          <input class="p-2 w-max bg-blue-500 rounded block mt-4 text-white" type="submit"
+        <form class="w-full mx-auto flex flex-col gap-4 text-sm mb-6" action="/profile/doisodienthoai" method="post">
+          <div>
+            <label th:if="${taikhoan.sodienthoai == null}" class="block font-medium mb-1" th:for="newphonenumber">Thêm số điện
+              thoại</label>
+            <label th:if="${taikhoan.sodienthoai}" class="block font-medium mb-1" th:for="newphonenumber">Số điện thoại
+              mới</label>
+            <input class="block px-3 py-2 w-full border border-slate-300 rounded" type="text" name="newphonenumber"
+              placeholder="Số điện thoại" onkeypress='validate(event)' required />
+          </div>
+          <input class="p-2 w-max bg-blue-500 rounded block text-white" type="submit"
             th:value="${taikhoan.sodienthoai != null ? 'Đổi số điện thoại' : 'Thêm số điện thoại'}" />
         </form>
-        <form class="mx-auto w-full" action="/profile/doimatkhau" method="post">
-          <label class="block font-medium" for="newpassword">Mật khẩu:</label>
-          <section class="relative w-full">
-            <input class="block relative p-2 w-full rounded border border-black overflow-hidden" type="password"
-              id="newpassword" name="newpassword" placeholder="P@ssword12345" required>
-            <button id="visibilityOn" type="button" class="absolute top-3 right-3">
-              <img src="/svg/visibility.svg" alt="Xem mật khẩu" class="w-5 h-5 opacity-10 hover:opacity-100">
-            </button>
-            <button id="visibilityOff" type="button" class="absolute top-3 right-3" style="display: none;">
-              <img src="/svg/visibility_off.svg" alt="Xem mật khẩu" class="w-5 h-5 opacity-10 hover:opacity-100">
-            </button>
-          </section>
-          <ul class="text-sm text-slate-500 ml-2 my-2">
-            <li class="flex items-center gap-1 pointer-events-none">
-              <input type="checkbox" name="passwordCheck" id="passwordLength" class="block" required>
-              <label id="passwordLengthLabel" for="passwordLength">Độ dài tối thiểu là 8 ký tự.</label>
-            </li>
-            <li class="flex items-center gap-1 pointer-events-none">
-              <input type="checkbox" name="passwordCheck" id="passwordReq1" class="block" required>
-              <label id="passwordReq1Label" for="passwordReq1">Bao gồm cả chữ hoa, chữ thường và số.</label>
-            </li>
-            <li class="flex items-center gap-1 pointer-events-none">
-              <input type="checkbox" name="passwordCheck" id="passwordReq2" class="block" required>
-              <label id="passwordReq2Label" for="passwordReq2">Bao gồm ký tự đặc biệt như: @, #, $,...</label>
-            </li>
-          </ul>
-          <input class="p-2 w-max bg-red-500 rounded block mt-4 text-white" type="submit" value="Đổi mật khẩu" />
+        <form class="w-full mx-auto flex flex-col gap-4 text-sm mb-6" action="/profile/doimatkhau" method="post">
+          <div>
+            <label class="block font-medium mb-1" for="newpassword">Mật khẩu:</label>
+            <section class="relative w-full">
+              <input class="block px-3 py-2 w-full border border-slate-300 rounded relative" type="password"
+                id="newpassword" name="newpassword" placeholder="P@ssword12345" required>
+              <button id="visibilityOn" type="button" class="absolute top-[10px] right-3">
+                <img src="/svg/visibility.svg" alt="Xem mật khẩu" class="w-5 h-5 opacity-10 hover:opacity-100">
+              </button>
+              <button id="visibilityOff" type="button" class="absolute top-[10px] right-3" style="display: none;">
+                <img src="/svg/visibility_off.svg" alt="Xem mật khẩu" class="w-5 h-5 opacity-10 hover:opacity-100">
+              </button>
+            </section>
+            <ul class="text-sm text-slate-500 ml-2 my-2">
+              <li class="flex items-center gap-1 pointer-events-none">
+                <input type="checkbox" name="passwordCheck" id="passwordLength" class="block" required>
+                <label id="passwordLengthLabel" for="passwordLength">Độ dài tối thiểu là 8 ký tự.</label>
+              </li>
+              <li class="flex items-center gap-1 pointer-events-none">
+                <input type="checkbox" name="passwordCheck" id="passwordReq1" class="block" required>
+                <label id="passwordReq1Label" for="passwordReq1">Bao gồm cả chữ hoa, chữ thường và số.</label>
+              </li>
+              <li class="flex items-center gap-1 pointer-events-none">
+                <input type="checkbox" name="passwordCheck" id="passwordReq2" class="block" required>
+                <label id="passwordReq2Label" for="passwordReq2">Bao gồm ký tự đặc biệt như: @, #, $,...</label>
+              </li>
+            </ul>
+          </div>
+          <input class="p-2 w-max bg-red-500 rounded block text-white" type="submit" value="Đổi mật khẩu" />
         </form>
       </section>
 
@@ -140,15 +143,15 @@
             </div>
             <p>Chúng tôi đã gửi mã xác thực tới <span th:text="${newphonenumber}"></span></p>
             <section class="flex items-center gap-2">
-              <button id="sendbtn" class="p-2 w-max bg-blue-500 hover:bg-blue-600 rounded block mt-4 text-white">
+              <button id="sendbtn" class="p-2 w-max bg-blue-500 hover:bg-blue-600 rounded block text-white">
                 Xác thực
               </button>
-              <div id="waitbtn" class="p-2 w-max bg-slate-500 rounded block mt-4 text-white cursor-wait"
+              <div id="waitbtn" class="p-2 w-max bg-slate-500 rounded block text-white cursor-wait"
                 style="display: none;">
                 Xác thực
               </div>
               <a href="/profile/doithongtin"
-                class="p-2 w-max bg-red-500 hover:bg-red-600 rounded block mt-4 text-white">Hủy</a>
+                class="p-2 w-max bg-red-500 hover:bg-red-600 rounded block text-white">Hủy</a>
             </section>
           </section>
         </form>

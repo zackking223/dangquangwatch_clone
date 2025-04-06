@@ -9,54 +9,53 @@
     <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}" />
 </head>
 
-<body>
+<body class="bg-slate-200">
     <div th:replace="~{fragments/sidebar :: sidebar}"></div>
-    <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
+    <div class="p-4 w-full h-screen pl-16">
         <h1 class="font-bold text-center my-2">Bút ký mới</h1>
-        <div class="col-md-auto">
+        <div>
             <form th:object="${butky}" th:action="@{/admin/butky/save}" action="#" method="post"
-                enctype="multipart/form-data">
-                <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="file">Chọn ảnh:</label>
+                enctype="multipart/form-data"
+                class="w-full mx-auto flex flex-col gap-4 bg-white rounded-md shadow-sm text-sm p-5 mb-6  border border-slate-400">
+                <div>
+                    <label class="block font-medium mb-1" for="file">Chọn ảnh:</label>
                     <input type="file" id="file" name="file"
-                        class="border border-black rounded form-input mt-1 block w-full" multiple="multiple"
+                        class="block px-3 py-2 w-full border border-dashed border-slate-300 rounded" multiple="multiple"
                         accept="image/*" onchange="previewImages(event)" required>
                 </div>
-                <div id="preview-container" class="mb-4 flex flex-wrap">
+                <div id="preview-container" class="flex flex-wrap">
                     <!-- Images preview will be shown here -->
                 </div>
-                <div>
-                    <label class="block font-medium" th:for="tenbutky">Tên bút ký</label>
-                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
-                        th:field="*{tenbutky}" placeholder="Tên bút ký" />
-                </div>
-                <div style="clear: both; display: block; height: 10px"></div>
-                <div>
-                    <label class="block font-medium" th:for="giatien">Giá tiền</label>
-                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number"
-                        th:field="*{giatien}" placeholder="Giá tiền" />
-                </div>
-                <div style="clear: both; display: block; height: 10px"></div>
+
+                <section class="grid lg:grid-cols-3 grid-cols-1 gap-3">
+                    <div>
+                        <label class="block font-medium mb-1" th:for="tenbutky">Tên bút ký</label>
+                        <input class="block px-3 py-2 w-full border border-slate-300 rounded" type="text"
+                            th:field="*{tenbutky}" placeholder="Tên bút ký" />
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1" th:for="giatien">Giá tiền</label>
+                        <input class="block px-3 py-2 w-full border border-slate-300 rounded" type="number"
+                            th:field="*{giatien}" placeholder="Giá tiền" />
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1" th:for="tragop">Trả góp</label>
+                        <input class="block px-3 py-2 w-full border border-slate-300 rounded" type="number"
+                            th:field="*{tragop}" placeholder="Trả góp" />
+                    </div>
+                </section>
 
                 <input type="hidden" th:field="*{soluong}" value="0" />
 
-                <div style="clear: both; display: block; height: 10px"></div>
                 <div>
-                    <label class="block font-medium" th:for="tragop">Trả góp</label>
-                    <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number"
-                        th:field="*{tragop}" placeholder="Trả góp" />
-                </div>
-                <div style="clear: both; display: block; height: 10px"></div>
-                <div>
-                    <label class="block font-medium" th:for="thongtin">Thông tin</label>
-                    <textarea class="border border-black rounded w-[80vw] min-w-[280px] p-2" rows="5"
+                    <label class="block font-medium mb-1" th:for="thongtin">Thông tin</label>
+                    <textarea class="block px-3 py-2 w-full border border-slate-300 rounded" rows="5"
                         th:field="*{thongtin}" placeholder="Thông tin sản phẩm"></textarea>
                 </div>
 
                 <input class="hidden" type="date" id="NGAYTHEM" name="NGAYTHEM" />
 
-                <div style="clear: both; display: block; height: 10px"></div>
-                <input class="p-2 w-max bg-green-500 rounded block mt-4 text-white" type="submit" value="Thêm" />
+                <input class="p-2 w-max bg-green-500 rounded block text-white" type="submit" value="Thêm" />
             </form>
         </div>
     </div>

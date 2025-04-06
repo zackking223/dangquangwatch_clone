@@ -9,14 +9,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-<body>
+<body class="bg-slate-200">
   <div th:replace="~{fragments/sidebar :: sidebar}"></div>
-  <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
+  <div class="p-4 w-full h-screen pl-16">
     <h1 class="font-bold text-center my-2">Sửa thông tin</h1>
 
-    <div class="flex flex-wrap w-full items-center mb-4">
+    <div class="w-full mx-auto flex flex-col gap-4 bg-white rounded-md shadow-sm text-sm p-5 mb-6 border border-slate-300">
       <form action="/admin/phukien/deleteimage" method="post" th:each="img : ${images}"
-        class="h-32 relative m-2 overflow-visible">
+        class="h-32 w-32 relative m-2 overflow-visible">
         <img th:src="${img.getUrl()}" th:alt="${img.getTenanh()}" class="w-32 h-32 object-cover">
         <input type="number" name="id" class="hidden" th:value="${img.getMaanh()}">
         <button class="p-1 rounded bg-red-500 absolute -top-1 -right-1">
@@ -25,62 +25,57 @@
       </form>
     </div>
 
-    <form class="mb-4" action="/admin/phukien/uploadimage" method="post" enctype="multipart/form-data">
-      <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="file">Chọn ảnh:</label>
+    <form class="w-full mx-auto flex flex-col gap-4 bg-white rounded-md shadow-sm text-sm p-5 mb-6 border border-slate-300" action="/admin/phukien/uploadimage" method="post" enctype="multipart/form-data">
+      <div>
+        <section class="flex items-center gap-2 mb-4">
+          <label class="block font-medium mb-1" for="file">Thêm ảnh mới:</label>
+          <input class="p-2 w-max bg-blue-500 rounded block text-white text-xs" type="submit" value="Tải ảnh mới" />
+        </section>
         <input type="hidden" name="id" th:value="${phuKien.maPhuKien}" />
-        <input type="file" id="file" name="file" class="border border-black rounded form-input mt-1 block w-full"
+        <input type="file" id="file" name="file" class="block px-3 py-2 w-full border border-dashed border-slate-300 rounded"
           multiple="multiple" accept="image/*" onchange="previewImages(event)" required>
       </div>
 
-      <div id="preview-container" class="mb-4 flex flex-wrap">
+      <div id="preview-container" class="flex flex-wrap">
         <!-- Images preview will be shown here -->
       </div>
-      <input class="p-2 w-max bg-blue-500 rounded block mt-4 text-white text-xs" type="submit" value="Tải ảnh mới" />
     </form>
 
-    <form th:object="${phuKien}" th:action="@{/admin/phukien/update}" action="#" method="post">
+    <form class="w-full mx-auto flex flex-col gap-4 bg-white rounded-md shadow-sm text-sm p-5 mb-6 border border-slate-300"
+      th:object="${phuKien}" th:action="@{/admin/phukien/update}" action="#" method="post">
+      <section class="grid lg:grid-cols-2 grid-cols-1 gap-3">
+        <div>
+          <label class="block font-medium mb-1" th:for="maPhuKien">Mã phụ kiện</label>
+          <input class="block px-3 py-2 w-full border border-slate-300 rounded" readonly type="number"
+            th:field="*{maPhuKien}" />
+        </div>
+        <div>
+          <label class="block font-medium mb-1" th:for="tenPhuKien">Tên sản phẩm</label>
+          <input class="block px-3 py-2 w-full border border-slate-300 rounded" type="text"
+            th:field="*{tenPhuKien}" />
+        </div>
+        <div>
+          <label class="block font-medium mb-1" th:for="giaTien">Giá tiền</label>
+          <input class="block px-3 py-2 w-full border border-slate-300 rounded" type="number"
+            th:field="*{giaTien}" />
+        </div>
+        <div>
+          <label class="block font-medium mb-1" th:for="traGop">Trả góp</label>
+          <input class="block px-3 py-2 w-full border border-slate-300 rounded" type="number" th:field="*{traGop}"
+            placeholder="Trả góp" />
+      </section>
+      
       <div>
-        <label class="block font-medium" th:for="maPhuKien">Mã phụ kiện</label>
-        <input readonly class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number"
-          th:field="*{maPhuKien}" placeholder="Mã phụ kiện" />
-      </div>
-
-      <div style="clear: both; display: block; height: 10px"></div>
-      <div>
-        <label class="block font-medium" th:for="tenPhuKien">Tên sản phẩm</label>
-        <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
-          th:field="*{tenPhuKien}" />
-      </div>
-
-      <div style="clear: both; display: block; height: 10px"></div>
-      <input type="hidden" th:field="*{soLuong}" />
-      <div>
-        <label class="block font-medium" th:for="giaTien">Giá tiền</label>
-        <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number"
-          th:field="*{giaTien}" />
-      </div>
-
-      <div style="clear: both; display: block; height: 10px"></div>
-      <div>
-        <label class="block font-medium" th:for="traGop">Trả góp</label>
-        <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number"
-          th:field="*{traGop}" />
-      </div>
-
-      <div style="clear: both; display: block; height: 10px"></div>
-      <div>
-        <label class="block font-medium" th:for="thongTin">Thông tin</label>
-        <textarea rows="5" class="border border-black rounded w-[80vw] min-w-[280px] p-2"
+        <label class="block font-medium mb-1" th:for="thongTin">Thông tin</label>
+        <textarea rows="5" class="block px-3 py-2 w-full border border-slate-300 rounded"
           th:field="*{thongTin}"></textarea>
       </div>
 
       <input type="hidden" th:field="*{NGAYTHEM}" />
       <input type="hidden" th:field="*{kichhoat}" />
       <input type="hidden" th:field="*{soluongdatmua}" />
-
-      <div style="clear: both; display: block; height: 10px"></div>
-      <input type="submit" class="p-2 w-max bg-green-500 rounded block mt-4 text-white" value="Lưu" />
+      <input type="hidden" th:field="*{soLuong}" />
+      <input type="submit" class="p-2 w-max bg-green-500 rounded block text-white" value="Lưu" />
     </form>
   </div>
   <script>

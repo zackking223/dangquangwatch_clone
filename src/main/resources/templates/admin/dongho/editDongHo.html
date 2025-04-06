@@ -9,14 +9,14 @@
   <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}" />
 </head>
 
-<body>
+<body class="bg-slate-200">
   <div th:replace="~{fragments/sidebar :: sidebar}"></div>
-  <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
+  <div class="p-4 w-full h-screen pl-16">
     <h1 class="font-bold text-center my-2">Sửa thông tin</h1>
 
-    <div class="flex flex-wrap w-full items-center mb-4">
+    <div class="w-full mx-auto flex flex-col gap-4 bg-white rounded-md shadow-sm text-sm p-5 mb-6 border border-slate-300">
       <form action="/admin/dongho/deleteimage" method="post" th:each="img : ${images}"
-        class="h-32 relative m-2 overflow-visible">
+        class="h-32 w-32 relative m-2 overflow-visible">
         <img th:src="${img.getUrl()}" th:alt="${img.getTenanh()}" class="w-32 h-32 object-cover">
         <input type="number" name="id" class="hidden" th:value="${img.getMaanh()}">
         <button class="p-1 rounded bg-red-500 absolute -top-1 -right-1">
@@ -25,82 +25,83 @@
       </form>
     </div>
 
-    <form class="mb-4" action="/admin/dongho/uploadimage" method="post" enctype="multipart/form-data">
-      <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="file">Chọn ảnh:</label>
+    <form class="w-full mx-auto flex flex-col gap-4 bg-white rounded-md shadow-sm text-sm p-5 mb-6 border border-slate-300" action="/admin/dongho/uploadimage" method="post" enctype="multipart/form-data">
+      <div>
+        <section class="flex items-center gap-2 mb-4">
+          <label class="block font-medium mb-1" for="file">Thêm ảnh mới:</label>
+          <input class="p-2 w-max bg-blue-500 rounded block text-white text-xs" type="submit" value="Tải ảnh mới" />
+        </section>
         <input type="hidden" name="id" th:value="${dongho.madongho}" />
-        <input type="file" id="file" name="file" class="border border-black rounded form-input mt-1 block w-full"
+        <input type="file" id="file" name="file" class="block px-3 py-2 w-full border border-dashed border-slate-300 rounded"
           multiple="multiple" accept="image/*" onchange="previewImages(event)" required>
       </div>
 
-      <div id="preview-container" class="mb-4 flex flex-wrap">
+      <div id="preview-container" class="flex gap-2 flex-wrap">
         <!-- Images preview will be shown here -->
       </div>
-      <input class="p-2 w-max bg-blue-500 rounded block mt-4 text-white text-xs" type="submit" value="Tải ảnh mới" />
     </form>
 
-    <form th:object="${dongho}" th:action="@{/admin/dongho/update}" action="#" method="post">
+    <form th:object="${dongho}"
+      class="w-full mx-auto flex flex-col gap-4 bg-white rounded-md shadow-sm text-sm p-5 mb-6 border border-slate-300"
+      th:action="@{/admin/dongho/update}" action="#" method="post">
+      <section class="grid lg:grid-cols-3 grid-cols-1 gap-3">
+        <div>
+          <label class="block font-medium mb-1" th:for="madongho">Mã đồng hồ</label>
+          <input class="block px-3 py-2 w-full border border-slate-300 rounded" readonly type="number"
+            th:field="*{madongho}" />
+        </div>
+        <div>
+          <label class="block font-medium mb-1" th:for="tendongho">Tên đồng hồ</label>
+          <input class="block px-3 py-2 w-full border border-slate-300 rounded" type="text"
+            th:field="*{tendongho}" />
+        </div>
+        <div>
+          <label class="block font-medium mb-1" th:for="giatien">Giá tiền</label>
+          <input class="block px-3 py-2 w-full border border-slate-300 rounded" type="number"
+            th:field="*{giatien}" />
+        </div>
+      </section>
+      
+      <section class="grid lg:grid-cols-3 grid-cols-1 gap-3">
+        <div>
+          <label class="block font-medium mb-1" th:for="tragop">Trả góp</label>
+          <input class="block px-3 py-2 w-full border border-slate-300 rounded" type="number"
+            th:field="*{tragop}" />
+        </div>
+        <div>
+          <label class="block font-medium mb-1" th:for="duongkinh">Đường kính</label>
+          <input class="block px-3 py-2 w-full border border-slate-300 rounded" type="number"
+            th:field="*{duongkinh}" />
+        </div>
+        <div>
+          <label class="block font-medium mb-1" th:for="chongnuoc">Chống nước</label>
+          <input class="block px-3 py-2 w-full border border-slate-300 rounded" type="number"
+            th:field="*{chongnuoc}" />
+        </div>
+      </section>
+      <input type="hidden" name="soluong" th:field="*{soluong}" />
+      <section class="grid lg:grid-cols-3 grid-cols-1 gap-3">
+        <div>
+          <label class="block font-medium mb-1" th:for="bomay">Bộ máy</label>
+          <input class="block px-3 py-2 w-full border border-slate-300 rounded" type="text" th:field="*{bomay}" />
+        </div>
+        <div>
+          <label class="block font-medium mb-1" for="gioitinh">Giới tính</label>
+          <select class="block px-3 py-2 w-full border border-slate-300 rounded" name="gioitinh">
+            <option th:each="tt : ${gioitinh_options}" th:value="${tt}" th:text="${tt}" th:selected="${tt == gioitinh}">
+            </option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-medium mb-1" th:for="chatlieu">Chất liệu</label>
+          <input class="block px-3 py-2 w-full border border-slate-300 rounded" type="text"
+            th:field="*{chatlieu}" />
+        </div>
+      </section>
+
       <div>
-        <label class="block font-medium" th:for="madongho">Mã đồng hồ</label>
-        <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" readonly type="number"
-          th:field="*{madongho}" />
-      </div>
-      <div style="clear: both; display: block; height: 10px"></div>
-      <div>
-        <label class="block font-medium" th:for="tendongho">Tên đồng hồ</label>
-        <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
-          th:field="*{tendongho}" />
-      </div>
-      <div style="clear: both; display: block; height: 10px"></div>
-      <div>
-        <label class="block font-medium" th:for="giatien">Giá tiền</label>
-        <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number"
-          th:field="*{giatien}" />
-      </div>
-      <div>
-        <input type="hidden" name="soluong" th:field="*{soluong}" />
-      </div>
-      <div style="clear: both; display: block; height: 10px"></div>
-      <div>
-        <label class="block font-medium" th:for="tragop">Trả góp</label>
-        <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number"
-          th:field="*{tragop}" />
-      </div>
-      <div style="clear: both; display: block; height: 10px"></div>
-      <div>
-        <label class="block font-medium" th:for="duongkinh">Đường kính</label>
-        <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number"
-          th:field="*{duongkinh}" />
-      </div>
-      <div style="clear: both; display: block; height: 10px"></div>
-      <div>
-        <label class="block font-medium" th:for="chongnuoc">Chống nước</label>
-        <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number"
-          th:field="*{chongnuoc}" />
-      </div>
-      <div style="clear: both; display: block; height: 10px"></div>
-      <div>
-        <label class="block font-medium" th:for="bomay">Bộ máy</label>
-        <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{bomay}" />
-      </div>
-      <div style="clear: both; display: block; height: 10px"></div>
-      <div>
-        <label class="block font-medium" for="gioitinh">Giới tính</label>
-        <select class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" name="gioitinh">
-          <option th:each="tt : ${gioitinh_options}" th:value="${tt}" th:text="${tt}" th:selected="${tt == gioitinh}">
-          </option>
-        </select>
-      </div>
-      <div style="clear: both; display: block; height: 10px"></div>
-      <div>
-        <label class="block font-medium" th:for="chatlieu">Chất liệu</label>
-        <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
-          th:field="*{chatlieu}" />
-      </div>
-      <div style="clear: both; display: block; height: 10px"></div>
-      <div>
-        <label class="block font-medium" th:for="thongtin">Thông tin</label>
-        <textarea class="border border-black rounded p-2 w-[80vw] min-w-[280px]" rows="5"
+        <label class="block font-medium mb-1" th:for="thongtin">Thông tin</label>
+        <textarea class="block px-3 py-2 w-full border border-slate-300 rounded" rows="5"
           th:field="*{thongtin}"></textarea>
       </div>
 
@@ -108,8 +109,8 @@
       <input type="hidden" th:field="*{kichhoat}" />
       <input type="hidden" th:field="*{soluongdatmua}" />
 
-      <div style="clear: both; display: block; height: 10px"></div>
-      <input class="border p-2 w-max bg-green-500 rounded block mt-4 text-white" type="submit"
+      
+      <input class="border p-2 w-max bg-green-500 rounded block text-white" type="submit"
         value="Lưu" />
     </form>
   </div>

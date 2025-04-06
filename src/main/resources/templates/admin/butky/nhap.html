@@ -9,37 +9,36 @@
   <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}" />
 </head>
 
-<body>
+<body class="bg-slate-200">
   <div th:replace="~{fragments/sidebar :: sidebar}"></div>
-  <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
+  <div class="p-4 w-full h-screen pl-16">
     <h1 class="font-bold text-center my-2">Nhập kho</h1>
 
-    <form th:object="${butky}" th:action="@{/admin/butky/nhap}" action="#" method="post">
+    <form th:object="${butky}" 
+      class="w-full mx-auto flex flex-col gap-4 bg-white rounded-md shadow-sm text-sm p-5 mb-6 border border-slate-300"
+      th:action="@{/admin/butky/nhap}" action="#" method="post">
       <input type="hidden" th:value="${butky.mabutky}" name="id" />
       <p class="block font-medium text-lg" th:text="${'Mã: ' + butky.mabutky + ' - ' + butky.tenbutky}"></p>
-      <div style="clear: both; display: block; height: 10px"></div>
+      <section class="grid lg:grid-cols-2 grid-cols-1 gap-3">
+        <div>
+          <label class="block font-medium mb-1" th:for="soluong">Số lượng</label>
+          <input class="block px-3 py-2 w-full border border-slate-300 rounded" type="number"
+            name="soLuong" placeholder="1" required/>
+        </div>
+        <div>
+          <label class="block font-medium mb-1" th:for="giatien">Chi phí</label>
+          <input class="block px-3 py-2 w-full border border-slate-300 rounded" type="number"
+            name="giaTien" placeholder="1000" required/>
+        </div>
+      </section>
 
       <div>
-        <label class="block font-medium" th:for="soluong">Số lượng</label>
-        <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number"
-          name="soLuong" placeholder="1" required/>
-      </div>
-      <div style="clear: both; display: block; height: 10px"></div>
-      <div>
-        <label class="block font-medium" th:for="giatien">Chi phí</label>
-        <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="number"
-          name="giaTien" placeholder="1000" required/>
-      </div>
-      <div style="clear: both; display: block; height: 10px"></div>
-
-      <div>
-        <label class="block font-medium" th:for="thongtin">Thông tin nhập</label>
-        <textarea class="border border-black rounded p-2 w-[80vw] min-w-[280px]" rows="5"
+        <label class="block font-medium mb-1" th:for="thongtin">Thông tin nhập</label>
+        <textarea class="block px-3 py-2 w-full border border-slate-300 rounded" rows="5"
           placeholder="Đặt vào dãy A, kệ thứ 2"
           name="thongTinNhap" required></textarea>
       </div>
 
-      <div style="clear: both; display: block; height: 10px"></div>
       <input class="border p-2 w-max bg-green-500 rounded block mt-4 text-white" type="submit"
         value="Nhập" />
     </form>

@@ -9,76 +9,70 @@
   <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}" />
 </head>
 
-<body>
+<body class="bg-slate-200">
   <div th:replace="~{fragments/sidebar :: sidebar}"></div>
-  <div class="p-4 w-max bg-slate-50 shadow-sm rounded-lg mx-auto">
+  <div class="p-4 w-full h-screen pl-16">
     <h1 class="font-bold text-center my-2">Sửa thông tin</h1>
     <div>
       <div id="error" class="p-2 bg-red-500 rounded-md text-white hover:cursor-pointer" th:if="${errorMessage}"
         th:text="${errorMessage}"></div>
-      <form th:object="${taikhoan}" th:action="@{/admin/khachhang/save}" action="#" method="post">
-        <div>
-          <label class="block font-medium" th:for="username">Email</label>
-          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{username}"
-            placeholder="user@email.com" required />
-        </div>
-        <div style="clear: both; display: block; height: 10px"></div>
-        <div>
-          <label class="block font-medium" th:for="hoten">Họ tên</label>
-          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text" th:field="*{hoten}"
-            required />
-        </div>
+      <form th:object="${taikhoan}" th:action="@{/admin/khachhang/save}" action="#" method="post"
+        class="w-full mx-auto flex flex-col gap-4 bg-white rounded-md shadow-sm text-sm p-5 mb-6 border border-slate-300">
+        <section class="grid lg:grid-cols-2 grid-cols-1 gap-3">
+          <div>
+            <label class="block font-medium mb-1" th:for="username">Email</label>
+            <input class="block px-3 py-2 w-full border border-slate-300 rounded" type="text" th:field="*{username}"
+              placeholder="user@email.com" required readonly />
+          </div>
+          <div>
+            <label class="block font-medium mb-1" th:for="hoten">Họ tên</label>
+            <input class="block px-3 py-2 w-full border border-slate-300 rounded" type="text" th:field="*{hoten}"
+              required />
+          </div>
+          <div>
+            <label class="block font-medium mb-1" th:for="sodienthoai">Số điện thoại</label>
+            <input class="block px-3 py-2 w-full border border-slate-300 rounded" type="text"
+              th:field="*{sodienthoai}" placeholder="Số điện thoại" required onkeypress='validate(event)' />
+          </div>
+        </section>
 
-        <div style="clear: both; display: block; height: 10px"></div>
         <div>
-          <label class="block font-medium" th:for="sodienthoai">Số điện thoại</label>
-          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="text"
-            th:field="*{sodienthoai}" placeholder="Số điện thoại" required onkeypress='validate(event)' />
-        </div>
-
-        <div style="clear: both; display: block; height: 10px"></div>
-        <div>
-          <label class="block font-medium" th:for="diachi">Địa chỉ</label>
+          <label class="block font-medium mb-1" th:for="diachi">Địa chỉ</label>
           <input type="hidden" th:field="*{diachi}" id="diachi" />
           <div class="flex lg:flex-row flex-col items-center gap-2">
-            <select id="provinceSelect" class="border border-black rounded block p-2 w-full"
+            <select id="provinceSelect" class="block px-3 py-2 w-full border border-slate-300 rounded"
               onchange="populateDistricts()" required>
               <option value="">Chọn tỉnh/thành phố</option>
             </select>
-            <select id="districtSelect" class="border border-black rounded block p-2 w-full" onchange="populateWards()"
+            <select id="districtSelect" class="block px-3 py-2 w-full border border-slate-300 rounded" onchange="populateWards()"
               required>
               <option value="">Chọn quận/huyện</option>
             </select>
-            <select id="wardSelect" class="border border-black rounded block p-2 w-full" onchange="updateAddress()"
+            <select id="wardSelect" class="block px-3 py-2 w-full border border-slate-300 rounded" onchange="updateAddress()"
               required>
               <option value="">Chọn phường/xã</option>
             </select>
-            <input id="extraAddress" placeholder="Địa chỉ nhà" class="border border-black rounded block p-2 w-full"
+            <input id="extraAddress" placeholder="Địa chỉ nhà" class="block px-3 py-2 w-full border border-slate-300 rounded"
               type="text" oninput="updateAddress()" required />
           </div>
         </div>
-        <div style="clear: both; display: block; height: 10px"></div>
 
         <input class="hidden" value="ROLE_KHACHHANG" type="text" th:field="*{loai_tai_khoan}" />
-        <div style="clear: both; display: block; height: 10px"></div>
         <div>
-          <label class="block font-medium" th:for="enabled">Xác thực email</label>
-          <select class="border border-black rounded block p-2 w-full" name="enabled" id="enabled"
+          <label class="block font-medium mb-1" th:for="enabled">Xác thực email</label>
+          <select class="block px-3 py-2 w-full border border-slate-300 rounded" name="enabled" id="enabled"
             th:field="*{enabled}">
             <option value="0">Chưa xác thực</option>
             <option value="1">Đã xác thực</option>
           </select>
         </div>
         <input class="hidden" type="date" th:field="*{NGAYTHEM}" />
-
-        <div class="bg-black h-[1px] w-full mt-8 mb-4"></div>
         <div>
-          <label class="block font-medium" th:for="password">Mật khẩu mới</label>
-          <input class="border border-black rounded block p-2 w-[80vw] min-w-[280px]" type="password" id="Mật khẩu"
+          <label class="block font-medium mb-1" th:for="password">Mật khẩu mới</label>
+          <input class="block px-3 py-2 w-full border border-slate-300 rounded" type="password" id="Mật khẩu"
             name="password" placeholder="Nhập mật khẩu mới (Bỏ trống nếu không muốn đổi)" />
         </div>
 
-        <div style="clear: both; display: block; height: 10px"></div>
         <input class="p-2 w-max bg-green-500 rounded block mt-4 text-white" type="submit" value="Lưu" />
       </form>
     </div>

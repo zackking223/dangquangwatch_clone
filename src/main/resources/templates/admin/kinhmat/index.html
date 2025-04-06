@@ -9,102 +9,107 @@
     <link type="text/css" rel="stylesheet" href="/css/application.css" th:href="@{/css/application.css}" />
 </head>
 
-<body>
+<body class="bg-slate-200">
     <div th:replace="~{fragments/sidebar :: sidebar}"></div>
-    <div class="p-4 w-full bg-slate-50 shadow-sm rounded-lg md:mx-auto pl-11">
-        <h1 class="font-bold text-center my-2">Quản lý kính mắt</h1>
-        <form action="" class="w-full flex flex-col gap-2 my-2">
+    <div class="p-4 w-full h-screen pl-16">
+        <form action="" class="w-full mx-auto flex flex-col gap-4 bg-white rounded-md shadow-sm text-sm p-5 mb-6 border border-slate-300">
             <section>
-                <label class="block font-medium" for="search">Tìm kiếm</label>
-                <input class="p-2 rounded block w-full outline-none border border-black" type="text" name="search"
+                <label class="block font-medium mb-1" for="search">Tìm kiếm</label>
+                <input class="block px-3 py-2 w-full border border-slate-300 rounded" type="text" name="search"
                     th:value="${search}" placeholder="Tìm kiếm">
             </section>
-            <section class="grid sm:grid-cols-2 grid-cols-1 gap-2">
+            <section class="grid sm:grid-cols-2 grid-cols-1 gap-3">
                 <div>
-                    <label class="block font-medium" for="from">Từ ngày</label>
-                    <input class="block p-2 w-full border border-black rounded" type="date" name="from" id="from"
+                    <label class="block font-medium mb-1" for="from">Từ ngày</label>
+                    <input class="block px-3 py-2 w-full border border-slate-300 rounded" type="date" name="from" id="from"
                         th:value="${from}">
                 </div>
                 <div>
-                    <label class="block font-medium" for="to">Đến ngày</label>
-                    <input class="block p-2 w-full border border-black rounded" type="date" name="to" id="to"
+                    <label class="block font-medium mb-1" for="to">Đến ngày</label>
+                    <input class="block px-3 py-2 w-full border border-slate-300 rounded" type="date" name="to" id="to"
                         th:value="${to}">
                 </div>
             </section>
-            <section class="flex items-center gap-1">
-                <button class="p-2 w-max my-2 bg-blue-500 rounded block text-white flex-shrink-0">Tìm kiếm</button>
-                <a href="/admin/kinhmat/add" class="p-2 w-max bg-green-500 rounded block text-white">Thêm kính mắt</a>
+
+            <section class="flex gap-3 sm:flex-row sm:items-center flex-col">
+                <button class="py-2 px-4 font-medium w-max bg-blue-500 rounded block text-white flex-shrink-0">Tìm kiếm</button>
+                <a href="/admin/kinhmat/add" class="py-2 px-4 font-medium w-max bg-green-500 rounded block text-white">Thêm kính mắt</a>
             </section>
-            <ul th:if="${sotrang > 1}" class="flex items-center flex-wrap w-full sm:gap-2 gap-1 my-4">
-                <li>Trang:</li>
-                <li th:each="i:${#numbers.sequence(1,sotrang,1)}">
-                    <a th:classappend="${page + 1 == i} ? 'bg-black text-white pointer-events-none' : 'bg-white text-black'"
-                        class="p-2 aspect-square border border-b hover:text-blue-500"
+            <ul th:if="${sotrang > 1}" class="flex items-center flex-wrap w-full">
+                <li class="mr-2">Trang:</li>
+                <li
+                    th:classappend="${page + 1 == i} ? 'bg-blue-500 text-white pointer-events-none' : 'bg-white text-black'" 
+                    class="py-2 px-3 border hover:text-blue-500"
+                    th:each="i:${#numbers.sequence(1,sotrang,1)}">
+                    <a
                         th:href="@{'/admin/kinhmat/?search=' + ${search} + '&page=' + ${i} + '&from=' + ${from} + '&to=' + ${to}}"
                         th:text="${i}"></a>
                 </li>
             </ul>
         </form>
-        <section class="w-full overflow-x-auto">
-            <table class="w-max mx-auto">
+
+        <section class="w-full mx-auto bg-white rounded-md shadow-sm text-sm p-5 mb-6 overflow-x-auto border border-slate-300">
+            <table class="sm:w-full w-max mx-auto text-neutral-800">
                 <tr>
-                    <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Mã</th>
-                    <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Tên sản phẩm</th>
-                    <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Giá tiền</th>
-                    <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Số lượng</th>
-                    <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Rộng mắt</th>
-                    <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Sống mũi</th>
-                    <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Dài gọng</th>
-                    <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Tính năng</th>
-                    <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Trả góp</th>
-                    <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Thông tin</th>
-                    <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Ngày thêm</th>
-                    <th class="bg-black text-white p-2 border border-solid border-black max-w-[200px]">Tùy chọn</th>
+                    <th class="bg-slate-200 font-medium border border-slate-300 p-2 text-left max-w-[200px]">Mã</th>
+                    <th class="bg-slate-200 font-medium border border-slate-300 p-2 text-left max-w-[200px]">Tên sản phẩm</th>
+                    <th class="bg-slate-200 font-medium border border-slate-300 p-2 text-left max-w-[200px]">Giá tiền</th>
+                    <th class="bg-slate-200 font-medium border border-slate-300 p-2 text-left max-w-[200px]">Số lượng</th>
+                    <th class="bg-slate-200 font-medium border border-slate-300 p-2 text-left max-w-[200px]">Rộng mắt</th>
+                    <th class="bg-slate-200 font-medium border border-slate-300 p-2 text-left max-w-[200px]">Sống mũi</th>
+                    <th class="bg-slate-200 font-medium border border-slate-300 p-2 text-left max-w-[200px]">Dài gọng</th>
+                    <th class="bg-slate-200 font-medium border border-slate-300 p-2 text-left max-w-[200px]">Tính năng</th>
+                    <th class="bg-slate-200 font-medium border border-slate-300 p-2 text-left max-w-[200px]">Trả góp</th>
+                    <th class="bg-slate-200 font-medium border border-slate-300 p-2 text-left max-w-[200px]">Thông tin</th>
+                    <th class="bg-slate-200 font-medium border border-slate-300 p-2 text-left max-w-[200px]">Ngày thêm</th>
+                    <th class="bg-slate-200 font-medium border border-slate-300 p-2 text-left max-w-[200px]">Tùy chọn</th>
                 </tr>
                 <tr th:each="kinhMat : ${kinhMats}">
-                    <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${kinhMat.getMaKinhMat()}">
+                    <td class="p-2 border border-slate-300 max-w-[200px] overflow-auto" th:text="${kinhMat.getMaKinhMat()}">
                     </td>
-                    <td class="p-2 border border-solid border-black max-w-[200px]">
+                    <td class="p-2 border border-slate-300 max-w-[200px] overflow-auto">
                         <a th:href="${'/kinhmat/' + kinhMat.getMaKinhMat()}" th:text="${kinhMat.getTenKinhMat()}"
                             class="hover:text-yellow-500" target="_blank"></a>
                     </td>
-                    <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${kinhMat.getGiaTien()}">
+                    <td class="p-2 border border-slate-300 max-w-[200px] overflow-auto" th:text="${kinhMat.getGiaTien()}">
                     </td>
-                    <td class="p-2 border border-solid border-black max-w-[200px]">
+                    <td class="p-2 border border-slate-300 max-w-[200px] overflow-auto">
                         <p th:text="${kinhMat.getSoLuong()}"></p>
                         <p class="text-orange-500" th:text="${'Đặt: ' + kinhMat.getSoluongdatmua()}"></p>
                     </td>
-                    <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${kinhMat.getRongMat()}">
+                    <td class="p-2 border border-slate-300 max-w-[200px] overflow-auto" th:text="${kinhMat.getRongMat()}">
                     </td>
-                    <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${kinhMat.getSongMui()}">
+                    <td class="p-2 border border-slate-300 max-w-[200px] overflow-auto" th:text="${kinhMat.getSongMui()}">
                     </td>
-                    <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${kinhMat.getDaiGong()}">
+                    <td class="p-2 border border-slate-300 max-w-[200px] overflow-auto" th:text="${kinhMat.getDaiGong()}">
                     </td>
-                    <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${kinhMat.getTinhNang()}">
+                    <td class="p-2 border border-slate-300 max-w-[200px] overflow-auto" th:text="${kinhMat.getTinhNang()}">
                     </td>
-                    <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${kinhMat.getTraGop()}">
+                    <td class="p-2 border border-slate-300 max-w-[200px] overflow-auto" th:text="${kinhMat.getTraGop()}">
                     </td>
-                    <td class="max-h-[200px] overflow-hidden p-2 border border-solid border-black max-w-[200px]">
+                    <td class="p-2 border border-slate-300 max-w-[200px] overflow-auto">
                         <p class="max-h-[200px] overflow-hidden" th:text="${kinhMat.getThongTin()}"></p>
                     </td>
-                    <td class="p-2 border border-solid border-black max-w-[200px]" th:text="${kinhMat.getNGAYTHEM()}">
+                    <td class="p-2 border border-slate-300 max-w-[200px] overflow-auto" th:text="${kinhMat.getNGAYTHEM()}">
                     </td>
-                    <td class="p-2 border border-solid border-black max-w-[200px]">
-                        <a class="block w-max text-center my-1 p-2 rounded bg-green-500 text-white"
-                            th:href="@{/admin/kinhmat/edit?id={id}(id=${kinhMat.getMaKinhMat()})}">Sửa</a>
-                        <a th:href="@{/admin/kinhmat/nhap?id={id}(id=${kinhMat.getMaKinhMat()})}"
-                            class="block w-max text-center my-1 p-2 rounded bg-purple-500 text-white">Nhập</a>
-                        <a th:href="@{/admin/kinhmat/xuat?id={id}(id=${kinhMat.getMaKinhMat()})}"
-                            class="block w-max text-center my-1 p-2 rounded bg-orange-500 text-white">Xuất</a>
-                        <button th:if="${kinhMat.kichhoat == 1}"
-                            class="block w-max text-center my-1 p-2 rounded bg-amber-500 text-white"
-                            th:data-id="${kinhMat.getMaKinhMat()}" onclick="confirmDeactivate(this);">Tắt</button>
-                        <button th:if="${kinhMat.kichhoat == 0}"
-                            class="block w-max text-center my-1 p-2 rounded bg-blue-500 text-white"
-                            th:data-id="${kinhMat.getMaKinhMat()}" onclick="confirmActivate(this);">Bật</button>
-                        <button
-                            class="block w-max text-center my-1 p-2 rounded bg-red-500 text-white"
-                            th:data-id="${kinhMat.getMaKinhMat()}" onclick="confirmDelete(this);">Xóa</button>
+                    <td class="p-2 border border-slate-300 max-w-[200px] overflow-auto">
+                        <section class="flex flex-col gap-1">
+                            <a class="p-2 w-full text-center text-xs font-medium rounded bg-green-500 text-white"
+                                th:href="@{/admin/kinhmat/edit?id={id}(id=${kinhMat.getMaKinhMat()})}">Sửa</a>
+                            <a th:href="@{/admin/kinhmat/nhap?id={id}(id=${kinhMat.getMaKinhMat()})}"
+                                class="p-2 w-full text-center text-xs font-medium rounded bg-purple-500 text-white">Nhập</a>
+                            <a th:href="@{/admin/kinhmat/xuat?id={id}(id=${kinhMat.getMaKinhMat()})}"
+                                class="p-2 w-full text-center text-xs font-medium rounded bg-orange-500 text-white">Xuất</a>
+                            <button th:if="${kinhMat.kichhoat == 1}"
+                                class="p-2 w-full text-center text-xs font-medium rounded bg-amber-500 text-white"
+                                th:data-id="${kinhMat.getMaKinhMat()}" onclick="confirmDeactivate(this);">Tắt</button>
+                            <button th:if="${kinhMat.kichhoat == 0}"
+                                class="p-2 w-full text-center text-xs font-medium rounded bg-blue-500 text-white"
+                                th:data-id="${kinhMat.getMaKinhMat()}" onclick="confirmActivate(this);">Bật</button>
+                            <button
+                                class="p-2 w-full text-center text-xs font-medium rounded bg-red-500 text-white"
+                                th:data-id="${kinhMat.getMaKinhMat()}" onclick="confirmDelete(this);">Xóa</button>
+                        </section>
                     </td>
                 </tr>
             </table>
