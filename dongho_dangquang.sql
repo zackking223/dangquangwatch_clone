@@ -291,7 +291,7 @@ CREATE TABLE `chitietdonhang` (
   `masanpham` int(11) NOT NULL,
   `tensanpham` varchar(255) NOT NULL,
   `anhsanpham` varchar(255) NOT NULL,
-  `ngaythem` date DEFAULT current_timestamp()
+  `ngaythem` date
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -459,7 +459,7 @@ CREATE TABLE `donhang` (
   `ghichu` varchar(255) DEFAULT 'Không có ghi chú',
   `tinhtrang` varchar(255) DEFAULT NULL,
   `thanhtoan` varchar(255) DEFAULT NULL,
-  `ngaythem` date DEFAULT current_timestamp()
+  `ngaythem` date
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -670,7 +670,7 @@ CREATE TABLE `otp` (
   `email` varchar(255) NOT NULL,
   `action` varchar(255) DEFAULT NULL,
   `payload` varchar(255) DEFAULT NULL,
-  `expiry_date` date DEFAULT current_timestamp()
+  `expiry_date` date
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -735,7 +735,7 @@ CREATE TABLE `taikhoan` (
   `hoten` varchar(255) DEFAULT 'Chưa có',
   `loai_tai_khoan` varchar(255) DEFAULT NULL,
   `enabled` int(11) DEFAULT NULL,
-  `ngaythem` date DEFAULT current_timestamp()
+  `ngaythem` date
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
