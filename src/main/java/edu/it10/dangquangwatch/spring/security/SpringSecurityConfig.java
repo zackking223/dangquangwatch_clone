@@ -55,7 +55,8 @@ public class SpringSecurityConfig {
                 .cors(cors -> cors.configurationSource
                         (httpServletRequest -> {
                             CorsConfiguration config = new CorsConfiguration();
-                            config.setAllowedOrigins(List.of("http://localhost:3000")); // Chỉ cho phép frontend
+                            // config.setAllowedOrigins(List.of("http://localhost:3000")); // Frontend local
+                            config.setAllowedOrigins(List.of("https://dangquangwatchclone.up.railway.app")); // Frontend production
                             config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                             config.setAllowCredentials(true); // Cho phép cookie/sessions
                             return config;
